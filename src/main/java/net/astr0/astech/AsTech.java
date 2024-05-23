@@ -3,6 +3,8 @@ package net.astr0.astech;
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.ModFluids;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -40,6 +42,7 @@ public class AsTech
         ModBlocks.register(modEventBus);
         ModFluids.register(modEventBus);
         ModCreativeModTab.register(modEventBus);
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)

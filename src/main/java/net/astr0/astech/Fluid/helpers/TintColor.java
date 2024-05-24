@@ -22,6 +22,35 @@ public class TintColor {
         this(r, g, b, 255);
     }
 
+    public static TintColor fromHex(String hex, int alpha) {
+        // Remove the hash at the beginning if it's there
+        if (hex.startsWith("#")) {
+            hex = hex.substring(1);
+        }
+
+        // Check if the hex string is exactly 6 characters long
+        if (hex.length() != 6) {
+            throw new IllegalArgumentException("Hex color string must be 6 characters long.");
+        }
+
+        // Check if the hex string contains only valid hexadecimal characters
+        if (!hex.matches("[0-9A-Fa-f]{6}")) {
+            throw new IllegalArgumentException("Hex color string contains invalid characters.");
+        }
+
+        // Parse the hex string to integer values
+        int r = Integer.parseInt(hex.substring(0, 2), 16);
+        int g = Integer.parseInt(hex.substring(2, 4), 16);
+        int b = Integer.parseInt(hex.substring(4, 6), 16);
+
+        return new TintColor(r, g, b, alpha);
+    }
+
+    public static TintColor fromHex(String hex) {
+        return  fromHex(hex, 255);
+    }
+
+
     public int getTintColor() {
         return _color;
     }

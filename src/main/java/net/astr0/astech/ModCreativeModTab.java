@@ -24,6 +24,5 @@ public class ModCreativeModTab {
                         output.accept(ModItems.DEEZ_NUTS_ITEM.get());
                         output.accept(ModItems.DEEZ_BUTTS_ITEM.get());
                         output.accept(ModBlocks.NIC_BLOCK.get());
-                        output.accept(ModItems.SOAP_WATER_BUCKET.get());
                     }).build());
 }

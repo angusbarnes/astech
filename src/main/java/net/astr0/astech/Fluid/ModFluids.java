@@ -27,44 +27,44 @@ public class ModFluids {
     public static final DeferredRegister<FluidType> FLUID_TYPES =
             DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, AsTech.MODID);
 
-    private static RegistryObject<FluidType> registerType(String name) {
-        return FLUID_TYPES.register(name, () -> new ChemicalLiquidType(new TintColor(255, 54, 111)));
+    private static RegistryObject<FluidType> registerType(String name, String type, String colorCode) {
+        if (type.equals("gas")) {
+            return FLUID_TYPES.register(name, () -> new ChemicalGasType(TintColor.fromHex(colorCode, 179)));
+        } else {
+            return FLUID_TYPES.register(name, () -> new ChemicalLiquidType(TintColor.fromHex(colorCode, 179)));
+        }
     }
 
-
-    // work on finding a generic way to create fluids, associated buckets and source blocks
-    // Maybe a factory which maintains its own registers for all of these areas
-    // Need to create a generic bucket or textures. The block should be easy.
-    // Maybe cache these in a Hashmap if they need to be looked up, but all recipes should
-    // use tags anyways.
-    // A central fluid definitions file could be used which has a plain text list,
-    // the factory could read this static list, using the key to generate the registry entries,
-    // and then set values in the list as it generates the block, bucket, etc
-    // The Tag datagen task can then also read these definitions and tag them
-    private static void registerLiquid(String name, TintColor color) {
-        RegistryObject<FluidType> type = FLUID_TYPES.register(name, () -> new ChemicalLiquidType(color));
-        ForgeFlowingFluid.Properties props = new ForgeFlowingFluid.Properties(
-                SOAP_WATER_FLUID_TYPE, SOURCE_SOAP_WATER, FLOWING_SOAP_WATER)
-                .slopeFindDistance(1).levelDecreasePerBlock(1).block(ModBlocks.SOAP_WATER_BLOCK);
-    }
-
-    public static final ResourceLocation WATER_STILL_RL = new ResourceLocation("block/water_still");
-    public static final ResourceLocation WATER_FLOWING_RL = new ResourceLocation("block/water_flow");
-    public static final ResourceLocation SOAP_OVERLAY_RL = new ResourceLocation(AsTech.MODID, "misc/in_soap_water");
-
+    public static final RegistryObject<FluidType> SOAP_WATER_FLUID_TYPE = registerType("soap_water_fluid", "liquid", "#3486eb");
     public static final RegistryObject<FlowingFluid> SOURCE_SOAP_WATER = FLUIDS.register("soap_water_fluid",
             () -> new ForgeFlowingFluid.Source(ModFluids.SOAP_WATER_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_SOAP_WATER = FLUIDS.register("flowing_soap_water",
             () -> new ForgeFlowingFluid.Flowing(ModFluids.SOAP_WATER_FLUID_PROPERTIES));
-
-    public static final RegistryObject<FluidType> SOAP_WATER_FLUID_TYPE = registerType("soap_water_fluid");
-
-
     public static final ForgeFlowingFluid.Properties SOAP_WATER_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             SOAP_WATER_FLUID_TYPE, SOURCE_SOAP_WATER, FLOWING_SOAP_WATER)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.SOAP_WATER_BLOCK)
-            .bucket(ModItems.SOAP_WATER_BUCKET);
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("soap_water", SOURCE_SOAP_WATER))
+            .bucket(ModItems.registerBucketItem("soap_water", SOURCE_SOAP_WATER));
 
+
+    public static final RegistryObject<FluidType> PISS_WATER_FLUID_TYPE = registerType("piss_water_fluid", "liquid", "#ebba34");
+    public static final RegistryObject<FlowingFluid> SOURCE_PISS_WATER = FLUIDS.register("piss_water_fluid",
+            () -> new ForgeFlowingFluid.Source(ModFluids.PISS_WATER_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_PISS_WATER = FLUIDS.register("flowing_piss_water",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.PISS_WATER_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties PISS_WATER_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            PISS_WATER_FLUID_TYPE, SOURCE_PISS_WATER, FLOWING_PISS_WATER)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("piss_water", SOURCE_PISS_WATER))
+            .bucket(ModItems.registerBucketItem("piss_water", SOURCE_PISS_WATER));
+
+    public static final RegistryObject<FluidType> ethane_FLUID_TYPE = registerType("ethane_fluid", "gas", "#f5f5f5");
+    public static final RegistryObject<FlowingFluid> SOURCE_ethane = FLUIDS.register("ethane_fluid",
+            () -> new ForgeFlowingFluid.Source(ModFluids.ethane_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_ethane = FLUIDS.register("flowing_ethane",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.ethane_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties ethane_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            ethane_FLUID_TYPE, SOURCE_ethane, FLOWING_ethane)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("ethane", SOURCE_ethane))
+            .bucket(ModItems.registerBucketItem("ethane", SOURCE_ethane));
 
     public static void register(IEventBus eventBus) {
         FLUID_TYPES.register(eventBus);

@@ -1,6 +1,7 @@
 package net.astr0.astech;
 
 import com.mojang.logging.LogUtils;
+import net.astr0.astech.Fluid.FluidRegister;
 import net.astr0.astech.Fluid.ModFluids;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;

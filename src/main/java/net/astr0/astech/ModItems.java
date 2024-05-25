@@ -16,8 +16,8 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, AsTech.MODID);
     public static RegistryObject<Item> registerBucketItem(String fluidName, RegistryObject<FlowingFluid> source) {
         return ITEMS.register(String.format("%s_bucket", fluidName),
-                () -> new BucketItem(source,
-                        new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+                () -> new AsTechBucketItem(source,
+                        new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), String.format("tooltip.%s.fluid", fluidName)));
     }
 
     // Call this function from the entry point to allow the items register to link itself to the eventBus
@@ -32,4 +32,5 @@ public class ModItems {
 
     public static final RegistryObject<Item> DEEZ_NUTS_ITEM = SimpleIngredientItem("deez_nuts", 16);
     public static final RegistryObject<Item> DEEZ_BUTTS_ITEM = SimpleIngredientItem("deez_butts", 32);
+
 }

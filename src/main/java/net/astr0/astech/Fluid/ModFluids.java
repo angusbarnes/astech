@@ -45,64 +45,133 @@ public class ModFluids {
         ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SOAP_WATER.get(), RenderType.translucent());
         //#anchor RENDER_REGION
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_POLYTETRAFLUOROETHYLENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_POLYTETRAFLUOROETHYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DIMETHYL_ETHER.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DIMETHYL_ETHER.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROCARBONIC_BROTH.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDROCARBONIC_BROTH.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ETHANE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ETHANE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PISS_WATER.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PISS_WATER.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ALUMUNIUM_HYDROXIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ALUMUNIUM_HYDROXIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SULFURIC_ACID.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SULFURIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AMMONIA.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AMMONIA.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BENZENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BENZENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CHLORINE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CHLORINE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ACETONE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ACETONE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_METHANOL.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_METHANOL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROGEN.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDROGEN.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NITROGEN.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NITROGEN.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TOLUENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TOLUENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PROPANE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PROPANE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ETHANOL.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ETHANOL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_FORMALDEHYDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_FORMALDEHYDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HEXANE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HEXANE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BUTANE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BUTANE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CARBON_TETRACHLORIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CARBON_TETRACHLORIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ETHYLENE_GLYCOL.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ETHYLENE_GLYCOL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ACETIC_ACID.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ACETIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_METHYL_CHLORIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_METHYL_CHLORIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PHOSGENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PHOSGENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ISOPROPANOL.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ISOPROPANOL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ANILINE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ANILINE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SODIUM_HYPOCHLORITE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SODIUM_HYPOCHLORITE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROGEN_SULFIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDROGEN_SULFIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_VINYL_CHLORIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_VINYL_CHLORIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_XYLENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROCHLORIC_ACID.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDROCHLORIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NITRIC_ACID.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NITRIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SODIUM_HYDROXIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SODIUM_HYDROXIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DICHLOROMETHANE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DICHLOROMETHANE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TRICHLOROETHYLENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TRICHLOROETHYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PERCHLOROETHYLENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PERCHLOROETHYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BROMINE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BROMINE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PHOSPHORIC_ACID.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PHOSPHORIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SODIUM_BICARBONATE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SODIUM_BICARBONATE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DIMETHYL_SULFOXIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DIMETHYL_SULFOXIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDRAZINE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDRAZINE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HEXAFLUOROPROPYLENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HEXAFLUOROPROPYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TETRAHYDROFURAN.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TETRAHYDROFURAN.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_STYRENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_STYRENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PROPYLENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PROPYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ACROLEIN.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ACROLEIN.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TETRACHLOROETHYLENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TETRACHLOROETHYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AQUA_REGIA.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AQUA_REGIA.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CYANOGEN.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CYANOGEN.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_FLUOROSILICIC_ACID.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_FLUOROSILICIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TITANIUM_TETRACHLORIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TITANIUM_TETRACHLORIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_METHYL_ETHYL_KETONE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_METHYL_ETHYL_KETONE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_THIONYL_CHLORIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_THIONYL_CHLORIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AZOTH.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AZOTH.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_UNOBTANIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_UNOBTANIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DILITHIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DILITHIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ADAMANTIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ADAMANTIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CARBONADIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CARBONADIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_RADON.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_RADON.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NEON.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NEON.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ARGON.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ARGON.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_XENON.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XENON.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CRYPTIC_ACID.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CRYPTIC_ACID.get(), RenderType.translucent());
 
         //#end RENDER_REGION
     }
@@ -766,6 +835,61 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CARBONADIUM.get(), RenderT
             CARBONADIUM_FLUID_TYPE, SOURCE_CARBONADIUM, FLOWING_CARBONADIUM)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("carbonadium", SOURCE_CARBONADIUM))
             .bucket(ModItems.registerBucketItem("carbonadium", SOURCE_CARBONADIUM));
+
+    
+    public static final RegistryObject<FluidType> RADON_FLUID_TYPE = registerType("radon_fluid", "gas", "#ffd700");
+    public static final RegistryObject<FlowingFluid> SOURCE_RADON = FLUIDS.register("radon_fluid",
+            () -> new ForgeFlowingFluid.Source(ModFluids.RADON_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_RADON = FLUIDS.register("flowing_radon",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.RADON_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties RADON_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            RADON_FLUID_TYPE, SOURCE_RADON, FLOWING_RADON)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("radon", SOURCE_RADON))
+            .bucket(ModItems.registerBucketItem("radon", SOURCE_RADON));
+
+    
+    public static final RegistryObject<FluidType> NEON_FLUID_TYPE = registerType("neon_fluid", "gas", "#ff5ccd");
+    public static final RegistryObject<FlowingFluid> SOURCE_NEON = FLUIDS.register("neon_fluid",
+            () -> new ForgeFlowingFluid.Source(ModFluids.NEON_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_NEON = FLUIDS.register("flowing_neon",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.NEON_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties NEON_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            NEON_FLUID_TYPE, SOURCE_NEON, FLOWING_NEON)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("neon", SOURCE_NEON))
+            .bucket(ModItems.registerBucketItem("neon", SOURCE_NEON));
+
+    
+    public static final RegistryObject<FluidType> ARGON_FLUID_TYPE = registerType("argon_fluid", "gas", "#80dfff");
+    public static final RegistryObject<FlowingFluid> SOURCE_ARGON = FLUIDS.register("argon_fluid",
+            () -> new ForgeFlowingFluid.Source(ModFluids.ARGON_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_ARGON = FLUIDS.register("flowing_argon",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.ARGON_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties ARGON_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            ARGON_FLUID_TYPE, SOURCE_ARGON, FLOWING_ARGON)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("argon", SOURCE_ARGON))
+            .bucket(ModItems.registerBucketItem("argon", SOURCE_ARGON));
+
+    
+    public static final RegistryObject<FluidType> XENON_FLUID_TYPE = registerType("xenon_fluid", "gas", "#3a79ff");
+    public static final RegistryObject<FlowingFluid> SOURCE_XENON = FLUIDS.register("xenon_fluid",
+            () -> new ForgeFlowingFluid.Source(ModFluids.XENON_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_XENON = FLUIDS.register("flowing_xenon",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.XENON_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties XENON_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            XENON_FLUID_TYPE, SOURCE_XENON, FLOWING_XENON)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("xenon", SOURCE_XENON))
+            .bucket(ModItems.registerBucketItem("xenon", SOURCE_XENON));
+
+    
+    public static final RegistryObject<FluidType> CRYPTIC_ACID_FLUID_TYPE = registerType("cryptic_acid_fluid", "liquid", "#DD33DD");
+    public static final RegistryObject<FlowingFluid> SOURCE_CRYPTIC_ACID = FLUIDS.register("cryptic_acid_fluid",
+            () -> new ForgeFlowingFluid.Source(ModFluids.CRYPTIC_ACID_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_CRYPTIC_ACID = FLUIDS.register("flowing_cryptic_acid",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.CRYPTIC_ACID_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties CRYPTIC_ACID_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            CRYPTIC_ACID_FLUID_TYPE, SOURCE_CRYPTIC_ACID, FLOWING_CRYPTIC_ACID)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("cryptic_acid", SOURCE_CRYPTIC_ACID))
+            .bucket(ModItems.registerBucketItem("cryptic_acid", SOURCE_CRYPTIC_ACID));
 
     
     //#end FLUID_REGION

@@ -69,7 +69,7 @@ def tint_image(image, tint_color):
     
     return tinted_image
 
-def layer_images(base_image_path, top_image_path, output_image_path, tint_color):
+def layer_images(base_image_path, top_image_path, output_image_path, tint_color, type):
     # Open the base image
     base_image = Image.open(base_image_path).convert("RGBA")
     
@@ -79,6 +79,9 @@ def layer_images(base_image_path, top_image_path, output_image_path, tint_color)
     
     # Layer the tinted top image on the base image
     combined_image = Image.alpha_composite(base_image, tinted_top_image)
+
+    if type == 'gas':
+        combined_image = combined_image.rotate(180)
     
     # Save the result
     combined_image.save(output_image_path, format='PNG')
@@ -131,7 +134,7 @@ fluids = [
     ['Dimethyl Ether', 'gas', '#fcfffe', 'C2H6O', 'Used as a propellant in aerosol products.'],
     ['Hydrocarbonic Broth', 'liquid', '#1e1e1e', 'C12H26', 'A mixture of hydrocarbons, often used as a solvent.'],
     ['Ethane', 'gas', '#ebba34', 'C2H6', 'A component of natural gas used as a feedstock for ethylene production.'],
-    ['Piss Water', 'liquid', '#ebba34', 'H2O', 'A slang term for urine, which is primarily water with dissolved waste products.'],
+    ['Piss Water', 'liquid', '#ebba34', 'Urine', 'A slang term for urine, which is primarily water with dissolved waste products.'],
     ['Alumunium Hydroxide', 'gas', '#a8e5eb', 'Al(OH)3', 'Used as an antacid and in the manufacture of aluminum compounds.'],
     ['Sulfuric Acid', 'liquid', '#ffcc00', 'H2SO4', 'A highly corrosive acid used in industrial processes and battery acid.'],
     ['Ammonia', 'gas', '#b2dfdb', 'NH3', 'Used in fertilizers and as a refrigerant gas.'],
@@ -185,7 +188,12 @@ fluids = [
     ['Unobtanium', 'liquid', '#ff66cc', 'Ubt', 'A rare and highly valuable fictional material with exceptional properties.'],
     ['Dilithium', 'liquid', '#99ccff', 'Li2', 'A fictional element used as a power source in the Star Trek universe.'],
     ['Adamantium', 'liquid', '#cccccc', 'Ad', 'A fictional, virtually indestructible metal alloy from the Marvel universe.'],
-    ['Carbonadium', 'liquid', '#666666', 'Cbd', 'A malleable and resilient fictional alloy used in various sci-fi contexts.']
+    ['Carbonadium', 'liquid', '#666666', 'Cbd', 'A malleable and resilient fictional alloy used in various sci-fi contexts.'],
+    ['Radon', 'gas', '#ffd700', 'Rn', 'A radioactive noble gas used in some types of cancer treatment.'],
+    ['Neon', 'gas', '#ff5ccd', 'Ne', 'A noble gas used in neon signs and high-voltage indicators.'],
+    ['Argon', 'gas', '#80dfff', 'Ar', 'A noble gas used in welding and as a protective atmosphere for growing silicon and germanium crystals.'],
+    ['Xenon', 'gas', '#3a79ff', 'Xe', 'A noble gas used in high-intensity lamps and ion propulsion systems in spacecraft.'],
+    ['Cryptic Acid', 'liquid','#DD33DD', '§kJKSD', 'Hmm, what is this strange substrance']
 ]
 
 fluid_text = ""
@@ -207,6 +215,7 @@ for fluid_name, type, tint, formula, desc in fluids:
     """
 
     render_text += f"ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_{fluid_name.upper()}.get(), RenderType.translucent());\n"
+    render_text += f"ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_{fluid_name.upper()}.get(), RenderType.translucent());\n"
 
     output_image_path = f'../../../../../resources/assets/astech/textures/item/{fluid_name}_bucket.png'
 
@@ -214,7 +223,7 @@ for fluid_name, type, tint, formula, desc in fluids:
     tooltips[f"item.astech.{fluid_name}_bucket"] = f"{plain_text_name}"
     tooltips[f"fluid_type.astech.{fluid_name}_fluid"] = f"{'Liquid ' if type != 'gas' else ''}{plain_text_name}{' Gas' if type == 'gas' else ''}"
 
-    layer_images(base_image_path, top_image_path, output_image_path, hex_to_rgb(tint))
+    layer_images(base_image_path, top_image_path, output_image_path, hex_to_rgb(tint), type)
 
     with open(f'../../../../../resources/assets/astech/models/item/{fluid_name}_bucket.json', 'w') as model_file:
         model_file.write(f"{{\"parent\": \"item/generated\",\"textures\":{{\"layer0\": \"astech:item/{fluid_name}_bucket\"}}}}")

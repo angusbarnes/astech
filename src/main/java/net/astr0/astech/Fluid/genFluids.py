@@ -198,6 +198,8 @@ fluids = [
 
 fluid_text = ""
 render_text = ""
+item_text = ""
+tab_text = ""
 tooltips = {}
 for fluid_name, type, tint, formula, desc in fluids:
     plain_text_name = fluid_name
@@ -225,11 +227,38 @@ for fluid_name, type, tint, formula, desc in fluids:
 
     layer_images(base_image_path, top_image_path, output_image_path, hex_to_rgb(tint), type)
 
+    ingot_template = Image.open('../../../../../resources/assets/astech/textures/item/ingot_template1.png')
+    dust_template = Image.open('../../../../../resources/assets/astech/textures/item/dust_template.png')
+
+    ingot = tint_image(ingot_template, hex_to_rgb(tint))
+    dust = tint_image(dust_template, hex_to_rgb(tint))
+
+    ingot.save(f'../../../../../resources/assets/astech/textures/item/{fluid_name}_ingot.png', format='PNG')
+    dust.save(f'../../../../../resources/assets/astech/textures/item/{fluid_name}_dust.png', format='PNG')
+
+    tooltips[f"item.astech.{fluid_name}_ingot"] = f"{plain_text_name} Ingot"
+    tooltips[f"item.astech.{fluid_name}_dust"] = f"{plain_text_name} Dust"
+    tooltips[f"tooltip.{fluid_name}.material"] = f"§e{formula}§r"
+
+    item_text += f"""public static final RegistryObject<AsTechMaterialItem> {fluid_name.upper()}_INGOT = ITEMS.register("{fluid_name}_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "{fluid_name}"));\n"""
+    item_text += f"""public static final RegistryObject<AsTechMaterialItem> {fluid_name.upper()}_DUST = ITEMS.register("{fluid_name}_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "{fluid_name}"));\n"""
+
+    tab_text += f"""output.accept(ModItems.{fluid_name.upper()}_INGOT.get());\n"""
+    tab_text += f"""output.accept(ModItems.{fluid_name.upper()}_DUST.get());\n"""
+
     with open(f'../../../../../resources/assets/astech/models/item/{fluid_name}_bucket.json', 'w') as model_file:
         model_file.write(f"{{\"parent\": \"item/generated\",\"textures\":{{\"layer0\": \"astech:item/{fluid_name}_bucket\"}}}}")
 
+    with open(f'../../../../../resources/assets/astech/models/item/{fluid_name}_ingot.json', 'w') as model_file:
+        model_file.write(f"{{\"parent\": \"item/generated\",\"textures\":{{\"layer0\": \"astech:item/{fluid_name}_ingot\"}}}}")
+
+    with open(f'../../../../../resources/assets/astech/models/item/{fluid_name}_dust.json', 'w') as model_file:
+        model_file.write(f"{{\"parent\": \"item/generated\",\"textures\":{{\"layer0\": \"astech:item/{fluid_name}_dust\"}}}}")
+
 insert_text_in_region(file_path, 'FLUID_REGION', fluid_text)
 insert_text_in_region(file_path, 'RENDER_REGION', render_text)
+insert_text_in_region('../ModItems.java', 'MATERIAL_REGION', item_text)
+insert_text_in_region('../ModCreativeModTab.java', 'TAB_REGION', tab_text)
 
 # Example usage
 json_file_path = '../../../../../resources/assets/astech/lang/en_us.json'

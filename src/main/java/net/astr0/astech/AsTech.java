@@ -1,11 +1,11 @@
 package net.astr0.astech;
 
 import com.mojang.logging.LogUtils;
-import net.astr0.astech.Fluid.FluidRegister;
 import net.astr0.astech.Fluid.ModFluids;
+import net.astr0.astech.block.ModBlockEntities;
+import net.astr0.astech.gui.ModMenuTypes;
+import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -18,6 +18,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.astr0.astech.block.GemPolisher.GemPolishingStationScreen;
 
 @Mod(AsTech.MODID)
 public class AsTech
@@ -34,8 +36,6 @@ public class AsTech
         // Register the commonSetup method for mod loading
         modEventBus.addListener(this::commonSetup);
 
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
@@ -43,6 +43,11 @@ public class AsTech
         ModBlocks.register(modEventBus);
         ModFluids.register(modEventBus);
         ModCreativeModTab.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
+        ModRecipes.register(modEventBus);
+
+        MinecraftForge.EVENT_BUS.register(this);
 
     }
 
@@ -77,6 +82,8 @@ public class AsTech
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
+            MenuScreens.register(ModMenuTypes.GEM_POLISHING_MENU.get(), GemPolishingStationScreen::new);
         }
     }
 }

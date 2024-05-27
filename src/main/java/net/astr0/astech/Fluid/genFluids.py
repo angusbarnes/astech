@@ -1,4 +1,5 @@
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageEnhance, ImageOps
+import numpy as np
 
 def insert_text_in_region(file_path, region, new_text):
     # Define the anchors
@@ -101,6 +102,35 @@ def hex_to_rgb(hex_str):
     
     # Convert the hex string to an integer tuple
     return tuple(int(hex_str[i:i+2], 16) for i in (0, 2, 4))
+
+
+def blend_overlay(image, color):
+    # Convert to RGBA to handle transparency
+    image = image.convert('RGBA')
+    image_data = np.array(image, dtype=np.float32) / 255
+
+    # Separate alpha channel
+    alpha = image_data[:, :, 3]
+
+    # Convert image to grayscale and expand dimensions
+    grayscale = ImageOps.grayscale(image)
+    grayscale = np.array(grayscale, dtype=np.float32) / 255
+    grayscale = np.expand_dims(grayscale, axis=-1)
+
+    # Prepare the color for blending
+    color = np.array(color, dtype=np.float32) / 255
+    color = color.reshape((1, 1, 3))
+
+    # Blend the grayscale image with the color using the overlay method
+    blended = np.where(grayscale < 0.55, 2 * grayscale * color, 1 - 2 * (1 - grayscale) * (1 - color))
+    blended = np.clip(blended, 0, 1)
+
+    # Combine blended color with the alpha channel
+    result = np.dstack((blended, alpha))
+
+    # Convert the result back to an image
+    result = (result * 255).astype('uint8')
+    return Image.fromarray(result, 'RGBA')
 
 import json
 import os
@@ -230,8 +260,8 @@ for fluid_name, type, tint, formula, desc in fluids:
     ingot_template = Image.open('../../../../../resources/assets/astech/textures/item/ingot_template1.png')
     dust_template = Image.open('../../../../../resources/assets/astech/textures/item/dust_template.png')
 
-    ingot = tint_image(ingot_template, hex_to_rgb(tint))
-    dust = tint_image(dust_template, hex_to_rgb(tint))
+    ingot = blend_overlay(ingot_template, hex_to_rgb(tint))
+    dust = blend_overlay(dust_template, hex_to_rgb(tint))
 
     ingot.save(f'../../../../../resources/assets/astech/textures/item/{fluid_name}_ingot.png', format='PNG')
     dust.save(f'../../../../../resources/assets/astech/textures/item/{fluid_name}_dust.png', format='PNG')

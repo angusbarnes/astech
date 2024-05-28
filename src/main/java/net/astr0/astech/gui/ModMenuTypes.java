@@ -1,6 +1,7 @@
 package net.astr0.astech.gui;
 
 import net.astr0.astech.AsTech;
+import net.astr0.astech.block.ChemicalMixer.ChemicalMixerStationMenu;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -17,6 +18,9 @@ public class ModMenuTypes {
 
     public static final RegistryObject<MenuType<GemPolishingStationMenu>> GEM_POLISHING_MENU =
             registerMenuType("gem_polishing_menu", GemPolishingStationMenu::new);
+
+    public static final RegistryObject<MenuType<ChemicalMixerStationMenu>> CHEMICAL_MIXER_MENU =
+            registerMenuType("chemical_mixer_menu", ChemicalMixerStationMenu::new);
 
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {

@@ -1,57 +1,39 @@
-package net.astr0.astech;
+package net.astr0.astech.item;
 
-import io.netty.util.Attribute;
-import net.astr0.astech.Fluid.ChemicalGasType;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
-import org.jetbrains.annotations.NotNull;
 
+import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public class AsTechBucketItem extends BucketItem {
     private final String _tooltip_key;
-    private final Fluid content;
-    private final Supplier<? extends Fluid> fluidSupplier;
+
 
     public AsTechBucketItem(Supplier<? extends Fluid> supplier, Properties builder, String tooltip_key) {
         super(supplier, builder);
         _tooltip_key = tooltip_key;
-        this.content = supplier.get();
-        this.fluidSupplier = supplier;
     }
 
     @Override
@@ -74,6 +56,8 @@ public class AsTechBucketItem extends BucketItem {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
     public boolean emptyContents(@org.jetbrains.annotations.Nullable Player pPlayer, Level pLevel, BlockPos pPos, @org.jetbrains.annotations.Nullable BlockHitResult pResult, @org.jetbrains.annotations.Nullable ItemStack container) {
         if (!(this.getFluid() instanceof FlowingFluid))  return false;
 

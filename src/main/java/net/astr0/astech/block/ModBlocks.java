@@ -1,5 +1,8 @@
-package net.astr0.astech;
+package net.astr0.astech.block;
 
+import net.astr0.astech.AsTech;
+import net.astr0.astech.block.ChemicalMixer.ChemicalMixerStationBlock;
+import net.astr0.astech.item.ModItems;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -41,7 +44,14 @@ public class ModBlocks {
     public static final RegistryObject<Block> NIC_BLOCK = registerBlock("nic_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
 
+    public static final RegistryObject<Block> TROPHY = registerBlock("trophy",
+            () -> new TrophyBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST).noOcclusion()));
+
+
     public static final RegistryObject<Block> GEM_POLISHING_STATION = registerBlock("gem_polishing_station",
             () -> new GemPolishingStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
+    public static final RegistryObject<Block> CHEMICAL_MIXER = registerBlock("chemical_mixer",
+            () -> new ChemicalMixerStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
 }

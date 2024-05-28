@@ -1,8 +1,7 @@
-package net.astr0.astech;
+package net.astr0.astech.item;
 
+import net.astr0.astech.AsTech;
 import net.astr0.astech.Fluid.AsTechMaterialItem;
-import net.astr0.astech.Fluid.ModFluids;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.FlowingFluid;

@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.world.item.ItemStack;
-import net.astr0.astech.ModBlocks;
+import net.astr0.astech.block.ModBlocks;
 
 public class GemPolishingCategory implements IRecipeCategory<GemPolishingRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(AsTech.MODID, "gem_polishing");

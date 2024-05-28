@@ -1,4 +1,4 @@
-package net.astr0.astech.block.GemPolisher;
+package net.astr0.astech.block.ChemicalMixer;
 
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.gui.ModMenuTypes;
@@ -12,28 +12,41 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class GemPolishingStationMenu extends AbstractContainerMenu {
-    public final GemPolishingStationBlockEntity blockEntity;
+
+// The menu acts as the logic behind the screen, which utimately performs the screenspace drawing
+public class ChemicalMixerStationMenu extends AbstractContainerMenu {
+    public final ChemicalMixerStationBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    public GemPolishingStationMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+    public ChemicalMixerStationMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public GemPolishingStationMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.GEM_POLISHING_MENU.get(), pContainerId);
+    public ChemicalMixerStationMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(ModMenuTypes.CHEMICAL_MIXER_MENU.get(), pContainerId);
+
+        // An inventory is a container type. I don't know why we would be checking this as I believe
+        // it refers to the player inventory. Im guessing it was probably meant to be data instead,
+        // as that would correspond to the dataContainer size of two we created in the block entity
         checkContainerSize(inv, 2);
-        blockEntity = ((GemPolishingStationBlockEntity) entity);
+        blockEntity = ((ChemicalMixerStationBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
+        // Get the item handler capability from our block entity, if it exists,
+        // create (menu)Slot objects for it. We map these slots to corresponding item handler indexes
+        // The ItemHanlder cap is the ultimate authority on what can go in which index,
+        // These are high level helper classes which wrap an IItemHandler
+        // This uses a top left origin on the textures
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 80, 11));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 80, 59));
+            this.addSlot(new SlotItemHandler(iItemHandler, 0, 62, 18));
+            this.addSlot(new SlotItemHandler(iItemHandler, 1, 62, 38));
+            this.addSlot(new SlotItemHandler(iItemHandler, 2, 62, 58));
+            this.addSlot(new SlotItemHandler(iItemHandler, 3, 113, 38));
         });
 
         addDataSlots(data);
@@ -67,8 +80,8 @@ public class GemPolishingStationMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 2;  // must be the number of slots you have!
-    private static final int TE_INVENTORY_INPUT_COUNT = 1;
+    private static final int TE_INVENTORY_SLOT_COUNT = 4;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_INPUT_COUNT = 3;
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
@@ -105,9 +118,11 @@ public class GemPolishingStationMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                pPlayer, ModBlocks.GEM_POLISHING_STATION.get());
+                pPlayer, ModBlocks.CHEMICAL_MIXER.get());
     }
 
+    // Helper functions to add visual slots to display the player inventory.
+    // Could easily prank the player by not displaying a random amount of slots
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {

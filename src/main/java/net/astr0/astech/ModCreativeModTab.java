@@ -1,5 +1,7 @@
 package net.astr0.astech;
 
+import net.astr0.astech.block.ModBlocks;
+import net.astr0.astech.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -25,6 +27,8 @@ public class ModCreativeModTab {
                         output.accept(ModItems.DEEZ_BUTTS_ITEM.get());
                         output.accept(ModBlocks.NIC_BLOCK.get());
                         output.accept(ModBlocks.GEM_POLISHING_STATION.get());
+                        output.accept(ModBlocks.CHEMICAL_MIXER.get());
+                        output.accept(ModBlocks.TROPHY.get());
 
                         //#anchor TAB_REGION
 output.accept(ModItems.POLYTETRAFLUOROETHYLENE_INGOT.get());

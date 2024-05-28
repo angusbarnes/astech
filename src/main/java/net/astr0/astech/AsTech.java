@@ -2,12 +2,16 @@ package net.astr0.astech;
 
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.ModFluids;
+import net.astr0.astech.block.ChemicalMixer.ChemicalMixerStationScreen;
 import net.astr0.astech.block.ModBlockEntities;
+import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.gui.ModMenuTypes;
+import net.astr0.astech.item.ModItems;
 import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -20,6 +24,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationScreen;
+import net.astr0.astech.block.GemPolisher.GemPolishingBlockEntityRenderer;
 
 @Mod(AsTech.MODID)
 public class AsTech
@@ -72,6 +77,11 @@ public class AsTech
         LOGGER.info("HELLO from server starting");
     }
 
+    @SubscribeEvent
+    public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModBlockEntities.GEM_POLISHING_BE.get(), GemPolishingBlockEntityRenderer::new);
+    }
+
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
@@ -84,6 +94,7 @@ public class AsTech
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 
             MenuScreens.register(ModMenuTypes.GEM_POLISHING_MENU.get(), GemPolishingStationScreen::new);
+            MenuScreens.register(ModMenuTypes.CHEMICAL_MIXER_MENU.get(), ChemicalMixerStationScreen::new);
         }
     }
 }

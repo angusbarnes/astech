@@ -27,7 +27,7 @@ public class ChemicalMixerStationMenu extends AbstractContainerMenu {
         super(ModMenuTypes.CHEMICAL_MIXER_MENU.get(), pContainerId);
 
         // An inventory is a container type. I don't know why we would be checking this as I believe
-        // it refers to the player inventory. Im guessing it was probably meant to be data instead,
+        // it refers to the player inventory. I'm guessing it was probably meant to be data instead,
         // as that would correspond to the dataContainer size of two we created in the block entity
         checkContainerSize(inv, 2);
         blockEntity = ((ChemicalMixerStationBlockEntity) entity);

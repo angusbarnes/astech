@@ -5,9 +5,18 @@ import net.astr0.astech.AsTech;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 // This only gets registered on the client side
 public class ChemicalMixerStationScreen extends AbstractContainerScreen<ChemicalMixerStationMenu> {
@@ -33,7 +42,46 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
-        renderProgressArrow(guiGraphics, x, y);
+        FluidTank tank = this.menu.blockEntity.getFluidTank();
+        FluidStack fluidStack = tank.getFluid();
+        if (fluidStack.isEmpty())
+            return;
+
+        int fluidHeight = getFluidHeight(tank);
+
+        IClientFluidTypeExtensions fluidTypeExtensions = IClientFluidTypeExtensions.of(fluidStack.getFluid());
+        ResourceLocation stillTexture = fluidTypeExtensions.getStillTexture(fluidStack);
+
+        if (stillTexture == null) return;
+
+        TextureAtlasSprite sprite = this.minecraft.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(stillTexture);
+        int tintColor = fluidTypeExtensions.getTintColor(fluidStack);
+        float alpha = ((tintColor >> 24) & 0xFF) / 255.0f;
+        float red = ((tintColor >> 16) & 0xFF) / 255.0f;
+        float green = ((tintColor >> 8) & 0xFF) / 255.0f;
+        float blue = ((tintColor) & 0xFF) / 255.0f;
+
+        guiGraphics.setColor(red, green, blue, alpha);
+
+        guiGraphics.blit(
+                this.leftPos + 34,
+                getFluidY(fluidHeight),
+                0,
+                10,
+                fluidHeight,
+                sprite
+        );
+
+        guiGraphics.setColor(1f, 1f, 1f, 1f);
+
+    }
+
+    private int getFluidY(int fluidHeight) {
+        return this.topPos + 18 + (56-fluidHeight);
+    }
+
+    private static int getFluidHeight(IFluidTank tank) {
+        return  (int) (56 * ((float)tank.getFluidAmount()/tank.getCapacity()));
     }
 
     @Override
@@ -53,5 +101,17 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
+
+        FluidTank tank = this.menu.blockEntity.getFluidTank();
+        FluidStack fluidStack = tank.getFluid();
+        if (fluidStack.isEmpty())
+            return;
+
+        int fluidHeight = getFluidHeight(tank);
+
+        if(!isHovering(34, getFluidY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
+
+        Component component = MutableComponent.create(fluidStack.getDisplayName().getContents()).append(" (%s/%s mB)".formatted(tank.getFluidAmount(), tank.getCapacity()));
+        guiGraphics.renderTooltip(this.font, component, mouseX, mouseY);
     }
 }

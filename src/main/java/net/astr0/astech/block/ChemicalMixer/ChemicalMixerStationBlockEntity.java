@@ -1,5 +1,6 @@
 package net.astr0.astech.block.ChemicalMixer;
 
+import com.mojang.logging.LogUtils;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.recipe.GemPolishingRecipe;
 import net.minecraft.core.BlockPos;
@@ -19,11 +20,14 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -45,9 +49,22 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
             // If we are server side, we also send a blockUpdate. The docs for this function can
             // be found here: https://docs.minecraftforge.net/en/1.20.x/blockentities/#synchronizing-on-block-update
             // This if it is passed i=2 or 3, it will query this block entity by calling getPacketUpdate()
-            if(!level.isClientSide()) {
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            if(level!= null && !level.isClientSide()) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
+        }
+    };
+
+    private final FluidTank fluidTank = new FluidTank(10000) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+
+            if(level!= null && !level.isClientSide()) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+            }
+
+            LogUtils.getLogger().warn("Contents of fluid inventory updated");
         }
     };
 
@@ -57,6 +74,8 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     // This is the provider that allows networked data to be lazily updates
     // We must invalidate this every time a change occurs so the server re-syncs
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+
+    private  LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.empty();
 
     // Container data is simple data which is syncrhonised by default over the network
     protected final ContainerData data;
@@ -112,6 +131,8 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if(cap == ForgeCapabilities.ITEM_HANDLER) {
             return lazyItemHandler.cast();
+        } else if (cap == ForgeCapabilities.FLUID_HANDLER) {
+            return lazyFluidHandler.cast();
         }
 
         return super.getCapability(cap, side); // Allow previous caps in the stack to be checked
@@ -121,6 +142,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     public void onLoad() {
         super.onLoad();
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
+        lazyFluidHandler = LazyOptional.of(() -> fluidTank);
     }
 
     // Called by forge (I think in the underlying blockEntity's setChanged()) to mark our caps as old
@@ -129,6 +151,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     public void invalidateCaps() {
         super.invalidateCaps();
         lazyItemHandler.invalidate();
+        lazyFluidHandler.invalidate();
     }
 
     // User defined helper to get a list of all the items we are holding,
@@ -160,6 +183,8 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         pTag.put("inventory", itemHandler.serializeNBT());
         pTag.putInt("chemical_mixer.progress", progress);
 
+        pTag.put("fluidTank", fluidTank.writeToNBT(new CompoundTag()));
+
         super.saveAdditional(pTag);
     }
 
@@ -170,10 +195,17 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         super.load(pTag);
         itemHandler.deserializeNBT(pTag.getCompound("inventory"));
         progress = pTag.getInt("chemical_mixer.progress");
+
+        fluidTank.readFromNBT(pTag.getCompound("fluidTank"));
     }
 
     // This logic is a userDefined name for a tick function
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
+
+        // Only tick on the server, the server should still sync
+        if(this.level == null || this.level.isClientSide())
+            return;
+
         if(hasRecipe()) {
             increaseCraftingProgress();
 
@@ -187,6 +219,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         } else {
             resetProgress();
         }
+
     }
 
     private void resetProgress() {
@@ -239,6 +272,17 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         progress++;
     }
 
+    public FluidTank getFluidTank() {
+        return fluidTank;
+    }
+
+    public ItemStackHandler getItemHandler() {
+        return itemHandler;
+    }
+
+    public LazyOptional<IFluidHandler> getLazyFluidHandler() {
+        return lazyFluidHandler;
+    }
 
     // Called by our block update logic, which occurs when the inventory is updated
     @Nullable

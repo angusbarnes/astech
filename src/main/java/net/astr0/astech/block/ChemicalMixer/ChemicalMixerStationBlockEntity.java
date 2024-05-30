@@ -1,6 +1,7 @@
 package net.astr0.astech.block.ChemicalMixer;
 
 import com.mojang.logging.LogUtils;
+import net.astr0.astech.block.ITickableBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.recipe.GemPolishingRecipe;
 import net.minecraft.core.BlockPos;
@@ -35,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class ChemicalMixerStationBlockEntity extends BlockEntity implements MenuProvider {
+public class ChemicalMixerStationBlockEntity extends BlockEntity implements MenuProvider, ITickableBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
     private final ItemStackHandler itemHandler = new ItemStackHandler(4) {

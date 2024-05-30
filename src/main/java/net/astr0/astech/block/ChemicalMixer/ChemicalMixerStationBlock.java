@@ -1,45 +1,55 @@
 package net.astr0.astech.block.ChemicalMixer;
 
+import net.astr0.astech.block.ITickableBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ChemicalMixerStationBlock extends BaseEntityBlock {
+public class ChemicalMixerStationBlock extends HorizontalDirectionalBlock implements EntityBlock {
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
     public ChemicalMixerStationBlock(Properties pProperties) {
         super(pProperties);
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 
 
     // Pretty confident we can probably ignore this over-ride for cubic machines, this seems to be for settng the bounding
     // box in non-standard scenarios
-    @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return SHAPE;
-    }
+//    @Override
+//    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+//        return SHAPE;
+//    }
 
-    // Not sure if we need this or not, I will leave it for now
+//    // Not sure if we need this or not, I will leave it for now
+//    @Override
+//    public RenderShape getRenderShape(BlockState pState) {
+//        return RenderShape.MODEL;
+//    }
+
     @Override
-    public RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.MODEL;
+    protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(FACING);
     }
 
     // This is called when the block is destroyed, it over-rides BaseEntityBlock
@@ -80,24 +90,20 @@ public class ChemicalMixerStationBlock extends BaseEntityBlock {
 
     // Implements the EntityBlock interface, which the abstract BaseEntityBlock does not do for us
     @Nullable
-    @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new ChemicalMixerStationBlockEntity(pPos, pState);
     }
 
-    // Allows the game to get our tick function, so it can call it every logic frame.
     @Nullable
     @Override
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+    }
+
+    // Allows the game to get our tick function, so it can call it every logic frame.
+    @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
 
-        // We only tick on the server
-        if(pLevel.isClientSide()) {
-            return null;
-        }
-
-        // I think some shit to do with ITickable or something might make this simpler,
-        // otherwise, BaseEntityBlock provides us this helper to create a ticker fucntion
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.CHEMICAL_MIXER_BE.get(),
-                (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
+        return ITickableBlockEntity.getTickerHelper(pLevel);
     }
 }

@@ -1,4 +1,4 @@
-package net.astr0.astech.Fluid;
+package net.astr0.astech.item;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;

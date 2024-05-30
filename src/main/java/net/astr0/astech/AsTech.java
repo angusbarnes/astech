@@ -6,14 +6,20 @@ import net.astr0.astech.block.ChemicalMixer.ChemicalMixerStationScreen;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.gui.ModMenuTypes;
+import net.astr0.astech.item.AsTechBucketItem;
 import net.astr0.astech.item.ModItems;
 import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.ComponentContents;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -54,6 +60,9 @@ public class AsTech
 
         MinecraftForge.EVENT_BUS.register(this);
 
+        IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
+        forgeEventBus.addListener(AsTech::addDangerToolTips);
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -66,6 +75,20 @@ public class AsTech
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ModItems.DEEZ_NUTS_ITEM);
+        }
+    }
+
+    public static void addDangerToolTips(ItemTooltipEvent event) {
+        ItemStack stack = event.getItemStack();
+        Item item = stack.getItem();
+
+        if(item instanceof AsTechBucketItem) {
+            if(stack.getTag() != null && stack.getTag().contains("danger_ttl")) {
+                LogUtils.getLogger().warn(String.format("We found one with a countdown, %d", stack.getTag().getInt("danger_ttl")));
+                MutableComponent timer = MutableComponent.create(ComponentContents.EMPTY);
+                timer.append(String.format("§c%d...", stack.getTag().getInt("danger_ttl")/20));
+                event.getToolTip().add(timer);
+            }
         }
     }
 

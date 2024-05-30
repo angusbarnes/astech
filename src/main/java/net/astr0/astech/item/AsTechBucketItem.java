@@ -1,16 +1,24 @@
 package net.astr0.astech.item;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlockContainer;
@@ -45,8 +53,42 @@ public class AsTechBucketItem extends BucketItem {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+
         super.inventoryTick(stack, level, entity, slotId, isSelected);
-        if(entity instanceof LivingEntity livingEntity && livingEntity.tickCount % 20 == 0) {}
+
+        if(level.isClientSide() || !(entity instanceof LivingEntity livingEntity)) return;
+
+        if(livingEntity.tickCount % 20 == 0) {
+            LogUtils.getLogger().warn("Player Damage ticked");
+        }
+
+        CompoundTag tag = stack.getTag();
+
+        if(tag == null)  {
+            tag = new CompoundTag();
+            stack.setTag(tag);
+        }
+
+        if(tag.contains("danger_ttl")) {
+            int count = tag.getInt("danger_ttl");
+
+            // We run all the other logic on both sides, so we can display a count,
+            // but the explosion, damage and item removal should happen server side only
+            if(count <= 0) {
+                Explosion explosion = level.explode((Entity) null, entity.position().x +0.5, entity.position().y +0.5, entity.position().z +0.5, 3, true, Level.ExplosionInteraction.NONE);
+                stack.setCount(0);
+
+                DamageSource source = level.damageSources().genericKill();
+                if (entity instanceof Player player) {
+                    player.hurt(source, 200f);
+                }
+            }
+            tag.putInt("danger_ttl", count - 1);
+
+        } else {
+            tag.putInt("danger_ttl", 80);
+            LogUtils.getLogger().warn("Hm we added a tag, lets see what happends!");
+        }
             //GTUtil.applyHazardEffects(material, livingEntity, () -> true);
 
     }
@@ -58,7 +100,7 @@ public class AsTechBucketItem extends BucketItem {
     @Override
     @SuppressWarnings("deprecation")
     @ParametersAreNonnullByDefault
-    public boolean emptyContents(@org.jetbrains.annotations.Nullable Player pPlayer, Level pLevel, BlockPos pPos, @org.jetbrains.annotations.Nullable BlockHitResult pResult, @org.jetbrains.annotations.Nullable ItemStack container) {
+    public boolean emptyContents(@Nullable Player pPlayer, Level pLevel, BlockPos pPos, @Nullable BlockHitResult pResult, @Nullable ItemStack container) {
         if (!(this.getFluid() instanceof FlowingFluid))  return false;
 
         BlockState blockstate = pLevel.getBlockState(pPos);

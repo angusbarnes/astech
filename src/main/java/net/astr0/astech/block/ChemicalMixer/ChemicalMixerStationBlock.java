@@ -54,6 +54,7 @@ public class ChemicalMixerStationBlock extends HorizontalDirectionalBlock implem
 
     // This is called when the block is destroyed, it over-rides BaseEntityBlock
     @Override
+    @SuppressWarnings("deprecation")
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
 
         // The block state may changed when a texture is changed,

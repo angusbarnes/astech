@@ -1,6 +1,7 @@
 package net.astr0.astech.block.ChemicalMixer;
 
 import com.mojang.logging.LogUtils;
+import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.block.ITickableBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.recipe.GemPolishingRecipe;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
@@ -56,7 +58,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         }
     };
 
-    private final FluidTank fluidTank = new FluidTank(10000) {
+    private final MachineFluidHandler fluidTank = new MachineFluidHandler(4,10000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -74,9 +76,9 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
 
     // This is the provider that allows networked data to be lazily updates
     // We must invalidate this every time a change occurs so the server re-syncs
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+    private final LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.of(() -> itemHandler);
 
-    private  LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.empty();
+    private final LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.of(() -> fluidTank);;
 
     // Container data is simple data which is syncrhonised by default over the network
     protected final ContainerData data;
@@ -142,8 +144,6 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     @Override
     public void onLoad() {
         super.onLoad();
-        lazyItemHandler = LazyOptional.of(() -> itemHandler);
-        lazyFluidHandler = LazyOptional.of(() -> fluidTank);
     }
 
     // Called by forge (I think in the underlying blockEntity's setChanged()) to mark our caps as old
@@ -231,7 +231,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         Optional<GemPolishingRecipe> recipe = getCurrentRecipe();
         ItemStack result = recipe.get().getResultItem(null);
 
-        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
+        this.itemHandler.extractItem(INPUT_SLOT, 2, false);
 
         this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
                 this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
@@ -273,8 +273,8 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         progress++;
     }
 
-    public FluidTank getFluidTank() {
-        return fluidTank;
+    public FluidTank getFluidTank(int i) {
+        return fluidTank.getTank(i);
     }
 
     public ItemStackHandler getItemHandler() {

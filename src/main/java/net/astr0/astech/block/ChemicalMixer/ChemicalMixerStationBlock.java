@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ChemicalMixerStationBlock extends HorizontalDirectionalBlock implements EntityBlock {
-    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    //public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
     public ChemicalMixerStationBlock(Properties pProperties) {
         super(pProperties);

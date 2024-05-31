@@ -42,7 +42,15 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
-        FluidTank tank = this.menu.blockEntity.getFluidTank();
+        FluidTank tank = this.menu.blockEntity.getFluidTank(0);
+        drawFluidTank(guiGraphics, tank, 34);
+
+        tank = this.menu.blockEntity.getFluidTank(1);
+        drawFluidTank(guiGraphics, tank, 48);
+
+    }
+
+    private void drawFluidTank(GuiGraphics guiGraphics, FluidTank tank, int x) {
         FluidStack fluidStack = tank.getFluid();
         if (fluidStack.isEmpty())
             return;
@@ -64,7 +72,7 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         guiGraphics.setColor(red, green, blue, alpha);
 
         guiGraphics.blit(
-                this.leftPos + 34,
+                this.leftPos + x,
                 getFluidY(fluidHeight),
                 0,
                 10,
@@ -73,7 +81,6 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         );
 
         guiGraphics.setColor(1f, 1f, 1f, 1f);
-
     }
 
     private int getFluidY(int fluidHeight) {
@@ -102,7 +109,7 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
 
-        FluidTank tank = this.menu.blockEntity.getFluidTank();
+        FluidTank tank = this.menu.blockEntity.getFluidTank(0);
         FluidStack fluidStack = tank.getFluid();
         if (fluidStack.isEmpty())
             return;
@@ -112,6 +119,18 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         if(!isHovering(34, getFluidY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
 
         Component component = MutableComponent.create(fluidStack.getDisplayName().getContents()).append(" (%s/%s mB)".formatted(tank.getFluidAmount(), tank.getCapacity()));
+        guiGraphics.renderTooltip(this.font, component, mouseX, mouseY);
+
+        tank = this.menu.blockEntity.getFluidTank(0);
+        fluidStack = tank.getFluid();
+        if (fluidStack.isEmpty())
+            return;
+
+        fluidHeight = getFluidHeight(tank);
+
+        if(!isHovering(34, getFluidY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
+
+        component = MutableComponent.create(fluidStack.getDisplayName().getContents()).append(" (%s/%s mB)".formatted(tank.getFluidAmount(), tank.getCapacity()));
         guiGraphics.renderTooltip(this.font, component, mouseX, mouseY);
     }
 }

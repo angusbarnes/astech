@@ -20,7 +20,7 @@ public class ChemicalMixerStationMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public ChemicalMixerStationMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
     public ChemicalMixerStationMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
@@ -53,12 +53,12 @@ public class ChemicalMixerStationMenu extends AbstractContainerMenu {
     }
 
     public boolean isCrafting() {
-        return data.get(0) > 0;
+        return data.get(2) > 0;
     }
 
     public int getScaledProgress() {
-        int progress = this.data.get(0);
-        int maxProgress = this.data.get(1);  // Max Progress
+        int progress = this.data.get(2);
+        int maxProgress = this.data.get(3);  // Max Progress
         int progressArrowSize = 26; // This is the height in pixels of your arrow
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
@@ -119,6 +119,14 @@ public class ChemicalMixerStationMenu extends AbstractContainerMenu {
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
                 pPlayer, ModBlocks.CHEMICAL_MIXER.get());
+    }
+
+    public int getEnergy() {
+        return this.data.get(1);
+    }
+
+    public int getMaxEnergy() {
+        return this.data.get(0);
     }
 
     // Helper functions to add visual slots to display the player inventory.

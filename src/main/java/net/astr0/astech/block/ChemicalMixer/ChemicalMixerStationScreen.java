@@ -1,13 +1,17 @@
 package net.astr0.astech.block.ChemicalMixer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
 import net.astr0.astech.AsTech;
+import net.astr0.astech.Fluid.helpers.TintColor;
+import net.astr0.astech.GraphicsUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
@@ -17,6 +21,8 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 // This only gets registered on the client side
 public class ChemicalMixerStationScreen extends AbstractContainerScreen<ChemicalMixerStationMenu> {
@@ -43,11 +49,32 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
         FluidTank tank = this.menu.blockEntity.getFluidTank(0);
-        drawFluidTank(guiGraphics, tank, 34);
+        drawFluidTankV2(guiGraphics, tank, 34, 74);
 
         tank = this.menu.blockEntity.getFluidTank(1);
-        drawFluidTank(guiGraphics, tank, 48);
+        drawFluidTankV2(guiGraphics, tank, 48, 74);
+        renderEnergyBar(guiGraphics, 154);
 
+    }
+
+    private void drawFluidTankV2(GuiGraphics guiGraphics, FluidTank tank, int x, int y) {
+        FluidStack fluidStack = tank.getFluid();
+        if (fluidStack.isEmpty())
+            return;
+
+        int fluidHeight = getFluidHeight(tank);
+
+        IClientFluidTypeExtensions fluidTypeExtensions = IClientFluidTypeExtensions.of(fluidStack.getFluid());
+        ResourceLocation stillTexture = fluidTypeExtensions.getStillTexture(fluidStack);
+
+        if (stillTexture == null) return;
+
+        TextureAtlasSprite sprite = this.minecraft.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(stillTexture);
+        Vector4f tintColor = new TintColor(fluidTypeExtensions.getTintColor(fluidStack)).getAsNormalisedRenderColor();
+
+        guiGraphics.setColor(tintColor.x, tintColor.y, tintColor.z, tintColor.w);
+        GraphicsUtils.drawTiledSprite(guiGraphics, this.leftPos + x, this.topPos + y, 0, 10, getFluidHeight(tank), sprite, 16, 16, 1);
+        guiGraphics.setColor(1f, 1f, 1f, 1f);
     }
 
     private void drawFluidTank(GuiGraphics guiGraphics, FluidTank tank, int x) {
@@ -87,13 +114,21 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         return this.topPos + 18 + (56-fluidHeight);
     }
 
+    private int getEnergyY(int energyHeight) {
+        return this.topPos + 9 + (69-energyHeight);
+    }
+
     private static int getFluidHeight(IFluidTank tank) {
         return  (int) (56 * ((float)tank.getFluidAmount()/tank.getCapacity()));
     }
 
+    private static int getEnergyHeight(int max, int value) {
+        return  (int) (69 * ((float)value/max));
+    }
+
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
-        pGuiGraphics.drawString(this.font, Component.literal("Chemical Mixer"), 4, 4, 4210752, false);
+        pGuiGraphics.drawString(this.font, Component.literal("Chemical Mixer"), 5, 5, GraphicsUtils.DEFAULT_INVENTORY_TEXT_COLOR, false);
         //pGuiGraphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 4210752, false);
     }
 
@@ -103,6 +138,21 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         }
     }
 
+    private void renderEnergyBar(GuiGraphics guiGraphics, int x) {
+
+        int height = getEnergyHeight(menu.getMaxEnergy(), menu.getEnergy());
+        guiGraphics.blit(TEXTURE,
+                this.leftPos + x,
+                getEnergyY(height),
+                178,
+                9,
+                10,
+                height
+        );
+    }
+
+
+
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         renderBackground(guiGraphics);
@@ -110,27 +160,33 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         renderTooltip(guiGraphics, mouseX, mouseY);
 
         FluidTank tank = this.menu.blockEntity.getFluidTank(0);
+        renderTankTooltip(guiGraphics, mouseX, mouseY, tank, 34);
+
+        FluidTank tank2 = this.menu.blockEntity.getFluidTank(1);
+        renderTankTooltip(guiGraphics, mouseX, mouseY, tank2, 48);
+        renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
+    }
+
+    private void renderTankTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, FluidTank tank, int x) {
         FluidStack fluidStack = tank.getFluid();
         if (fluidStack.isEmpty())
             return;
 
         int fluidHeight = getFluidHeight(tank);
 
-        if(!isHovering(34, getFluidY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
+        if(!isHovering(x, getFluidY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
 
         Component component = MutableComponent.create(fluidStack.getDisplayName().getContents()).append(" (%s/%s mB)".formatted(tank.getFluidAmount(), tank.getCapacity()));
         guiGraphics.renderTooltip(this.font, component, mouseX, mouseY);
+    }
 
-        tank = this.menu.blockEntity.getFluidTank(0);
-        fluidStack = tank.getFluid();
-        if (fluidStack.isEmpty())
-            return;
+    private void renderEnergyTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, int x) {
 
-        fluidHeight = getFluidHeight(tank);
+        int fluidHeight = getEnergyHeight(menu.getMaxEnergy(), menu.getEnergy());
 
-        if(!isHovering(34, getFluidY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
+        if(!isHovering(x, getEnergyY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
 
-        component = MutableComponent.create(fluidStack.getDisplayName().getContents()).append(" (%s/%s mB)".formatted(tank.getFluidAmount(), tank.getCapacity()));
+        Component component = MutableComponent.create(Component.literal("Energy ").getContents()).append("%d%%)".formatted(menu.getEnergy()/ menu.getMaxEnergy()));
         guiGraphics.renderTooltip(this.font, component, mouseX, mouseY);
     }
 }

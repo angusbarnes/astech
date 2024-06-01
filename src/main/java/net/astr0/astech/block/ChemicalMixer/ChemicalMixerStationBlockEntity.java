@@ -1,6 +1,7 @@
 package net.astr0.astech.block.ChemicalMixer;
 
 import com.mojang.logging.LogUtils;
+import net.astr0.astech.CustomEnergyStorage;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.block.ITickableBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
@@ -28,7 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
@@ -41,7 +42,7 @@ import java.util.Optional;
 public class ChemicalMixerStationBlockEntity extends BlockEntity implements MenuProvider, ITickableBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
-    private final ItemStackHandler itemHandler = new ItemStackHandler(4) {
+    private final ItemStackHandler inputItemHandler = new ItemStackHandler(4) {
 
         // This over-rides the ItemStackHandler method which gets called on an update.
         // Here we call this::setChanged() which marks this block entity as dirty.
@@ -58,7 +59,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         }
     };
 
-    private final MachineFluidHandler fluidTank = new MachineFluidHandler(4,10000) {
+    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(2,10000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -71,15 +72,18 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         }
     };
 
+    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(30000, 500, 0);
+
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 3;
 
     // This is the provider that allows networked data to be lazily updates
     // We must invalidate this every time a change occurs so the server re-syncs
-    private final LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.of(() -> itemHandler);
+    private final LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.of(() -> inputItemHandler);
 
-    private final LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.of(() -> fluidTank);;
+    private final LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.of(() -> inputFluidTank);;
 
+    private final LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
     // Container data is simple data which is syncrhonised by default over the network
     protected final ContainerData data;
     private int progress = 0;
@@ -93,23 +97,26 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
             @Override
             public int get(int pIndex) {
                 return switch (pIndex) {
-                    case 0 -> ChemicalMixerStationBlockEntity.this.progress;
-                    case 1 -> ChemicalMixerStationBlockEntity.this.maxProgress;
-                    default -> 0;
+                    case 0 -> energyStorage.getMaxEnergyStored();
+                    case 1 -> energyStorage.getEnergyStored();
+                    case 2 -> ChemicalMixerStationBlockEntity.this.progress;
+                    case 3 -> ChemicalMixerStationBlockEntity.this.maxProgress;
+                    default -> throw new UnsupportedOperationException("Unexpected value: " + pIndex);
                 };
             }
 
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 0 -> ChemicalMixerStationBlockEntity.this.progress = pValue;
-                    case 1 -> ChemicalMixerStationBlockEntity.this.maxProgress = pValue;
+                    case 1 -> ChemicalMixerStationBlockEntity.this.energyStorage.setEnergy(pValue);
+                    case 2 -> ChemicalMixerStationBlockEntity.this.progress = pValue;
+                    case 3 -> ChemicalMixerStationBlockEntity.this.maxProgress = pValue;
                 }
             }
 
             @Override
             public int getCount() {
-                return 2;
+                return 4;
             }
         };
     }
@@ -117,10 +124,10 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     // This function is user defined and is used to get an ItemStack to render
     // This only works if a rendered is used with this block
     public ItemStack getRenderStack() {
-        if(itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
-            return itemHandler.getStackInSlot(INPUT_SLOT);
+        if(inputItemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
+            return inputItemHandler.getStackInSlot(INPUT_SLOT);
         } else {
-            return itemHandler.getStackInSlot(OUTPUT_SLOT);
+            return inputItemHandler.getStackInSlot(OUTPUT_SLOT);
         }
     }
 
@@ -136,6 +143,8 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
             return lazyItemHandler.cast();
         } else if (cap == ForgeCapabilities.FLUID_HANDLER) {
             return lazyFluidHandler.cast();
+        } else if (cap == ForgeCapabilities.ENERGY) {
+            return lazyEnergyHandler.cast();
         }
 
         return super.getCapability(cap, side); // Allow previous caps in the stack to be checked
@@ -153,14 +162,15 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         super.invalidateCaps();
         lazyItemHandler.invalidate();
         lazyFluidHandler.invalidate();
+        lazyEnergyHandler.invalidate();
     }
 
     // User defined helper to get a list of all the items we are holding,
     // this is used to drop those items when this block is destroyed
     public void drops() {
-        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        SimpleContainer inventory = new SimpleContainer(inputItemHandler.getSlots());
+        for(int i = 0; i < inputItemHandler.getSlots(); i++) {
+            inventory.setItem(i, inputItemHandler.getStackInSlot(i));
         }
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
@@ -181,10 +191,10 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     // On chunk load or on updatePacket we can save our basic data to NBT
     @Override
     protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory", itemHandler.serializeNBT());
+        pTag.put("inventory", inputItemHandler.serializeNBT());
         pTag.putInt("chemical_mixer.progress", progress);
-
-        pTag.put("fluidTank", fluidTank.writeToNBT(new CompoundTag()));
+        pTag.put("Energy", this.energyStorage.serializeNBT());
+        pTag.put("fluidTank", inputFluidTank.writeToNBT(new CompoundTag()));
 
         super.saveAdditional(pTag);
     }
@@ -194,10 +204,10 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-        itemHandler.deserializeNBT(pTag.getCompound("inventory"));
+        inputItemHandler.deserializeNBT(pTag.getCompound("inventory"));
         progress = pTag.getInt("chemical_mixer.progress");
-
-        fluidTank.readFromNBT(pTag.getCompound("fluidTank"));
+        energyStorage.deserializeNBT(pTag.get("Energy"));
+        inputFluidTank.readFromNBT(pTag.getCompound("fluidTank"));
     }
 
     // This logic is a userDefined name for a tick function
@@ -231,10 +241,10 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         Optional<GemPolishingRecipe> recipe = getCurrentRecipe();
         ItemStack result = recipe.get().getResultItem(null);
 
-        this.itemHandler.extractItem(INPUT_SLOT, 2, false);
+        this.inputItemHandler.extractItem(INPUT_SLOT, 2, false);
 
-        this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
-                this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+        this.inputItemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
+                this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
     }
 
     private boolean hasRecipe() {
@@ -249,20 +259,20 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     }
 
     private Optional<GemPolishingRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
+        SimpleContainer inventory = new SimpleContainer(this.inputItemHandler.getSlots());
+        for(int i = 0; i < inputItemHandler.getSlots(); i++) {
+            inventory.setItem(i, this.inputItemHandler.getStackInSlot(i));
         }
 
         return this.level.getRecipeManager().getRecipeFor(GemPolishingRecipe.Type.INSTANCE, inventory, level);
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {
-        return this.itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || this.itemHandler.getStackInSlot(OUTPUT_SLOT).is(item);
+        return this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).is(item);
     }
 
     private boolean canInsertAmountIntoOutputSlot(int count) {
-        return this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + count <= this.itemHandler.getStackInSlot(OUTPUT_SLOT).getMaxStackSize();
+        return this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + count <= this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).getMaxStackSize();
     }
 
     private boolean hasProgressFinished() {
@@ -274,11 +284,11 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     }
 
     public FluidTank getFluidTank(int i) {
-        return fluidTank.getTank(i);
+        return inputFluidTank.getTank(i);
     }
 
-    public ItemStackHandler getItemHandler() {
-        return itemHandler;
+    public ItemStackHandler getInputItemHandler() {
+        return inputItemHandler;
     }
 
     public LazyOptional<IFluidHandler> getLazyFluidHandler() {

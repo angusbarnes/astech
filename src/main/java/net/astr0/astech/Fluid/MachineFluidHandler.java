@@ -61,7 +61,10 @@ public abstract class MachineFluidHandler implements IFluidHandler {
 
         for (int i = 0; i < tanks.length; i++) {
             LogUtils.getLogger().warn("In fill loop: %d".formatted(i));
-            if (fluidStack.isFluidEqual(tanks[i].getFluid()) || tanks[i].getFluid() == FluidStack.EMPTY) {
+            if (fluidStack.isFluidEqual(tanks[i].getFluid())
+                    || tanks[i].getFluid() == FluidStack.EMPTY
+                    || tanks[i].getFluidAmount() <= 0
+            ) {
                 LogUtils.getLogger().warn("Attempting to fill %d".formatted(i));
                 onContentsChanged();
                 return tanks[i].fill(fluidStack, fluidAction);

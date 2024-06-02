@@ -2,10 +2,14 @@ package net.astr0.astech.block.ChemicalMixer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.logging.LogUtils;
 import net.astr0.astech.AsTech;
 import net.astr0.astech.Fluid.helpers.TintColor;
 import net.astr0.astech.GraphicsUtils;
+import net.astr0.astech.gui.IconButton;
+import net.astr0.astech.gui.Icons;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -36,6 +40,7 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
     @Override
     protected void init() {
         super.init();
+        setup();
     }
 
     @Override
@@ -151,7 +156,20 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         );
     }
 
+    protected void setup() {
+        SETTINGS_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 30, Icons.SETTINGS, (button) -> {
+            LogUtils.getLogger().info("Button Pressed");
+        });
 
+        LOCK_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 49, Icons.LOCKED, (button) -> {
+            LogUtils.getLogger().info("Button 2 Pressed");
+            button.setIcon(button.getIcon() == Icons.UNLOCKED ? Icons.LOCKED : Icons.UNLOCKED);
+        });
+    }
+
+    private IconButton SETTINGS_BUTTON;
+
+    private IconButton LOCK_BUTTON;
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
@@ -165,6 +183,9 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         FluidTank tank2 = this.menu.blockEntity.getFluidTank(1);
         renderTankTooltip(guiGraphics, mouseX, mouseY, tank2, 48);
         renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
+
+        this.addRenderableWidget(SETTINGS_BUTTON);
+        this.addRenderableWidget(LOCK_BUTTON);
     }
 
     private void renderTankTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, FluidTank tank, int x) {
@@ -186,7 +207,7 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
         if(!isHovering(x, getEnergyY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
 
-        Component component = MutableComponent.create(Component.literal("Energy ").getContents()).append("%d%%".formatted(menu.getEnergy()/ menu.getMaxEnergy() * 100));
+        Component component = MutableComponent.create(Component.literal("Energy ").getContents()).append("%.2f%%".formatted(((float)menu.getEnergy()/ menu.getMaxEnergy()) * 100));
         guiGraphics.renderTooltip(this.font, component, mouseX, mouseY);
     }
 }

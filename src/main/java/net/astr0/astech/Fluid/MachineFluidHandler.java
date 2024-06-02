@@ -66,7 +66,7 @@ public abstract class MachineFluidHandler implements IFluidHandler {
                     || tanks[i].getFluidAmount() <= 0
             ) {
                 LogUtils.getLogger().warn("Attempting to fill %d".formatted(i));
-                onContentsChanged();
+                if(fluidAction == FluidAction.EXECUTE) onContentsChanged();
                 return tanks[i].fill(fluidStack, fluidAction);
             }
         }
@@ -79,7 +79,7 @@ public abstract class MachineFluidHandler implements IFluidHandler {
 
         for (FluidTank tank : tanks) {
             if (tank.getFluid().isFluidEqual(fluidStack)) {
-                onContentsChanged();
+                if(fluidAction == FluidAction.EXECUTE) onContentsChanged();
                 return tank.drain(fluidStack, fluidAction);
             }
         }
@@ -94,7 +94,10 @@ public abstract class MachineFluidHandler implements IFluidHandler {
         for(FluidTank tank : tanks) {
             if(tank.getFluidAmount() > 0) {
 
-                onContentsChanged();
+                // Only trigger a change call back if a drain action is acutally executed
+                // no need to tell anyone about simulations
+                if(fluidAction == FluidAction.EXECUTE) onContentsChanged();
+
                 return tank.drain(maxDrain, fluidAction);
             }
         }

@@ -186,7 +186,7 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
         if(!isHovering(x, getEnergyY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
 
-        Component component = MutableComponent.create(Component.literal("Energy ").getContents()).append("%d%%)".formatted(menu.getEnergy()/ menu.getMaxEnergy()));
+        Component component = MutableComponent.create(Component.literal("Energy ").getContents()).append("%d%%".formatted(menu.getEnergy()/ menu.getMaxEnergy() * 100));
         guiGraphics.renderTooltip(this.font, component, mouseX, mouseY);
     }
 }

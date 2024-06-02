@@ -16,7 +16,7 @@ public class AsTechNetworkHandler {
     );
 
     public static void onCommonSetup() {
-        INSTANCE.registerMessage(0, FilterUpdateMessage.class, FilterUpdateMessage::encode, FilterUpdateMessage::decode, FilterUpdateMessage::handle);
+        INSTANCE.registerMessage(0, NetworkedMachineUpdate.class, NetworkedMachineUpdate::encode, NetworkedMachineUpdate::decode, NetworkedMachineUpdate::handle);
     }
 
 }

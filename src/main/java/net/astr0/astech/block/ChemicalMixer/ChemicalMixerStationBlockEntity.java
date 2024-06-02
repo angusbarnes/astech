@@ -5,6 +5,8 @@ import net.astr0.astech.CustomEnergyStorage;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.block.ITickableBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
+import net.astr0.astech.network.NetworkedMachineUpdate;
+import net.astr0.astech.network.INetworkedMachine;
 import net.astr0.astech.recipe.GemPolishingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,7 +41,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class ChemicalMixerStationBlockEntity extends BlockEntity implements MenuProvider, ITickableBlockEntity {
+public class ChemicalMixerStationBlockEntity extends BlockEntity implements MenuProvider, ITickableBlockEntity, INetworkedMachine {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
     private final ItemStackHandler inputItemHandler = new ItemStackHandler(4) {
@@ -93,6 +95,14 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         super(ModBlockEntities.CHEMICAL_MIXER_BE.get(), pPos, pBlockState);
 
         // Init our simple container data
+        // this is synced for us every tick automatically,
+        // this is limited to the signed short range
+        // ItemHandlerSlot's in the menu screen sync the item stacks for us
+        // We should use this for basic, simply serializable data.
+        // Energy level, and crafting progress for example
+        // Fluid updates and setting changes should be reflected by sending custom packets
+        // to the client. We could do this by sending a packet every X ticks (probably 1)
+        // if we mark ourselves as having updated state. (OnContents changed from fluid for example)
         this.data = new ContainerData() {
             @Override
             public int get(int pIndex) {
@@ -309,6 +319,20 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     @Override
     public CompoundTag getUpdateTag() {
         return saveWithoutMetadata();
+    }
+
+    @Override
+    public void updateServer(NetworkedMachineUpdate msg) {
+        if(this.level !=null && this.level.isClientSide()) {
+            throw new IllegalStateException("updateServer() should never run on the client! The level is either null or client side.");
+        }
+    }
+
+    @Override
+    public void updateClient(NetworkedMachineUpdate msg) {
+        if(this.level !=null && !this.level.isClientSide()) {
+            throw new IllegalStateException("updateClient() should never run on the server! The level is either null or server side.");
+        }
     }
 
     // A networking re-write can use custom packets to synchronise data more effectively

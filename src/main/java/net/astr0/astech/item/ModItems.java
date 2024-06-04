@@ -31,6 +31,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> DEEZ_NUTS_ITEM = SimpleIngredientItem("deez_nuts", 16);
     public static final RegistryObject<Item> DEEZ_BUTTS_ITEM = SimpleIngredientItem("deez_butts", 32);
+    public static final RegistryObject<Item> GOD_FORGED_INGOT_ITEM = SimpleIngredientItem("god_forged_ingot", 64);
 
     
     //#anchor MATERIAL_REGION

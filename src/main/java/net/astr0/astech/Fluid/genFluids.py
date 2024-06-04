@@ -122,7 +122,7 @@ def blend_overlay(image, color):
     color = color.reshape((1, 1, 3))
 
     # Blend the grayscale image with the color using the overlay method
-    blended = np.where(grayscale < 0.55, 2 * grayscale * color, 1 - 2 * (1 - grayscale) * (1 - color))
+    blended = np.where(grayscale < 0.65, 2 * grayscale * color, 1 - 2 * (1 - grayscale) * (1 - color))
     blended = np.clip(blended, 0, 1)
 
     # Combine blended color with the alpha channel
@@ -287,7 +287,7 @@ for fluid_name, type, tint, formula, desc in fluids:
 
 insert_text_in_region(file_path, 'FLUID_REGION', fluid_text)
 insert_text_in_region(file_path, 'RENDER_REGION', render_text)
-insert_text_in_region('../ModItems.java', 'MATERIAL_REGION', item_text)
+insert_text_in_region('../item/ModItems.java', 'MATERIAL_REGION', item_text)
 insert_text_in_region('../ModCreativeModTab.java', 'TAB_REGION', tab_text)
 
 # Example usage

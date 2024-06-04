@@ -28,10 +28,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
@@ -231,6 +233,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
             increaseCraftingProgress();
 
             // every time we change some shit, call setChanged
+            // This set changes ensures this block is queried for changes when the levekChunk is saved to disk
             setChanged(pLevel, pPos, pState);
 
             if(hasProgressFinished()) {
@@ -240,6 +243,19 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         } else {
             resetProgress();
         }
+
+        // After processing this recipe, we should check if we have data updates to send to the client
+        // WE DO NOT NEED TO SYNC CRAFTING PROGRESS, OR ENERGY STATUS. WE ALSO DO NOT NEED TO SYNC ITEM SLOTS
+        // We WILL send changes to fluid tanks (The initial states are synced from the server by block state)
+        // We WILL send changes to block settings
+        // We will only send these updates to clients which are tracking this level chunk
+        // Anything action which modifies server state should set a flag for this entity to say the data is dirty
+        // We will attempt to encode data as tightly as possible without too much peformance overhead
+        // The first implementation should be naive and just resend all data when any of it changes,
+        // but a future implementation could consider the type of changed data and only synchronise that.
+        // Fluid level can be an int with 4 bytes per tank, settings can probably be encoded in a byte each
+        // Sending around 16 bytes, even every tick should not represent a significant bandwidth constraint
+        // around 0.3 Kbps
 
     }
 
@@ -326,6 +342,12 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         if(this.level !=null && this.level.isClientSide()) {
             throw new IllegalStateException("updateServer() should never run on the client! The level is either null or client side.");
         }
+
+        inputFluidTank.getTank(0).setFluid(FluidStack.EMPTY);
+
+        if(level!= null && !level.isClientSide()) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        }
     }
 
     @Override
@@ -333,6 +355,22 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         if(this.level !=null && !this.level.isClientSide()) {
             throw new IllegalStateException("updateClient() should never run on the server! The level is either null or server side.");
         }
+    }
+
+    private boolean _isNetworkDirty = false;
+
+    @Override
+    public void SetNetworkDirty() {
+        _isNetworkDirty = true;
+    }
+
+    @Override
+    public boolean IsNetworkDirty() {
+        return _isNetworkDirty;
+    }
+
+    public LevelChunk getLevelChunk() {
+        return this.level.getChunkAt(this.getBlockPos());
     }
 
     // A networking re-write can use custom packets to synchronise data more effectively

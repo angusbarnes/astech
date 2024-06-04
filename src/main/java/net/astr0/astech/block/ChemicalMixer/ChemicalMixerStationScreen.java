@@ -8,6 +8,8 @@ import net.astr0.astech.Fluid.helpers.TintColor;
 import net.astr0.astech.GraphicsUtils;
 import net.astr0.astech.gui.IconButton;
 import net.astr0.astech.gui.Icons;
+import net.astr0.astech.network.AsTechNetworkHandler;
+import net.astr0.astech.network.NetworkedMachineUpdate;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -25,6 +27,7 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.network.PacketDistributor;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 
@@ -164,6 +167,8 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         LOCK_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 49, Icons.LOCKED, (button) -> {
             LogUtils.getLogger().info("Button 2 Pressed");
             button.setIcon(button.getIcon() == Icons.UNLOCKED ? Icons.LOCKED : Icons.UNLOCKED);
+
+            AsTechNetworkHandler.INSTANCE.sendToServer(new NetworkedMachineUpdate(menu.blockEntity.getBlockPos()));
         });
     }
 

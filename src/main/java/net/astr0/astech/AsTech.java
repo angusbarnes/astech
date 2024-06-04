@@ -8,6 +8,7 @@ import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.gui.ModMenuTypes;
 import net.astr0.astech.item.AsTechBucketItem;
 import net.astr0.astech.item.ModItems;
+import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.ComponentContents;
@@ -69,6 +70,7 @@ public class AsTech
     {
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
+        AsTechNetworkHandler.onCommonSetup();
     }
 
     // Add the example block item to the building blocks tab

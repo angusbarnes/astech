@@ -40,7 +40,7 @@ public class NetworkedMachineUpdate {
                 var tile = level.getBlockEntity(msg.pos);
 
                 // Not sure if this is the most suitable method for determining chunk coord
-                if(level.hasChunk(player.chunkPosition().x, player.chunkPosition().x)) {
+                if(level.hasChunk(player.chunkPosition().x, player.chunkPosition().z)) {
 
                     // NOTE: reduce nesting
                     if(tile instanceof INetworkedMachine machine) {
@@ -50,6 +50,8 @@ public class NetworkedMachineUpdate {
             }
 
         });
+
+        ctx.get().setPacketHandled(true);
     }
 
     private BlockPos pos;

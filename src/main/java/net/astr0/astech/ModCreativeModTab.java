@@ -29,6 +29,7 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.GEM_POLISHING_STATION.get());
                         output.accept(ModBlocks.CHEMICAL_MIXER.get());
                         output.accept(ModBlocks.TROPHY.get());
+                        output.accept(ModItems.GOD_FORGED_INGOT_ITEM.get());
 
                         //#anchor TAB_REGION
 output.accept(ModItems.POLYTETRAFLUOROETHYLENE_INGOT.get());

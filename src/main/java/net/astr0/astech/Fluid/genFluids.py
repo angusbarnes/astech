@@ -115,14 +115,13 @@ def blend_overlay(image, color):
     # Convert image to grayscale and expand dimensions
     grayscale = ImageOps.grayscale(image)
     grayscale = np.array(grayscale, dtype=np.float32) / 255
-    grayscale = np.expand_dims(grayscale, axis=-1)
-
+    grayscale = np.expand_dims(grayscale, axis=-1) * 0.86
     # Prepare the color for blending
     color = np.array(color, dtype=np.float32) / 255
     color = color.reshape((1, 1, 3))
 
     # Blend the grayscale image with the color using the overlay method
-    blended = np.where(grayscale < 0.65, 2 * grayscale * color, 1 - 2 * (1 - grayscale) * (1 - color))
+    blended = np.where(grayscale < 0.57, 2 * grayscale * color, 1 - 2 * (1 - grayscale) * (1 - color))
     blended = np.clip(blended, 0, 1)
 
     # Combine blended color with the alpha channel

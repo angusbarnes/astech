@@ -164,12 +164,13 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
             LogUtils.getLogger().info("Button Pressed");
         });
 
-        LOCK_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 49, Icons.LOCKED, (button) -> {
+        LOCK_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 49, Icons.UNLOCKED, (button) -> {
             LogUtils.getLogger().info("Button 2 Pressed");
             button.setIcon(button.getIcon() == Icons.UNLOCKED ? Icons.LOCKED : Icons.UNLOCKED);
 
             AsTechNetworkHandler.INSTANCE.sendToServer(new NetworkedMachineUpdate(menu.blockEntity.getBlockPos()));
         });
+
     }
 
     private IconButton SETTINGS_BUTTON;

@@ -28,7 +28,7 @@ public class ServerBoundUIPacket {
 
                     // NOTE: reduce nesting
                     if(tile instanceof INetworkedMachine machine) {
-                        machine.updateServer(msg);
+                        //machine.updateServer(msg);
                     }
                 }
             }
@@ -43,7 +43,7 @@ public class ServerBoundUIPacket {
     }
 
     public static ServerBoundUIPacket decode(FriendlyByteBuf buffer) {
-
+        return null;
     }
 
 }

@@ -2,9 +2,13 @@ package net.astr0.astech.block.ChemicalMixer;
 
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.CustomEnergyStorage;
+import net.astr0.astech.DirectionTranslator;
 import net.astr0.astech.Fluid.MachineFluidHandler;
+import net.astr0.astech.block.CapabilityType;
 import net.astr0.astech.block.ITickableBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
+import net.astr0.astech.block.SidedConfig;
+import net.astr0.astech.network.ClientBoundFlexiPacket;
 import net.astr0.astech.network.NetworkedMachineUpdate;
 import net.astr0.astech.network.INetworkedMachine;
 import net.astr0.astech.recipe.GemPolishingRecipe;
@@ -28,6 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -63,6 +68,8 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         }
     };
 
+    protected final SidedConfig sidedConfig = new SidedConfig();
+
     private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(2,10000) {
         @Override
         protected void onContentsChanged() {
@@ -88,7 +95,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     private final LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.of(() -> inputFluidTank);;
 
     private final LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
-    // Container data is simple data which is syncrhonised by default over the network
+    // Container data is simple data which is synchronised by default over the network
     protected final ContainerData data;
     private int progress = 0;
     private int maxProgress = 78;
@@ -131,6 +138,9 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
                 return 4;
             }
         };
+
+        sidedConfig.setCap(Direction.UP, CapabilityType.INPUT_FLUID);
+        sidedConfig.setCap(Direction.NORTH, CapabilityType.INPUT_ITEMS);
     }
 
     // This function is user defined and is used to get an ItemStack to render
@@ -151,15 +161,44 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     // THIS CAN BE USED TO LINK SIDES TO CERTAIN ITEM OR FLUID HANDLERS
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+
+        side = DirectionTranslator.translate(side, this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
+
+        if (side == null) {
+            return super.getCapability(cap, side);
+        }
+
         if(cap == ForgeCapabilities.ITEM_HANDLER) {
-            return lazyItemHandler.cast();
+            return getItemCapability(cap, side);
         } else if (cap == ForgeCapabilities.FLUID_HANDLER) {
-            return lazyFluidHandler.cast();
+            return getFluidCapability(cap, side);
         } else if (cap == ForgeCapabilities.ENERGY) {
             return lazyEnergyHandler.cast();
         }
 
         return super.getCapability(cap, side); // Allow previous caps in the stack to be checked
+    }
+
+    public <T> LazyOptional<T> getFluidCapability(Capability<T> cap, Direction side) {
+        CapabilityType type = sidedConfig.getCap(side);
+
+        switch (type) {
+            case INPUT_FLUID:
+                return lazyFluidHandler.cast();
+            default:
+                return LazyOptional.empty();
+        }
+    }
+
+    public <T> LazyOptional<T> getItemCapability(Capability<T> cap, Direction side) {
+        CapabilityType type = sidedConfig.getCap(side);
+
+        switch (type) {
+            case INPUT_ITEMS:
+                return lazyItemHandler.cast();
+            default:
+                return LazyOptional.empty();
+        }
     }
 
     @Override
@@ -297,6 +336,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         return this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).is(item);
     }
 
+
     private boolean canInsertAmountIntoOutputSlot(int count) {
         return this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + count <= this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).getMaxStackSize();
     }
@@ -313,8 +353,8 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         return inputFluidTank.getTank(i);
     }
 
-    public ItemStackHandler getInputItemHandler() {
-        return inputItemHandler;
+    public LazyOptional<IItemHandler> getInputItemHandler() {
+        return lazyItemHandler;
     }
 
     public LazyOptional<IFluidHandler> getLazyFluidHandler() {
@@ -351,7 +391,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     }
 
     @Override
-    public void updateClient(NetworkedMachineUpdate msg) {
+    public void updateClient(ClientBoundFlexiPacket msg) {
         if(this.level !=null && !this.level.isClientSide()) {
             throw new IllegalStateException("updateClient() should never run on the server! The level is either null or server side.");
         }

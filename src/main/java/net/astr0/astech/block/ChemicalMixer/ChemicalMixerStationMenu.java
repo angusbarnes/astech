@@ -42,7 +42,7 @@ public class ChemicalMixerStationMenu extends AbstractContainerMenu {
         // The ItemHanlder cap is the ultimate authority on what can go in which index,
         // These are high level helper classes which wrap an IItemHandler
         // This uses a top left origin on the textures
-        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
+        this.blockEntity.getInputItemHandler().ifPresent(iItemHandler -> {
             this.addSlot(new SlotItemHandler(iItemHandler, 0, 62, 18));
             this.addSlot(new SlotItemHandler(iItemHandler, 1, 62, 38));
             this.addSlot(new SlotItemHandler(iItemHandler, 2, 62, 58));

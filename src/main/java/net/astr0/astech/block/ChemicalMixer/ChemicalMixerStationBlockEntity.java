@@ -140,7 +140,7 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
         };
 
         sidedConfig.setCap(Direction.UP, CapabilityType.INPUT_FLUID);
-        sidedConfig.setCap(Direction.NORTH, CapabilityType.INPUT_ITEMS);
+        sidedConfig.setCap(Direction.EAST, CapabilityType.INPUT_ITEMS);
     }
 
     // This function is user defined and is used to get an ItemStack to render
@@ -162,11 +162,12 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
 
-        side = DirectionTranslator.translate(side, this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
-
         if (side == null) {
             return super.getCapability(cap, side);
         }
+
+        side = DirectionTranslator.translate(side, this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
+
 
         if(cap == ForgeCapabilities.ITEM_HANDLER) {
             return getItemCapability(cap, side);

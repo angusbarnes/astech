@@ -7,12 +7,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.checkerframework.checker.units.qual.C;
 
 @OnlyIn(Dist.CLIENT)
 public class IconButton extends AbstractButton {
@@ -24,6 +26,7 @@ public class IconButton extends AbstractButton {
         super(pX, pY, icon.width(), icon.height(), Component.empty());
         this.onPress = pOnPress;
         iconToDraw = icon;
+        setTooltip(Tooltip.create(Component.literal("ToolTip Attempt")));
     }
 
     @Override

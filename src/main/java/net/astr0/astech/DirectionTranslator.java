@@ -13,18 +13,17 @@ public class DirectionTranslator {
      */
     public static Direction translate(Direction original, Direction orientation) {
         // Rotate the original direction around the block's orientation
-        switch (orientation) {
-            case NORTH:
-                return original;
-            case SOUTH:
-                return original.getOpposite();
-            case WEST:
-                return original.getClockWise();
-            case EAST:
-                return original.getCounterClockWise();
-            default:
-                return original;
+
+        if (original == Direction.UP || original == Direction.DOWN) {
+            return original;
         }
+        return switch (orientation) {
+            case NORTH -> original;
+            case SOUTH -> original.getOpposite();
+            case WEST -> original.getClockWise();
+            case EAST -> original.getCounterClockWise();
+            default -> original;
+        };
     }
 
     public static void main(String[] args) {

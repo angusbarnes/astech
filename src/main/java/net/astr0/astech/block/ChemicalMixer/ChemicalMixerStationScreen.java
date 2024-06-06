@@ -14,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
@@ -30,6 +31,8 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.network.PacketDistributor;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
+
+import java.awt.*;
 
 // This only gets registered on the client side
 public class ChemicalMixerStationScreen extends AbstractContainerScreen<ChemicalMixerStationMenu> {
@@ -159,9 +162,11 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         );
     }
 
+    private boolean isShowingSettings = false;
     protected void setup() {
         SETTINGS_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 30, Icons.SETTINGS, (button) -> {
             LogUtils.getLogger().info("Button Pressed");
+            isShowingSettings = !isShowingSettings;
         });
 
         LOCK_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 49, Icons.UNLOCKED, (button) -> {
@@ -171,6 +176,8 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
             //AsTechNetworkHandler.INSTANCE.sendToServer(new NetworkedMachineUpdate(menu.blockEntity.getBlockPos()));
         });
 
+        this.addRenderableWidget(LOCK_BUTTON);
+        this.addRenderableWidget(SETTINGS_BUTTON);
     }
 
     private IconButton SETTINGS_BUTTON;
@@ -190,8 +197,17 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         renderTankTooltip(guiGraphics, mouseX, mouseY, tank2, 48);
         renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
 
-        this.addRenderableWidget(SETTINGS_BUTTON);
-        this.addRenderableWidget(LOCK_BUTTON);
+
+        if(isShowingSettings) {
+            renderSettingsMenu(guiGraphics);
+        }
+    }
+
+    ResourceLocation WIDGET_TEXTURE = new ResourceLocation(AsTech.MODID, "textures/gui/widgets.png");
+    private void renderSettingsMenu(GuiGraphics guiGraphics) {
+
+        int TOP_POS = this.topPos + 30;
+        int LEFT_POS = this.leftPos - 40;
     }
 
     private void renderTankTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, FluidTank tank, int x) {

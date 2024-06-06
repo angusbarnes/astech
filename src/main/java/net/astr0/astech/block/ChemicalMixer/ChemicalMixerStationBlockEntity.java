@@ -4,10 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.astr0.astech.CustomEnergyStorage;
 import net.astr0.astech.DirectionTranslator;
 import net.astr0.astech.Fluid.MachineFluidHandler;
-import net.astr0.astech.block.CapabilityType;
-import net.astr0.astech.block.ITickableBlockEntity;
-import net.astr0.astech.block.ModBlockEntities;
-import net.astr0.astech.block.SidedConfig;
+import net.astr0.astech.block.*;
 import net.astr0.astech.network.ClientBoundFlexiPacket;
 import net.astr0.astech.network.NetworkedMachineUpdate;
 import net.astr0.astech.network.INetworkedMachine;
@@ -48,7 +45,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class ChemicalMixerStationBlockEntity extends BlockEntity implements MenuProvider, ITickableBlockEntity, INetworkedMachine {
+public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
     private final ItemStackHandler inputItemHandler = new ItemStackHandler(4) {
@@ -238,6 +235,11 @@ public class ChemicalMixerStationBlockEntity extends BlockEntity implements Menu
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return new ChemicalMixerStationMenu(pContainerId, pPlayerInventory, this, this.data);
+    }
+
+    @Override
+    public int[] getCapTypes() {
+        return new int[] {CapabilityType.NONE.ordinal(), CapabilityType.INPUT_FLUID.ordinal(), CapabilityType.INPUT_ITEMS.ordinal()};
     }
 
     // On chunk load or on updatePacket we can save our basic data to NBT

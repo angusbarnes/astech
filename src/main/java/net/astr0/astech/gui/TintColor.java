@@ -1,4 +1,4 @@
-package net.astr0.astech.Fluid.helpers;
+package net.astr0.astech.gui;
 
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -73,6 +73,15 @@ public class TintColor {
 
     public int getTintColor() {
         return _color;
+    }
+
+    public TintColor darkened(int amount) {
+        return new TintColor(
+                Math.max(0, _red - amount),
+                Math.max(0, _green - amount),
+                Math.max(0, _blue - amount),
+                _alpha
+        );
     }
 
     public Vector3f getFogColor() {

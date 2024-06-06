@@ -3,7 +3,7 @@ package net.astr0.astech.Fluid;
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.astr0.astech.Fluid.helpers.AsTechFluidType;
-import net.astr0.astech.Fluid.helpers.TintColor;
+import net.astr0.astech.gui.TintColor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;

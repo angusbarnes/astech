@@ -1,38 +1,27 @@
 package net.astr0.astech.block.ChemicalMixer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.AsTech;
-import net.astr0.astech.Fluid.helpers.TintColor;
+import net.astr0.astech.gui.TintColor;
 import net.astr0.astech.GraphicsUtils;
 import net.astr0.astech.gui.IconButton;
 import net.astr0.astech.gui.Icons;
-import net.astr0.astech.network.AsTechNetworkHandler;
-import net.astr0.astech.network.NetworkedMachineUpdate;
+import net.astr0.astech.gui.MachineCapConfiguratorWidget;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.texture.SpriteContents;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.network.PacketDistributor;
-import org.joml.Matrix4f;
 import org.joml.Vector4f;
-
-import java.awt.*;
 
 // This only gets registered on the client side
 public class ChemicalMixerStationScreen extends AbstractContainerScreen<ChemicalMixerStationMenu> {
@@ -164,12 +153,13 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
     private boolean isShowingSettings = false;
     protected void setup() {
-        SETTINGS_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 30, Icons.SETTINGS, (button) -> {
+        IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 30, Icons.SETTINGS, (button) -> {
             LogUtils.getLogger().info("Button Pressed");
             isShowingSettings = !isShowingSettings;
         });
 
-        LOCK_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 49, Icons.UNLOCKED, (button) -> {
+        //AsTechNetworkHandler.INSTANCE.sendToServer(new NetworkedMachineUpdate(menu.blockEntity.getBlockPos()));
+        IconButton LOCK_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 49, Icons.UNLOCKED, (button) -> {
             LogUtils.getLogger().info("Button 2 Pressed");
             button.setIcon(button.getIcon() == Icons.UNLOCKED ? Icons.LOCKED : Icons.UNLOCKED);
 
@@ -178,11 +168,9 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
         this.addRenderableWidget(LOCK_BUTTON);
         this.addRenderableWidget(SETTINGS_BUTTON);
+
+        this.addRenderableWidget(new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30));
     }
-
-    private IconButton SETTINGS_BUTTON;
-
-    private IconButton LOCK_BUTTON;
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {

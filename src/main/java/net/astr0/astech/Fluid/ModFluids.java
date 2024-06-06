@@ -1,7 +1,7 @@
 package net.astr0.astech.Fluid;
 
 import net.astr0.astech.AsTech;
-import net.astr0.astech.Fluid.helpers.TintColor;
+import net.astr0.astech.gui.TintColor;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.item.ModItems;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;

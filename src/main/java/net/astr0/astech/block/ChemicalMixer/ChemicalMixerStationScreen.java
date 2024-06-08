@@ -9,19 +9,26 @@ import net.astr0.astech.gui.IconButton;
 import net.astr0.astech.gui.Icons;
 import net.astr0.astech.gui.MachineCapConfiguratorWidget;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector4f;
+
+import javax.tools.Tool;
+import java.util.*;
 
 // This only gets registered on the client side
 public class ChemicalMixerStationScreen extends AbstractContainerScreen<ChemicalMixerStationMenu> {
@@ -153,9 +160,12 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
     private boolean isShowingSettings = false;
     protected void setup() {
+
+        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity);
+
         IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 30, Icons.SETTINGS, (button) -> {
             LogUtils.getLogger().info("Button Pressed");
-            isShowingSettings = !isShowingSettings;
+            config.ToggleRender();
         });
 
         //AsTechNetworkHandler.INSTANCE.sendToServer(new NetworkedMachineUpdate(menu.blockEntity.getBlockPos()));
@@ -168,8 +178,7 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
         this.addRenderableWidget(LOCK_BUTTON);
         this.addRenderableWidget(SETTINGS_BUTTON);
-
-        this.addRenderableWidget(new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30));
+        this.addRenderableWidget(config);
     }
 
     @Override
@@ -207,8 +216,10 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
         if(!isHovering(x, getFluidY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
 
-        Component component = MutableComponent.create(fluidStack.getDisplayName().getContents()).append(" (%s/%s mB)".formatted(tank.getFluidAmount(), tank.getCapacity()));
-        guiGraphics.renderTooltip(this.font, component, mouseX, mouseY);
+        List<Component> tips = new ArrayList<>(2);
+        tips.add(MutableComponent.create(fluidStack.getDisplayName().getContents()));
+        tips.add(Component.literal("§7%s/%s mB".formatted(tank.getFluidAmount(), tank.getCapacity())));
+        guiGraphics.renderComponentTooltip(this.font, tips, mouseX, mouseY);
     }
 
     private void renderEnergyTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, int x) {
@@ -217,7 +228,9 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
         if(!isHovering(x, getEnergyY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
 
-        Component component = MutableComponent.create(Component.literal("Energy ").getContents()).append("%.2f%%".formatted(((float)menu.getEnergy()/ menu.getMaxEnergy()) * 100));
-        guiGraphics.renderTooltip(this.font, component, mouseX, mouseY);
+        List<Component> tips = new ArrayList<>(2);
+        tips.add(Component.literal("Energy"));
+        tips.add(Component.literal("§7%.2f%%".formatted(((float)menu.getEnergy()/ menu.getMaxEnergy()) * 100)));
+        guiGraphics.renderComponentTooltip(this.font, tips, mouseX, mouseY);
     }
 }

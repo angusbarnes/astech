@@ -2,8 +2,8 @@ package net.astr0.astech.network;
 
 public interface INetworkedMachine {
 
-    public void updateServer(NetworkedMachineUpdate msg);
-    public void updateClient(ClientBoundFlexiPacket msg);
+    public void updateServer(FlexiPacket msg);
+    public void updateClient(FlexiPacket msg);
 
     // This should only be allowed on server
     public void SetNetworkDirty();

@@ -16,7 +16,7 @@ public class AsTechNetworkHandler {
     );
 
     public static void onCommonSetup() {
-        INSTANCE.registerMessage(0, NetworkedMachineUpdate.class, NetworkedMachineUpdate::encode, NetworkedMachineUpdate::decode, NetworkedMachineUpdate::handle);
+        INSTANCE.registerMessage(0, FlexiPacket.class, FlexiPacket::encode, FlexiPacket::new, FlexiPacket::handle);
     }
 
 }

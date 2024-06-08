@@ -110,6 +110,10 @@ public class UIButton {
         this.color = color;
     }
 
+    public void SetTooltip(String tooltip) {
+        tooltipString = Component.literal(tooltip);
+    }
+
     public interface OnPress {
         void onPress(UIButton button);
     }

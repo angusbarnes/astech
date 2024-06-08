@@ -1,6 +1,6 @@
 package net.astr0.astech.block;
 
-import net.astr0.astech.network.ClientBoundFlexiPacket;
+import net.astr0.astech.network.FlexiPacket;
 import net.astr0.astech.network.INetworkedMachine;
 import net.astr0.astech.network.NetworkedMachineUpdate;
 import net.minecraft.core.BlockPos;
@@ -26,12 +26,12 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
     }
 
     @Override
-    public void updateServer(NetworkedMachineUpdate msg) {
+    public void updateServer(FlexiPacket msg) {
 
     }
 
     @Override
-    public void updateClient(ClientBoundFlexiPacket msg) {
+    public void updateClient(FlexiPacket msg) {
 
     }
 
@@ -56,5 +56,7 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
         return null;
     }
 
-    abstract public int[] getCapTypes();
+    abstract public int[][] getCapTypes();
+
+    abstract public SidedConfig getSidedConfig(int mode);
 }

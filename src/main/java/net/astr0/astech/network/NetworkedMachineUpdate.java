@@ -44,7 +44,7 @@ public class NetworkedMachineUpdate {
 
                     // NOTE: reduce nesting
                     if(tile instanceof INetworkedMachine machine) {
-                        machine.updateServer(msg);
+
                     }
                 }
             }

@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 
 // The menu acts as the logic behind the screen, which utimately performs the screenspace drawing
@@ -46,7 +47,16 @@ public class ChemicalMixerStationMenu extends AbstractContainerMenu {
             this.addSlot(new SlotItemHandler(iItemHandler, 0, 62, 18));
             this.addSlot(new SlotItemHandler(iItemHandler, 1, 62, 38));
             this.addSlot(new SlotItemHandler(iItemHandler, 2, 62, 58));
-            this.addSlot(new SlotItemHandler(iItemHandler, 3, 113, 38));
+        });
+
+        this.blockEntity.getOutputItemHandler().ifPresent(iItemHandler -> {
+            this.addSlot(new SlotItemHandler(iItemHandler, 0, 113, 38) {
+                @Override
+
+                public boolean mayPlace(@NotNull ItemStack stack) {
+                    return false;
+                }
+            });
         });
 
         addDataSlots(data);

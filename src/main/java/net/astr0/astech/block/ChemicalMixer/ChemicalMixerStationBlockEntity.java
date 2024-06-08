@@ -7,7 +7,6 @@ import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.block.*;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
-import net.astr0.astech.network.NetworkedMachineUpdate;
 import net.astr0.astech.recipe.GemPolishingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +32,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
@@ -47,7 +45,7 @@ import java.util.Optional;
 public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
-    private final ItemStackHandler inputItemHandler = new ItemStackHandler(4) {
+    private final ItemStackHandler inputItemHandler = new ItemStackHandler(3) {
 
         // This over-rides the ItemStackHandler method which gets called on an update.
         // Here we call this::setChanged() which marks this block entity as dirty.
@@ -55,12 +53,18 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         protected void onContentsChanged(int slot) {
             setChanged();
 
-            // If we are server side, we also send a blockUpdate. The docs for this function can
-            // be found here: https://docs.minecraftforge.net/en/1.20.x/blockentities/#synchronizing-on-block-update
-            // This if it is passed i=2 or 3, it will query this block entity by calling getPacketUpdate()
-            if(level!= null && !level.isClientSide()) {
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-            }
+            // WE MAY NEED TO SEND A BLOCK UPDATE IF WE WANT TO DO ANY ITEM RENDERING
+//            if(level!= null && !level.isClientSide()) {
+//                LogUtils.getLogger().info("We actually called a change here (Input Slot)");
+//                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+//            }
+        }
+    };
+
+    private final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
         }
     };
 
@@ -96,29 +100,50 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         }
     }
 
+
+    // Todo: Update this to simply mark isNetworkDirty, this will allow an adjustable sync rate,
+    //       this is more efficient as we dont trigger a block update or network packet for every single
+    //       change in fluids.
     private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(2,10000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
 
+            // We do send an update here as fluids are NOT synced by forge
             if(level!= null && !level.isClientSide()) {
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
 
-            LogUtils.getLogger().warn("Contents of fluid inventory updated");
+            LogUtils.getLogger().warn("Contents of input fluid inventory updated");
         }
     };
 
-    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(30000, 500, 0);
+    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(1,10000) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+
+            // We do send an update here as fluids are NOT synced by forge
+            if(level!= null && !level.isClientSide()) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+            }
+
+            LogUtils.getLogger().warn("Contents of output fluid inventory updated");
+        }
+    };
+
+    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(40000, 500, 0);
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 3;
 
     // This is the provider that allows networked data to be lazily updates
     // We must invalidate this every time a change occurs so the server re-syncs
-    private final LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.of(() -> inputItemHandler);
+    private final LazyOptional<IItemHandler> lazyInputItemHandler = LazyOptional.of(() -> inputItemHandler);
+    private final LazyOptional<IItemHandler> lazyOutputItemHandler = LazyOptional.of(() -> outputItemHandler);
 
-    private final LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.of(() -> inputFluidTank);;
+    private final LazyOptional<IFluidHandler> lazyInputFluidHandler = LazyOptional.of(() -> inputFluidTank);
+    private final LazyOptional<IFluidHandler> lazyOutputFluidHandler = LazyOptional.of(() -> outputFluidTank);
 
     private final LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
     // Container data is simple data which is synchronised by default over the network
@@ -143,6 +168,9 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
             public int get(int pIndex) {
                 return switch (pIndex) {
                     case 0 -> energyStorage.getMaxEnergyStored();
+                    // This will probably cause a bug, this can only sync signed shorts,
+                    // but we may set the energy higher than the 32,000 limit.
+                    // TODO: Turn this into a synced percentage and reconvert to relative amount on client side
                     case 1 -> energyStorage.getEnergyStored();
                     case 2 -> ChemicalMixerStationBlockEntity.this.progress;
                     case 3 -> ChemicalMixerStationBlockEntity.this.maxProgress;
@@ -196,9 +224,9 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
 
 
         if(cap == ForgeCapabilities.ITEM_HANDLER) {
-            return getItemCapability(cap, side);
+            return getItemCapability(side);
         } else if (cap == ForgeCapabilities.FLUID_HANDLER) {
-            return getFluidCapability(cap, side);
+            return getFluidCapability(side);
         } else if (cap == ForgeCapabilities.ENERGY) {
             return lazyEnergyHandler.cast();
         }
@@ -206,26 +234,24 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         return super.getCapability(cap, side); // Allow previous caps in the stack to be checked
     }
 
-    public <T> LazyOptional<T> getFluidCapability(Capability<T> cap, Direction side) {
+    public <T> LazyOptional<T> getFluidCapability(Direction side) {
         int type = sidedFluidConfig.getCap(side);
         LogUtils.getLogger().info("Fluid cap was requested for {} side {}", type, side);
-        switch (type) {
-            case SidedConfig.FLUID_INPUT:
-                return lazyFluidHandler.cast();
-            default:
-                return LazyOptional.empty();
-        }
+        return switch (type) {
+            case SidedConfig.FLUID_INPUT -> lazyInputFluidHandler.cast();
+            case SidedConfig.FLUID_OUTPUT -> lazyOutputFluidHandler.cast();
+            default -> LazyOptional.empty();
+        };
     }
 
-    public <T> LazyOptional<T> getItemCapability(Capability<T> cap, Direction side) {
+    public <T> LazyOptional<T> getItemCapability(Direction side) {
         int type = sidedItemConfig.getCap(side);
 
-        switch (type) {
-            case SidedConfig.ITEM_INPUT:
-                return lazyItemHandler.cast();
-            default:
-                return LazyOptional.empty();
-        }
+        return switch (type) {
+            case SidedConfig.ITEM_INPUT -> lazyInputItemHandler.cast();
+            case SidedConfig.ITEM_OUTPUT -> lazyOutputItemHandler.cast();
+            default -> LazyOptional.empty();
+        };
     }
 
     @Override
@@ -233,14 +259,20 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         super.onLoad();
     }
 
-    // Called by forge (I think in the underlying blockEntity's setChanged()) to mark our caps as old
-    // Each capability registers in this class should be invalidated
+    // should be called when a change is made that should invalidate the cached caps of this block
+    // Seems to be working with just setChanged calls, but should be done any time some kind of updates
+    // are made to the BlockEntities caps, such as a change of config.
+    // At the moment I'm not really sure who or where this gets called from
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        lazyItemHandler.invalidate();
-        lazyFluidHandler.invalidate();
+        lazyInputItemHandler.invalidate();
+        lazyInputFluidHandler.invalidate();
+        lazyOutputFluidHandler.invalidate();
         lazyEnergyHandler.invalidate();
+        lazyEnergyHandler.invalidate();
+
+        LogUtils.getLogger().info("Caps have been invalidated somehow");
     }
 
     // User defined helper to get a list of all the items we are holding,
@@ -290,8 +322,10 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         pTag.putInt("chemical_mixer.progress", progress);
         pTag.put("Energy", this.energyStorage.serializeNBT());
         pTag.put("fluidTank", inputFluidTank.writeToNBT(new CompoundTag()));
+        pTag.put("outputFluidTank", outputFluidTank.writeToNBT(new CompoundTag()));
         pTag.put("itemConfig", sidedItemConfig.writeToNBT(new CompoundTag()));
         pTag.put("fluidConfig", sidedFluidConfig.writeToNBT(new CompoundTag()));
+        pTag.put("outputInventory", outputItemHandler.serializeNBT());
         super.saveAdditional(pTag);
     }
 
@@ -306,6 +340,8 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         inputFluidTank.readFromNBT(pTag.getCompound("fluidTank"));
         sidedItemConfig.readFromNBT(pTag.getCompound("itemConfig"));
         sidedFluidConfig.readFromNBT(pTag.getCompound("fluidConfig"));
+        outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
+        outputFluidTank.readFromNBT(pTag.getCompound("outputFluidTank"));
     }
 
     // This logic is a userDefined name for a tick function
@@ -396,16 +432,20 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         progress++;
     }
 
-    public FluidTank getFluidTank(int i) {
+    public FluidTank getFluidInputTank(int i) {
         return inputFluidTank.getTank(i);
     }
 
-    public LazyOptional<IItemHandler> getInputItemHandler() {
-        return lazyItemHandler;
+    public FluidTank getFluidOutputTank() {
+        return outputFluidTank.getTank(0);
     }
 
-    public LazyOptional<IFluidHandler> getLazyFluidHandler() {
-        return lazyFluidHandler;
+    public LazyOptional<IItemHandler> getInputItemHandler() {
+        return lazyInputItemHandler;
+    }
+
+    public LazyOptional<IFluidHandler> getLazyInputFluidHandler() {
+        return lazyInputFluidHandler;
     }
 
     // Called by our block update logic, which occurs when the inventory is updated
@@ -489,6 +529,10 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
 
     public LevelChunk getLevelChunk() {
         return this.level.getChunkAt(this.getBlockPos());
+    }
+
+    public LazyOptional<IItemHandler> getOutputItemHandler() {
+        return lazyOutputItemHandler;
     }
 
     // A networking re-write can use custom packets to synchronise data more effectively

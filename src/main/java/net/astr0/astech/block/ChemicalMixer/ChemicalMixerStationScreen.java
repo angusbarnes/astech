@@ -9,25 +9,20 @@ import net.astr0.astech.gui.IconButton;
 import net.astr0.astech.gui.Icons;
 import net.astr0.astech.gui.MachineCapConfiguratorWidget;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector4f;
 
-import javax.tools.Tool;
 import java.util.*;
 
 // This only gets registered on the client side
@@ -55,11 +50,15 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
-        FluidTank tank = this.menu.blockEntity.getFluidTank(0);
+        FluidTank tank = this.menu.blockEntity.getFluidInputTank(0);
         drawFluidTankV2(guiGraphics, tank, 34, 74);
 
-        tank = this.menu.blockEntity.getFluidTank(1);
+        tank = this.menu.blockEntity.getFluidInputTank(1);
         drawFluidTankV2(guiGraphics, tank, 48, 74);
+
+        tank = this.menu.blockEntity.getFluidOutputTank();
+        drawFluidTankV2(guiGraphics, tank, 133, 74);
+
         renderEnergyBar(guiGraphics, 154);
 
     }
@@ -187,10 +186,10 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
 
-        FluidTank tank = this.menu.blockEntity.getFluidTank(0);
+        FluidTank tank = this.menu.blockEntity.getFluidInputTank(0);
         renderTankTooltip(guiGraphics, mouseX, mouseY, tank, 34);
 
-        FluidTank tank2 = this.menu.blockEntity.getFluidTank(1);
+        FluidTank tank2 = this.menu.blockEntity.getFluidInputTank(1);
         renderTankTooltip(guiGraphics, mouseX, mouseY, tank2, 48);
         renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
 

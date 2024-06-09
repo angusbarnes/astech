@@ -16,26 +16,34 @@ import java.util.function.Supplier;
 public class FlexiPacket {
 
     private BlockPos pos;
+    private int code;
     private FriendlyByteBuf internalBuffer;
 
-    public FlexiPacket(BlockPos position) {
+    public FlexiPacket(BlockPos position, int message_code) {
         pos = position;
         internalBuffer = new FriendlyByteBuf(Unpooled.buffer());
+        code = message_code;
     }
 
-    public FlexiPacket(BlockPos position, FriendlyByteBuf buffer) {
+    public FlexiPacket(BlockPos position, int message_code, FriendlyByteBuf buffer) {
         pos = position;
+        code = message_code;
         internalBuffer = buffer;
     }
 
     public FlexiPacket(FriendlyByteBuf buffer) {
         this.pos = buffer.readBlockPos();
+        this.code = buffer.readInt();
         int bufferSize = buffer.readableBytes(); // Get the size of the remaining bytes in the buffer
         this.internalBuffer = new FriendlyByteBuf(buffer.readBytes(bufferSize)); // Initialize and read the remaining bytes into the internal buffer
     }
 
+    public int GetCode() {
+        return code;
+    }
+
     public FlexiPacket Copy() {
-        return new FlexiPacket(pos, internalBuffer);
+        return new FlexiPacket(pos, code, internalBuffer);
     }
 
     public BlockPos getPos() {
@@ -110,6 +118,7 @@ public class FlexiPacket {
 
     public void encode(FriendlyByteBuf buffer) {
         buffer.writeBlockPos(pos);
+        buffer.writeInt(code);
         buffer.writeBytes(internalBuffer.copy());
     }
 

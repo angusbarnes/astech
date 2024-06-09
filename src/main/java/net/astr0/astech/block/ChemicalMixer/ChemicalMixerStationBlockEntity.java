@@ -42,6 +42,23 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+
+// Todo:
+// - We need to prevent output handlers from being able to be input into
+// - We can leave inputs being drainable for conveniece of emptying old fluids
+// - We need to tidy up side config stuff
+// - Implement Recipe Type, Recipe Process and JEI Recipe Categories and transfer handlers
+// - Clean up print statements
+// - Enable fluid draining and filling from buckets in GUI
+// - Somehow support AE2 style click and drag to set filters from JEI
+// - add fancy rendering on the config slots
+// - add OK button to only update side config when pressed, or menu closed
+// - Implement ItemStack and FluidStack filters for locking slots
+//      - These must be saved correctly
+//      - These must be updated over the network
+//      - These must load correctly
+// - Shift clicking on fluid slots whilst unlocked should empty a fluid tank, which must be a network update
+// Data generators would be good to add too
 public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
@@ -71,24 +88,23 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
     protected final SidedConfig sidedItemConfig = new SidedConfig() {
         @Override
         protected void onContentsChanged() {
-            sideConfigUpdated(0);
+            CLIENT_sideConfigUpdated(0);
         }
     };
     protected final SidedConfig sidedFluidConfig = new SidedConfig() {
         @Override
         protected void onContentsChanged() {
-            sideConfigUpdated(1);
+            CLIENT_sideConfigUpdated(1);
         }
     };
 
-    private void sideConfigUpdated(int i) {
+    private void CLIENT_sideConfigUpdated(int i) {
 
         if(level != null && !level.isClientSide()) {
             throw new IllegalStateException("This shit should not run on the server");
         }
 
-        FlexiPacket packet = new FlexiPacket(this.getBlockPos());
-        packet.writeInt(430);
+        FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 430);
         packet.writeInt(i);
 
         LogUtils.getLogger().info("Side Config Updated");
@@ -100,35 +116,36 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         }
     }
 
-
-    // Todo: Update this to simply mark isNetworkDirty, this will allow an adjustable sync rate,
-    //       this is more efficient as we dont trigger a block update or network packet for every single
-    //       change in fluids.
-    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(2,10000) {
+    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(2,24000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
 
             // We do send an update here as fluids are NOT synced by forge
-            if(level!= null && !level.isClientSide()) {
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-            }
+//            if(level!= null && !level.isClientSide()) {
+//                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+//            }
 
             LogUtils.getLogger().warn("Contents of input fluid inventory updated");
+
+            SetNetworkDirty();
+
         }
     };
 
-    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(1,10000) {
+    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(1,24000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
 
             // We do send an update here as fluids are NOT synced by forge
-            if(level!= null && !level.isClientSide()) {
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-            }
+//            if(level!= null && !level.isClientSide()) {
+//                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+//            }
 
             LogUtils.getLogger().warn("Contents of output fluid inventory updated");
+
+            SetNetworkDirty();
         }
     };
 
@@ -329,7 +346,6 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         super.saveAdditional(pTag);
     }
 
-
     // When we need to load from NBT we can do the opposite
     @Override
     public void load(CompoundTag pTag) {
@@ -344,12 +360,8 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         outputFluidTank.readFromNBT(pTag.getCompound("outputFluidTank"));
     }
 
-    // This logic is a userDefined name for a tick function
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-
-        // Only tick on the server, the server should still sync
-        if(this.level == null || this.level.isClientSide())
-            return;
+    @Override
+    public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {
 
         if(hasRecipe()) {
             increaseCraftingProgress();
@@ -366,19 +378,7 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
             resetProgress();
         }
 
-        // After processing this recipe, we should check if we have data updates to send to the client
-        // WE DO NOT NEED TO SYNC CRAFTING PROGRESS, OR ENERGY STATUS. WE ALSO DO NOT NEED TO SYNC ITEM SLOTS
-        // We WILL send changes to fluid tanks (The initial states are synced from the server by block state)
-        // We WILL send changes to block settings
-        // We will only send these updates to clients which are tracking this level chunk
-        // Anything action which modifies server state should set a flag for this entity to say the data is dirty
-        // We will attempt to encode data as tightly as possible without too much peformance overhead
-        // The first implementation should be naive and just resend all data when any of it changes,
-        // but a future implementation could consider the type of changed data and only synchronise that.
-        // Fluid level can be an int with 4 bytes per tank, settings can probably be encoded in a byte each
-        // Sending around 16 bytes, even every tick should not represent a significant bandwidth constraint
-        // around 0.3 Kbps
-
+        IncrementNetworkTickCount();
     }
 
     private void resetProgress() {
@@ -448,6 +448,75 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         return lazyInputFluidHandler;
     }
 
+    public LazyOptional<IItemHandler> getOutputItemHandler() {
+        return lazyOutputItemHandler;
+    }
+
+    @Override
+    public void updateServer(FlexiPacket msg) {
+
+        int code = msg.GetCode();
+
+        // Throw if we don't have loaded level on server
+        if(!(this.level != null && !this.level.isClientSide())) {
+            throw new IllegalStateException("updateServer() should never run on the client! The level is either null or client side.");
+        }
+
+        // This is the filter update code
+        if (code == 430) {
+            int _mode = msg.readInt();
+
+            // Handle sided update
+            if(_mode == 0) {
+                msg.readSidedConfig(sidedItemConfig);
+            } else {
+                msg.readSidedConfig(sidedFluidConfig);
+            }
+
+            // Rebroadcast update to tracking clients
+            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), msg);
+        }
+
+        // A server update should always mark this block as dirty for saves
+        setChanged();
+    }
+
+    @Override
+    public void updateClient(FlexiPacket msg) {
+        if(this.level !=null && !this.level.isClientSide()) {
+            throw new IllegalStateException("updateClient() should never run on the server! The level is either null or server side.");
+        }
+
+        int code = msg.GetCode();
+        // This is the filter update code
+        if (code == 430) {
+            int _mode = msg.readInt();
+
+            // Handle sided update
+            if(_mode == 0) {
+                msg.readSidedConfig(sidedItemConfig);
+            } else {
+                msg.readSidedConfig(sidedFluidConfig);
+            }
+        } else if (code == 69) {
+            CLIENT_ReadUpdateFromFlexiPacket(msg);
+        }
+    }
+
+    @Override
+    protected void SERVER_WriteUpdateToFlexiPacket(FlexiPacket packet) {
+        packet.writeFluidStack(inputFluidTank.getFluidInTank(0));
+        packet.writeFluidStack(inputFluidTank.getFluidInTank(1));
+        packet.writeFluidStack(outputFluidTank.getFluidInTank(0));
+    }
+
+    @Override
+    protected void CLIENT_ReadUpdateFromFlexiPacket(FlexiPacket packet) {
+        inputFluidTank.getTank(0).setFluid(packet.readFluidStack());
+        inputFluidTank.getTank(1).setFluid(packet.readFluidStack());
+        outputFluidTank.getTank(0).setFluid(packet.readFluidStack());
+    }
+
     // Called by our block update logic, which occurs when the inventory is updated
     @Nullable
     @Override
@@ -463,77 +532,4 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
     public CompoundTag getUpdateTag() {
         return saveWithoutMetadata();
     }
-
-    @Override
-    public void updateServer(FlexiPacket msg) {
-
-        FlexiPacket cachedMsg = msg.Copy();
-
-        // Throw if we dont have loaded level on server
-        if(!(this.level != null && !this.level.isClientSide())) {
-            throw new IllegalStateException("updateServer() should never run on the client! The level is either null or client side.");
-        }
-
-        // This is the filter update code
-        if (msg.readInt() == 430) {
-            int _mode = msg.readInt();
-
-            // Handle sided update
-            if(_mode == 0) {
-                msg.readSidedConfig(sidedItemConfig);
-            } else {
-                msg.readSidedConfig(sidedFluidConfig);
-            }
-
-            // Rebroadcast update to tracking clients
-            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), cachedMsg);
-
-            //Instead of rebroadcast, try block update
-            //level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-        }
-
-        // A server update should always mark this block as dirty for saves
-        setChanged();
-    }
-
-    @Override
-    public void updateClient(FlexiPacket msg) {
-        if(this.level !=null && !this.level.isClientSide()) {
-            throw new IllegalStateException("updateClient() should never run on the server! The level is either null or server side.");
-        }
-
-        // This is the filter update code
-        if (msg.readInt() == 430) {
-            int _mode = msg.readInt();
-
-            // Handle sided update
-            if(_mode == 0) {
-                msg.readSidedConfig(sidedItemConfig);
-            } else {
-                msg.readSidedConfig(sidedFluidConfig);
-            }
-        }
-    }
-
-    private boolean _isNetworkDirty = false;
-
-    @Override
-    public void SetNetworkDirty() {
-        _isNetworkDirty = true;
-    }
-
-    @Override
-    public boolean IsNetworkDirty() {
-        return _isNetworkDirty;
-    }
-
-    public LevelChunk getLevelChunk() {
-        return this.level.getChunkAt(this.getBlockPos());
-    }
-
-    public LazyOptional<IItemHandler> getOutputItemHandler() {
-        return lazyOutputItemHandler;
-    }
-
-    // A networking re-write can use custom packets to synchronise data more effectively
 }

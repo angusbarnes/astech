@@ -193,6 +193,11 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         renderTankTooltip(guiGraphics, mouseX, mouseY, tank2, 48);
         renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
 
+        FluidTank tank3 = this.menu.blockEntity.getFluidOutputTank();
+        renderTankTooltip(guiGraphics, mouseX, mouseY, tank2, 134);
+
+        renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
+
 
         if(isShowingSettings) {
             renderSettingsMenu(guiGraphics);

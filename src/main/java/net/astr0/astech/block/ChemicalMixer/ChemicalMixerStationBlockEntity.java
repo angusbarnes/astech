@@ -3,6 +3,7 @@ package net.astr0.astech.block.ChemicalMixer;
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.CustomEnergyStorage;
 import net.astr0.astech.DirectionTranslator;
+import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.block.*;
 import net.astr0.astech.network.AsTechNetworkHandler;
@@ -62,7 +63,7 @@ import java.util.Optional;
 public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
-    private final ItemStackHandler inputItemHandler = new ItemStackHandler(3) {
+    private final FilteredItemStackHandler inputItemHandler = new FilteredItemStackHandler(3) {
 
         // This over-rides the ItemStackHandler method which gets called on an update.
         // Here we call this::setChanged() which marks this block entity as dirty.

@@ -52,7 +52,6 @@ import java.util.Optional;
 // - Clean up print statements
 // - Enable fluid draining and filling from buckets in GUI
 // - Somehow support AE2 style click and drag to set filters from JEI
-// - add fancy rendering on the config slots
 // - add OK button to only update side config when pressed, or menu closed
 // - Implement ItemStack and FluidStack filters for locking slots
 //      - These must be saved correctly
@@ -456,6 +455,11 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
     @Override
     public void updateServer(FlexiPacket msg) {
 
+        //TODO: Invesitgate why this was working without caching the message first,
+        //      My guess is that reading must just move a read pointer and this is not
+        //      serialised to the the encode function so when it is rebroadcast clients
+        //      init their own read pointers to 0
+        //FlexiPacket cache = msg.Copy();
         int code = msg.GetCode();
 
         // Throw if we don't have loaded level on server
@@ -478,6 +482,19 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
             AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), msg);
         }
 
+        if (code == 36) {
+            // Get the toggled slot lock
+            int slot = msg.readInt();
+
+            inputItemHandler.ToggleSlotLock(slot);
+
+            LogUtils.getLogger().info("There was an update to slot locks on the server, slot: {}", slot);
+            FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 36);
+            inputItemHandler.WriteToFlexiPacket(packet);
+            // Rebroadcast the change to listening clients
+            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
+        }
+
         // A server update should always mark this block as dirty for saves
         setChanged();
     }
@@ -489,6 +506,7 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         }
 
         int code = msg.GetCode();
+
         // This is the filter update code
         if (code == 430) {
             int _mode = msg.readInt();
@@ -501,6 +519,9 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
             }
         } else if (code == 69) {
             CLIENT_ReadUpdateFromFlexiPacket(msg);
+        } else if (code == 36) {
+            LogUtils.getLogger().info("There was an update to slot locks on the client");
+            inputItemHandler.ReadFromFlexiPacket(msg);
         }
     }
 
@@ -516,21 +537,5 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         inputFluidTank.getTank(0).setFluid(packet.readFluidStack());
         inputFluidTank.getTank(1).setFluid(packet.readFluidStack());
         outputFluidTank.getTank(0).setFluid(packet.readFluidStack());
-    }
-
-    // Called by our block update logic, which occurs when the inventory is updated
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-
-        // This created a Packet to update clients, if left unspecified,
-        // it searches 'this' for  getUpdateTag, which will save the current block tags
-        // and send those. These are the block tags saved by saveAdditional()
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
     }
 }

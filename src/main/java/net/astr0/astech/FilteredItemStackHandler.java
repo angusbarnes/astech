@@ -1,14 +1,11 @@
 package net.astr0.astech;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.core.NonNullList;
+import net.astr0.astech.network.FlexiPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,11 +14,7 @@ import java.util.List;
 
 public class FilteredItemStackHandler extends ItemStackHandler {
 
-    record BasicFilter(boolean isLocked, String itemName) {
-
-    }
-
-    List<BasicFilter> filters;
+    final List<BasicFilter> filters;
 
     public FilteredItemStackHandler(int size) {
         super(size);
@@ -46,28 +39,63 @@ public class FilteredItemStackHandler extends ItemStackHandler {
             // helpers/abstract API to simplify the filtering state
             // Eventually we would like to also be able to set filters from JEI, which seems plausible
             // using some kind of GhostTransferHandler or something
-            filters.add(new BasicFilter(false, ""));
+            filters.add(new BasicFilter(false, ItemStack.EMPTY));
+
+            LogUtils.getLogger().info("New FilteredItemStackHandler created on thread: {}", Thread.currentThread().getId());
         }
     }
 
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack)
     {
-        // This should be implemented to check against the filter for this slot
-        // The simplest comparison is probably with the ResourceLocation.toString()
-        return stack.getItem() == Items.STICK;
+        return filters.get(slot).TestFilterForMatch(stack);
     }
 
     public void LockSot(int i) {
         if(i > this.getSlots()) {
             throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
         }
+
+        filters.get(i).Lock(getStackInSlot(i));
+    }
+
+    public void UnlockSot(int i) {
+        if(i > this.getSlots()) {
+            throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
+        }
+
+        filters.get(i).Unlock();
+    }
+
+    public void ToggleSlotLock(int i) {
+        if(i > this.getSlots()) {
+            throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
+        }
+
+        if (filters.get(i).isLocked()) {
+            UnlockSot(i);
+        } else {
+            LockSot(i);
+
+        }
     }
 
     @Override
     public CompoundTag serializeNBT()
     {
-        ListTag nbtTagList = new ListTag();
+        ListTag filterTagList = new ListTag();
+        for (int i = 0; i < stacks.size(); i++)
+        {
+            if (filters.get(i).isLocked())
+            {
+                CompoundTag filterTag = new CompoundTag();
+                filterTag.putInt("Slot", i);
+                filters.get(i).GetFilter().save(filterTag);
+                filterTagList.add(filterTag);
+            }
+        }
+
+        ListTag itemTagList = new ListTag();
         for (int i = 0; i < stacks.size(); i++)
         {
             if (!stacks.get(i).isEmpty())
@@ -75,13 +103,22 @@ public class FilteredItemStackHandler extends ItemStackHandler {
                 CompoundTag itemTag = new CompoundTag();
                 itemTag.putInt("Slot", i);
                 stacks.get(i).save(itemTag);
-                nbtTagList.add(itemTag);
+                itemTagList.add(itemTag);
             }
         }
         CompoundTag nbt = new CompoundTag();
-        nbt.put("Items", nbtTagList);
+        nbt.put("Items", itemTagList);
+        nbt.put("Filters", filterTagList);
         nbt.putInt("Size", stacks.size());
         return nbt;
+    }
+
+    public boolean checkSlot(int i) {
+        return filters.get(i).isLocked();
+    }
+
+    public ItemStack getFilterForSlot(int slot) {
+        return filters.get(slot).GetFilter();
     }
 
     @Override
@@ -99,6 +136,45 @@ public class FilteredItemStackHandler extends ItemStackHandler {
                 stacks.set(slot, ItemStack.of(itemTags));
             }
         }
+
+        ListTag filterTagList = nbt.getList("Filters", Tag.TAG_COMPOUND);
+        for (int i = 0; i < filterTagList.size(); i++)
+        {
+            CompoundTag itemTags = filterTagList.getCompound(i);
+            int slot = itemTags.getInt("Slot");
+
+            if (slot >= 0 && slot < stacks.size())
+            {
+                ItemStack stack = ItemStack.of(itemTags);
+                filters.get(slot).Lock(stack);
+
+                LogUtils.getLogger().info("Loaded slot {} with filter {}", slot, stack);
+            }
+        }
         onLoad();
+    }
+
+    public void WriteToFlexiPacket(FlexiPacket packet) {
+        for(int i = 0; i < filters.size(); i++) {
+
+            boolean lock = filters.get(i).isLocked();
+            packet.writeBool(lock);
+            if(lock) {
+                packet.writeItemStack(filters.get(i).GetFilter());
+                LogUtils.getLogger().info("Wrote {} to flexipacket for slot {}", filters.get(i).GetFilter(), i);
+            }
+        }
+    }
+
+    public void ReadFromFlexiPacket(FlexiPacket packet) {
+        for(int i = 0; i < filters.size(); i++) {
+
+            boolean lock = packet.readBool();
+            filters.get(i).setLocked(lock);
+            if(lock) {
+                filters.get(i).Lock(packet.readItemStack());
+                LogUtils.getLogger().info("Read {} from flexipacket for slot {}", filters.get(i).GetFilter(), i);
+            }
+        }
     }
 }

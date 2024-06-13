@@ -29,10 +29,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
@@ -43,38 +45,23 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-
 // Todo:
 // - We need to prevent output handlers from being able to be input into
-// - We can leave inputs being drainable for conveniece of emptying old fluids
 // - We need to tidy up side config stuff
 // - Implement Recipe Type, Recipe Process and JEI Recipe Categories and transfer handlers
 // - Clean up print statements
 // - Enable fluid draining and filling from buckets in GUI
 // - Somehow support AE2 style click and drag to set filters from JEI
 // - add OK button to only update side config when pressed, or menu closed
-// - Implement ItemStack and FluidStack filters for locking slots
-//      - These must be saved correctly
-//      - These must be updated over the network
-//      - These must load correctly
-// - Shift clicking on fluid slots whilst unlocked should empty a fluid tank, which must be a network update
 // Data generators would be good to add too
 public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
     private final FilteredItemStackHandler inputItemHandler = new FilteredItemStackHandler(3) {
 
-        // This over-rides the ItemStackHandler method which gets called on an update.
-        // Here we call this::setChanged() which marks this block entity as dirty.
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
-
-            // WE MAY NEED TO SEND A BLOCK UPDATE IF WE WANT TO DO ANY ITEM RENDERING
-//            if(level!= null && !level.isClientSide()) {
-//                LogUtils.getLogger().info("We actually called a change here (Input Slot)");
-//                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-//            }
         }
     };
 
@@ -121,11 +108,6 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         protected void onContentsChanged() {
             setChanged();
 
-            // We do send an update here as fluids are NOT synced by forge
-//            if(level!= null && !level.isClientSide()) {
-//                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-//            }
-
             LogUtils.getLogger().warn("Contents of input fluid inventory updated");
 
             SetNetworkDirty();
@@ -137,11 +119,6 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         @Override
         protected void onContentsChanged() {
             setChanged();
-
-            // We do send an update here as fluids are NOT synced by forge
-//            if(level!= null && !level.isClientSide()) {
-//                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-//            }
 
             LogUtils.getLogger().warn("Contents of output fluid inventory updated");
 
@@ -493,6 +470,23 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
             inputItemHandler.WriteToFlexiPacket(packet);
             // Rebroadcast the change to listening clients
             AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
+        } else if (code == 37) {
+            // Get the toggled slot lock
+            int slot = msg.readInt();
+
+            inputFluidTank.ToggleSlotLock(slot);
+
+            LogUtils.getLogger().info("There was an update to slot locks on the server, slot: {}", slot);
+            FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 37);
+            inputFluidTank.WriteToFlexiPacket(packet);
+            // Rebroadcast the change to listening clients
+            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
+        } else if (code == 38) {
+            // Get the toggled slot lock
+            int slot = msg.readInt();
+
+            inputFluidTank.getTank(slot).setFluid(FluidStack.EMPTY);
+            SetNetworkDirty(); // Make sure the fluid changes is synced on next update
         }
 
         // A server update should always mark this block as dirty for saves
@@ -522,6 +516,9 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         } else if (code == 36) {
             LogUtils.getLogger().info("There was an update to slot locks on the client");
             inputItemHandler.ReadFromFlexiPacket(msg);
+        } else if (code == 37) {
+            LogUtils.getLogger().info("There was an update to slot locks on the client");
+            inputFluidTank.ReadFromFlexiPacket(msg);
         }
     }
 

@@ -1,10 +1,15 @@
 package net.astr0.astech.block;
 
+import com.mojang.logging.LogUtils;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
 import net.astr0.astech.network.INetworkedMachine;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -83,6 +88,24 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
         if(level!= null && !level.isClientSide()) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }
+    }
+
+
+    // Called by our block update logic, which occurs when the inventory is updated
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+
+        // This created a Packet to update clients, if left unspecified,
+        // it searches 'this' for  getUpdateTag, which will save the current block tags
+        // and send those. These are the block tags saved by saveAdditional()
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        LogUtils.getLogger().info("A block update tag was requested");
+        return saveWithoutMetadata();
     }
 
     @Override

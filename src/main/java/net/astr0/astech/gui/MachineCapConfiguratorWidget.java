@@ -1,14 +1,21 @@
 package net.astr0.astech.gui;
 
 import com.mojang.logging.LogUtils;
+import net.astr0.astech.BlockUtils;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.SidedConfig;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.util.*;
@@ -36,6 +43,7 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
         public TintColor COLOR = new TintColor(255, 255, 255);
         public final int x;
         public final int y;
+        ItemStack itemToRender;
 
         public Direction dir;
 
@@ -43,10 +51,10 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
             return SLOT_NAME + TYPE_STRING;
         }
 
-        public SlotSetting(Direction dir, int x, int y) {
+        public SlotSetting(Direction dir, ItemStack item, int x, int y) {
             this.x = x;
             this.y = y;
-
+            itemToRender = item;
             switch (dir) {
                 case DOWN -> this.SLOT_NAME = "Bottom: ";
                 case UP -> this.SLOT_NAME = "Top: ";
@@ -64,17 +72,38 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
 
     public int GetMode() {return this.mode;}
 
+    private ItemStack backBlockItem = null;
+    private ItemStack frontBlockItem = null;
+    private ItemStack leftBlockItem = null;
+    private ItemStack rightBlockItem = null;
+    private ItemStack topBlockItem = null;
+    private ItemStack bottomBlockItem = null;
+
     public MachineCapConfiguratorWidget(int pX, int pY, AbstractMachineBlockEntity be) {
         super(pX, pY, 0, 0, Component.empty());
 
+        BlockPos pos = be.getBlockPos();
+        Level lvl = be.getLevel();
+
+        if(lvl != null) {
+            BlockState[] lateralStates = BlockUtils.getSurroundingBlocks(lvl, pos, be.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
+
+            frontBlockItem = new ItemStack(lateralStates[0].getBlock().asItem());
+            backBlockItem = new ItemStack(lateralStates[1].getBlock().asItem());
+            leftBlockItem = new ItemStack(lateralStates[3].getBlock().asItem());
+            rightBlockItem = new ItemStack(lateralStates[2].getBlock().asItem());
+            topBlockItem = new ItemStack(lvl.getBlockState(pos.above()).getBlock().asItem());
+            bottomBlockItem = new ItemStack(lvl.getBlockState(pos.below()).getBlock().asItem());
+        }
+
         // HERE WE SET UP OUR MAIN GRID OF BUTTONS
         slots = new SlotSetting[] {
-                new SlotSetting(Direction.NORTH, pX, pY),
-                new SlotSetting(Direction.SOUTH, pX + 19, pY + 19),
-                new SlotSetting(Direction.EAST, pX - 19, pY),
-                new SlotSetting(Direction.WEST, pX + 19, pY),
-                new SlotSetting(Direction.UP, pX, pY - 19),
-                new SlotSetting(Direction.DOWN, pX, pY + 19),
+                new SlotSetting(Direction.NORTH, frontBlockItem, pX, pY),
+                new SlotSetting(Direction.SOUTH, backBlockItem,pX + 19, pY + 19),
+                new SlotSetting(Direction.EAST, leftBlockItem,pX - 19, pY),
+                new SlotSetting(Direction.WEST, rightBlockItem,pX + 19, pY),
+                new SlotSetting(Direction.UP, topBlockItem,pX, pY - 19),
+                new SlotSetting(Direction.DOWN, bottomBlockItem, pX, pY + 19),
         };
 
         buttons = new ArrayList<>(6);
@@ -151,6 +180,7 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
         for (UIButton button : buttons) {
             button.Render(pGuiGraphics, pMouseX, pMouseY);
         }
+
 
         RefreshSlotUI();
     }

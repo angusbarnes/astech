@@ -5,6 +5,7 @@ import net.astr0.astech.block.SidedConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.DistExecutor;
@@ -43,7 +44,7 @@ public class FlexiPacket {
     }
 
     public FlexiPacket Copy() {
-        return new FlexiPacket(pos, code, internalBuffer);
+        return new FlexiPacket(pos, code, (FriendlyByteBuf) internalBuffer.copy());
     }
 
     public BlockPos getPos() {
@@ -122,4 +123,19 @@ public class FlexiPacket {
         buffer.writeBytes(internalBuffer.copy());
     }
 
+    public void writeBool(boolean b) {
+        internalBuffer.writeBoolean(b);
+    }
+
+    public boolean readBool() {
+        return internalBuffer.readBoolean();
+    }
+
+    public void writeItemStack(ItemStack stack) {
+        internalBuffer.writeItemStack(stack, false);
+    }
+
+    public ItemStack readItemStack() {
+        return internalBuffer.readItem();
+    }
 }

@@ -1,13 +1,20 @@
 package net.astr0.astech.block.ChemicalMixer;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.logging.LogQueues;
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.AsTech;
+import net.astr0.astech.FilteredItemStackHandler;
+import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.gui.TintColor;
 import net.astr0.astech.GraphicsUtils;
 import net.astr0.astech.gui.IconButton;
 import net.astr0.astech.gui.Icons;
 import net.astr0.astech.gui.MachineCapConfiguratorWidget;
+import net.astr0.astech.network.AsTechNetworkHandler;
+import net.astr0.astech.network.FlexiPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -21,7 +28,9 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import org.jline.utils.Log;
 import org.joml.Vector4f;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 
@@ -60,7 +69,70 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         drawFluidTankV2(guiGraphics, tank, 133, 74);
 
         renderEnergyBar(guiGraphics, 154);
+    }
 
+    @Override
+    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        boolean isShiftHeld = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ||
+                InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT);
+
+        if (!isLocked) {
+            if(isHovering(62, 18, 16, 16, pMouseX, pMouseY)) {
+                LogUtils.getLogger().info("We clicked inside the slot area");
+
+                FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 36);
+                packet.writeInt(0);
+                AsTechNetworkHandler.INSTANCE.sendToServer(packet);
+
+                return true;
+            } else if(isHovering(62, 38, 16, 16, pMouseX, pMouseY)) {
+                LogUtils.getLogger().info("We clicked inside the slot area");
+
+                FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 36);
+                packet.writeInt(1);
+                AsTechNetworkHandler.INSTANCE.sendToServer(packet);
+
+                return true;
+            } else if(isHovering(62, 58, 16, 16, pMouseX, pMouseY)) {
+                LogUtils.getLogger().info("We clicked inside the slot area");
+
+                FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 36);
+                packet.writeInt(2);
+                AsTechNetworkHandler.INSTANCE.sendToServer(packet);
+
+                return true;
+            } else if(isHovering(34, 16, 12, 58, pMouseX, pMouseY)) {
+                LogUtils.getLogger().info("We clicked inside the tank area");
+
+                if(isShiftHeld) {
+                    FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 38);
+                    packet.writeInt(0);
+                    AsTechNetworkHandler.INSTANCE.sendToServer(packet);
+                } else {
+                    FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 37);
+                    packet.writeInt(0);
+                    AsTechNetworkHandler.INSTANCE.sendToServer(packet);
+                }
+
+                return true;
+            } else if(isHovering(48, 16, 12, 58, pMouseX, pMouseY)) {
+                LogUtils.getLogger().info("We clicked inside the tank area");
+
+                if(isShiftHeld) {
+                    FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 38);
+                    packet.writeInt(1);
+                    AsTechNetworkHandler.INSTANCE.sendToServer(packet);
+                } else {
+                    FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 37);
+                    packet.writeInt(1);
+                    AsTechNetworkHandler.INSTANCE.sendToServer(packet);
+                }
+
+                return true;
+            }
+        }
+
+        return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 
     private void drawFluidTankV2(GuiGraphics guiGraphics, FluidTank tank, int x, int y) {
@@ -157,7 +229,7 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         );
     }
 
-    private boolean isShowingSettings = false;
+    private boolean isLocked = true;
     protected void setup() {
 
         MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity);
@@ -171,8 +243,7 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         IconButton LOCK_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 49, Icons.UNLOCKED, (button) -> {
             LogUtils.getLogger().info("Button 2 Pressed");
             button.setIcon(button.getIcon() == Icons.UNLOCKED ? Icons.LOCKED : Icons.UNLOCKED);
-
-            //AsTechNetworkHandler.INSTANCE.sendToServer(new NetworkedMachineUpdate(menu.blockEntity.getBlockPos()));
+            isLocked = !isLocked;
         });
 
         this.addRenderableWidget(LOCK_BUTTON);
@@ -184,34 +255,81 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, delta);
+
+
+        this.menu.blockEntity.getInputItemHandler().ifPresent(iItemHandler -> {
+            if(iItemHandler instanceof FilteredItemStackHandler filteredHandler) {
+                if (filteredHandler.checkSlot(0)){
+                    guiGraphics.blit(WIDGET_TEXTURE, this.leftPos+61, this.topPos+17, 41, 238, 18, 18);
+                    RenderSystem.setShaderColor(1f, 1f, 1f, 0.30f);
+                    guiGraphics.renderItem(filteredHandler.getFilterForSlot(0), this.leftPos+62, this.topPos+18);
+                    RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+                }
+            }
+        });
+
+        this.menu.blockEntity.getInputItemHandler().ifPresent(iItemHandler -> {
+            if(iItemHandler instanceof FilteredItemStackHandler filteredHandler) {
+                if (filteredHandler.checkSlot(1)){
+                    guiGraphics.blit(WIDGET_TEXTURE, this.leftPos+61, this.topPos+37, 41, 238, 18, 18);
+                    RenderSystem.setShaderColor(1f, 1f, 1f, 0.30f);
+                    guiGraphics.renderItem(filteredHandler.getFilterForSlot(1), this.leftPos+62, this.topPos+38);
+                    RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+                }
+            }
+        });
+
+        this.menu.blockEntity.getInputItemHandler().ifPresent(iItemHandler -> {
+            if(iItemHandler instanceof FilteredItemStackHandler filteredHandler) {
+                if (filteredHandler.checkSlot(2)){
+                    guiGraphics.blit(WIDGET_TEXTURE, this.leftPos+61, this.topPos+57, 41, 238, 18, 18);
+                    RenderSystem.setShaderColor(1f, 1f, 1f, 0.30f);
+                    guiGraphics.renderItem(filteredHandler.getFilterForSlot(2), this.leftPos+62, this.topPos+58);
+                    RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+                }
+            }
+        });
+
+        this.menu.blockEntity.getLazyInputFluidHandler().ifPresent(iFluidHandler -> {
+            if(iFluidHandler instanceof MachineFluidHandler filteredHandler) {
+                if (filteredHandler.checkSlot(0)){
+                    guiGraphics.blit(WIDGET_TEXTURE, this.leftPos+33, this.topPos+17, 61, 198, 12, 58);
+                }
+            }
+        });
+
+        this.menu.blockEntity.getLazyInputFluidHandler().ifPresent(iFluidHandler -> {
+            if(iFluidHandler instanceof MachineFluidHandler filteredHandler) {
+                if (filteredHandler.checkSlot(1)){
+                    LogUtils.getLogger().info("Attemting to blit the lock for fluid slot 1");
+                    guiGraphics.blit(WIDGET_TEXTURE, this.leftPos+47, this.topPos+17, 61, 198, 12, 58);
+                }
+            }
+        });
+
+
         renderTooltip(guiGraphics, mouseX, mouseY);
 
-        FluidTank tank = this.menu.blockEntity.getFluidInputTank(0);
-        renderTankTooltip(guiGraphics, mouseX, mouseY, tank, 34);
-
-        FluidTank tank2 = this.menu.blockEntity.getFluidInputTank(1);
-        renderTankTooltip(guiGraphics, mouseX, mouseY, tank2, 48);
-        renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
+        renderTankTooltip(guiGraphics, mouseX, mouseY, 0, 34);
+        renderTankTooltip(guiGraphics, mouseX, mouseY, 1, 48);
 
         FluidTank tank3 = this.menu.blockEntity.getFluidOutputTank();
-        renderTankTooltip(guiGraphics, mouseX, mouseY, tank2, 134);
+        renderTankTooltip(guiGraphics, mouseX, mouseY, tank3, 134);
 
         renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
 
 
-        if(isShowingSettings) {
-            renderSettingsMenu(guiGraphics);
-        }
     }
 
     ResourceLocation WIDGET_TEXTURE = new ResourceLocation(AsTech.MODID, "textures/gui/widgets.png");
-    private void renderSettingsMenu(GuiGraphics guiGraphics) {
 
-        int TOP_POS = this.topPos + 30;
-        int LEFT_POS = this.leftPos - 40;
+    private void renderTankTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, int tank_number, int x) {
+        FluidTank tank = this.menu.blockEntity.getFluidInputTank(tank_number);
+        renderTankTooltip(guiGraphics, mouseX, mouseY, tank, x);
     }
 
     private void renderTankTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, FluidTank tank, int x) {
+
         FluidStack fluidStack = tank.getFluid();
         if (fluidStack.isEmpty())
             return;

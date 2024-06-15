@@ -10,16 +10,13 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import org.spongepowered.asm.mixin.MixinEnvironment;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
 public class MachineCapConfiguratorWidget extends AbstractWidget {
@@ -36,8 +33,7 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
     private boolean SHOULD_RENDER = false;
 
 
-    public class SlotSetting {
-        public int index;
+    public static class SlotSetting {
         public String TYPE_STRING = "§7NONE";
         protected String SLOT_NAME;
         public TintColor COLOR = new TintColor(255, 255, 255);
@@ -68,16 +64,7 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
         }
     }
 
-    private SlotSetting[] slots;
-
     public int GetMode() {return this.mode;}
-
-    private ItemStack backBlockItem = null;
-    private ItemStack frontBlockItem = null;
-    private ItemStack leftBlockItem = null;
-    private ItemStack rightBlockItem = null;
-    private ItemStack topBlockItem = null;
-    private ItemStack bottomBlockItem = null;
 
     public MachineCapConfiguratorWidget(int pX, int pY, AbstractMachineBlockEntity be) {
         super(pX, pY, 0, 0, Component.empty());
@@ -85,6 +72,12 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
         BlockPos pos = be.getBlockPos();
         Level lvl = be.getLevel();
 
+        ItemStack backBlockItem = null;
+        ItemStack frontBlockItem = null;
+        ItemStack leftBlockItem = null;
+        ItemStack rightBlockItem = null;
+        ItemStack topBlockItem = null;
+        ItemStack bottomBlockItem = null;
         if(lvl != null) {
             BlockState[] lateralStates = BlockUtils.getSurroundingBlocks(lvl, pos, be.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
 
@@ -97,12 +90,12 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
         }
 
         // HERE WE SET UP OUR MAIN GRID OF BUTTONS
-        slots = new SlotSetting[] {
+        SlotSetting[] slots = new SlotSetting[]{
                 new SlotSetting(Direction.NORTH, frontBlockItem, pX, pY),
-                new SlotSetting(Direction.SOUTH, backBlockItem,pX + 19, pY + 19),
-                new SlotSetting(Direction.EAST, leftBlockItem,pX - 19, pY),
-                new SlotSetting(Direction.WEST, rightBlockItem,pX + 19, pY),
-                new SlotSetting(Direction.UP, topBlockItem,pX, pY - 19),
+                new SlotSetting(Direction.SOUTH, backBlockItem, pX + 19, pY + 19),
+                new SlotSetting(Direction.EAST, leftBlockItem, pX - 19, pY),
+                new SlotSetting(Direction.WEST, rightBlockItem, pX + 19, pY),
+                new SlotSetting(Direction.UP, topBlockItem, pX, pY - 19),
                 new SlotSetting(Direction.DOWN, bottomBlockItem, pX, pY + 19),
         };
 
@@ -138,7 +131,7 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
         machine = be;
     }
 
-    private HashMap<Integer, int[]> slotSettings = new HashMap<>(2);
+    private final HashMap<Integer, int[]> slotSettings = new HashMap<>(2);
 
     private void incrementSlotType(Supplier<Integer> _mode, Direction dir) {
 
@@ -171,7 +164,7 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
     public record SlotFormat(TintColor color, String slotType) {}
 
     @Override
-    protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    protected void renderWidget(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
 
         if (!SHOULD_RENDER) return;
 
@@ -181,7 +174,6 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
             button.Render(pGuiGraphics, pMouseX, pMouseY);
         }
 
-
         RefreshSlotUI();
     }
 
@@ -190,12 +182,17 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
     }
 
     @Override
-    protected void updateWidgetNarration(NarrationElementOutput pNarrationElementOutput) {
+    protected void updateWidgetNarration(@NotNull NarrationElementOutput pNarrationElementOutput) {
 
     }
 
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+
+        // If the menu is hidden, we don't handle any clicks
+        if(!SHOULD_RENDER) return false;
+
+
         if (pButton == 0) {
             for (UIButton button : buttons) {
                 if(button.isMouseWithinBounds((int)pMouseX, (int)pMouseY)) {
@@ -211,11 +208,5 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
         }
 
         return super.mouseClicked(pMouseX, pMouseY, pButton);
-    }
-
-    protected void onConfigUpdated() {
-        // This function should be called any time a button icon is clicked
-        // We should update our internal state, then call a callback from our
-        // owner object which can dispatch a network update
     }
 }

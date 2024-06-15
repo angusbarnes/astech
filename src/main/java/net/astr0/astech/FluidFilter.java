@@ -1,7 +1,6 @@
 package net.astr0.astech;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidFilter {

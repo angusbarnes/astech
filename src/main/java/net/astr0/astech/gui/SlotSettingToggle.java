@@ -2,13 +2,12 @@ package net.astr0.astech.gui;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class SlotSettingToggle extends UIButton{
 
     MachineCapConfiguratorWidget.SlotSetting settings;
-    private ItemStack item;
+    private final ItemStack item;
     public SlotSettingToggle(MachineCapConfiguratorWidget.SlotSetting settings, OnPress onPress) {
         super(Icons.BLANK, settings.COLOR, settings.x, settings.y, settings.GetFormattedTooltip(), onPress);
 

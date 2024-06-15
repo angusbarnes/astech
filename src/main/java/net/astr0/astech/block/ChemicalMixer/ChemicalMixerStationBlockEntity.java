@@ -13,9 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -25,11 +22,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -42,7 +36,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.Optional;
 
 // Todo:
@@ -51,9 +44,13 @@ import java.util.Optional;
 // - Implement Recipe Type, Recipe Process and JEI Recipe Categories and transfer handlers
 // - Clean up print statements
 // - Enable fluid draining and filling from buckets in GUI
+//  ---> this might involve some custom fluidSlot type bullshit. IDK how to do that
 // - Somehow support AE2 style click and drag to set filters from JEI
 // - add OK button to only update side config when pressed, or menu closed
 // Data generators would be good to add too
+// Add fluid texture variations
+// Tie hazardous materials to actual underlying data
+// Fix energy percentage synced by ContainerData
 public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
@@ -151,7 +148,7 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         // Init our simple container data
         // this is synced for us every tick automatically,
         // this is limited to the signed short range
-        // ItemHandlerSlot's in the menu screen sync the item stacks for us
+        // ItemHandlerSlot's in the menu screen sync the item stacks for us.
         // We should use this for basic, simply serializable data.
         // Energy level, and crafting progress for example
         // Fluid updates and setting changes should be reflected by sending custom packets
@@ -211,7 +208,7 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
 
         if (side == null) {
-            return super.getCapability(cap, side);
+            return super.getCapability(cap, null);
         }
 
         side = DirectionTranslator.translate(side, this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
@@ -276,6 +273,7 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         for(int i = 0; i < inputItemHandler.getSlots(); i++) {
             inventory.setItem(i, inputItemHandler.getStackInSlot(i));
         }
+
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 

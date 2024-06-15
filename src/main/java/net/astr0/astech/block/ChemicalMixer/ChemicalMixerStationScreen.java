@@ -2,51 +2,47 @@ package net.astr0.astech.block.ChemicalMixer;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.logging.LogQueues;
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.AsTech;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.Fluid.MachineFluidHandler;
-import net.astr0.astech.gui.TintColor;
+import net.astr0.astech.gui.*;
 import net.astr0.astech.GraphicsUtils;
-import net.astr0.astech.gui.IconButton;
-import net.astr0.astech.gui.Icons;
-import net.astr0.astech.gui.MachineCapConfiguratorWidget;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
-import org.jline.utils.Log;
-import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
-
 import java.util.*;
 
 // This only gets registered on the client side
 public class ChemicalMixerStationScreen extends AbstractContainerScreen<ChemicalMixerStationMenu> {
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(AsTech.MODID, "textures/gui/chemical_mixer.png");
+    private static final ResourceLocation WIDGET_TEXTURE =
+            new ResourceLocation(AsTech.MODID, "textures/gui/widgets.png");
 
     public ChemicalMixerStationScreen(ChemicalMixerStationMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }
 
+    FluidTankSlot inputTankSlot1;
+    FluidTankSlot inputTankSlot2;
+    FluidTankSlot outputTankSlot;
+
     @Override
     protected void init() {
         super.init();
         setup();
+
+        inputTankSlot1 = new FluidTankSlot(this.menu.blockEntity.getFluidInputTank(0), 0, this.leftPos + 34, this.topPos + 18);
+        inputTankSlot2 = new FluidTankSlot(this.menu.blockEntity.getFluidInputTank(1), 1, this.leftPos + 48, this.topPos + 18);
+        outputTankSlot = new FluidTankSlot(this.menu.blockEntity.getFluidOutputTank(), 2, this.leftPos + 133, this.topPos + 18);
     }
 
     @Override
@@ -59,14 +55,9 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
 
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
-        FluidTank tank = this.menu.blockEntity.getFluidInputTank(0);
-        drawFluidTankV2(guiGraphics, tank, 34, 74);
-
-        tank = this.menu.blockEntity.getFluidInputTank(1);
-        drawFluidTankV2(guiGraphics, tank, 48, 74);
-
-        tank = this.menu.blockEntity.getFluidOutputTank();
-        drawFluidTankV2(guiGraphics, tank, 133, 74);
+        inputTankSlot1.renderBackground(guiGraphics);
+        inputTankSlot2.renderBackground(guiGraphics);
+        outputTankSlot.renderBackground(guiGraphics);
 
         renderEnergyBar(guiGraphics, 154);
     }
@@ -101,33 +92,9 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
                 AsTechNetworkHandler.INSTANCE.sendToServer(packet);
 
                 return true;
-            } else if(isHovering(34, 16, 12, 58, pMouseX, pMouseY)) {
-                LogUtils.getLogger().info("We clicked inside the tank area");
-
-                if(isShiftHeld) {
-                    FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 38);
-                    packet.writeInt(0);
-                    AsTechNetworkHandler.INSTANCE.sendToServer(packet);
-                } else {
-                    FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 37);
-                    packet.writeInt(0);
-                    AsTechNetworkHandler.INSTANCE.sendToServer(packet);
-                }
-
+            } else if(inputTankSlot1.handleClick(this.menu.blockEntity, pMouseX, pMouseY, pButton, isShiftHeld)) {
                 return true;
-            } else if(isHovering(48, 16, 12, 58, pMouseX, pMouseY)) {
-                LogUtils.getLogger().info("We clicked inside the tank area");
-
-                if(isShiftHeld) {
-                    FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 38);
-                    packet.writeInt(1);
-                    AsTechNetworkHandler.INSTANCE.sendToServer(packet);
-                } else {
-                    FlexiPacket packet = new FlexiPacket(this.menu.blockEntity.getBlockPos(), 37);
-                    packet.writeInt(1);
-                    AsTechNetworkHandler.INSTANCE.sendToServer(packet);
-                }
-
+            } else if(inputTankSlot2.handleClick(this.menu.blockEntity, pMouseX, pMouseY, pButton, isShiftHeld)) {
                 return true;
             }
         }
@@ -135,70 +102,10 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
         return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 
-    private void drawFluidTankV2(GuiGraphics guiGraphics, FluidTank tank, int x, int y) {
-        FluidStack fluidStack = tank.getFluid();
-        if (fluidStack.isEmpty())
-            return;
-
-        int fluidHeight = getFluidHeight(tank);
-
-        IClientFluidTypeExtensions fluidTypeExtensions = IClientFluidTypeExtensions.of(fluidStack.getFluid());
-        ResourceLocation stillTexture = fluidTypeExtensions.getStillTexture(fluidStack);
-
-        if (stillTexture == null) return;
-
-        TextureAtlasSprite sprite = this.minecraft.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(stillTexture);
-        Vector4f tintColor = new TintColor(fluidTypeExtensions.getTintColor(fluidStack)).getAsNormalisedRenderColor();
-
-        guiGraphics.setColor(tintColor.x, tintColor.y, tintColor.z, tintColor.w);
-        GraphicsUtils.drawTiledSprite(guiGraphics, this.leftPos + x, this.topPos + y, 0, 10, getFluidHeight(tank), sprite, 16, 16, 1);
-        guiGraphics.setColor(1f, 1f, 1f, 1f);
-    }
-
-    private void drawFluidTank(GuiGraphics guiGraphics, FluidTank tank, int x) {
-        FluidStack fluidStack = tank.getFluid();
-        if (fluidStack.isEmpty())
-            return;
-
-        int fluidHeight = getFluidHeight(tank);
-
-        IClientFluidTypeExtensions fluidTypeExtensions = IClientFluidTypeExtensions.of(fluidStack.getFluid());
-        ResourceLocation stillTexture = fluidTypeExtensions.getStillTexture(fluidStack);
-
-        if (stillTexture == null) return;
-
-        TextureAtlasSprite sprite = this.minecraft.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(stillTexture);
-        int tintColor = fluidTypeExtensions.getTintColor(fluidStack);
-        float alpha = ((tintColor >> 24) & 0xFF) / 255.0f;
-        float red = ((tintColor >> 16) & 0xFF) / 255.0f;
-        float green = ((tintColor >> 8) & 0xFF) / 255.0f;
-        float blue = ((tintColor) & 0xFF) / 255.0f;
-
-        guiGraphics.setColor(red, green, blue, alpha);
-
-        guiGraphics.blit(
-                this.leftPos + x,
-                getFluidY(fluidHeight),
-                0,
-                10,
-                fluidHeight,
-                sprite
-        );
-
-        guiGraphics.setColor(1f, 1f, 1f, 1f);
-    }
-
-    private int getFluidY(int fluidHeight) {
-        return this.topPos + 18 + (56-fluidHeight);
-    }
-
     private int getEnergyY(int energyHeight) {
         return this.topPos + 9 + (69-energyHeight);
     }
 
-    private static int getFluidHeight(IFluidTank tank) {
-        return  (int) (56 * ((float)tank.getFluidAmount()/tank.getCapacity()));
-    }
 
     private static int getEnergyHeight(int max, int value) {
         return  (int) (69 * ((float)value/max));
@@ -307,41 +214,13 @@ public class ChemicalMixerStationScreen extends AbstractContainerScreen<Chemical
             }
         });
 
-
         renderTooltip(guiGraphics, mouseX, mouseY);
 
-        renderTankTooltip(guiGraphics, mouseX, mouseY, 0, 34);
-        renderTankTooltip(guiGraphics, mouseX, mouseY, 1, 48);
-
-        FluidTank tank3 = this.menu.blockEntity.getFluidOutputTank();
-        renderTankTooltip(guiGraphics, mouseX, mouseY, tank3, 134);
+        inputTankSlot1.renderTooltip(guiGraphics, mouseX, mouseY);
+        inputTankSlot2.renderTooltip(guiGraphics, mouseX, mouseY);
+        outputTankSlot.renderTooltip(guiGraphics, mouseX, mouseY);
 
         renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
-
-
-    }
-
-    ResourceLocation WIDGET_TEXTURE = new ResourceLocation(AsTech.MODID, "textures/gui/widgets.png");
-
-    private void renderTankTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, int tank_number, int x) {
-        FluidTank tank = this.menu.blockEntity.getFluidInputTank(tank_number);
-        renderTankTooltip(guiGraphics, mouseX, mouseY, tank, x);
-    }
-
-    private void renderTankTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, FluidTank tank, int x) {
-
-        FluidStack fluidStack = tank.getFluid();
-        if (fluidStack.isEmpty())
-            return;
-
-        int fluidHeight = getFluidHeight(tank);
-
-        if(!isHovering(x, getFluidY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
-
-        List<Component> tips = new ArrayList<>(2);
-        tips.add(MutableComponent.create(fluidStack.getDisplayName().getContents()));
-        tips.add(Component.literal("§7%s/%s mB".formatted(tank.getFluidAmount(), tank.getCapacity())));
-        guiGraphics.renderComponentTooltip(this.font, tips, mouseX, mouseY);
     }
 
     private void renderEnergyTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, int x) {

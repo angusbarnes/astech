@@ -16,9 +16,9 @@ import java.util.function.Supplier;
 
 public class FlexiPacket {
 
-    private BlockPos pos;
-    private int code;
-    private FriendlyByteBuf internalBuffer;
+    private final BlockPos pos;
+    private final int code;
+    private final FriendlyByteBuf internalBuffer;
 
     public FlexiPacket(BlockPos position, int message_code) {
         pos = position;

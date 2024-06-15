@@ -12,43 +12,33 @@ public class BlockUtils {
         BlockState[] surroundingBlocks = new BlockState[4]; // Array to store the 4 surrounding blocks
 
         // Define the relative positions based on the orientation
-        BlockPos[] relativePositions;
-        switch (orientation) {
-            case NORTH:
-                relativePositions = new BlockPos[]{
-                        targetPos.north(), // Front
-                        targetPos.south(), // Back
-                        targetPos.west(),  // Left
-                        targetPos.east()   // Right
-                };
-                break;
-            case SOUTH:
-                relativePositions = new BlockPos[]{
-                        targetPos.south(), // Front
-                        targetPos.north(), // Back
-                        targetPos.east(),  // Left
-                        targetPos.west()   // Right
-                };
-                break;
-            case WEST:
-                relativePositions = new BlockPos[]{
-                        targetPos.west(),  // Front
-                        targetPos.east(),  // Back
-                        targetPos.south(), // Left
-                        targetPos.north()  // Right
-                };
-                break;
-            case EAST:
-                relativePositions = new BlockPos[]{
-                        targetPos.east(),  // Front
-                        targetPos.west(),  // Back
-                        targetPos.north(), // Left
-                        targetPos.south()  // Right
-                };
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported orientation: " + orientation);
-        }
+        BlockPos[] relativePositions = switch (orientation) {
+            case NORTH -> new BlockPos[]{
+                    targetPos.north(), // Front
+                    targetPos.south(), // Back
+                    targetPos.west(),  // Left
+                    targetPos.east()   // Right
+            };
+            case SOUTH -> new BlockPos[]{
+                    targetPos.south(), // Front
+                    targetPos.north(), // Back
+                    targetPos.east(),  // Left
+                    targetPos.west()   // Right
+            };
+            case WEST -> new BlockPos[]{
+                    targetPos.west(),  // Front
+                    targetPos.east(),  // Back
+                    targetPos.south(), // Left
+                    targetPos.north()  // Right
+            };
+            case EAST -> new BlockPos[]{
+                    targetPos.east(),  // Front
+                    targetPos.west(),  // Back
+                    targetPos.north(), // Left
+                    targetPos.south()  // Right
+            };
+            default -> throw new IllegalArgumentException("Unsupported orientation: " + orientation);
+        };
 
         // Retrieve the blocks at the relative positions
         for (int i = 0; i < relativePositions.length; i++) {

@@ -1,7 +1,6 @@
 package net.astr0.astech.block;
 
 import net.astr0.astech.AsTech;
-import net.astr0.astech.block.ChemicalMixer.ChemicalMixerStationBlock;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerStationBlockEntity;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;

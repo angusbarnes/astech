@@ -1,10 +1,7 @@
 package net.astr0.astech.gui;
 
-import com.mojang.datafixers.kinds.IdF;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
@@ -12,7 +9,7 @@ public class UIButton {
 
     private Icons.Icon iconToDraw;
     private TintColor color;
-    private net.minecraft.client.gui.Font font;
+    private final net.minecraft.client.gui.Font font;
     private int x;
     private int y;
 

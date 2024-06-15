@@ -30,7 +30,7 @@ public class FilteredItemStackHandler extends ItemStackHandler {
             // I think we should be allowed to send the slot index over the network
             // to lock the underling itemhandler.
             // If the fields only exist correctly on the server then we might see some strange behaviour
-            // when clicking items into slots (See if maybe they rebound??
+            // when clicking items into slots (See if maybe they rebound??)
             // It will be safest to sync filter updates back to tracking clients after applying the lock
 
             // Visually, the UI can check with the itemHandler to see if this slot has a lock

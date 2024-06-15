@@ -1,13 +1,11 @@
 package net.astr0.astech.Fluid;
 
 import com.mojang.logging.LogUtils;
-import net.astr0.astech.BasicFilter;
 import net.astr0.astech.FluidFilter;
 import net.astr0.astech.network.FlexiPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;

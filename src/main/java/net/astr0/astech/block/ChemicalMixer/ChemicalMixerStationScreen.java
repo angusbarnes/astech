@@ -1,6 +1,7 @@
 package net.astr0.astech.block.ChemicalMixer;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.AsTech;

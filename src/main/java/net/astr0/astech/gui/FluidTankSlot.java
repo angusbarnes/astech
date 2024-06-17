@@ -74,6 +74,8 @@ public class FluidTankSlot {
         guiGraphics.renderComponentTooltip(this.font, tips, mouseX, mouseY);
     }
 
+    public void render() {}
+
     public boolean handleClick(BlockEntity be, double mouseX, double mouseY, int mouseButton, boolean isShifting) {
         // We will not handle any click events that occur outside our bounds
         if(!isHovering(this.x, this.y, 10, 58, mouseX, mouseY)) return false;

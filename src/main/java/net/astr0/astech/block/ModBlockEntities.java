@@ -1,7 +1,7 @@
 package net.astr0.astech.block;
 
 import net.astr0.astech.AsTech;
-import net.astr0.astech.block.ChemicalMixer.ChemicalMixerStationBlockEntity;
+import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlockEntity;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,9 +18,9 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(GemPolishingStationBlockEntity::new,
                             ModBlocks.GEM_POLISHING_STATION.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<ChemicalMixerStationBlockEntity>> CHEMICAL_MIXER_BE =
+    public static final RegistryObject<BlockEntityType<ChemicalMixerBlockEntity>> CHEMICAL_MIXER_BE =
             BLOCK_ENTITIES.register("chemical_mixer", () ->
-                    BlockEntityType.Builder.of(ChemicalMixerStationBlockEntity::new,
+                    BlockEntityType.Builder.of(ChemicalMixerBlockEntity::new,
                             ModBlocks.CHEMICAL_MIXER.get()).build(null));
 
 

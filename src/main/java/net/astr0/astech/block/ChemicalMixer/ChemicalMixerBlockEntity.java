@@ -5,10 +5,13 @@ import net.astr0.astech.CustomEnergyStorage;
 import net.astr0.astech.DirectionTranslator;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.Fluid.MachineFluidHandler;
-import net.astr0.astech.block.*;
+import net.astr0.astech.block.AbstractMachineBlockEntity;
+import net.astr0.astech.block.ModBlockEntities;
+import net.astr0.astech.block.SidedConfig;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
-import net.astr0.astech.recipe.GemPolishingRecipe;
+import net.astr0.astech.recipe.ChemicalMixerRecipe;
+import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -36,7 +39,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import java.util.Optional;
+
+import java.util.List;
 
 // Todo:
 // - We need to prevent output handlers from being able to be input into
@@ -44,14 +48,14 @@ import java.util.Optional;
 // - Implement Recipe Type, Recipe Process and JEI Recipe Categories and transfer handlers
 // - Clean up print statements
 // - Enable fluid draining and filling from buckets in GUI
-//  ---> this might involve some custom fluidSlot type bullshit. IDK how to do that
+//   ---> this might involve some custom fluidSlot type bullshit. IDK how to do that
 // - Somehow support AE2 style click and drag to set filters from JEI
 // - add OK button to only update side config when pressed, or menu closed
 // Data generators would be good to add too
 // Add fluid texture variations
 // Tie hazardous materials to actual underlying data
 // Fix energy percentage synced by ContainerData
-public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity {
+public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
     private final FilteredItemStackHandler inputItemHandler = new FilteredItemStackHandler(3) {
@@ -123,7 +127,7 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         }
     };
 
-    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(40000, 500, 0);
+    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(300000, 750, 0);
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 3;
@@ -142,7 +146,7 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
     private int progress = 0;
     private int maxProgress = 78;
 
-    public ChemicalMixerStationBlockEntity(BlockPos pPos, BlockState pBlockState) {
+    public ChemicalMixerBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.CHEMICAL_MIXER_BE.get(), pPos, pBlockState);
 
         // Init our simple container data
@@ -163,8 +167,8 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
                     // but we may set the energy higher than the 32,000 limit.
                     // TODO: Turn this into a synced percentage and reconvert to relative amount on client side
                     case 1 -> energyStorage.getEnergyStored();
-                    case 2 -> ChemicalMixerStationBlockEntity.this.progress;
-                    case 3 -> ChemicalMixerStationBlockEntity.this.maxProgress;
+                    case 2 -> ChemicalMixerBlockEntity.this.progress;
+                    case 3 -> ChemicalMixerBlockEntity.this.maxProgress;
                     default -> throw new UnsupportedOperationException("Unexpected value: " + pIndex);
                 };
             }
@@ -172,9 +176,9 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 1 -> ChemicalMixerStationBlockEntity.this.energyStorage.setEnergy(pValue);
-                    case 2 -> ChemicalMixerStationBlockEntity.this.progress = pValue;
-                    case 3 -> ChemicalMixerStationBlockEntity.this.maxProgress = pValue;
+                    case 1 -> ChemicalMixerBlockEntity.this.energyStorage.setEnergy(pValue);
+                    case 2 -> ChemicalMixerBlockEntity.this.progress = pValue;
+                    case 3 -> ChemicalMixerBlockEntity.this.maxProgress = pValue;
                 }
             }
 
@@ -287,7 +291,7 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new ChemicalMixerStationMenu(pContainerId, pPlayerInventory, this, this.data);
+        return new ChemicalMixerMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 
     @Override
@@ -335,11 +339,21 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         outputFluidTank.readFromNBT(pTag.getCompound("outputFluidTank"));
     }
 
+    private void SipPower(int amount) {
+        this.energyStorage.removeEnergy(amount);
+        setChanged();
+    }
+
     @Override
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {
 
         if(hasRecipe()) {
-            increaseCraftingProgress();
+            if(this.energyStorage.getEnergyStored() < 256) {
+                decreaseCraftingProgress();
+            } else {
+                increaseCraftingProgress();
+                SipPower(256);
+            }
 
             // every time we change some shit, call setChanged
             // This set changes ensures this block is queried for changes when the levekChunk is saved to disk
@@ -361,42 +375,83 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
     }
 
     private void craftItem() {
-        Optional<GemPolishingRecipe> recipe = getCurrentRecipe();
-        ItemStack result = recipe.get().getResultItem(null);
+        ChemicalMixerRecipe recipe = getRecipe();
 
-        this.inputItemHandler.extractItem(INPUT_SLOT, 2, false);
+        if(recipe == null) return;
 
-        this.inputItemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
-                this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+        LogUtils.getLogger().info("Crafting Item....");
+
+        this.inputItemHandler.extractItem(0, 1, false);
+        this.inputItemHandler.extractItem(1, 1, false);
+        this.inputItemHandler.extractItem(2, 1, false);
+
+        int tank0consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(0));
+        int tank1consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(1));
+
+        inputFluidTank.getTank(0).drain(tank0consumed, IFluidHandler.FluidAction.EXECUTE);
+        inputFluidTank.getTank(1).drain(tank1consumed, IFluidHandler.FluidAction.EXECUTE);
+
+        ItemStack result = recipe.getOutputItem();
+
+        if(result != null && !result.isEmpty()) {
+            this.outputItemHandler.setStackInSlot(0, new ItemStack(result.getItem(),
+                    this.outputItemHandler.getStackInSlot(0).getCount() + result.getCount()));
+        }
     }
 
     private boolean hasRecipe() {
-        Optional<GemPolishingRecipe> recipe = getCurrentRecipe();
+        ChemicalMixerRecipe recipe = getRecipe();
 
-        if(recipe.isEmpty()) {
+        if(recipe == null) {
             return false;
         }
-        ItemStack result = recipe.get().getResultItem(getLevel().registryAccess());
+        ItemStack result = recipe.getOutputItem();
 
-        return canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
+        return canInsertAmountIntoOutputSlot(result.getCount())
+                && canInsertItemIntoOutputSlot(result.getItem())
+                && isOutputFluidValid(recipe.getOutputFluid());
     }
 
-    private Optional<GemPolishingRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(this.inputItemHandler.getSlots());
-        for(int i = 0; i < inputItemHandler.getSlots(); i++) {
-            inventory.setItem(i, this.inputItemHandler.getStackInSlot(i));
+    private ChemicalMixerRecipe cachedRecipe = null;
+    private ChemicalMixerRecipe getRecipe() {
+
+        ItemStack[] inputs = new ItemStack[] { inputItemHandler.getStackInSlot(0), inputItemHandler.getStackInSlot(1), inputItemHandler.getStackInSlot(2) };
+
+        if(cachedRecipe != null && cachedRecipe.matches(inputFluidTank.getFluidInTank(0), inputFluidTank.getFluidInTank(1), inputs)) {
+            return cachedRecipe;
         }
 
-        return this.level.getRecipeManager().getRecipeFor(GemPolishingRecipe.Type.INSTANCE, inventory, level);
+        List<ChemicalMixerRecipe> recipes = this.level.getRecipeManager().getAllRecipesFor(ModRecipes.CHEMICAL_MIXER_RECIPE_TYPE.get());
+
+        for(ChemicalMixerRecipe recipe : recipes) {
+            if(recipe.matches(inputFluidTank.getFluidInTank(0), inputFluidTank.getFluidInTank(1), inputs)) {
+                cachedRecipe = recipe;
+                return recipe;
+            }
+        }
+
+        cachedRecipe = null;
+        return null;
+    }
+
+    private boolean isOutputFluidValid(FluidStack output) {
+
+        FluidStack stack = outputFluidTank.getFluidInTank(0);
+
+        boolean result = (stack.isEmpty() || stack.containsFluid(output)) && stack.getAmount() + output.getAmount() <= inputFluidTank.getTankCapacity(0);
+
+        //LogUtils.getLogger().info("Comparing {} mB of {} with {} mB of {} with result: {}", output.getAmount(), output.getFluid(), stack.getAmount(), stack.getFluid(), result);
+
+        return result;
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {
-        return this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).is(item);
+        return this.outputItemHandler.getStackInSlot(0).isEmpty() || this.outputItemHandler.getStackInSlot(0).is(item);
     }
 
 
     private boolean canInsertAmountIntoOutputSlot(int count) {
-        return this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + count <= this.inputItemHandler.getStackInSlot(OUTPUT_SLOT).getMaxStackSize();
+        return this.outputItemHandler.getStackInSlot(0).getCount() + count <= this.outputItemHandler.getStackInSlot(0).getMaxStackSize();
     }
 
     private boolean hasProgressFinished() {
@@ -405,6 +460,12 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
 
     private void increaseCraftingProgress() {
         progress++;
+    }
+
+    private void decreaseCraftingProgress() {
+        progress--;
+
+        if(progress < 0) progress = 0;
     }
 
     public FluidTank getFluidInputTank(int i) {
@@ -427,14 +488,17 @@ public class ChemicalMixerStationBlockEntity extends AbstractMachineBlockEntity 
         return lazyOutputItemHandler;
     }
 
+    public MachineFluidHandler getInputFluidHandler() {
+        return inputFluidTank;
+    }
+
+    public FilteredItemStackHandler getInputStackHandler() {
+        return inputItemHandler;
+    }
+
     @Override
     public void updateServer(FlexiPacket msg) {
 
-        //TODO: Invesitgate why this was working without caching the message first,
-        //      My guess is that reading must just move a read pointer and this is not
-        //      serialised to the the encode function so when it is rebroadcast clients
-        //      init their own read pointers to 0
-        //FlexiPacket cache = msg.Copy();
         int code = msg.GetCode();
 
         // Throw if we don't have loaded level on server

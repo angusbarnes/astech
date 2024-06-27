@@ -6,8 +6,9 @@ import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.astr0.astech.AsTech;
-import net.astr0.astech.block.GemPolisher.GemPolishingStationScreen;
-import net.astr0.astech.recipe.GemPolishingRecipe;
+import net.astr0.astech.block.ChemicalMixer.ChemicalMixerScreen;
+import net.astr0.astech.recipe.ChemicalMixerRecipe;
+import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -23,20 +24,20 @@ public class AsTechJEIPlugin implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
-        registration.addRecipeCategories(new GemPolishingCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new ChemicalMixerCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
 
-        List<GemPolishingRecipe> polishingRecipes = recipeManager.getAllRecipesFor(GemPolishingRecipe.Type.INSTANCE);
-        registration.addRecipes(GemPolishingCategory.GEM_POLISHING_TYPE, polishingRecipes);
+        List<ChemicalMixerRecipe> polishingRecipes = recipeManager.getAllRecipesFor(ModRecipes.CHEMICAL_MIXER_RECIPE_TYPE.get());
+        registration.addRecipes(ChemicalMixerCategory.CHEMICAL_MIXER_TYPE, polishingRecipes);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        registration.addRecipeClickArea(GemPolishingStationScreen.class, 85, 30, 20, 30,
-                GemPolishingCategory.GEM_POLISHING_TYPE);
+        registration.addRecipeClickArea(ChemicalMixerScreen.class, 85, 30, 20, 30,
+                ChemicalMixerCategory.CHEMICAL_MIXER_TYPE);
     }
 }

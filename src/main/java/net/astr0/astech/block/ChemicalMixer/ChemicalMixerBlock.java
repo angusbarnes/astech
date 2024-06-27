@@ -9,7 +9,9 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,10 +22,10 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ChemicalMixerStationBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class ChemicalMixerBlock extends HorizontalDirectionalBlock implements EntityBlock {
     //public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
-    public ChemicalMixerStationBlock(Properties pProperties) {
+    public ChemicalMixerBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
@@ -45,10 +47,10 @@ public class ChemicalMixerStationBlock extends HorizontalDirectionalBlock implem
         if (pState.getBlock() != pNewState.getBlock()) {
 
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ChemicalMixerStationBlockEntity) {
+            if (blockEntity instanceof ChemicalMixerBlockEntity) {
                 // After safety rail checks, use our user defined function
                 // to create the dropped items
-                ((ChemicalMixerStationBlockEntity) blockEntity).drops();
+                ((ChemicalMixerBlockEntity) blockEntity).drops();
             }
         }
 
@@ -60,8 +62,8 @@ public class ChemicalMixerStationBlock extends HorizontalDirectionalBlock implem
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof ChemicalMixerStationBlockEntity) {
-                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (ChemicalMixerStationBlockEntity)entity, pPos);
+            if(entity instanceof ChemicalMixerBlockEntity) {
+                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (ChemicalMixerBlockEntity)entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
@@ -74,7 +76,7 @@ public class ChemicalMixerStationBlock extends HorizontalDirectionalBlock implem
     // Implements the EntityBlock interface, which the abstract BaseEntityBlock does not do for us
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new ChemicalMixerStationBlockEntity(pPos, pState);
+        return new ChemicalMixerBlockEntity(pPos, pState);
     }
 
     @Nullable

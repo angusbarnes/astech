@@ -1,12 +1,15 @@
 package net.astr0.astech.block;
 
 import net.astr0.astech.AsTech;
-import net.astr0.astech.block.ChemicalMixer.ChemicalMixerStationBlock;
-import net.astr0.astech.item.ModItems;
+import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlock;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlock;
+import net.astr0.astech.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -52,6 +55,6 @@ public class ModBlocks {
             () -> new GemPolishingStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
     public static final RegistryObject<Block> CHEMICAL_MIXER = registerBlock("chemical_mixer",
-            () -> new ChemicalMixerStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+            () -> new ChemicalMixerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
 }

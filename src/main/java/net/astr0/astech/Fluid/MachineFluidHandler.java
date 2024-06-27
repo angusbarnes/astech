@@ -1,6 +1,5 @@
 package net.astr0.astech.Fluid;
 
-import com.mojang.logging.LogUtils;
 import net.astr0.astech.FluidFilter;
 import net.astr0.astech.network.FlexiPacket;
 import net.minecraft.nbt.CompoundTag;
@@ -52,19 +51,16 @@ public abstract class MachineFluidHandler implements IFluidHandler {
 
     @Override
     public @NotNull FluidStack getFluidInTank(int i) {
-        LogUtils.getLogger().warn("Called getFluidInTank with: %d".formatted(i));
         return tanks[i].getFluid();
     }
 
     @Override
     public int getTankCapacity(int i) {
-        LogUtils.getLogger().warn("Called getTankCapacity with: %d".formatted(i));
         return tanks[i].getCapacity();
     }
 
     @Override
     public boolean isFluidValid(int i, @NotNull FluidStack fluidStack) {
-        LogUtils.getLogger().warn("Called isFluidValid with: %d".formatted(i));
         return tanks[i].isFluidValid(fluidStack) && filters.get(i).TestFilterForMatch(fluidStack);
     }
 
@@ -72,13 +68,11 @@ public abstract class MachineFluidHandler implements IFluidHandler {
     public int fill(FluidStack fluidStack, FluidAction fluidAction) {
 
         for (int i = 0; i < tanks.length; i++) {
-            LogUtils.getLogger().warn("In fill loop: %d".formatted(i));
             if ((fluidStack.isFluidEqual(tanks[i].getFluid())
                     || tanks[i].getFluid() == FluidStack.EMPTY
                     || tanks[i].getFluidAmount() <= 0)
                     && filters.get(i).TestFilterForMatch(fluidStack)
             ) {
-                LogUtils.getLogger().warn("Attempting to fill %d".formatted(i));
                 if(fluidAction == FluidAction.EXECUTE) onContentsChanged();
                 return tanks[i].fill(fluidStack, fluidAction);
             }
@@ -102,7 +96,6 @@ public abstract class MachineFluidHandler implements IFluidHandler {
 
     @Override
     public @NotNull FluidStack drain(int maxDrain, FluidAction fluidAction) {
-        LogUtils.getLogger().warn("Called drain with");
 
         for(FluidTank tank : tanks) {
             if(tank.getFluidAmount() > 0) {
@@ -159,8 +152,6 @@ public abstract class MachineFluidHandler implements IFluidHandler {
             {
                 FluidStack stack = FluidStack.loadFluidStackFromNBT(itemTags);
                 filters.get(slot).Lock(stack);
-
-                LogUtils.getLogger().info("Loaded slot {} with filter {}", slot, stack);
             }
         }
     }
@@ -172,7 +163,6 @@ public abstract class MachineFluidHandler implements IFluidHandler {
             packet.writeBool(lock);
             if(lock) {
                 packet.writeFluidStack(filters.get(i).GetFilter());
-                LogUtils.getLogger().info("Wrote {} to flexipacket for slot {}", filters.get(i).GetFilter(), i);
             }
         }
     }
@@ -184,7 +174,6 @@ public abstract class MachineFluidHandler implements IFluidHandler {
             filters.get(i).setLocked(lock);
             if(lock) {
                 filters.get(i).Lock(packet.readFluidStack());
-                LogUtils.getLogger().info("Read {} from flexipacket for slot {}", filters.get(i).GetFilter(), i);
             }
         }
     }

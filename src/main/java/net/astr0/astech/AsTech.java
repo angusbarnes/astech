@@ -2,7 +2,9 @@ package net.astr0.astech;
 
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.ModFluids;
-import net.astr0.astech.block.ChemicalMixer.ChemicalMixerStationScreen;
+import net.astr0.astech.block.ChemicalMixer.ChemicalMixerScreen;
+import net.astr0.astech.block.GemPolisher.GemPolishingBlockEntityRenderer;
+import net.astr0.astech.block.GemPolisher.GemPolishingStationScreen;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.gui.ModMenuTypes;
@@ -11,6 +13,7 @@ import net.astr0.astech.item.ModItems;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -29,9 +32,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.astr0.astech.block.GemPolisher.GemPolishingStationScreen;
-import net.astr0.astech.block.GemPolisher.GemPolishingBlockEntityRenderer;
 
 @Mod(AsTech.MODID)
 public class AsTech
@@ -119,7 +119,7 @@ public class AsTech
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 
             MenuScreens.register(ModMenuTypes.GEM_POLISHING_MENU.get(), GemPolishingStationScreen::new);
-            MenuScreens.register(ModMenuTypes.CHEMICAL_MIXER_MENU.get(), ChemicalMixerStationScreen::new);
+            MenuScreens.register(ModMenuTypes.CHEMICAL_MIXER_MENU.get(), ChemicalMixerScreen::new);
         }
     }
 }

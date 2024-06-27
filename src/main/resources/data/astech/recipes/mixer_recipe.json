@@ -1,0 +1,22 @@
+{
+  "type": "astech:chemical_mixer",
+  "fluid_output": {
+    "amount": 500,
+    "fluid": "minecraft:lava"
+  },
+  "inputs" : [],
+  "fluid_input1": {
+    "type": "astech:fluid",
+    "amount": 250,
+    "tag": "forge:oxygen"
+  },
+  "fluid_input2": {
+    "type": "astech:fluid",
+    "amount": 250,
+    "fluid": "minecraft:lava"
+  },
+  "item_output": {
+    "item": "minecraft:diamond"
+  },
+  "time": 300
+}

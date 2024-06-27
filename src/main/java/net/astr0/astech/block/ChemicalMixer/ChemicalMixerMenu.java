@@ -14,23 +14,23 @@ import org.jetbrains.annotations.NotNull;
 
 
 // The menu acts as the logic behind the screen, which utimately performs the screenspace drawing
-public class ChemicalMixerStationMenu extends AbstractContainerMenu {
-    public final ChemicalMixerStationBlockEntity blockEntity;
+public class ChemicalMixerMenu extends AbstractContainerMenu {
+    public final ChemicalMixerBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    public ChemicalMixerStationMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+    public ChemicalMixerMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
-    public ChemicalMixerStationMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+    public ChemicalMixerMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.CHEMICAL_MIXER_MENU.get(), pContainerId);
 
         // An inventory is a container type. I don't know why we would be checking this as I believe
         // it refers to the player inventory. I'm guessing it was probably meant to be data instead,
         // as that would correspond to the dataContainer size of two we created in the block entity
         checkContainerSize(inv, 2);
-        blockEntity = ((ChemicalMixerStationBlockEntity) entity);
+        blockEntity = ((ChemicalMixerBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
@@ -68,7 +68,7 @@ public class ChemicalMixerStationMenu extends AbstractContainerMenu {
     public int getScaledProgress() {
         int progress = this.data.get(2);
         int maxProgress = this.data.get(3);  // Max Progress
-        int progressArrowSize = 26; // This is the height in pixels of your arrow
+        int progressArrowSize = 22; // This is the height in pixels of your arrow
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }

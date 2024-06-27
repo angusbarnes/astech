@@ -104,7 +104,7 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         }
     }
 
-    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(2,24000) {
+    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(2,10000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -116,7 +116,7 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         }
     };
 
-    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(1,24000) {
+    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(1,20000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -231,7 +231,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
     public <T> LazyOptional<T> getFluidCapability(Direction side) {
         int type = sidedFluidConfig.getCap(side);
-        LogUtils.getLogger().info("Fluid cap was requested for {} side {}", type, side);
         return switch (type) {
             case SidedConfig.FLUID_INPUT -> lazyInputFluidHandler.cast();
             case SidedConfig.FLUID_OUTPUT -> lazyOutputFluidHandler.cast();
@@ -388,6 +387,8 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         int tank0consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(0));
         int tank1consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(1));
 
+        LogUtils.getLogger().info("We tried to consume {} mB and {} mB from internal tanks", tank0consumed, tank1consumed);
+
         inputFluidTank.getTank(0).drain(tank0consumed, IFluidHandler.FluidAction.EXECUTE);
         inputFluidTank.getTank(1).drain(tank1consumed, IFluidHandler.FluidAction.EXECUTE);
 
@@ -397,6 +398,14 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
             this.outputItemHandler.setStackInSlot(0, new ItemStack(result.getItem(),
                     this.outputItemHandler.getStackInSlot(0).getCount() + result.getCount()));
         }
+
+        FluidStack resultFluid = recipe.getOutputFluid();
+
+        if(resultFluid != null && !resultFluid.isEmpty()) {
+            outputFluidTank.fill(resultFluid, IFluidHandler.FluidAction.EXECUTE);
+        }
+
+        SetNetworkDirty(); // Make sure we mark this block for an update now that we changed inventory content
     }
 
     private boolean hasRecipe() {

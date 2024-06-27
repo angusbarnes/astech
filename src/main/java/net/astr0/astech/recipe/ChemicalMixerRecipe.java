@@ -101,7 +101,7 @@ public class ChemicalMixerRecipe extends AsTechRecipeBase {
     }
 
     public FluidStack getOutputFluid() {
-        return outputFluid;
+        return outputFluid.copy();
     }
 
     public ItemStack getOutputItem() {

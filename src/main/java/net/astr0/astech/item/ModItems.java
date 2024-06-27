@@ -45,8 +45,8 @@ public static final RegistryObject<AsTechMaterialItem> ETHANE_INGOT = ITEMS.regi
 public static final RegistryObject<AsTechMaterialItem> ETHANE_DUST = ITEMS.register("ethane_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ethane"));
 public static final RegistryObject<AsTechMaterialItem> PISS_WATER_INGOT = ITEMS.register("piss_water_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "piss_water"));
 public static final RegistryObject<AsTechMaterialItem> PISS_WATER_DUST = ITEMS.register("piss_water_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "piss_water"));
-public static final RegistryObject<AsTechMaterialItem> ALUMUNIUM_HYDROXIDE_INGOT = ITEMS.register("alumunium_hydroxide_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "alumunium_hydroxide"));
-public static final RegistryObject<AsTechMaterialItem> ALUMUNIUM_HYDROXIDE_DUST = ITEMS.register("alumunium_hydroxide_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "alumunium_hydroxide"));
+public static final RegistryObject<AsTechMaterialItem> ALUMINIUM_HYDROXIDE_INGOT = ITEMS.register("aluminium_hydroxide_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "aluminium_hydroxide"));
+public static final RegistryObject<AsTechMaterialItem> ALUMINIUM_HYDROXIDE_DUST = ITEMS.register("aluminium_hydroxide_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "aluminium_hydroxide"));
 public static final RegistryObject<AsTechMaterialItem> SULFURIC_ACID_INGOT = ITEMS.register("sulfuric_acid_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "sulfuric_acid"));
 public static final RegistryObject<AsTechMaterialItem> SULFURIC_ACID_DUST = ITEMS.register("sulfuric_acid_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "sulfuric_acid"));
 public static final RegistryObject<AsTechMaterialItem> AMMONIA_INGOT = ITEMS.register("ammonia_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
@@ -163,6 +163,18 @@ public static final RegistryObject<AsTechMaterialItem> XENON_INGOT = ITEMS.regis
 public static final RegistryObject<AsTechMaterialItem> XENON_DUST = ITEMS.register("xenon_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "xenon"));
 public static final RegistryObject<AsTechMaterialItem> CRYPTIC_ACID_INGOT = ITEMS.register("cryptic_acid_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "cryptic_acid"));
 public static final RegistryObject<AsTechMaterialItem> CRYPTIC_ACID_DUST = ITEMS.register("cryptic_acid_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "cryptic_acid"));
+public static final RegistryObject<AsTechMaterialItem> POLYVINYL_CHLORIDE_INGOT = ITEMS.register("polyvinyl_chloride_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "polyvinyl_chloride"));
+public static final RegistryObject<AsTechMaterialItem> POLYVINYL_CHLORIDE_DUST = ITEMS.register("polyvinyl_chloride_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "polyvinyl_chloride"));
+public static final RegistryObject<AsTechMaterialItem> HYDROFLUORIC_ACID_INGOT = ITEMS.register("hydrofluoric_acid_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "hydrofluoric_acid"));
+public static final RegistryObject<AsTechMaterialItem> HYDROFLUORIC_ACID_DUST = ITEMS.register("hydrofluoric_acid_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "hydrofluoric_acid"));
+public static final RegistryObject<AsTechMaterialItem> TRICHLOROMETHANE_INGOT = ITEMS.register("trichloromethane_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "trichloromethane"));
+public static final RegistryObject<AsTechMaterialItem> TRICHLOROMETHANE_DUST = ITEMS.register("trichloromethane_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "trichloromethane"));
+public static final RegistryObject<AsTechMaterialItem> PIRANHA_INGOT = ITEMS.register("piranha_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "piranha"));
+public static final RegistryObject<AsTechMaterialItem> PIRANHA_DUST = ITEMS.register("piranha_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "piranha"));
+public static final RegistryObject<AsTechMaterialItem> FLUOROANTIMONIC_ACID_INGOT = ITEMS.register("fluoroantimonic_acid_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "fluoroantimonic_acid"));
+public static final RegistryObject<AsTechMaterialItem> FLUOROANTIMONIC_ACID_DUST = ITEMS.register("fluoroantimonic_acid_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "fluoroantimonic_acid"));
+public static final RegistryObject<AsTechMaterialItem> STYRENE_BUTADIENE_INGOT = ITEMS.register("styrene_butadiene_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "styrene_butadiene"));
+public static final RegistryObject<AsTechMaterialItem> STYRENE_BUTADIENE_DUST = ITEMS.register("styrene_butadiene_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "styrene_butadiene"));
 
     //#end MATERIAL_REGION
 }

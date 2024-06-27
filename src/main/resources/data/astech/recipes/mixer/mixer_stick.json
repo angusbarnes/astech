@@ -1,9 +1,5 @@
 {
   "type": "astech:chemical_mixer",
-  "fluid_output": {
-    "amount": 700,
-    "fluid": "mekanism:oxygen"
-  },
   "inputs" : [
     {
       "item": "minecraft:potato"
@@ -28,6 +24,10 @@
   "item_output": {
     "item": "minecraft:stick",
     "count": 12
+  },
+  "fluid_output": {
+    "amount": 700,
+    "fluid": "mekanism:oxygen"
   },
   "time": 300
 }

@@ -41,7 +41,6 @@ public class FluidFilter {
         if(!this.isLocked) {
             return true;
         } else {
-            LogUtils.getLogger().info("Item {} was tested against {}", itemStack, this.filterFluidStack);
             return filterFluidStack.isFluidEqual(itemStack);
         }
     }

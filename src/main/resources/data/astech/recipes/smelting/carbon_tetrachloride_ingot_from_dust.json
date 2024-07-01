@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "tag": "forge:dusts/carbon_tetrachloride"
+  },
+  "result": "astech:carbon_tetrachloride_ingot"
+}

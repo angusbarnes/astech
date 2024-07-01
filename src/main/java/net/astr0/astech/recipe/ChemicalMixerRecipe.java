@@ -88,6 +88,17 @@ public class ChemicalMixerRecipe extends AsTechRecipeBase {
         return 0;
     }
 
+    public int calculateConsumedAmountItems(ItemStack input) {
+
+        for(Ingredient ingredient : inputItems) {
+            if(ingredient.test(input) && ingredient.getItems().length > 0) {
+                return ingredient.getItems()[0].getCount();
+            }
+        }
+
+        return 0;
+    }
+
     public FluidIngredient getInput1() {
         return input1;
     }

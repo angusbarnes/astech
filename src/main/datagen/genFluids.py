@@ -170,8 +170,8 @@ for chemdef in chemicals:
     plain_text_name = chemdef['Name']
     fluid_name = chemdef['MATERIAL_ID']
     fluid_text += f"""
-    public static final RegistryObject<FluidType> {fluid_name.upper()}_FLUID_TYPE = registerType("{fluid_name}_fluid", "{chemdef['Form']}", "{chemdef['Color']}");
-    public static final RegistryObject<FlowingFluid> SOURCE_{fluid_name.upper()} = FLUIDS.register("{fluid_name}_fluid",
+    public static final RegistryObject<FluidType> {fluid_name.upper()}_FLUID_TYPE = registerType("{fluid_name}", "{chemdef['Form']}", "{chemdef['Color']}");
+    public static final RegistryObject<FlowingFluid> SOURCE_{fluid_name.upper()} = FLUIDS.register("{fluid_name}",
             () -> new ForgeFlowingFluid.Source(ModFluids.{fluid_name.upper()}_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_{fluid_name.upper()} = FLUIDS.register("flowing_{fluid_name}",
             () -> new ForgeFlowingFluid.Flowing(ModFluids.{fluid_name.upper()}_FLUID_PROPERTIES));
@@ -188,7 +188,7 @@ for chemdef in chemicals:
 
     tooltips[f"tooltip.{fluid_name}.fluid"] = f"§e{chemdef['Formula']}§r"
     tooltips[f"item.astech.{fluid_name}_bucket"] = f"{plain_text_name}"
-    tooltips[f"fluid_type.astech.{fluid_name}_fluid"] = f"{'Liquid ' if chemdef['Form'] != 'gas' else ''}{plain_text_name}{' Gas' if chemdef['Form'] == 'gas' else ''}"
+    tooltips[f"fluid_type.astech.{fluid_name}"] = f"{'Liquid ' if chemdef['Form'] != 'gas' else ''}{plain_text_name}{' Gas' if chemdef['Form'] == 'gas' else ''}"
 
     layer_images(base_image_path, top_image_path, output_image_path, hex_to_rgb(chemdef["Color"]), chemdef['Form'])
 
@@ -219,6 +219,66 @@ for chemdef in chemicals:
 
     with open(f'../resources/assets/astech/models/item/{fluid_name}_dust.json', 'w') as model_file:
         model_file.write(f"{{\"parent\": \"item/generated\",\"textures\":{{\"layer0\": \"astech:item/{fluid_name}_dust\"}}}}")
+
+    with open(f"../resources/data/forge/tags/fluids/{fluid_name}.json", 'w') as fluid_tag_file:
+        fluid_tag_file.write(
+f"""{{
+    "values": [
+        "astech:{fluid_name}"
+    ]
+}}""")
+        
+    with open(f"../resources/data/forge/tags/items/dusts/{fluid_name}.json", 'w') as dust_tag_file:
+        dust_tag_file.write(
+f"""{{
+    "values": [
+        "astech:{fluid_name}_dust"
+    ]
+}}""")
+        
+    with open(f"../resources/data/forge/tags/items/ingots/{fluid_name}.json", 'w') as ingot_tag_file:
+        ingot_tag_file.write(
+f"""{{
+    "values": [
+        "astech:{fluid_name}_ingot"
+    ]
+}}""")
+        
+    with open(f"../resources/data/astech/recipes/smelting/{fluid_name}_ingot_from_dust.json", 'w') as ingot_recipe:
+        ingot_recipe.write(
+f"""{{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {{
+    "tag": "forge:dusts/{fluid_name}"
+  }},
+  "result": "astech:{fluid_name}_ingot"
+}}""")
+        
+ingot_tag_list = []
+with open("../resources/data/forge/tags/items/ingots.json", 'w') as ingot_master_file:
+    
+    values = {}
+    
+    for file in os.listdir("../resources/data/forge/tags/items/ingots"):
+        ingot_tag_list.append(f"#forge:ingots/{file.removesuffix('.json')}")
+
+    values["values"] = ingot_tag_list
+
+    json.dump(values, ingot_master_file,ensure_ascii=False, indent=4)
+
+dust_tag_list = []
+with open("../resources/data/forge/tags/items/dusts.json", 'w') as dust_master_file:
+    
+    values = {}
+    
+    for file in os.listdir("../resources/data/forge/tags/items/dusts"):
+        dust_tag_list.append(f"#forge:dusts/{file.removesuffix('.json')}")
+
+    values["values"] = dust_tag_list
+
+    json.dump(values, dust_master_file,ensure_ascii=False, indent=4)
 
 insert_text_in_region(file_path, 'FLUID_REGION', fluid_text)
 insert_text_in_region(file_path, 'RENDER_REGION', render_text)

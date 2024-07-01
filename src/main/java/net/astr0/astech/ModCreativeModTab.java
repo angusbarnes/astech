@@ -172,6 +172,12 @@ output.accept(ModItems.FLUOROANTIMONIC_ACID_INGOT.get());
 output.accept(ModItems.FLUOROANTIMONIC_ACID_DUST.get());
 output.accept(ModItems.STYRENE_BUTADIENE_INGOT.get());
 output.accept(ModItems.STYRENE_BUTADIENE_DUST.get());
+output.accept(ModItems.FLUORINE_INGOT.get());
+output.accept(ModItems.FLUORINE_DUST.get());
+output.accept(ModItems.STIPNICIUM_INGOT.get());
+output.accept(ModItems.STIPNICIUM_DUST.get());
+output.accept(ModItems.BIOLUMINESCENT_COON_JUICE_INGOT.get());
+output.accept(ModItems.BIOLUMINESCENT_COON_JUICE_DUST.get());
 
                         //#end TAB_REGION
                     }).build());

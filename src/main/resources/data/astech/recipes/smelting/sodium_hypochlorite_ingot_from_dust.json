@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "tag": "forge:dusts/sodium_hypochlorite"
+  },
+  "result": "astech:sodium_hypochlorite_ingot"
+}

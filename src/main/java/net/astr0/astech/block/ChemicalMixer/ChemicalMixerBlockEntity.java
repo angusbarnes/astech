@@ -95,8 +95,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 430);
         packet.writeInt(i);
 
-        LogUtils.getLogger().info("Side Config Updated");
-
         packet.writeSidedConfig(i == 0 ? sidedItemConfig : sidedFluidConfig);
 
         if(level != null && level.isClientSide()) {
@@ -109,8 +107,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         protected void onContentsChanged() {
             setChanged();
 
-            LogUtils.getLogger().warn("Contents of input fluid inventory updated");
-
             SetNetworkDirty();
 
         }
@@ -121,50 +117,30 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         protected void onContentsChanged() {
             setChanged();
 
-            LogUtils.getLogger().warn("Contents of output fluid inventory updated");
-
             SetNetworkDirty();
         }
     };
 
     private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(300000, 750, 0);
 
-    private static final int INPUT_SLOT = 0;
-    private static final int OUTPUT_SLOT = 3;
-
-    // This is the provider that allows networked data to be lazily updates
-    // We must invalidate this every time a change occurs so the server re-syncs
     private final LazyOptional<IItemHandler> lazyInputItemHandler = LazyOptional.of(() -> inputItemHandler);
     private final LazyOptional<IItemHandler> lazyOutputItemHandler = LazyOptional.of(() -> outputItemHandler);
-
     private final LazyOptional<IFluidHandler> lazyInputFluidHandler = LazyOptional.of(() -> inputFluidTank);
     private final LazyOptional<IFluidHandler> lazyOutputFluidHandler = LazyOptional.of(() -> outputFluidTank);
-
     private final LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
     // Container data is simple data which is synchronised by default over the network
     protected final ContainerData data;
     private int progress = 0;
-    private int maxProgress = 78;
+    private int maxProgress = 80;
 
     public ChemicalMixerBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.CHEMICAL_MIXER_BE.get(), pPos, pBlockState);
 
-        // Init our simple container data
-        // this is synced for us every tick automatically,
-        // this is limited to the signed short range
-        // ItemHandlerSlot's in the menu screen sync the item stacks for us.
-        // We should use this for basic, simply serializable data.
-        // Energy level, and crafting progress for example
-        // Fluid updates and setting changes should be reflected by sending custom packets
-        // to the client. We could do this by sending a packet every X ticks (probably 1)
-        // if we mark ourselves as having updated state. (OnContents changed from fluid for example)
         this.data = new ContainerData() {
             @Override
             public int get(int pIndex) {
                 return switch (pIndex) {
                     case 0 -> energyStorage.getMaxEnergyStored();
-                    // This will probably cause a bug, this can only sync signed shorts,
-                    // but we may set the energy higher than the 32,000 limit.
                     // TODO: Turn this into a synced percentage and reconvert to relative amount on client side
                     case 1 -> energyStorage.getEnergyStored();
                     case 2 -> ChemicalMixerBlockEntity.this.progress;
@@ -189,25 +165,16 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         };
 
         sidedItemConfig.setCap(Direction.UP, SidedConfig.ITEM_INPUT);
+        sidedItemConfig.setCap(Direction.EAST, SidedConfig.ITEM_INPUT);
+        sidedItemConfig.setCap(Direction.DOWN, SidedConfig.ITEM_OUTPUT);
+        sidedItemConfig.setCap(Direction.WEST, SidedConfig.ITEM_OUTPUT);
+
+        sidedFluidConfig.setCap(Direction.UP, SidedConfig.FLUID_INPUT);
         sidedFluidConfig.setCap(Direction.EAST, SidedConfig.FLUID_INPUT);
+        sidedFluidConfig.setCap(Direction.DOWN, SidedConfig.FLUID_OUTPUT);
+        sidedFluidConfig.setCap(Direction.WEST, SidedConfig.FLUID_OUTPUT);
     }
 
-    // This function is user defined and is used to get an ItemStack to render
-    // This only works if a rendered is used with this block
-    public ItemStack getRenderStack() {
-        if(inputItemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
-            return inputItemHandler.getStackInSlot(INPUT_SLOT);
-        } else {
-            return inputItemHandler.getStackInSlot(OUTPUT_SLOT);
-        }
-    }
-
-    // Forge API which allows for queries related to our abilities,
-    // The requesting party will call this function with their capability type.
-    // It is our job to check if we have what they are looking for our not.
-    // Don't get fancy, for performance reasons manual if-elses or switch statements are recommended
-    // THERE ARE TWO OVERLOADS FOR THIS. THE ONE SHOWN BELOW IS THE FULL IMPLEMENTATION WHICH TAKE A DIRECTIONALITY
-    // THIS CAN BE USED TO LINK SIDES TO CERTAIN ITEM OR FLUID HANDLERS
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
 
@@ -216,7 +183,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         }
 
         side = DirectionTranslator.translate(side, this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
-
 
         if(cap == ForgeCapabilities.ITEM_HANDLER) {
             return getItemCapability(side);
@@ -249,15 +215,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
     }
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-    }
-
-    // should be called when a change is made that should invalidate the cached caps of this block
-    // Seems to be working with just setChanged calls, but should be done any time some kind of updates
-    // are made to the BlockEntities caps, such as a change of config.
-    // At the moment I'm not really sure who or where this gets called from
-    @Override
     public void invalidateCaps() {
         super.invalidateCaps();
         lazyInputItemHandler.invalidate();
@@ -265,8 +222,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         lazyOutputFluidHandler.invalidate();
         lazyEnergyHandler.invalidate();
         lazyEnergyHandler.invalidate();
-
-        LogUtils.getLogger().info("Caps have been invalidated somehow");
     }
 
     // User defined helper to get a list of all the items we are holding,
@@ -338,7 +293,7 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         outputFluidTank.readFromNBT(pTag.getCompound("outputFluidTank"));
     }
 
-    private void SipPower(int amount) {
+    private void ConsumePower(int amount) {
         this.energyStorage.removeEnergy(amount);
         setChanged();
     }
@@ -351,7 +306,7 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
                 decreaseCraftingProgress();
             } else {
                 increaseCraftingProgress();
-                SipPower(256);
+                ConsumePower(256);
             }
 
             // every time we change some shit, call setChanged
@@ -378,16 +333,16 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
         if(recipe == null) return;
 
-        LogUtils.getLogger().info("Crafting Item....");
+        int itemsConsumed0 = recipe.calculateConsumedAmountItems(this.inputItemHandler.getStackInSlot(0));
+        int itemsConsumed1 = recipe.calculateConsumedAmountItems(this.inputItemHandler.getStackInSlot(1));
+        int itemsConsumed2 = recipe.calculateConsumedAmountItems(this.inputItemHandler.getStackInSlot(2));
 
-        this.inputItemHandler.extractItem(0, 1, false);
-        this.inputItemHandler.extractItem(1, 1, false);
-        this.inputItemHandler.extractItem(2, 1, false);
+        this.inputItemHandler.extractItem(0, itemsConsumed0, false);
+        this.inputItemHandler.extractItem(1, itemsConsumed1, false);
+        this.inputItemHandler.extractItem(2, itemsConsumed2, false);
 
         int tank0consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(0));
         int tank1consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(1));
-
-        LogUtils.getLogger().info("We tried to consume {} mB and {} mB from internal tanks", tank0consumed, tank1consumed);
 
         inputFluidTank.getTank(0).drain(tank0consumed, IFluidHandler.FluidAction.EXECUTE);
         inputFluidTank.getTank(1).drain(tank1consumed, IFluidHandler.FluidAction.EXECUTE);
@@ -447,9 +402,7 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
         FluidStack stack = outputFluidTank.getFluidInTank(0);
 
-        boolean result = (stack.isEmpty() || stack.containsFluid(output)) && stack.getAmount() + output.getAmount() <= inputFluidTank.getTankCapacity(0);
-
-        //LogUtils.getLogger().info("Comparing {} mB of {} with {} mB of {} with result: {}", output.getAmount(), output.getFluid(), stack.getAmount(), stack.getFluid(), result);
+        boolean result = (stack.isEmpty() || stack.containsFluid(output)) && stack.getAmount() + output.getAmount() <= outputFluidTank.getTankCapacity(0);
 
         return result;
     }
@@ -477,20 +430,12 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         if(progress < 0) progress = 0;
     }
 
-    public FluidTank getFluidInputTank(int i) {
-        return inputFluidTank.getTank(i);
-    }
-
     public FluidTank getFluidOutputTank() {
         return outputFluidTank.getTank(0);
     }
 
     public LazyOptional<IItemHandler> getInputItemHandler() {
         return lazyInputItemHandler;
-    }
-
-    public LazyOptional<IFluidHandler> getLazyInputFluidHandler() {
-        return lazyInputFluidHandler;
     }
 
     public LazyOptional<IItemHandler> getOutputItemHandler() {
@@ -536,7 +481,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
             inputItemHandler.ToggleSlotLock(slot);
 
-            LogUtils.getLogger().info("There was an update to slot locks on the server, slot: {}", slot);
             FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 36);
             inputItemHandler.WriteToFlexiPacket(packet);
             // Rebroadcast the change to listening clients
@@ -547,7 +491,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
             inputFluidTank.ToggleSlotLock(slot);
 
-            LogUtils.getLogger().info("There was an update to slot locks on the server, slot: {}", slot);
             FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 37);
             inputFluidTank.WriteToFlexiPacket(packet);
             // Rebroadcast the change to listening clients

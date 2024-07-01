@@ -60,7 +60,7 @@ Adamantium,adamantium,Ad,#cccccc,liquid,,,,,,A fictional virtually indestructibl
 Carbonadium,carbonadium,Cbd,#666666,liquid,,,,,,A malleable and resilient fictional alloy used in various sci-fi contexts.
 Radon,radon,Rn,#ffd700,gas,No,No,Yes,Radioactive,,A radioactive noble gas used in some types of cancer treatment.
 Neon,neon,Ne,#ff5ccd,gas,No,Yes,,,,A noble gas used in neon signs and high-voltage indicators.
-Argon,argon,Ar,#80dfff,gas,No,No,,,,A noble gas used in welding and as a protective atmosphere for growing silicon and germanium crystals.
+Argon,argon,Ar,#bc47ff,gas,No,No,,,,A noble gas used in welding and as a protective atmosphere for growing silicon and germanium crystals.
 Xenon,xenon,Xe,#3a79ff,gas,Yes,Yes,,,,A noble gas used in high-intensity lamps and ion propulsion systems in spacecraft.
 Cryptic Acid,cryptic_acid,§kJKSD,#DD33DD,liquid,No,No,No,,,"Hmm, what is this strange substrance"
 Polyvinyl chloride,polyvinyl_chloride,(C2H3Cl)n,#e8fffa,liquid,Yes,Yes,,,,The world's third-most widely produced synthetic polymer of plastic.
@@ -68,4 +68,7 @@ Hydrofluoric Acid,hydrofluoric_acid,HF,#7e7ecf,liquid,No,No,,,,
 Trichloromethane,trichloromethane,CHCl3,#fDfeed,liquid,No,Yes,,,,This be chloroform
 Piranha,piranha,(H2SO4)(H2O2),#f2f0d5,liquid,No,No,Yes,EXTREME,,Fully hectic acid; used similarly to aqua regia and HF
 Fluoroantimonic Acid,fluoroantimonic_acid,HSbF6,#ffffdd,liquid,No,No,Yes,EXTREME,,
-Styrene Butadiene,styrene_butadiene,C12H14,#2b2b29,,,,,,,
+Styrene Butadiene,styrene_butadiene,C12H14,#2b2b29,liquid,Yes,Yes,,,,
+Fluorine,fluorine,F,#ccffff,liquid,Yes,Yes,No,,,
+Stipnicium,stipnicium,St,#ff4245,liquid,Yes,Yes,No,,,
+Bioluminescent Coon Juice,bioluminescent_coon_juice,Organic Compound,#00ff55,liquid,Yes,Yes,No,,,

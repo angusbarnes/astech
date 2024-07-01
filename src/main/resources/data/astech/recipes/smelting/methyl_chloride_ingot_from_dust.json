@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "tag": "forge:dusts/methyl_chloride"
+  },
+  "result": "astech:methyl_chloride_ingot"
+}

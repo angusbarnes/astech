@@ -175,6 +175,12 @@ public static final RegistryObject<AsTechMaterialItem> FLUOROANTIMONIC_ACID_INGO
 public static final RegistryObject<AsTechMaterialItem> FLUOROANTIMONIC_ACID_DUST = ITEMS.register("fluoroantimonic_acid_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "fluoroantimonic_acid"));
 public static final RegistryObject<AsTechMaterialItem> STYRENE_BUTADIENE_INGOT = ITEMS.register("styrene_butadiene_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "styrene_butadiene"));
 public static final RegistryObject<AsTechMaterialItem> STYRENE_BUTADIENE_DUST = ITEMS.register("styrene_butadiene_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "styrene_butadiene"));
+public static final RegistryObject<AsTechMaterialItem> FLUORINE_INGOT = ITEMS.register("fluorine_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "fluorine"));
+public static final RegistryObject<AsTechMaterialItem> FLUORINE_DUST = ITEMS.register("fluorine_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "fluorine"));
+public static final RegistryObject<AsTechMaterialItem> STIPNICIUM_INGOT = ITEMS.register("stipnicium_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "stipnicium"));
+public static final RegistryObject<AsTechMaterialItem> STIPNICIUM_DUST = ITEMS.register("stipnicium_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "stipnicium"));
+public static final RegistryObject<AsTechMaterialItem> BIOLUMINESCENT_COON_JUICE_INGOT = ITEMS.register("bioluminescent_coon_juice_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "bioluminescent_coon_juice"));
+public static final RegistryObject<AsTechMaterialItem> BIOLUMINESCENT_COON_JUICE_DUST = ITEMS.register("bioluminescent_coon_juice_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "bioluminescent_coon_juice"));
 
     //#end MATERIAL_REGION
 }

@@ -44,7 +44,7 @@ public class ChemicalMixerCategory implements IRecipeCategory<ChemicalMixerRecip
 
     @Override
     public Component getTitle() {
-        return Component.translatable("block.tutorialmod.gem_polishing_station");
+        return Component.literal("Chemical Mixing");
     }
 
     @Override

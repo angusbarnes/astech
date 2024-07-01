@@ -4,11 +4,13 @@
     "amount": 500,
     "fluid": "minecraft:lava"
   },
-  "inputs" : [],
+  "inputs" : [{
+    "item": "minecraft:stick"
+  }],
   "fluid_input1": {
     "type": "astech:fluid",
     "amount": 250,
-    "tag": "forge:oxygen"
+    "tag": "forge:adamantium"
   },
   "fluid_input2": {
     "type": "astech:fluid",

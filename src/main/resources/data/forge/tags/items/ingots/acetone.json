@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:acetone_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:acetone_ingot"
+  ]
 }

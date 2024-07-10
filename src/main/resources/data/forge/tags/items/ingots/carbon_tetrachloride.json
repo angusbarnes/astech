@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:carbon_tetrachloride_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:carbon_tetrachloride_ingot"
+  ]
 }

@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:tetrahydrofuran_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:tetrahydrofuran_dust"
+  ]
 }

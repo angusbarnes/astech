@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:nitric_acid_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:nitric_acid_dust"
+  ]
 }

@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:hydrogen_sulfide_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:hydrogen_sulfide_dust"
+  ]
 }

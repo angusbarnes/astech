@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:propylene_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:propylene_ingot"
+  ]
 }

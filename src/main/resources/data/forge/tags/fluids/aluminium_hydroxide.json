@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:aluminium_hydroxide"
-    ]
+  "replace": false,
+  "values": [
+    "astech:aluminium_hydroxide"
+  ]
 }

@@ -190,6 +190,20 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_STIPNICIUM.get(), RenderTy
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_STIPNICIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BIOLUMINESCENT_COON_JUICE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BIOLUMINESCENT_COON_JUICE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_GELID_CRYOTHEUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_GELID_CRYOTHEUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SODIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SODIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_POTASSIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_POTASSIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HELIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HELIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_KRYPTON.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_KRYPTON.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_GHASTLY_LIQUID.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_GHASTLY_LIQUID.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_FENTANYL.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_FENTANYL.get(), RenderType.translucent());
 
         //#end RENDER_REGION
     }
@@ -580,7 +594,7 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BIOLUMINESCENT_COON_JUICE.g
             .bucket(ModItems.registerBucketItem("sodium_hydroxide", SOURCE_SODIUM_HYDROXIDE));
 
     
-    public static final RegistryObject<FluidType> DICHLOROMETHANE_FLUID_TYPE = registerType("dichloromethane", "liquid", "#c6c6a7");
+    public static final RegistryObject<FluidType> DICHLOROMETHANE_FLUID_TYPE = registerType("dichloromethane", "gas", "#c6c6a7");
     public static final RegistryObject<FlowingFluid> SOURCE_DICHLOROMETHANE = FLUIDS.register("dichloromethane",
             () -> new ForgeFlowingFluid.Source(ModFluids.DICHLOROMETHANE_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_DICHLOROMETHANE = FLUIDS.register("flowing_dichloromethane",
@@ -822,7 +836,7 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BIOLUMINESCENT_COON_JUICE.g
             .bucket(ModItems.registerBucketItem("unobtanium", SOURCE_UNOBTANIUM));
 
     
-    public static final RegistryObject<FluidType> DILITHIUM_FLUID_TYPE = registerType("dilithium", "liquid", "#99ccff");
+    public static final RegistryObject<FluidType> DILITHIUM_FLUID_TYPE = registerType("dilithium", "liquid", "#e60045");
     public static final RegistryObject<FlowingFluid> SOURCE_DILITHIUM = FLUIDS.register("dilithium",
             () -> new ForgeFlowingFluid.Source(ModFluids.DILITHIUM_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_DILITHIUM = FLUIDS.register("flowing_dilithium",
@@ -1007,6 +1021,83 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BIOLUMINESCENT_COON_JUICE.g
             BIOLUMINESCENT_COON_JUICE_FLUID_TYPE, SOURCE_BIOLUMINESCENT_COON_JUICE, FLOWING_BIOLUMINESCENT_COON_JUICE)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("bioluminescent_coon_juice", SOURCE_BIOLUMINESCENT_COON_JUICE))
             .bucket(ModItems.registerBucketItem("bioluminescent_coon_juice", SOURCE_BIOLUMINESCENT_COON_JUICE));
+
+    
+    public static final RegistryObject<FluidType> GELID_CRYOTHEUM_FLUID_TYPE = registerType("gelid_cryotheum", "liquid", "#549eff");
+    public static final RegistryObject<FlowingFluid> SOURCE_GELID_CRYOTHEUM = FLUIDS.register("gelid_cryotheum",
+            () -> new ForgeFlowingFluid.Source(ModFluids.GELID_CRYOTHEUM_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_GELID_CRYOTHEUM = FLUIDS.register("flowing_gelid_cryotheum",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.GELID_CRYOTHEUM_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties GELID_CRYOTHEUM_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            GELID_CRYOTHEUM_FLUID_TYPE, SOURCE_GELID_CRYOTHEUM, FLOWING_GELID_CRYOTHEUM)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("gelid_cryotheum", SOURCE_GELID_CRYOTHEUM))
+            .bucket(ModItems.registerBucketItem("gelid_cryotheum", SOURCE_GELID_CRYOTHEUM));
+
+    
+    public static final RegistryObject<FluidType> SODIUM_FLUID_TYPE = registerType("sodium", "gas", "#ffaf54");
+    public static final RegistryObject<FlowingFluid> SOURCE_SODIUM = FLUIDS.register("sodium",
+            () -> new ForgeFlowingFluid.Source(ModFluids.SODIUM_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_SODIUM = FLUIDS.register("flowing_sodium",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.SODIUM_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties SODIUM_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            SODIUM_FLUID_TYPE, SOURCE_SODIUM, FLOWING_SODIUM)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("sodium", SOURCE_SODIUM))
+            .bucket(ModItems.registerBucketItem("sodium", SOURCE_SODIUM));
+
+    
+    public static final RegistryObject<FluidType> POTASSIUM_FLUID_TYPE = registerType("potassium", "gas", "#d6adf7");
+    public static final RegistryObject<FlowingFluid> SOURCE_POTASSIUM = FLUIDS.register("potassium",
+            () -> new ForgeFlowingFluid.Source(ModFluids.POTASSIUM_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_POTASSIUM = FLUIDS.register("flowing_potassium",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.POTASSIUM_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties POTASSIUM_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            POTASSIUM_FLUID_TYPE, SOURCE_POTASSIUM, FLOWING_POTASSIUM)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("potassium", SOURCE_POTASSIUM))
+            .bucket(ModItems.registerBucketItem("potassium", SOURCE_POTASSIUM));
+
+    
+    public static final RegistryObject<FluidType> HELIUM_FLUID_TYPE = registerType("helium", "gas", "#f7ecad");
+    public static final RegistryObject<FlowingFluid> SOURCE_HELIUM = FLUIDS.register("helium",
+            () -> new ForgeFlowingFluid.Source(ModFluids.HELIUM_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_HELIUM = FLUIDS.register("flowing_helium",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.HELIUM_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties HELIUM_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            HELIUM_FLUID_TYPE, SOURCE_HELIUM, FLOWING_HELIUM)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("helium", SOURCE_HELIUM))
+            .bucket(ModItems.registerBucketItem("helium", SOURCE_HELIUM));
+
+    
+    public static final RegistryObject<FluidType> KRYPTON_FLUID_TYPE = registerType("krypton", "gas", "#96fff1");
+    public static final RegistryObject<FlowingFluid> SOURCE_KRYPTON = FLUIDS.register("krypton",
+            () -> new ForgeFlowingFluid.Source(ModFluids.KRYPTON_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_KRYPTON = FLUIDS.register("flowing_krypton",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.KRYPTON_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties KRYPTON_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            KRYPTON_FLUID_TYPE, SOURCE_KRYPTON, FLOWING_KRYPTON)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("krypton", SOURCE_KRYPTON))
+            .bucket(ModItems.registerBucketItem("krypton", SOURCE_KRYPTON));
+
+    
+    public static final RegistryObject<FluidType> GHASTLY_LIQUID_FLUID_TYPE = registerType("ghastly_liquid", "liquid", "#f4e6ff");
+    public static final RegistryObject<FlowingFluid> SOURCE_GHASTLY_LIQUID = FLUIDS.register("ghastly_liquid",
+            () -> new ForgeFlowingFluid.Source(ModFluids.GHASTLY_LIQUID_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_GHASTLY_LIQUID = FLUIDS.register("flowing_ghastly_liquid",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.GHASTLY_LIQUID_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties GHASTLY_LIQUID_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            GHASTLY_LIQUID_FLUID_TYPE, SOURCE_GHASTLY_LIQUID, FLOWING_GHASTLY_LIQUID)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("ghastly_liquid", SOURCE_GHASTLY_LIQUID))
+            .bucket(ModItems.registerBucketItem("ghastly_liquid", SOURCE_GHASTLY_LIQUID));
+
+    
+    public static final RegistryObject<FluidType> FENTANYL_FLUID_TYPE = registerType("fentanyl", "liquid", "#19ffdd");
+    public static final RegistryObject<FlowingFluid> SOURCE_FENTANYL = FLUIDS.register("fentanyl",
+            () -> new ForgeFlowingFluid.Source(ModFluids.FENTANYL_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_FENTANYL = FLUIDS.register("flowing_fentanyl",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.FENTANYL_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties FENTANYL_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            FENTANYL_FLUID_TYPE, SOURCE_FENTANYL, FLOWING_FENTANYL)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("fentanyl", SOURCE_FENTANYL))
+            .bucket(ModItems.registerBucketItem("fentanyl", SOURCE_FENTANYL));
 
     
     //#end FLUID_REGION

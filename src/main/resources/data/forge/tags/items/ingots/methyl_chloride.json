@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:methyl_chloride_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:methyl_chloride_ingot"
+  ]
 }

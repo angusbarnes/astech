@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:vinyl_chloride"
-    ]
+  "replace": false,
+  "values": [
+    "astech:vinyl_chloride"
+  ]
 }

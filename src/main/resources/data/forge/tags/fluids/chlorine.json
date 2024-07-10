@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:chlorine"
-    ]
+  "replace": false,
+  "values": [
+    "astech:chlorine"
+  ]
 }

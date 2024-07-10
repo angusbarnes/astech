@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:xylene_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:xylene_dust"
+  ]
 }

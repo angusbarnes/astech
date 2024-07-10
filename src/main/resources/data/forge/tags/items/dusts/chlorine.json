@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:chlorine_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:chlorine_dust"
+  ]
 }

@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:chlorine_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:chlorine_ingot"
+  ]
 }

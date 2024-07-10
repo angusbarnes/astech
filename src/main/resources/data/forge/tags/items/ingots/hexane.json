@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:hexane_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:hexane_ingot"
+  ]
 }

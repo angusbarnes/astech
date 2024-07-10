@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:aqua_regia"
-    ]
+  "replace": false,
+  "values": [
+    "astech:aqua_regia"
+  ]
 }

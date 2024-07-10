@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:radon_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:radon_ingot"
+  ]
 }

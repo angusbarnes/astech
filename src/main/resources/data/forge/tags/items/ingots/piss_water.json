@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:piss_water_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:piss_water_ingot"
+  ]
 }

@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:sodium_bicarbonate_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:sodium_bicarbonate_dust"
+  ]
 }

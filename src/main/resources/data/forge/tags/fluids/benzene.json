@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:benzene"
-    ]
+  "replace": false,
+  "values": [
+    "astech:benzene"
+  ]
 }

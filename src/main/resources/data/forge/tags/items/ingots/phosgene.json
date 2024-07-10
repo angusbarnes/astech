@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:phosgene_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:phosgene_ingot"
+  ]
 }

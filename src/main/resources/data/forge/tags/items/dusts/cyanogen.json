@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:cyanogen_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:cyanogen_dust"
+  ]
 }

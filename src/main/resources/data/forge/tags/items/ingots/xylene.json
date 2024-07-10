@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:xylene_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:xylene_ingot"
+  ]
 }

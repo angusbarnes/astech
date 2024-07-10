@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:hydrazine_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:hydrazine_ingot"
+  ]
 }

@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:acetone_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:acetone_dust"
+  ]
 }

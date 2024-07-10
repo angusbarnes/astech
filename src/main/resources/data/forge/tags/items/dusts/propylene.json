@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:propylene_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:propylene_dust"
+  ]
 }

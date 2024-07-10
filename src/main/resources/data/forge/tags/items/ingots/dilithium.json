@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:dilithium_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:dilithium_ingot"
+  ]
 }

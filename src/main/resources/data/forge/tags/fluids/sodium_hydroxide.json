@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:sodium_hydroxide"
-    ]
+  "replace": false,
+  "values": [
+    "astech:sodium_hydroxide"
+  ]
 }

@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:styrene_butadiene_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:styrene_butadiene_ingot"
+  ]
 }

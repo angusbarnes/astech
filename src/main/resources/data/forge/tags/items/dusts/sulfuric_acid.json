@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:sulfuric_acid_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:sulfuric_acid_dust"
+  ]
 }

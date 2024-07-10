@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:formaldehyde"
-    ]
+  "replace": false,
+  "values": [
+    "astech:formaldehyde"
+  ]
 }

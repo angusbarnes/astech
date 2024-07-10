@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:argon_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:argon_ingot"
+  ]
 }

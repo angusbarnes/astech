@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:piranha_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:piranha_dust"
+  ]
 }

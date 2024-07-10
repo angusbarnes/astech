@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:bioluminescent_coon_juice_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:bioluminescent_coon_juice_ingot"
+  ]
 }

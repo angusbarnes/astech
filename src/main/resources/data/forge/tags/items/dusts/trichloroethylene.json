@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:trichloroethylene_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:trichloroethylene_dust"
+  ]
 }

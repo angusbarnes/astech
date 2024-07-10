@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:hydrochloric_acid"
-    ]
+  "replace": false,
+  "values": [
+    "astech:hydrochloric_acid"
+  ]
 }

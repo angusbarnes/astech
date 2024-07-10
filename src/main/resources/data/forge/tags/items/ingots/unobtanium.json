@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:unobtanium_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:unobtanium_ingot"
+  ]
 }

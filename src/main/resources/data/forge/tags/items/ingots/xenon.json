@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:xenon_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:xenon_ingot"
+  ]
 }

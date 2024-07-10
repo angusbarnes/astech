@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:titanium_tetrachloride"
-    ]
+  "replace": false,
+  "values": [
+    "astech:titanium_tetrachloride"
+  ]
 }

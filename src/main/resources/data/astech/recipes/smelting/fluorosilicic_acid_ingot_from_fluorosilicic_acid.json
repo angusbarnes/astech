@@ -1,0 +1,10 @@
+
+{
+"type": "minecraft:smelting",
+"cookingtime": 200,
+"experience": 0.35,
+"ingredient": {
+    "tag": "forge:dusts/fluorosilicic_acid"
+},
+"result": "astech:fluorosilicic_acid_ingot"
+}

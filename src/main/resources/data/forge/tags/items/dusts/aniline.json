@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:aniline_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:aniline_dust"
+  ]
 }

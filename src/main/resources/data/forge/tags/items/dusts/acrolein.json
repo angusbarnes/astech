@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:acrolein_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:acrolein_dust"
+  ]
 }

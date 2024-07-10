@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:fluorosilicic_acid_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:fluorosilicic_acid_dust"
+  ]
 }

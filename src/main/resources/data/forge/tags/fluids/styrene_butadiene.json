@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:styrene_butadiene"
-    ]
+  "replace": false,
+  "values": [
+    "astech:styrene_butadiene"
+  ]
 }

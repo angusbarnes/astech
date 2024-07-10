@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:bromine_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:bromine_ingot"
+  ]
 }

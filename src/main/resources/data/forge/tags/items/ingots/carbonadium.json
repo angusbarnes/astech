@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:carbonadium_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:carbonadium_ingot"
+  ]
 }

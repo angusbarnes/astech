@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:dichloromethane_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:dichloromethane_ingot"
+  ]
 }

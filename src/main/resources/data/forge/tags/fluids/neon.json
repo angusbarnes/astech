@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:neon"
-    ]
+  "replace": false,
+  "values": [
+    "astech:neon"
+  ]
 }

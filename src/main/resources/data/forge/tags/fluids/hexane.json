@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:hexane"
-    ]
+  "replace": false,
+  "values": [
+    "astech:hexane"
+  ]
 }

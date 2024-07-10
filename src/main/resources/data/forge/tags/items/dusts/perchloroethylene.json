@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:perchloroethylene_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:perchloroethylene_dust"
+  ]
 }

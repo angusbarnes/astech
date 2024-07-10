@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:aniline"
-    ]
+  "replace": false,
+  "values": [
+    "astech:aniline"
+  ]
 }

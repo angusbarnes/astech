@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:cryptic_acid"
-    ]
+  "replace": false,
+  "values": [
+    "astech:cryptic_acid"
+  ]
 }

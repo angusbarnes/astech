@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:acrolein_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:acrolein_ingot"
+  ]
 }

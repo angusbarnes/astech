@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:ethanol"
-    ]
+  "replace": false,
+  "values": [
+    "astech:ethanol"
+  ]
 }

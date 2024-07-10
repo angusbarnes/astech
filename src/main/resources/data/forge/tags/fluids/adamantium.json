@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:adamantium"
-    ]
+  "replace": false,
+  "values": [
+    "astech:adamantium"
+  ]
 }

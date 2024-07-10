@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:carbonadium_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:carbonadium_dust"
+  ]
 }

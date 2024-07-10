@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:isopropanol"
-    ]
+  "replace": false,
+  "values": [
+    "astech:isopropanol"
+  ]
 }

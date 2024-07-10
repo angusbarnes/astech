@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:bromine"
-    ]
+  "replace": false,
+  "values": [
+    "astech:bromine"
+  ]
 }

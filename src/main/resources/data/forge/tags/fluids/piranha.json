@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:piranha"
-    ]
+  "replace": false,
+  "values": [
+    "astech:piranha"
+  ]
 }

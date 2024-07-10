@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:phosphoric_acid_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:phosphoric_acid_dust"
+  ]
 }

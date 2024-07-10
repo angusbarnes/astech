@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:ethylene_glycol_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:ethylene_glycol_ingot"
+  ]
 }

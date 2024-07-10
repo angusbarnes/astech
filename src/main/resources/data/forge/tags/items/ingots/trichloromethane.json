@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:trichloromethane_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:trichloromethane_ingot"
+  ]
 }

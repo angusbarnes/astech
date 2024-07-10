@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:hydrochloric_acid_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:hydrochloric_acid_dust"
+  ]
 }

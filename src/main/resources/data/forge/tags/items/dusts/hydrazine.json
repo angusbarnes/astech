@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:hydrazine_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:hydrazine_dust"
+  ]
 }

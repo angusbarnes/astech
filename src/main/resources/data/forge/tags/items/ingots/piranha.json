@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:piranha_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:piranha_ingot"
+  ]
 }

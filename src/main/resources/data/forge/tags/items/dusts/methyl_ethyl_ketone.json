@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:methyl_ethyl_ketone_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:methyl_ethyl_ketone_dust"
+  ]
 }

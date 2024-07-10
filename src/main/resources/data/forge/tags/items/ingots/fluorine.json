@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:fluorine_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:fluorine_ingot"
+  ]
 }

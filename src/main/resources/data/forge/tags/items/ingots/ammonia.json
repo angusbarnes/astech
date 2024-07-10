@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:ammonia_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:ammonia_ingot"
+  ]
 }

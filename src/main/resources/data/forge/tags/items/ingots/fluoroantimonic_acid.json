@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:fluoroantimonic_acid_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:fluoroantimonic_acid_ingot"
+  ]
 }

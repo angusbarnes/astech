@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:stipnicium_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:stipnicium_dust"
+  ]
 }

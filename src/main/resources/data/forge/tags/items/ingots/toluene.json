@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:toluene_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:toluene_ingot"
+  ]
 }

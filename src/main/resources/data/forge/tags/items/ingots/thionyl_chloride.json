@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:thionyl_chloride_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:thionyl_chloride_ingot"
+  ]
 }

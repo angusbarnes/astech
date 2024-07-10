@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:stipnicium_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:stipnicium_ingot"
+  ]
 }

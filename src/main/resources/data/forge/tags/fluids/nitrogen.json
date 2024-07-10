@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:nitrogen"
-    ]
+  "replace": false,
+  "values": [
+    "astech:nitrogen"
+  ]
 }

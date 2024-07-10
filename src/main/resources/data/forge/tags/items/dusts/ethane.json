@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:ethane_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:ethane_dust"
+  ]
 }

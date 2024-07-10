@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:azoth_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:azoth_dust"
+  ]
 }

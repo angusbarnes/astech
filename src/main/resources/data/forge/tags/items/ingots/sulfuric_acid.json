@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:sulfuric_acid_ingot"
-    ]
+  "replace": false,
+  "values": [
+    "astech:sulfuric_acid_ingot"
+  ]
 }

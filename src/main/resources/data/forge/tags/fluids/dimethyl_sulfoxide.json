@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:dimethyl_sulfoxide"
-    ]
+  "replace": false,
+  "values": [
+    "astech:dimethyl_sulfoxide"
+  ]
 }

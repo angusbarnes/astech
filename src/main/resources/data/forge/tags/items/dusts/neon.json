@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:neon_dust"
-    ]
+  "replace": false,
+  "values": [
+    "astech:neon_dust"
+  ]
 }

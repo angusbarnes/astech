@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:dichloromethane"
-    ]
+  "replace": false,
+  "values": [
+    "astech:dichloromethane"
+  ]
 }

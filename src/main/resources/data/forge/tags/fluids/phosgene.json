@@ -1,5 +1,6 @@
 {
-    "values": [
-        "astech:phosgene"
-    ]
+  "replace": false,
+  "values": [
+    "astech:phosgene"
+  ]
 }

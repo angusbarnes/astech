@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/sodium_bicarbonate"
+    },
+    "P": {
+      "item": "astech:sodium_bicarbonate_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "#P#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "item": "astech:sodium_bicarbonate_ingot"
+  }
+}

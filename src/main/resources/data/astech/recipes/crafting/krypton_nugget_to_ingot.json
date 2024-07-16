@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/krypton"
+    },
+    "P": {
+      "item": "astech:krypton_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "#P#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "item": "astech:krypton_ingot"
+  }
+}

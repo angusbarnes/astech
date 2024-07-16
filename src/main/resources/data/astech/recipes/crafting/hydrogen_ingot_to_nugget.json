@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "astech:hydrogen_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "astech:hydrogen_nugget"
+  }
+}

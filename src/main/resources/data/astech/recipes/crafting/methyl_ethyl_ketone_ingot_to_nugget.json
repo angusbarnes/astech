@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "astech:methyl_ethyl_ketone_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "astech:methyl_ethyl_ketone_nugget"
+  }
+}

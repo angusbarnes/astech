@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "astech:trichloromethane_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "astech:trichloromethane_nugget"
+  }
+}

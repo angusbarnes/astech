@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/dimethyl_sulfoxide"
+    },
+    "P": {
+      "item": "astech:dimethyl_sulfoxide_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "#P#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "item": "astech:dimethyl_sulfoxide_ingot"
+  }
+}

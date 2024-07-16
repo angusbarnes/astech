@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "astech:sodium_hydroxide_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "astech:sodium_hydroxide_nugget"
+  }
+}

@@ -38,27 +38,12 @@ class Context:
         self.REGION_TEXT[(file, region)].append(text)
 
     def add_simple_item_model(self, item_name):
-        self.MODEL_DEFS[item_name] = f"{{\"parent\": \"item/generated\",\"textures\":{{\"layer0\": \"{self.NAMESPACE}:item/{item_name}\"}}}}"
+        self.MODEL_DEFS['item/' + item_name] = f"{{\"parent\": \"item/generated\",\"textures\":{{\"layer0\": \"{self.NAMESPACE}:item/{item_name}\"}}}}"
 
-    def add_smelting_recipe(self, input, output):
+    def add_simple_block_model(self, block_name):
+        self.MODEL_DEFS['block/' + block_name] = f"{{\"parent\": \"minecraft:block/cube_all\",\"textures\":{{\"all\": \"{self.NAMESPACE}:block/{block_name}\"}}}}"
 
-        json_template = textwrap.dedent(f"""
-            {{
-            "type": "minecraft:smelting",
-            "cookingtime": 200,
-            "experience": 0.35,
-            "ingredient": {{
-                "tag": "forge:dusts/{input}"
-            }},
-            "result": "astech:{output}"
-            }}
-        """)
-
-        # We will only have one recipe for each smelting
-        self.RECIPES[f'smelting/{output}_from_{input}'] = json_template
-
-
-    def add_generic_recipe(self, input, output):
+    def add_smelting_recipe(self, id, input, output):
 
         json_template = textwrap.dedent(f"""
             {{
@@ -66,14 +51,22 @@ class Context:
             "cookingtime": 200,
             "experience": 0.35,
             "ingredient": {{
-                "tag": "forge:dusts/{input}"
+                "tag": "{input}"
             }},
-            "result": "astech:{output}"
+            "result": "{output}"
             }}
         """)
 
         # We will only have one recipe for each smelting
-        self.RECIPES[f'smelting/{output}_from_{input}'] = json_template
+        self.RECIPES[id] = json_template
+
+
+    #TODO: fix this so it actually behaves
+    def add_generic_recipe(self, id, recipe):
+
+        # We will only have one recipe for each smelting
+        self.RECIPES[id] = recipe
+
 
     # This one takes a fully qualified tag ("minecraft:items/planks")
     def add_tag(self, tag_name, tag_value):
@@ -166,11 +159,12 @@ class Context:
             if not os.path.exists(filename):
                 raise Exception(f"File {filename} does not exist to insert for region {region}")
             
-            for line in lines_to_write:
-                Context._insert_text_in_region(line)
+            Context._insert_text_in_region(filename, region, '\n'.join(lines_to_write))
 
-        for item_name, model_info in self.MODEL_DEFS.items():
-            with open(f'../resources/assets/astech/models/item/{item_name}.json', 'w') as model_file:
+        print("Wrote Region Text to disk")
+
+        for model_location, model_info in self.MODEL_DEFS.items():
+            with open(f'../resources/assets/astech/models/{model_location}.json', 'w') as model_file:
                 model_file.write(model_info)
             
         print("Wrote Item Models to disk")

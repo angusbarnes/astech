@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/styrene_butadiene"
+    },
+    "P": {
+      "item": "astech:styrene_butadiene_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "#P#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "item": "astech:styrene_butadiene_ingot"
+  }
+}

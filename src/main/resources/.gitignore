@@ -1,0 +1,4 @@
+# Changes to these files will be ignored,
+# Make any changes to the mirror structure in the datagen direction and then run the generation script
+./assets/**
+./data/**

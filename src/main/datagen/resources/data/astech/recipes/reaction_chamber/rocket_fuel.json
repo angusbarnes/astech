@@ -1,0 +1,18 @@
+{
+    "type": "astech:chemical_reactor",
+    "input1": {
+      "type": "astech:fluid",
+      "amount": 700,
+      "tag": "forge:hydrazine"
+    },
+    "input2": {
+      "type": "astech:fluid",
+      "amount": 300,
+      "tag": "forge:nitrogen"
+    },
+    "output1": {
+      "amount": 1000,
+      "fluid": "astech:rocket_fuel"
+    },
+    "time": 500
+  }

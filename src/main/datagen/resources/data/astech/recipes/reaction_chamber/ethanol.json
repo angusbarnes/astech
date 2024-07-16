@@ -1,0 +1,22 @@
+{
+    "type": "astech:chemical_reactor",
+    "input1": {
+      "type": "astech:fluid",
+      "amount": 800,
+      "tag": "forge:hydrocarbonic_broth"
+    },
+    "input2": {
+      "type": "astech:fluid",
+      "amount": 200,
+      "tag": "forge:water"
+    },
+    "output1": {
+      "amount": 600,
+      "fluid": "astech:ethanol"
+    },
+    "output2": {
+      "amount": 400,
+      "fluid": "astech:carbon_dioxide"
+    },
+    "time": 600
+  }

@@ -1,0 +1,35 @@
+{
+  "type": "astech:chemical_mixer",
+  "inputs" : [
+    {
+      "type": "astech:stacked_item",
+      "item": "minecraft:potato",
+      "count": 8
+    },
+    {
+      "tag": "forge:ingots"
+    },
+    {
+      "tag": "forge:dusts"
+    }
+  ],
+  "fluid_input1": {
+    "type": "astech:fluid",
+    "amount": 250,
+    "tag": "forge:oxygen"
+  },
+  "fluid_input2": {
+    "type": "astech:fluid",
+    "amount": 350,
+    "fluid": "minecraft:water"
+  },
+  "item_output": {
+    "item": "minecraft:stick",
+    "count": 12
+  },
+  "fluid_output": {
+    "amount": 700,
+    "fluid": "mekanism:oxygen"
+  },
+  "time": 300
+}

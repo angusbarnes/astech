@@ -63,6 +63,16 @@ def add_simple_tint_item(ctx: Context, item_id: str, item_name, tint, template_f
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
     ctx.add_simple_item_model(f'{item_id}')
 
+def add_static_asset_item(ctx: Context, item_id: str, item_name):
+
+    TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
+    ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
+    FLUIDS_FILE = '../java/net/astr0/astech/Fluid/ModFluids.java'
+    ctx.add_translation(f"item.astech.{item_id}", f"{item_name}")
+    ctx.add_text_to_region(ITEM_FILE, 'MATERIAL_REGION', f"""public static final RegistryObject<Item> {item_id.upper()} = SimpleIngredientItem("{item_id}", 64);""")
+    ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
+    ctx.add_simple_item_model(f'{item_id}')
+
 # def add_ore_block(ctx: Context, block_id: str, block_name, tint, template_file, material_name):
 
 #     TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
@@ -92,6 +102,29 @@ datapack.set_base_dictionary({
     "block.astech.chemical_mixer": "Chemical Mixer"
 })
 
+add_static_asset_item(datapack, 'cosmic_stew', 'Cosmic Stew')
+add_static_asset_item(datapack, 'cosmic_meatballs', 'Cosmic Meatballs')
+add_static_asset_item(datapack, 'creative_flight_core', 'Creative Flight Core')
+add_static_asset_item(datapack, 'interplanetary_mining_lens', 'Interplanetary Mining Lens')
+add_static_asset_item(datapack, 'multi_biome_mining_lens', 'Multi-Biome Mining Lens')
+add_static_asset_item(datapack, 'diamond_lattice', 'Diamond Lattice')
+add_static_asset_item(datapack, 'beaker', 'Beaker')
+add_static_asset_item(datapack, 'endest_pearl', 'Endest Pearl')
+add_static_asset_item(datapack, 'infinity_ingot', 'Infinity Ingot')
+add_static_asset_item(datapack, 'infinity_nugget', 'Infinity Nugget')
+add_static_asset_item(datapack, 'matter_cluster', 'Matter Cluster')
+add_static_asset_item(datapack, 'neutron_ingot', 'Neutron Ingot')
+add_static_asset_item(datapack, 'neutron_gear', 'Neutron Gear')
+add_static_asset_item(datapack, 'neutron_pile', 'Neutron Pile')
+add_static_asset_item(datapack, 'record_fragment', 'Record Fragment')
+add_static_asset_item(datapack, 'backwards_ingot', 'Backwards Ingot')
+add_static_asset_item(datapack, 'infinity_totem', 'Infinity Totem')
+add_static_asset_item(datapack, 'infinity_catalyst', 'Infinity Catalyst')
+add_static_asset_item(datapack, 'genetic_material_a', 'Genetic Material A')
+add_static_asset_item(datapack, 'genetic_material_b', 'Genetic Material B')
+add_static_asset_item(datapack, 'genetic_material_c', 'Genetic Material C')
+add_static_asset_item(datapack, 'mutated_genetic_material', 'Mutated Genetic Material')
+
 TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
 ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
 FLUIDS_FILE = '../java/net/astr0/astech/Fluid/ModFluids.java' 
@@ -120,16 +153,34 @@ for chemdef in chemicals:
     datapack.add_translation(f"item.astech.{fluid_name}_bucket", f"{plain_text_name}")
     datapack.add_translation(f"fluid_type.astech.{fluid_name}", f"{'Liquid ' if chemdef['Form'] != 'gas' else ''}{plain_text_name}{' Gas' if chemdef['Form'] == 'gas' else ''}")
 
+    datapack.add_translation(f"tooltip.{fluid_name}.material", f"§e{chemdef['Formula']}§r")
+
+    datapack.add_simple_item_model(f'{fluid_name}_bucket')
+
+    datapack.add_fluid_tag(f"forge:{fluid_name}", f"astech:{fluid_name}")
+
     layer_images(base_image_path, top_image_path, output_image_path, hex_to_rgb(chemdef["Color"]), chemdef['Form'])
 
+    add_simple_tint_item(datapack, f"{fluid_name}_dust", f"{plain_text_name} Dust", chemdef["Color"], get_texture(fluid_name, dust_textures), fluid_name)
+    datapack.add_item_tag(f"forge:dusts/{fluid_name}", f"astech:{fluid_name}_dust")
+
+    if chemdef['Type'] == 'Chemical': continue
 
     add_simple_tint_item(datapack, f"{fluid_name}_screw", f"{plain_text_name} Screw", chemdef["Color"], './templates/screw.png', fluid_name)
     add_simple_tint_item(datapack, f"{fluid_name}_rod", f"{plain_text_name} Rod", chemdef["Color"], get_texture(fluid_name, rod_textures), fluid_name)
-    add_simple_tint_item(datapack, f"raw_{fluid_name}", f"Raw {plain_text_name}", chemdef["Color"], get_texture(fluid_name, raw_ore_textures), fluid_name)
     add_simple_tint_item(datapack, f"{fluid_name}_ingot", f"{plain_text_name} Ingot", chemdef["Color"], get_texture(fluid_name, ingot_textures), fluid_name)
-    add_simple_tint_item(datapack, f"{fluid_name}_dust", f"{plain_text_name} Dust", chemdef["Color"], get_texture(fluid_name, dust_textures), fluid_name)
     add_simple_tint_item(datapack, f"{fluid_name}_plate", f"{plain_text_name} Plate", chemdef["Color"], get_texture(fluid_name, plate_textures), fluid_name)
     add_simple_tint_item(datapack, f"{fluid_name}_nugget", f"{plain_text_name} Nugget", chemdef["Color"], get_texture(fluid_name, nugget_textures), fluid_name)
+
+    
+    datapack.add_item_tag(f"forge:ingots/{fluid_name}", f"astech:{fluid_name}_ingot")
+    datapack.add_item_tag(f"forge:nuggets/{fluid_name}", f"astech:{fluid_name}_nugget")
+    datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_dust', f"forge:dusts/{fluid_name}", f"astech:{fluid_name}_ingot")
+
+    if chemdef['Type'] == 'Element':
+        add_simple_tint_item(datapack, f"raw_{fluid_name}", f"Raw {plain_text_name}", chemdef["Color"], get_texture(fluid_name, raw_ore_textures), fluid_name)
+        datapack.add_item_tag(f"forge:raw_ores/{fluid_name}", f"astech:raw_{fluid_name}")
+        datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_raw', f"forge:raw_ores/{fluid_name}", f"astech:{fluid_name}_ingot")
 
     datapack.add_generic_recipe(f"crafting/{fluid_name}_ingot_to_nugget", f"""{{
   "type": "minecraft:crafting_shapeless",
@@ -142,6 +193,52 @@ for chemdef in chemicals:
   "result": {{
     "count": 9,
     "item": "astech:{fluid_name}_nugget"
+  }}
+}}
+""")
+    
+    datapack.add_generic_recipe(f"compat/mek/crushing/{fluid_name}_ingot_to_plate", f"""{{
+  "type": "mekanism:crushing",
+  "input": {{
+    "ingredient": {{
+      "tag": "forge:ingots/{fluid_name}"
+    }}
+  }},
+  "output": {{
+    "count": 1,
+    "item": "astech:{fluid_name}_plate"
+  }}
+}}
+""")
+    
+    datapack.add_generic_recipe(f"compat/mek/sawing/{fluid_name}_plate_to_rod", f"""{{
+  "type": "mekanism:sawing",
+  "input": {{
+    "ingredient": {{
+      "item": "astech:{fluid_name}_plate"
+    }}
+  }},
+  "mainOutput": {{
+    "count": 3,
+    "item": "astech:{fluid_name}_rod"
+  }},
+  "secondaryChance": 0.25,
+  "secondaryOutput": {{
+    "item": "astech:{fluid_name}_dust"
+  }}
+}}
+""")
+    
+    datapack.add_generic_recipe(f"compat/mek/sawing/{fluid_name}_nugget_to_screw", f"""{{
+  "type": "mekanism:sawing",
+  "input": {{
+    "ingredient": {{
+      "item": "astech:{fluid_name}_nugget"
+    }}
+  }},
+  "mainOutput": {{
+    "count": 1,
+    "item": "astech:{fluid_name}_screw"
   }}
 }}
 """)
@@ -168,19 +265,6 @@ for chemdef in chemicals:
   }}
 }}
 """)
-
-    datapack.add_translation(f"tooltip.{fluid_name}.material", f"§e{chemdef['Formula']}§r")
-
-    datapack.add_simple_item_model(f'{fluid_name}_bucket')
-
-    datapack.add_fluid_tag(f"forge:{fluid_name}", f"astech:{fluid_name}")
-    datapack.add_item_tag(f"forge:dusts/{fluid_name}", f"astech:{fluid_name}_dust")
-    datapack.add_item_tag(f"forge:ingots/{fluid_name}", f"astech:{fluid_name}_ingot")
-    datapack.add_item_tag(f"forge:raw_ores/{fluid_name}", f"astech:raw_{fluid_name}")
-    datapack.add_item_tag(f"forge:nuggets/{fluid_name}", f"astech:{fluid_name}_nugget")
-
-    datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_dust', f"forge:dusts/{fluid_name}", f"astech:{fluid_name}_ingot")
-    datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_raw', f"forge:raw_ores/{fluid_name}", f"astech:{fluid_name}_ingot")
 
 
 datapack.write_to_disk()

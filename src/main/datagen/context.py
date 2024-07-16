@@ -182,6 +182,10 @@ class Context:
         print("Wrote Item Models to disk")
 
         for recipe_id, recipe in self.RECIPES.items():
+            directory = os.path.dirname(f'../resources/data/astech/recipes/{recipe_id}.json')
+    
+             # Create all directories in the path if they don't exist
+            os.makedirs(directory, exist_ok=True)
             with open(f'../resources/data/astech/recipes/{recipe_id}.json', 'w') as recipe_file:
                 recipe_file.write(recipe)
                 

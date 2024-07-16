@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "astech:block/chemical_mixer" },
-    "facing=east": { "model": "astech:block/chemical_mixer", "y": 90 },
-    "facing=south": { "model": "astech:block/chemical_mixer", "y": 180 },
-    "facing=west": { "model": "astech:block/chemical_mixer", "y": 270 }
-  }
-}

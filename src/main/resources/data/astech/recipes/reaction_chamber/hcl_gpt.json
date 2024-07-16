@@ -1,0 +1,19 @@
+{
+    "type": "astech:chemical_reactor",
+    "input1": {
+      "type": "astech:fluid",
+      "amount": 200,
+      "tag": "forge:hydrogen"
+    },
+    "input2": {
+      "type": "astech:fluid",
+      "amount": 200,
+      "tag": "forge:chlorine"
+    },
+    "output1": {
+      "amount": 400,
+      "fluid": "astech:hydrochloric_acid"
+    },
+    "time": 300
+  }
+  

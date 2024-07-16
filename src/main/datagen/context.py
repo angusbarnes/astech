@@ -19,7 +19,19 @@ class Context:
         folder_path = os.path.join(self.ROOT_FOLDER, "data", self.NAMESPACE, "recipes/smelting")
         os.makedirs(folder_path, exist_ok=True)
 
+        folder_path = os.path.join(self.ROOT_FOLDER, "data", self.NAMESPACE, "recipes/crafting")
+        os.makedirs(folder_path, exist_ok=True)
+
         folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "recipes/smelting")
+        os.makedirs(folder_path, exist_ok=True)
+
+        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "textures/item")
+        os.makedirs(folder_path, exist_ok=True)
+
+        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "models/item")
+        os.makedirs(folder_path, exist_ok=True)
+
+        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "lang")
         os.makedirs(folder_path, exist_ok=True)
         
     def add_data_folder(self, folder_name):
@@ -176,9 +188,9 @@ class Context:
         print("Recipes have been written")
 
 
-        for recipe_id, recipe in self.RECIPES.items():
-            with open(f'../resources/assets/astech/lang/en_us.json', 'w') as lang_file:
-                json.dump(self.LANG_KEYS, lang_file, ensure_ascii=False, indent=4)
+
+        with open(f'../resources/assets/astech/lang/en_us.json', 'w', encoding='utf-8') as lang_file:
+            json.dump(self.LANG_KEYS, lang_file, ensure_ascii=False, indent=4)
                 
         print("Recipes have been written")
 

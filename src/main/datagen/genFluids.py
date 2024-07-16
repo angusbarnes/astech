@@ -184,3 +184,8 @@ for chemdef in chemicals:
 
 
 datapack.write_to_disk()
+# Example usage
+source_dir = "./resources"
+destination_dir = "../resources/"
+
+copy_and_overwrite(source_dir, destination_dir)

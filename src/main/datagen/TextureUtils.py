@@ -101,3 +101,29 @@ def blend_overlay(image, color):
     # Convert the result back to an image
     result = (result * 255).astype('uint8')
     return Image.fromarray(result, 'RGBA')
+
+import os
+import shutil
+import logging
+
+def copy_and_overwrite(src, dst):
+    for root, dirs, files in os.walk(src):
+        rel_path = os.path.relpath(root, src)
+        dst_dir = os.path.join(dst, rel_path)
+
+        # Create destination directory if it doesn't exist
+        os.makedirs(dst_dir, exist_ok=True)
+
+        for file in files:
+            src_file = os.path.join(root, file)
+            dst_file = os.path.join(dst_dir, file)
+
+            if os.path.exists(dst_file):
+                # If file exists, overwrite and log
+                shutil.copy2(src_file, dst_file)
+                print(f"Overwritten: {dst_file}")
+            else:
+                # If file doesn't exist, just copy
+                shutil.copy2(src_file, dst_file)
+
+    print(f"\nCopy operation completed.")

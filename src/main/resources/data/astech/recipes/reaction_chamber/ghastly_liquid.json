@@ -1,0 +1,22 @@
+{
+    "type": "astech:chemical_reactor",
+    "input1": {
+      "type": "astech:fluid",
+      "amount": 400,
+      "tag": "forge:netherite"
+    },
+    "input2": {
+      "type": "astech:fluid",
+      "amount": 600,
+      "tag": "forge:gelid_cryotheum"
+    },
+    "output1": {
+      "amount": 800,
+      "fluid": "astech:lava"
+    },
+    "output2": {
+      "amount": 200,
+      "fluid": "astech:ghastly_liquid"
+    },
+    "time": 1000
+  }

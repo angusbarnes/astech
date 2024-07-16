@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/bioluminescent_coon_juice"
+    },
+    "P": {
+      "item": "astech:bioluminescent_coon_juice_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "#P#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "item": "astech:bioluminescent_coon_juice_ingot"
+  }
+}

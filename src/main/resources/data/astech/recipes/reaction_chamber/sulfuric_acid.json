@@ -1,0 +1,22 @@
+{
+    "type": "astech:chemical_reactor",
+    "input1": {
+      "type": "astech:fluid",
+      "amount": 500,
+      "tag": "forge:hydrogen_sulfide"
+    },
+    "input2": {
+      "type": "astech:fluid",
+      "amount": 750,
+      "tag": "forge:oxygen"
+    },
+    "output1": {
+      "amount": 1000,
+      "fluid": "astech:sulfuric_acid"
+    },
+    "output2": {
+      "amount": 250,
+      "fluid": "astech:water"
+    },
+    "time": 300
+  }

@@ -1,0 +1,10 @@
+
+{
+"type": "minecraft:smelting",
+"cookingtime": 200,
+"experience": 0.35,
+"ingredient": {
+    "tag": "forge:dusts/polyvinyl_chloride"
+},
+"result": "astech:polyvinyl_chloride_ingot"
+}

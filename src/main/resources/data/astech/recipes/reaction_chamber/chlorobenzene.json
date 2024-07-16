@@ -1,0 +1,19 @@
+{
+    "type": "astech:chemical_reactor",
+    "input1": {
+      "type": "astech:fluid",
+      "amount": 200,
+      "tag": "forge:benzene"
+    },
+    "input2": {
+      "type": "astech:fluid",
+      "amount": 200,
+      "tag": "forge:chlorine"
+    },
+    "output1": {
+      "amount": 400,
+      "fluid": "astech:chlorobenzene"
+    },
+    "time": 450
+  }
+  

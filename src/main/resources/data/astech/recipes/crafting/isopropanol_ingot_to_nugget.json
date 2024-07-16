@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "astech:isopropanol_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "astech:isopropanol_nugget"
+  }
+}

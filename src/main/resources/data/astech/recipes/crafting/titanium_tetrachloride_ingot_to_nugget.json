@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "astech:titanium_tetrachloride_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "astech:titanium_tetrachloride_nugget"
+  }
+}

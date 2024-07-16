@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "astech:bioluminescent_coon_juice_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "astech:bioluminescent_coon_juice_nugget"
+  }
+}

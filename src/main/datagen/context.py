@@ -12,6 +12,7 @@ class Context:
         self.NAMESPACE = namespace
         self.LANG_KEYS = {}
         self.REGION_TEXT = {}
+        self.BLOCK_STATES = {}
 
         folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "lang")
         os.makedirs(folder_path, exist_ok=True)
@@ -32,6 +33,9 @@ class Context:
         os.makedirs(folder_path, exist_ok=True)
 
         folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "lang")
+        os.makedirs(folder_path, exist_ok=True)
+
+        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "blockstates")
         os.makedirs(folder_path, exist_ok=True)
         
     def add_data_folder(self, folder_name):
@@ -54,6 +58,10 @@ class Context:
 
     def add_simple_block_model(self, block_name):
         self.MODEL_DEFS['block/' + block_name] = f"{{\"parent\": \"minecraft:block/cube_all\",\"textures\":{{\"all\": \"{self.NAMESPACE}:block/{block_name}\"}}}}"
+        self.BLOCK_STATES[block_name] = f"""{{"variants": {{"": {{"model": "astech:block/{block_name}"}}}}}}"""
+
+    def add_block_item_model(self, block_id):
+        self.MODEL_DEFS['item/' + block_id] = f"""{{"parent": "astech:block/{block_id}"}}"""
 
     def add_smelting_recipe(self, id, input, output):
 
@@ -180,6 +188,12 @@ class Context:
                 model_file.write(model_info)
             
         print("Wrote Item Models to disk")
+
+        for state_location, state_info in self.BLOCK_STATES.items():
+            with open(f'../resources/assets/astech/blockstates/{state_location}.json', 'w') as state_file:
+                state_file.write(state_info)
+            
+        print("Wrote Block States to disk")
 
         for recipe_id, recipe in self.RECIPES.items():
             directory = os.path.dirname(f'../resources/data/astech/recipes/{recipe_id}.json')

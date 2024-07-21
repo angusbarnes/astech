@@ -35,9 +35,10 @@ dust_textures = ['./templates/dust1.png', './templates/dust2.png', './templates/
 plate_textures = ['./templates/plate1.png', './templates/plate2.png']
 rod_textures = ['./templates/rod1.png', './templates/rod2.png']
 nugget_textures = ['./templates/nugget1.png', './templates/nugget2.png']
-raw_ore_textures = ['./templates/raw_ore1.png', './templates/raw_ore2.png', './templates/raw_ore3.png']
+raw_ore_textures = ['./templates/raw_ore1.png', './templates/raw_ore2.png', './templates/raw_ore3.png', './templates/raw_ore4.png', './templates/raw_ore5.png', './templates/raw_ore6.png', './templates/raw_ore7.png', './templates/raw_ore8.png']
 ore_textures = ['./templates/ore1.png', './templates/ore2.png', './templates/ore3.png', './templates/ore4.png', './templates/ore5.png', './templates/ore6.png', './templates/ore7.png', './templates/ore8.png']
-block_textures = ['./templates/block1.png', './templates/block2.png', './templates/block3.png', './templates/block4.png']
+block_textures = ['./templates/block1.png', './templates/block2.png', './templates/block3.png', './templates/block4.png', './templates/block5.png', './templates/block6.png', './templates/block7.png']
+gear_textures = ['./templates/gear.png', './templates/gear2.png']
 
 def get_texture(filename, textures):
     # Step 1: Hash the filename using a hash function (e.g., SHA-256)
@@ -73,6 +74,21 @@ def add_static_asset_item(ctx: Context, item_id: str, item_name):
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
     ctx.add_simple_item_model(f'{item_id}')
 
+def add_simple_tint_block(ctx: Context, block_id: str, block_name, tint, template_file):
+    TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
+    BLOCK_FILE = '../java/net/astr0/astech/block/ModBlocks.java'
+
+    template = Image.open(template_file)
+    texture = blend_overlay(template, hex_to_rgb(tint))
+    texture.save(f'../resources/assets/astech/textures/block/{block_id}.png', format='PNG')
+
+    ctx.add_translation(f"block.astech.{block_id}", f"{block_name}")
+    ctx.add_text_to_region(BLOCK_FILE, 'BLOCK_REGION', f"""public static final RegistryObject<Block> {block_id.upper()} = registerBlock("{block_id}", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));""")
+    ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModBlocks.{block_id.upper()}.get());")
+    ctx.add_simple_block_model(f'{block_id}')
+    ctx.add_block_item_model(f'{block_id}')
+    
+
 # def add_ore_block(ctx: Context, block_id: str, block_name, tint, template_file, material_name):
 
 #     TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
@@ -102,28 +118,93 @@ datapack.set_base_dictionary({
     "block.astech.chemical_mixer": "Chemical Mixer"
 })
 
-add_static_asset_item(datapack, 'cosmic_stew', 'Cosmic Stew')
-add_static_asset_item(datapack, 'cosmic_meatballs', 'Cosmic Meatballs')
-add_static_asset_item(datapack, 'creative_flight_core', 'Creative Flight Core')
-add_static_asset_item(datapack, 'interplanetary_mining_lens', 'Interplanetary Mining Lens')
-add_static_asset_item(datapack, 'multi_biome_mining_lens', 'Multi-Biome Mining Lens')
-add_static_asset_item(datapack, 'diamond_lattice', 'Diamond Lattice')
-add_static_asset_item(datapack, 'beaker', 'Beaker')
-add_static_asset_item(datapack, 'endest_pearl', 'Endest Pearl')
-add_static_asset_item(datapack, 'infinity_ingot', 'Infinity Ingot')
-add_static_asset_item(datapack, 'infinity_nugget', 'Infinity Nugget')
-add_static_asset_item(datapack, 'matter_cluster', 'Matter Cluster')
-add_static_asset_item(datapack, 'neutron_ingot', 'Neutron Ingot')
-add_static_asset_item(datapack, 'neutron_gear', 'Neutron Gear')
-add_static_asset_item(datapack, 'neutron_pile', 'Neutron Pile')
-add_static_asset_item(datapack, 'record_fragment', 'Record Fragment')
-add_static_asset_item(datapack, 'backwards_ingot', 'Backwards Ingot')
-add_static_asset_item(datapack, 'infinity_totem', 'Infinity Totem')
-add_static_asset_item(datapack, 'infinity_catalyst', 'Infinity Catalyst')
-add_static_asset_item(datapack, 'genetic_material_a', 'Genetic Material A')
-add_static_asset_item(datapack, 'genetic_material_b', 'Genetic Material B')
-add_static_asset_item(datapack, 'genetic_material_c', 'Genetic Material C')
-add_static_asset_item(datapack, 'mutated_genetic_material', 'Mutated Genetic Material')
+static_items = [
+    'backwards_ingot',
+    'unrefined', 
+    'digital_circuit_board',
+    'electronic_circuit_board', 
+    'creative_flight_core', 
+    'quantum_circuit', 
+    'beating_heart',
+    'endergem',
+    'codex',
+    'aerogel',
+    'dynamite',
+    'diode', 
+    'neutron_nugget', 
+    'genetic_material_c', 
+    'record_fragment', 
+    'neutron_gear', 
+    'and_gate', 
+    'memory_management_unit', 
+    'mutated_genetic_material', 
+    'digital_circuit',
+    'unstable_mutex',
+    'genetic_sample',
+    'electronic_circuit', 
+    'qubit', 
+    'singularity',
+    'or_gate', 
+    'neutron_pile', 
+    'analog_circuit_board', 
+    'steel_upgrade', 
+    'transistor', 
+    'monocrystalline_silicon', 
+    'antimatter_tormentum',
+    'abyssium_ingot',
+    'ultradense_metal_ball', 
+    'analog_circuit', 
+    'genetic_material_a', 
+    'portable_storage_unit', 
+    'refined', 
+    'infinity_totem', 
+    'infinity_catalyst', 
+    'cosmic_stew', 
+    'endest_pearl',
+    'stellar_catalyst',
+    'arithmetic_logic_unit',
+    'mosfet', 
+    'infinity_ingot', 
+    'processing_unit_board', 
+    'infinity_nugget', 
+    'cooling_cell', 
+    'random_access_memory', 
+    'combined_bucket', 
+    'vial', 
+    'matter_cluster',
+    'multi_biome_mining_lens', 
+    'rubber_sheet', 
+    'inductor', 
+    'silicon_wafer', 
+    'quantum_upgrade', 
+    'capacitor', 
+    'diamond_lattice', 
+    'redstone_control_module_high', 
+    'processing_unit', 
+    'god_forged_ingot', 
+    'op_amp', 
+    'beaker', 
+    'neutron_ingot', 
+    'large_heat_exchanger', 
+    'resistor', 
+    'interplanetary_mining_lens', 
+    'not_gate', 
+    'crystal_matrix_ingot', 
+    'genetic_material_b', 
+    'wrench', 
+    'small_heat_exchanger', 
+    'cosmic_meatballs', 
+    'quantum_circuit_board'
+]
+
+
+for item in sorted(static_items):
+    add_static_asset_item(datapack, item, item.replace('_', ' ').title())
+
+datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_a')
+datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_b')
+datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_c')
+datapack.add_item_tag('forge:genetic_material', 'astech:mutated_genetic_material')
 
 TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
 ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
@@ -171,7 +252,11 @@ for chemdef in chemicals:
     add_simple_tint_item(datapack, f"{fluid_name}_ingot", f"{plain_text_name} Ingot", chemdef["Color"], get_texture(fluid_name, ingot_textures), fluid_name)
     add_simple_tint_item(datapack, f"{fluid_name}_plate", f"{plain_text_name} Plate", chemdef["Color"], get_texture(fluid_name, plate_textures), fluid_name)
     add_simple_tint_item(datapack, f"{fluid_name}_nugget", f"{plain_text_name} Nugget", chemdef["Color"], get_texture(fluid_name, nugget_textures), fluid_name)
-
+    add_simple_tint_item(datapack, f"{fluid_name}_gear", f"{plain_text_name} Gear", chemdef["Color"], get_texture(fluid_name, gear_textures), fluid_name)
+    add_simple_tint_item(datapack, f"{fluid_name}_ring", f"{plain_text_name} Ring", chemdef["Color"], './templates/ring.png', fluid_name)
+    add_simple_tint_item(datapack, f"{fluid_name}_curved_plate", f"{plain_text_name} Curved Plate", chemdef["Color"], './templates/curved_plate.png', fluid_name)
+    add_simple_tint_item(datapack, f"{fluid_name}_wire", f"{plain_text_name} Wire", chemdef["Color"], './templates/wire.png', fluid_name)
+    add_simple_tint_block(datapack, f"{fluid_name}_block", f"{plain_text_name} Block", chemdef["Color"], get_texture(fluid_name, block_textures))
     
     datapack.add_item_tag(f"forge:ingots/{fluid_name}", f"astech:{fluid_name}_ingot")
     datapack.add_item_tag(f"forge:nuggets/{fluid_name}", f"astech:{fluid_name}_nugget")
@@ -193,6 +278,21 @@ for chemdef in chemicals:
   "result": {{
     "count": 9,
     "item": "astech:{fluid_name}_nugget"
+  }}
+}}
+""")
+    
+    datapack.add_generic_recipe(f"crafting/{fluid_name}_block_to_ingot", f"""{{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {{
+      "item": "astech:{fluid_name}_block"
+    }}
+  ],
+  "result": {{
+    "count": 9,
+    "item": "astech:{fluid_name}_ingot"
   }}
 }}
 """)
@@ -262,6 +362,26 @@ for chemdef in chemicals:
   "result": {{
     "count": 1,
     "item": "astech:{fluid_name}_ingot"
+  }}
+}}
+""")
+    
+    datapack.add_generic_recipe(f"crafting/{fluid_name}_ingot_to_block", f"""{{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {{
+    "#": {{
+      "item": "astech:{fluid_name}_ingot"
+    }}
+  }},
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "result": {{
+    "count": 1,
+    "item": "astech:{fluid_name}_block"
   }}
 }}
 """)

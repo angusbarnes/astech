@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "astech:infinity_ingot"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "item": "astech:infinity_nugget"
+    }
+}

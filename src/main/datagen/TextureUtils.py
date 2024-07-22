@@ -47,7 +47,7 @@ def layer_images(base_image_path, top_image_path, output_image_path, tint_color,
     
     # Open the top image and apply the color tint
     top_image = Image.open(top_image_path).convert("RGBA")
-    tinted_top_image = tint_image(top_image, tint_color)
+    tinted_top_image = blend_overlay(top_image, tint_color)
     
     # Layer the tinted top image on the base image
     combined_image = Image.alpha_composite(base_image, tinted_top_image)

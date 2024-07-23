@@ -29,7 +29,13 @@ class Context:
         folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "textures/item")
         os.makedirs(folder_path, exist_ok=True)
 
+        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "textures/block")
+        os.makedirs(folder_path, exist_ok=True)
+
         folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "models/item")
+        os.makedirs(folder_path, exist_ok=True)
+
+        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "models/block")
         os.makedirs(folder_path, exist_ok=True)
 
         folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "lang")

@@ -7,6 +7,7 @@ import net.astr0.astech.block.GemPolisher.GemPolishingBlockEntityRenderer;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationScreen;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.ModBlocks;
+import net.astr0.astech.compat.mek.AsTechSlurries;
 import net.astr0.astech.gui.ModMenuTypes;
 import net.astr0.astech.item.AsTechBucketItem;
 import net.astr0.astech.item.ModItems;
@@ -27,6 +28,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -58,6 +60,10 @@ public class AsTech
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModRecipes.register(modEventBus);
+
+        if(ModList.get().isLoaded("mekanism")) {
+            AsTechSlurries.SLURRIES.register(modEventBus);
+        }
 
         MinecraftForge.EVENT_BUS.register(this);
 

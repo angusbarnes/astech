@@ -1,6 +1,7 @@
 import os
 import json
 import textwrap
+from ResourcePackManager import ResourcePackManager
 
 class Context:
     def __init__(self, resources_path, namespace) -> None:
@@ -13,36 +14,26 @@ class Context:
         self.LANG_KEYS = {}
         self.REGION_TEXT = {}
         self.BLOCK_STATES = {}
+        self.LOOT_TABLES = {}
 
-        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "lang")
-        os.makedirs(folder_path, exist_ok=True)
-
-        folder_path = os.path.join(self.ROOT_FOLDER, "data", self.NAMESPACE, "recipes/smelting")
-        os.makedirs(folder_path, exist_ok=True)
-
-        folder_path = os.path.join(self.ROOT_FOLDER, "data", self.NAMESPACE, "recipes/crafting")
-        os.makedirs(folder_path, exist_ok=True)
-
-        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "recipes/smelting")
-        os.makedirs(folder_path, exist_ok=True)
-
-        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "textures/item")
-        os.makedirs(folder_path, exist_ok=True)
-
-        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "textures/block")
-        os.makedirs(folder_path, exist_ok=True)
-
-        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "models/item")
-        os.makedirs(folder_path, exist_ok=True)
-
-        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "models/block")
-        os.makedirs(folder_path, exist_ok=True)
-
-        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "lang")
-        os.makedirs(folder_path, exist_ok=True)
-
-        folder_path = os.path.join(self.ROOT_FOLDER, "assets", self.NAMESPACE, "blockstates")
-        os.makedirs(folder_path, exist_ok=True)
+        # Ensures the required folders are created
+        ResourcePackManager(resources_path, 'astech', {
+            'assets': [
+                'lang',
+                'textures/item',
+                'textures/block',
+                'models/item',
+                'models/block',
+                'blockstates',
+                'recipes/smelting'
+            ],
+            'data': [
+                'recipes/smelting',
+                'recipes/crafting'
+                'recipes/compat',
+                'loot_tables/blocks'
+            ]
+        })
         
     def add_data_folder(self, folder_name):
         folder_path = os.path.join(self.ROOT_FOLDER, "data", folder_name)
@@ -68,6 +59,79 @@ class Context:
 
     def add_block_item_model(self, block_id):
         self.MODEL_DEFS['item/' + block_id] = f"""{{"parent": "astech:block/{block_id}"}}"""
+
+    def add_simple_block_loot(self, astech_block_id):
+        self.LOOT_TABLES[f'blocks/{astech_block_id}'] = json.dumps({
+            "type": "minecraft:block",
+            "pools": [
+                {
+                "bonus_rolls": 0.0,
+                "conditions": [
+                    {
+                    "condition": "minecraft:survives_explosion"
+                    }
+                ],
+                "entries": [
+                    {
+                    "type": "minecraft:item",
+                    "name": f"astech:{astech_block_id}"
+                    }
+                ],
+                "rolls": 1.0
+                }
+            ]
+        })
+
+    def add_ore_block_loot(self, astech_block_id, astech_ore_item_id):
+        self.LOOT_TABLES[f'blocks/{astech_block_id}'] = json.dumps({
+            "type": "minecraft:block",
+            "pools": [
+                {
+                "bonus_rolls": 0.0,
+                "entries": [
+                    {
+                    "type": "minecraft:alternatives",
+                    "children": [
+                        {
+                        "type": "minecraft:item",
+                        "conditions": [
+                            {
+                            "condition": "minecraft:match_tool",
+                            "predicate": {
+                                "enchantments": [
+                                {
+                                    "enchantment": "minecraft:silk_touch",
+                                    "levels": {
+                                    "min": 1
+                                    }
+                                }
+                                ]
+                            }
+                            }
+                        ],
+                        "name": f"astech:{astech_block_id}"
+                        },
+                        {
+                        "type": "minecraft:item",
+                        "functions": [
+                            {
+                            "enchantment": "minecraft:fortune",
+                            "formula": "minecraft:ore_drops",
+                            "function": "minecraft:apply_bonus"
+                            },
+                            {
+                            "function": "minecraft:explosion_decay"
+                            }
+                        ],
+                        "name": f"astech:{astech_ore_item_id}"
+                        }
+                    ]
+                    }
+                ],
+                "rolls": 1.0
+                }
+            ]
+        })
 
     def add_smelting_recipe(self, id, input, output):
 
@@ -194,6 +258,12 @@ class Context:
                 model_file.write(model_info)
             
         print("Wrote Item Models to disk")
+
+        for table_location, table_info in self.LOOT_TABLES.items():
+            with open(f'../resources/data/astech/loot_tables/{table_location}.json', 'w') as table_file:
+                table_file.write(table_info)
+
+        print("Wrote Loot Tables to disk")
 
         for state_location, state_info in self.BLOCK_STATES.items():
             with open(f'../resources/assets/astech/blockstates/{state_location}.json', 'w') as state_file:

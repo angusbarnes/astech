@@ -126,6 +126,13 @@ repositories {
         name = "Jared's maven"
         url = "https://maven.blamejared.com/"
     }
+
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
@@ -161,6 +168,9 @@ dependencies {
     runtimeOnly(fg.deobf("blank:Cucumber-${minecraft_version}:7.0.8"))
     runtimeOnly(fg.deobf("blank:ExtendedCrafting-${minecraft_version}:6.0.7"))
     //runtimeOnly(fg.deobf("blank:kubejs-forge-2001.6.4:build.138"))
+
+    // Not sure what the fuck this means
+    implementation fg.deobf("curse.maven:${mekanism}")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

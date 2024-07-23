@@ -58,6 +58,24 @@ def layer_images(base_image_path, top_image_path, output_image_path, tint_color,
     # Save the result
     combined_image.save(output_image_path, format='PNG')
 
+def layer_images_but_backwards(base_image_path, top_image_path, output_image_path, tint_color, type):
+    # Open the base image
+    base_image = Image.open(base_image_path).convert("RGBA")
+    tinted_base_image = blend_overlay(base_image, tint_color)
+    
+    # Open the top image and apply the color tint
+    top_image = Image.open(top_image_path).convert("RGBA")
+    
+    
+    # Layer the tinted top image on the base image
+    combined_image = Image.alpha_composite(base_image, tinted_top_image)
+
+    if type == 'gas':
+        combined_image = combined_image.rotate(180)
+    
+    # Save the result
+    combined_image.save(output_image_path, format='PNG')
+
 def hex_to_rgb(hex_str):
     """
     Convert a hexadecimal color string to an RGB tuple.

@@ -1,4 +1,4 @@
-package net.astr0.astech.compat;
+package net.astr0.astech.compat.JEI;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;

@@ -38,7 +38,7 @@ nugget_textures = ['./templates/nugget1.png', './templates/nugget2.png']
 raw_ore_textures = ['./templates/raw_ore1.png', './templates/raw_ore2.png', './templates/raw_ore3.png', './templates/raw_ore4.png', './templates/raw_ore5.png', './templates/raw_ore6.png', './templates/raw_ore7.png', './templates/raw_ore8.png']
 ore_textures = ['./templates/ore1.png', './templates/ore2.png', './templates/ore3.png', './templates/ore4.png', './templates/ore5.png', './templates/ore6.png', './templates/ore7.png', './templates/ore8.png']
 block_textures = ['./templates/block1.png', './templates/block2.png', './templates/block3.png', './templates/block4.png', './templates/block5.png', './templates/block6.png', './templates/block7.png']
-gear_textures = ['./templates/gear.png', './templates/gear2.png']
+gear_textures = ['./templates/gear.png', './templates/gear2.png', './templates/gear2.png']
 
 def get_texture(filename, textures):
     # Step 1: Hash the filename using a hash function (e.g., SHA-256)
@@ -98,7 +98,7 @@ def add_simple_ore_block(ctx: Context, block_id: str, block_name, tint, template
     layer_images(STONE_BASE, template_file, f'../resources/assets/astech/textures/block/{block_id}.png', hex_to_rgb(tint), 'Liquid')
 
     ctx.add_translation(f"block.astech.{block_id}", f"{block_name}")
-    ctx.add_text_to_region(BLOCK_FILE, 'BLOCK_REGION', f"""public static final RegistryObject<Block> {block_id.upper()} = registerBlock("{block_id}", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));""")
+    ctx.add_text_to_region(BLOCK_FILE, 'BLOCK_REGION', f"""public static final RegistryObject<Block> {block_id.upper()} = registerBlock("{block_id}", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));""")
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModBlocks.{block_id.upper()}.get());")
     ctx.add_simple_block_model(f'{block_id}')
     ctx.add_block_item_model(f'{block_id}')
@@ -249,6 +249,10 @@ for chemdef in chemicals:
     datapack.add_translation(f"item.astech.{fluid_name}_bucket", f"{plain_text_name}")
     datapack.add_translation(f"fluid_type.astech.{fluid_name}", f"{'Liquid ' if chemdef['Form'] != 'gas' else ''}{plain_text_name}{' Gas' if chemdef['Form'] == 'gas' else ''}")
 
+
+    datapack.add_translation(f"slurry.astech.dirty_{fluid_name}", f"{plain_text_name} Dirty Slurry")
+    datapack.add_translation(f"slurry.astech.clean_{fluid_name}", f"{plain_text_name} Clean Slurry")
+
     datapack.add_translation(f"tooltip.{fluid_name}.material", f"§e{chemdef['Formula']}§r")
 
     datapack.add_simple_item_model(f'{fluid_name}_bucket')
@@ -272,22 +276,38 @@ for chemdef in chemicals:
     add_simple_tint_item(datapack, f"{fluid_name}_curved_plate", f"{plain_text_name} Curved Plate", chemdef["Color"], './templates/curved_plate.png', fluid_name)
     add_simple_tint_item(datapack, f"{fluid_name}_wire", f"{plain_text_name} Wire", chemdef["Color"], './templates/wire.png', fluid_name)
     add_simple_tint_block(datapack, f"{fluid_name}_block", f"{plain_text_name} Block", chemdef["Color"], get_texture(fluid_name, block_textures))
-    datapack.add_block_tag("minecraft:mineable/pickaxe", f"{fluid_name}_block")
+    datapack.add_block_tag("minecraft:mineable/pickaxe", f"astech:{fluid_name}_block")
+    datapack.add_simple_block_loot(f"{fluid_name}_block")
+    datapack.add_item_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
+    datapack.add_block_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
     
     datapack.add_item_tag(f"forge:ingots/{fluid_name}", f"astech:{fluid_name}_ingot")
     datapack.add_item_tag(f"forge:nuggets/{fluid_name}", f"astech:{fluid_name}_nugget")
+    datapack.add_item_tag(f"forge:rods/{fluid_name}", f"astech:{fluid_name}_rod")
+    datapack.add_item_tag(f"forge:plates/{fluid_name}", f"astech:{fluid_name}_plate")
+    datapack.add_item_tag(f"forge:wires/{fluid_name}", f"astech:{fluid_name}_wire")
+    datapack.add_item_tag(f"forge:gears/{fluid_name}", f"astech:{fluid_name}_gear")
     datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_dust', f"forge:dusts/{fluid_name}", f"astech:{fluid_name}_ingot")
 
     if chemdef['Type'] == 'Element':
         add_simple_tint_item(datapack, f"raw_{fluid_name}", f"Raw {plain_text_name}", chemdef["Color"], get_texture(fluid_name, raw_ore_textures), fluid_name)
-        datapack.add_item_tag(f"forge:raw_ores/{fluid_name}", f"astech:raw_{fluid_name}")
-        datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_raw', f"forge:raw_ores/{fluid_name}", f"astech:{fluid_name}_ingot")
+        datapack.add_item_tag(f"forge:raw_materials/{fluid_name}", f"astech:raw_{fluid_name}")
+        datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_raw', f"forge:raw_materials/{fluid_name}", f"astech:{fluid_name}_ingot")
         add_simple_ore_block(datapack, f"{fluid_name}_ore", f"{plain_text_name} Ore", chemdef["Color"], get_texture(fluid_name, ore_textures))
         add_simple_ore_block(datapack, f"deepslate_{fluid_name}_ore", f"Deepslate {plain_text_name} Ore", chemdef["Color"], get_texture(fluid_name, ore_textures))
         datapack.add_block_tag("minecraft:mineable/pickaxe", f"astech:{fluid_name}_ore")
         datapack.add_block_tag("minecraft:mineable/pickaxe", f"astech:deepslate_{fluid_name}_ore")
         datapack.add_block_tag("minecraft:needs_iron_tool", f"astech:deepslate_{fluid_name}_ore")
         datapack.add_block_tag("minecraft:needs_iron_tool", f"astech:{fluid_name}_ore")
+        datapack.add_ore_block_loot(f"{fluid_name}_ore", f"raw_{fluid_name}")
+        datapack.add_ore_block_loot(f"deepslate_{fluid_name}_ore", f"raw_{fluid_name}")
+
+        datapack.add_item_tag(f"forge:ores/{fluid_name}", f"astech:{fluid_name}_ore")
+        datapack.add_item_tag(f"forge:ores/{fluid_name}", f"astech:deepslate_{fluid_name}_ore")
+        datapack.add_block_tag(f"forge:ores/{fluid_name}", f"astech:{fluid_name}_ore")
+        datapack.add_block_tag(f"forge:ores/{fluid_name}", f"astech:deepslate_{fluid_name}_ore")
+
+        datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_ore', f"forge:ores/{fluid_name}", f"astech:{fluid_name}_ingot")
 
     datapack.add_generic_recipe(f"crafting/{fluid_name}_ingot_to_nugget", f"""{{
   "type": "minecraft:crafting_shapeless",

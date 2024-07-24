@@ -224,6 +224,14 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SODIUM_SULFATE.get(), Rend
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SODIUM_SULFATE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CHLOROBENZENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CHLOROBENZENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DEUTERIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DEUTERIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BAUXITE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BAUXITE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_URANIUM_OXIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_URANIUM_OXIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_COBALT.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_COBALT.get(), RenderType.translucent());
         //#end RENDER_REGION
     }
 
@@ -1227,6 +1235,50 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CHLOROBENZENE.get(), Render
             CHLOROBENZENE_FLUID_TYPE, SOURCE_CHLOROBENZENE, FLOWING_CHLOROBENZENE)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("chlorobenzene", SOURCE_CHLOROBENZENE))
             .bucket(ModItems.registerBucketItem("chlorobenzene", SOURCE_CHLOROBENZENE));
+    
+
+    public static final RegistryObject<FluidType> DEUTERIUM_FLUID_TYPE = registerType("deuterium", "liquid", "#e8fffa");
+    public static final RegistryObject<FlowingFluid> SOURCE_DEUTERIUM = FLUIDS.register("deuterium",
+            () -> new ForgeFlowingFluid.Source(ModFluids.DEUTERIUM_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_DEUTERIUM = FLUIDS.register("flowing_deuterium",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.DEUTERIUM_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties DEUTERIUM_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            DEUTERIUM_FLUID_TYPE, SOURCE_DEUTERIUM, FLOWING_DEUTERIUM)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("deuterium", SOURCE_DEUTERIUM))
+            .bucket(ModItems.registerBucketItem("deuterium", SOURCE_DEUTERIUM));
+    
+
+    public static final RegistryObject<FluidType> BAUXITE_FLUID_TYPE = registerType("bauxite", "liquid", "#ad7f53");
+    public static final RegistryObject<FlowingFluid> SOURCE_BAUXITE = FLUIDS.register("bauxite",
+            () -> new ForgeFlowingFluid.Source(ModFluids.BAUXITE_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_BAUXITE = FLUIDS.register("flowing_bauxite",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.BAUXITE_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties BAUXITE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            BAUXITE_FLUID_TYPE, SOURCE_BAUXITE, FLOWING_BAUXITE)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("bauxite", SOURCE_BAUXITE))
+            .bucket(ModItems.registerBucketItem("bauxite", SOURCE_BAUXITE));
+    
+
+    public static final RegistryObject<FluidType> URANIUM_OXIDE_FLUID_TYPE = registerType("uranium_oxide", "liquid", "#488257");
+    public static final RegistryObject<FlowingFluid> SOURCE_URANIUM_OXIDE = FLUIDS.register("uranium_oxide",
+            () -> new ForgeFlowingFluid.Source(ModFluids.URANIUM_OXIDE_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_URANIUM_OXIDE = FLUIDS.register("flowing_uranium_oxide",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.URANIUM_OXIDE_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties URANIUM_OXIDE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            URANIUM_OXIDE_FLUID_TYPE, SOURCE_URANIUM_OXIDE, FLOWING_URANIUM_OXIDE)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("uranium_oxide", SOURCE_URANIUM_OXIDE))
+            .bucket(ModItems.registerBucketItem("uranium_oxide", SOURCE_URANIUM_OXIDE));
+    
+
+    public static final RegistryObject<FluidType> COBALT_FLUID_TYPE = registerType("cobalt", "liquid", "#0e389c");
+    public static final RegistryObject<FlowingFluid> SOURCE_COBALT = FLUIDS.register("cobalt",
+            () -> new ForgeFlowingFluid.Source(ModFluids.COBALT_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_COBALT = FLUIDS.register("flowing_cobalt",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.COBALT_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties COBALT_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            COBALT_FLUID_TYPE, SOURCE_COBALT, FLOWING_COBALT)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("cobalt", SOURCE_COBALT))
+            .bucket(ModItems.registerBucketItem("cobalt", SOURCE_COBALT));
     
     //#end FLUID_REGION
 }

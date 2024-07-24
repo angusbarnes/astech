@@ -24,5 +24,8 @@ public static SlurryRegistryObject<Slurry, Slurry> POTASSIUM_SLURRY = SLURRIES.r
 public static SlurryRegistryObject<Slurry, Slurry> HELIUM_SLURRY = SLURRIES.register("helium", "#f7ecad", new ResourceLocation("forge","tags/items/ores/helium"));
 public static SlurryRegistryObject<Slurry, Slurry> KRYPTON_SLURRY = SLURRIES.register("krypton", "#96fff1", new ResourceLocation("forge","tags/items/ores/krypton"));
 public static SlurryRegistryObject<Slurry, Slurry> IUMIUM_SLURRY = SLURRIES.register("iumium", "#ff903b", new ResourceLocation("forge","tags/items/ores/iumium"));
+public static SlurryRegistryObject<Slurry, Slurry> BAUXITE_SLURRY = SLURRIES.register("bauxite", "#ad7f53", new ResourceLocation("forge","tags/items/ores/bauxite"));
+public static SlurryRegistryObject<Slurry, Slurry> URANIUM_OXIDE_SLURRY = SLURRIES.register("uranium_oxide", "#488257", new ResourceLocation("forge","tags/items/ores/uranium_oxide"));
+public static SlurryRegistryObject<Slurry, Slurry> COBALT_SLURRY = SLURRIES.register("cobalt", "#0e389c", new ResourceLocation("forge","tags/items/ores/cobalt"));
     //#end SLURRY_REGION
 }

@@ -293,8 +293,8 @@ for chemdef in chemicals:
     datapack.add_translation(f"fluid_type.astech.{fluid_name}", f"{'Liquid ' if chemdef['Form'] != 'gas' else ''}{plain_text_name}{' Gas' if chemdef['Form'] == 'gas' else ''}")
 
 
-    datapack.add_translation(f"slurry.astech.dirty_{fluid_name}", f"{plain_text_name} Dirty Slurry")
-    datapack.add_translation(f"slurry.astech.clean_{fluid_name}", f"{plain_text_name} Clean Slurry")
+    datapack.add_translation(f"slurry.astech.dirty_{fluid_name}", f"Dirty {plain_text_name} Slurry")
+    datapack.add_translation(f"slurry.astech.clean_{fluid_name}", f"Clean {plain_text_name} Slurry")
 
     datapack.add_translation(f"tooltip.{fluid_name}.material", f"§e{chemdef['Formula']}§r")
 

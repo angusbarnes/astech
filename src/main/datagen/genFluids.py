@@ -48,7 +48,7 @@ def merge_json_file(json_file_path, new_data):
 
 file_path = '../java/net/astr0/astech/Fluid/ModFluids.java'  # Replace with your file path
 base_image_path = './templates/bucket_base_layer.png'  # Replace with your base image file path
-top_image_path = './templates/bucket_fluid_layer.png'    # Replace with your top image file path
+top_image_path = './templates/bucket_fluid_layer.png'   # Replace with your top image file path
 
 ingot_textures = ['./templates/ingot1.png', './templates/ingot2.png', './templates/ingot3.png', './templates/ingot4.png']
 dust_textures = ['./templates/dust1.png', './templates/dust2.png', './templates/dust3.png', './templates/dust4.png', './templates/dust5.png', './templates/dust6.png']

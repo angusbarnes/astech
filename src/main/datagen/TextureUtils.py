@@ -142,3 +142,34 @@ def copy_and_overwrite(src, dst):
                 shutil.copy2(src_file, dst_file)
 
     print(f"\nCopy operation completed.")
+
+
+def copy_and_substitute(template_dir, dest_dir, substitutions):
+    def process_file(src, dst):
+        with open(src, 'r') as f:
+            content = f.read()
+        
+        for key, value in substitutions.items():
+            content = content.replace(key, value)
+        
+        with open(dst, 'w') as f:
+            f.write(content)
+
+    for root, dirs, files in os.walk(template_dir):
+        rel_path = os.path.relpath(root, template_dir)
+        dest_root = os.path.join(dest_dir, rel_path)
+
+        # Create directories
+        os.makedirs(dest_root, exist_ok=True)
+
+        # Copy and process files
+        for file in files:
+            src_file = os.path.join(root, file)
+            dst_file = os.path.join(dest_root, file)
+
+            # Check if it's a text file (you might want to adjust this check)
+            if os.path.isfile(src_file) and not file.endswith(('.jpg', '.png', '.gif', '.pdf')):
+                process_file(src_file, dst_file)
+            else:
+                shutil.copy2(src_file, dst_file)
+

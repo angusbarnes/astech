@@ -3,7 +3,7 @@
   "itemInput": {
     "amount": 3,
     "ingredient": {
-      "tag": "forge:raw_materials/stipnicium"
+      "tag": "forge:raw_materials/$FLUID_TYPE$"
     }
   },
   "gasInput": {
@@ -11,7 +11,7 @@
     "gas": "mekanism:sulfuric_acid"
   },
   "output": {
-    "slurry": "astech:dirty_stipnicium",
+    "slurry": "astech:dirty_$FLUID_TYPE$",
     "amount": 2000,
     "chemicalType": "slurry"
   }

@@ -361,11 +361,38 @@ for chemdef in chemicals:
         add_mek_tint_item(datapack, f"{fluid_name}_shard", f"{plain_text_name} Shard", chemdef["Color"], SHARD_TEXTURE, SHARD_TEXTURE_OVERLAY, fluid_name)
         datapack.add_item_tag(f"mekanism:shards/{fluid_name}", f"astech:{fluid_name}_shard")
 
+        # Example usage
+        template_dir = './templates/mek_processing/reference'
+        dest_dir = f'../resources/data/astech/recipes/compat/mek_processing/{fluid_name}'
+        substitutions = {
+            '$FLUID_TYPE$': fluid_name
+        }
+
+        copy_and_substitute(template_dir, dest_dir, substitutions)
+
         datapack.add_text_to_region(SLURRY_FILE, 'SLURRY_REGION', f"""public static SlurryRegistryObject<Slurry, Slurry> {fluid_name.upper()}_SLURRY = SLURRIES.register("{fluid_name}", "{chemdef['Color']}", new ResourceLocation("forge","tags/items/ores/{fluid_name}"));""")
 
 
     datapack.add_generic_recipe(f"crafting/{fluid_name}_ingot_to_nugget", UNCOMPACTING_RECIPE(f"astech:{fluid_name}_ingot", f"astech:{fluid_name}_nugget"))
-    
+    datapack.add_generic_recipe(f"compat/mek/crushing/{fluid_name}_ingot_to_dust", JSON(
+        {
+            "type": "mekanism:crushing",
+            "input": {
+                "ingredient": {
+                "tag": f"forge:ingots/{fluid_name}"
+                }
+            },
+            "output": {
+                "item": f"astech:{fluid_name}_dust"
+            },
+            "conditions": [
+                {
+                "type": "forge:mod_loaded",
+                "modid": "mekanism"
+                }
+            ]
+        }
+    ))
     datapack.add_generic_recipe(f"crafting/{fluid_name}_block_to_ingot", UNCOMPACTING_RECIPE(f"astech:{fluid_name}_block", f"astech:{fluid_name}_ingot"))
     
     datapack.add_generic_recipe(f"compat/mek/crushing/{fluid_name}_ingot_to_plate", f"""{{

@@ -2,7 +2,7 @@
   "type": "mekanism:dissolution",
   "itemInput": {
     "ingredient": {
-      "tag": "forge:ores/stipnicium"
+      "tag": "forge:ores/$FLUID_TYPE$"
     }
   },
   "gasInput": {
@@ -10,7 +10,7 @@
     "gas": "mekanism:sulfuric_acid"
   },
   "output": {
-    "slurry": "astech:dirty_stipnicium",
+    "slurry": "astech:dirty_$FLUID_TYPE$",
     "amount": 1000,
     "chemicalType": "slurry"
   },

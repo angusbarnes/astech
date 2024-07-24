@@ -1,0 +1,18 @@
+{
+  "type": "mekanism:enriching",
+  "input": {
+    "ingredient": {
+      "tag": "forge:ores/$FLUID_TYPE$"
+    }
+  },
+  "output": {
+    "item": "astech:$FLUID_TYPE$_dust",
+    "count": 2
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ]
+}

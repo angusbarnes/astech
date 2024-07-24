@@ -8,6 +8,26 @@ import textwrap
 import json
 import os
 
+def JSON(obj):
+    return json.dumps(obj, ensure_ascii=False)
+
+def UNCOMPACTING_RECIPE(from_item, to_item):
+    return JSON(
+        {
+            "type": "minecraft:crafting_shapeless",
+            "category": "misc",
+            "ingredients": [
+                {
+                "item": from_item
+                }
+            ],
+            "result": {
+                "count": 9,
+                "item": to_item
+            }
+        }
+    )
+
 def merge_json_file(json_file_path, new_data):
     # Load existing data from the JSON file if it exists
     if os.path.exists(json_file_path):
@@ -40,6 +60,15 @@ ore_textures = ['./templates/ore1.png', './templates/ore2.png', './templates/ore
 block_textures = ['./templates/block1.png', './templates/block2.png', './templates/block3.png', './templates/block4.png', './templates/block5.png', './templates/block6.png', './templates/block7.png']
 gear_textures = ['./templates/gear.png', './templates/gear2.png', './templates/gear2.png']
 
+SHARD_TEXTURE = './templates/shard.png'
+SHARD_TEXTURE_OVERLAY = './templates/shard_overlay.png'
+CLUMP_TEXTURE = './templates/clump.png'
+CLUMP_TEXTURE_OVERLAY = './templates/clump_overlay.png'
+DIRTY_DUST_TEXTURE = './templates/dirty_dust.png'
+DIRTY_DUST_TEXTURE_OVERLAY = './templates/dirty_dust_overlay.png'
+CRYSTAL_TEXTURE = './templates/crystal.png'
+CRYSTAL_TEXTURE_OVERLAY = './templates/crystal_overlay.png'
+
 def get_texture(filename, textures):
     # Step 1: Hash the filename using a hash function (e.g., SHA-256)
     hash_object = hashlib.sha256(filename.encode())
@@ -59,6 +88,19 @@ def add_simple_tint_item(ctx: Context, item_id: str, item_name, tint, template_f
     template = Image.open(template_file)
     texture = blend_overlay(template, hex_to_rgb(tint))
     texture.save(f'../resources/assets/astech/textures/item/{item_id}.png', format='PNG')
+    ctx.add_translation(f"item.astech.{item_id}", f"{item_name}")
+    ctx.add_text_to_region(ITEM_FILE, 'MATERIAL_REGION', f"""public static final RegistryObject<AsTechMaterialItem> {item_id.upper()} = ITEMS.register("{item_id}", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "{material_name}"));""")
+    ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
+    ctx.add_simple_item_model(f'{item_id}')
+
+def add_mek_tint_item(ctx: Context, item_id: str, item_name, tint, template_file, overlay, material_name):
+
+    TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
+    ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
+    FLUIDS_FILE = '../java/net/astr0/astech/Fluid/ModFluids.java' 
+
+    layer_images_but_backwards(template_file, overlay, f'../resources/assets/astech/textures/item/{item_id}.png', hex_to_rgb(tint))
+
     ctx.add_translation(f"item.astech.{item_id}", f"{item_name}")
     ctx.add_text_to_region(ITEM_FILE, 'MATERIAL_REGION', f"""public static final RegistryObject<AsTechMaterialItem> {item_id.upper()} = ITEMS.register("{item_id}", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "{material_name}"));""")
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
@@ -224,6 +266,7 @@ datapack.add_item_tag('forge:genetic_material', 'astech:mutated_genetic_material
 TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
 ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
 FLUIDS_FILE = '../java/net/astr0/astech/Fluid/ModFluids.java' 
+SLURRY_FILE = '../java/net/astr0/astech/compat/mek/AsTechSlurries.java'
 
 for chemdef in chemicals:
     plain_text_name = chemdef['Name']
@@ -309,35 +352,21 @@ for chemdef in chemicals:
 
         datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_ore', f"forge:ores/{fluid_name}", f"astech:{fluid_name}_ingot")
 
-    datapack.add_generic_recipe(f"crafting/{fluid_name}_ingot_to_nugget", f"""{{
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "ingredients": [
-    {{
-      "item": "astech:{fluid_name}_ingot"
-    }}
-  ],
-  "result": {{
-    "count": 9,
-    "item": "astech:{fluid_name}_nugget"
-  }}
-}}
-""")
+        add_mek_tint_item(datapack, f"{fluid_name}_clump", f"{plain_text_name} Clump", chemdef["Color"], CLUMP_TEXTURE, CLUMP_TEXTURE_OVERLAY, fluid_name)
+        datapack.add_item_tag(f"mekanism:clumps/{fluid_name}", f"astech:{fluid_name}_clump")
+        add_mek_tint_item(datapack, f"{fluid_name}_dirty_dust", f"{plain_text_name} Dirty Dust", chemdef["Color"], DIRTY_DUST_TEXTURE, DIRTY_DUST_TEXTURE_OVERLAY, fluid_name)
+        datapack.add_item_tag(f"mekanism:dirty_dusts/{fluid_name}", f"astech:{fluid_name}_dirty_dust")
+        add_mek_tint_item(datapack, f"{fluid_name}_crystal", f"{plain_text_name} Crystal", chemdef["Color"], CRYSTAL_TEXTURE, CRYSTAL_TEXTURE_OVERLAY, fluid_name)
+        datapack.add_item_tag(f"mekanism:crystals/{fluid_name}", f"astech:{fluid_name}_crystal")
+        add_mek_tint_item(datapack, f"{fluid_name}_shard", f"{plain_text_name} Shard", chemdef["Color"], SHARD_TEXTURE, SHARD_TEXTURE_OVERLAY, fluid_name)
+        datapack.add_item_tag(f"mekanism:shards/{fluid_name}", f"astech:{fluid_name}_shard")
+
+        datapack.add_text_to_region(SLURRY_FILE, 'SLURRY_REGION', f"""public static SlurryRegistryObject<Slurry, Slurry> {fluid_name.upper()}_SLURRY = SLURRIES.register("{fluid_name}", "{chemdef['Color']}", new ResourceLocation("forge","tags/items/ores/{fluid_name}"));""")
+
+
+    datapack.add_generic_recipe(f"crafting/{fluid_name}_ingot_to_nugget", UNCOMPACTING_RECIPE(f"astech:{fluid_name}_ingot", f"astech:{fluid_name}_nugget"))
     
-    datapack.add_generic_recipe(f"crafting/{fluid_name}_block_to_ingot", f"""{{
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "ingredients": [
-    {{
-      "item": "astech:{fluid_name}_block"
-    }}
-  ],
-  "result": {{
-    "count": 9,
-    "item": "astech:{fluid_name}_ingot"
-  }}
-}}
-""")
+    datapack.add_generic_recipe(f"crafting/{fluid_name}_block_to_ingot", UNCOMPACTING_RECIPE(f"astech:{fluid_name}_block", f"astech:{fluid_name}_ingot"))
     
     datapack.add_generic_recipe(f"compat/mek/crushing/{fluid_name}_ingot_to_plate", f"""{{
   "type": "mekanism:crushing",

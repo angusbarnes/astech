@@ -58,7 +58,7 @@ def layer_images(base_image_path, top_image_path, output_image_path, tint_color,
     # Save the result
     combined_image.save(output_image_path, format='PNG')
 
-def layer_images_but_backwards(base_image_path, top_image_path, output_image_path, tint_color, type):
+def layer_images_but_backwards(base_image_path, top_image_path, output_image_path, tint_color):
     # Open the base image
     base_image = Image.open(base_image_path).convert("RGBA")
     tinted_base_image = blend_overlay(base_image, tint_color)
@@ -68,11 +68,8 @@ def layer_images_but_backwards(base_image_path, top_image_path, output_image_pat
     
     
     # Layer the tinted top image on the base image
-    combined_image = Image.alpha_composite(base_image, tinted_top_image)
+    combined_image = Image.alpha_composite(tinted_base_image, top_image)
 
-    if type == 'gas':
-        combined_image = combined_image.rotate(180)
-    
     # Save the result
     combined_image.save(output_image_path, format='PNG')
 

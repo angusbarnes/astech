@@ -144,23 +144,6 @@ def add_simple_ore_block(ctx: Context, block_id: str, block_name, tint, template
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModBlocks.{block_id.upper()}.get());")
     ctx.add_simple_block_model(f'{block_id}')
     ctx.add_block_item_model(f'{block_id}')
-    
-
-# def add_ore_block(ctx: Context, block_id: str, block_name, tint, template_file, material_name):
-
-#     TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
-#     ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
-#     FLUIDS_FILE = '../java/net/astr0/astech/Fluid/ModFluids.java'
-#     BLOCK_FILE 
-
-#     template = Image.open(template_file)
-#     texture = blend_overlay(template, hex_to_rgb(tint))
-#     texture.save(f'../resources/assets/astech/textures/item/{item_id}.png', format='PNG')
-#     ctx.add_translation(f"item.astech.{item_id}", f"{item_name}")
-#     ctx.add_text_to_region(BLOCK_FILE, 'BLOCKS_REGION', f"""public static final RegistryObject<Block> {} = registerBlock("{}",
-#             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK)));""")
-#     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
-#     ctx.add_simple_item_model(f'{item_id}')
 
 headers, chemicals = get_chemical_defs("chems.csv")
 datapack = Context('../resources/', 'astech')
@@ -208,11 +191,12 @@ static_items = [
     'transistor', 
     'monocrystalline_silicon', 
     'antimatter_tormentum',
+    'photonic_flux_capacitor',
     'abyssium_ingot',
     'ultradense_metal_ball', 
     'analog_circuit', 
     'genetic_material_a', 
-    'portable_storage_unit', 
+    'capacitor_array', 
     'refined', 
     'infinity_totem', 
     'infinity_catalyst', 
@@ -242,7 +226,7 @@ static_items = [
     'op_amp', 
     'beaker', 
     'neutron_ingot', 
-    'large_heat_exchanger', 
+    'hyper_dimensional_data_transceiver', 
     'resistor', 
     'interplanetary_mining_lens', 
     'not_gate', 

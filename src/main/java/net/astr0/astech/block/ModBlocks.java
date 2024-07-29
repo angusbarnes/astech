@@ -1,6 +1,7 @@
 package net.astr0.astech.block;
 
 import net.astr0.astech.AsTech;
+import net.astr0.astech.block.Assembler.AssemblerBlock;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlock;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlock;
 import net.astr0.astech.item.ModItems;
@@ -56,6 +57,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> CHEMICAL_MIXER = registerBlock("chemical_mixer",
             () -> new ChemicalMixerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
+    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler",
+            () -> new AssemblerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
     //#anchor BLOCK_REGION
 public static final RegistryObject<Block> PISS_WATER_BLOCK = registerBlock("piss_water_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));

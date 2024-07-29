@@ -2,6 +2,8 @@ package net.astr0.astech;
 
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.ModFluids;
+import net.astr0.astech.block.Assembler.AssemblerMenu;
+import net.astr0.astech.block.Assembler.AssemblerScreen;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerScreen;
 import net.astr0.astech.block.GemPolisher.GemPolishingBlockEntityRenderer;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationScreen;
@@ -126,6 +128,7 @@ public class AsTech
 
             MenuScreens.register(ModMenuTypes.GEM_POLISHING_MENU.get(), GemPolishingStationScreen::new);
             MenuScreens.register(ModMenuTypes.CHEMICAL_MIXER_MENU.get(), ChemicalMixerScreen::new);
+            MenuScreens.register(ModMenuTypes.ASSEMBLER_MENU.get(), AssemblerScreen::new);
         }
     }
 }

@@ -1,4 +1,4 @@
-package net.astr0.astech.block.ChemicalMixer;
+package net.astr0.astech.block.Assembler;
 
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.CustomEnergyStorage;
@@ -42,23 +42,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-// Todo:
-// - We need to prevent output handlers from being able to be input into
-// - We need to tidy up side config stuff
-// - Implement Recipe Type, Recipe Process and JEI Recipe Categories and transfer handlers
-// - Clean up print statements
-// - Enable fluid draining and filling from buckets in GUI
-//   ---> this might involve some custom fluidSlot type bullshit. IDK how to do that
-// - Somehow support AE2 style click and drag to set filters from JEI
-// - add OK button to only update side config when pressed, or menu closed
-// Data generators would be good to add too
-// Add fluid texture variations
-// Tie hazardous materials to actual underlying data
-// Fix energy percentage synced by ContainerData
-public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
+public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
-    private final FilteredItemStackHandler inputItemHandler = new FilteredItemStackHandler(3) {
+    private final FilteredItemStackHandler inputItemHandler = new FilteredItemStackHandler(5) {
 
         @Override
         protected void onContentsChanged(int slot) {
@@ -102,22 +89,13 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         }
     }
 
-    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(2,10000) {
+    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(1,10000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
 
             SetNetworkDirty();
 
-        }
-    };
-
-    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(1,20000) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
-
-            SetNetworkDirty();
         }
     };
 
@@ -126,15 +104,14 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
     private final LazyOptional<IItemHandler> lazyInputItemHandler = LazyOptional.of(() -> inputItemHandler);
     private final LazyOptional<IItemHandler> lazyOutputItemHandler = LazyOptional.of(() -> outputItemHandler);
     private final LazyOptional<IFluidHandler> lazyInputFluidHandler = LazyOptional.of(() -> inputFluidTank);
-    private final LazyOptional<IFluidHandler> lazyOutputFluidHandler = LazyOptional.of(() -> outputFluidTank);
     private final LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
     // Container data is simple data which is synchronised by default over the network
     protected final ContainerData data;
     private int progress = 0;
     private int maxProgress = 80;
 
-    public ChemicalMixerBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.CHEMICAL_MIXER_BE.get(), pPos, pBlockState);
+    public AssemblerBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(ModBlockEntities.ASSEMBLER_BE.get(), pPos, pBlockState);
 
         this.data = new ContainerData() {
             @Override
@@ -143,8 +120,8 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
                     case 0 -> energyStorage.getMaxEnergyStored();
                     // TODO: Turn this into a synced percentage and reconvert to relative amount on client side
                     case 1 -> energyStorage.getEnergyStored();
-                    case 2 -> ChemicalMixerBlockEntity.this.progress;
-                    case 3 -> ChemicalMixerBlockEntity.this.maxProgress;
+                    case 2 -> AssemblerBlockEntity.this.progress;
+                    case 3 -> AssemblerBlockEntity.this.maxProgress;
                     default -> throw new UnsupportedOperationException("Unexpected value: " + pIndex);
                 };
             }
@@ -152,9 +129,9 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 1 -> ChemicalMixerBlockEntity.this.energyStorage.setEnergy(pValue);
-                    case 2 -> ChemicalMixerBlockEntity.this.progress = pValue;
-                    case 3 -> ChemicalMixerBlockEntity.this.maxProgress = pValue;
+                    case 1 -> AssemblerBlockEntity.this.energyStorage.setEnergy(pValue);
+                    case 2 -> AssemblerBlockEntity.this.progress = pValue;
+                    case 3 -> AssemblerBlockEntity.this.maxProgress = pValue;
                 }
             }
 
@@ -171,8 +148,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
         sidedFluidConfig.setCap(Direction.UP, SidedConfig.FLUID_INPUT);
         sidedFluidConfig.setCap(Direction.EAST, SidedConfig.FLUID_INPUT);
-        sidedFluidConfig.setCap(Direction.DOWN, SidedConfig.FLUID_OUTPUT);
-        sidedFluidConfig.setCap(Direction.WEST, SidedConfig.FLUID_OUTPUT);
     }
 
     @Override
@@ -199,7 +174,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         int type = sidedFluidConfig.getCap(side);
         return switch (type) {
             case SidedConfig.FLUID_INPUT -> lazyInputFluidHandler.cast();
-            case SidedConfig.FLUID_OUTPUT -> lazyOutputFluidHandler.cast();
             default -> LazyOptional.empty();
         };
     }
@@ -219,12 +193,12 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         super.invalidateCaps();
         lazyInputItemHandler.invalidate();
         lazyInputFluidHandler.invalidate();
-        lazyOutputFluidHandler.invalidate();
         lazyEnergyHandler.invalidate();
     }
 
     // User defined helper to get a list of all the items we are holding,
     // this is used to drop those items when this block is destroyed
+    // TODO: FIX BUG IN ALL BLOCK ENTITIES TO ALSO DROP ITEM IN OUTPUT HANDLER
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(inputItemHandler.getSlots());
         for(int i = 0; i < inputItemHandler.getSlots(); i++) {
@@ -236,7 +210,7 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal("Chemical Mixer");
+        return Component.literal("Assembler");
     }
 
     // Not sure exactly what this over-rides, but it implements MenuProvider
@@ -244,14 +218,14 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new ChemicalMixerMenu(pContainerId, pPlayerInventory, this, this.data);
+        return new AssemblerMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 
     @Override
     public int[][] getCapTypes() {
         return new int[][] {
                 {SidedConfig.NONE, SidedConfig.ITEM_INPUT, SidedConfig.ITEM_OUTPUT},
-                {SidedConfig.NONE, SidedConfig.FLUID_INPUT, SidedConfig.FLUID_OUTPUT},
+                {SidedConfig.NONE, SidedConfig.FLUID_INPUT},
         };
     }
 
@@ -268,10 +242,9 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("inventory", inputItemHandler.serializeNBT());
-        pTag.putInt("chemical_mixer.progress", progress);
+        pTag.putInt("assembler.progress", progress);
         pTag.put("Energy", this.energyStorage.serializeNBT());
         pTag.put("fluidTank", inputFluidTank.writeToNBT(new CompoundTag()));
-        pTag.put("outputFluidTank", outputFluidTank.writeToNBT(new CompoundTag()));
         pTag.put("itemConfig", sidedItemConfig.writeToNBT(new CompoundTag()));
         pTag.put("fluidConfig", sidedFluidConfig.writeToNBT(new CompoundTag()));
         pTag.put("outputInventory", outputItemHandler.serializeNBT());
@@ -283,13 +256,12 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
     public void load(CompoundTag pTag) {
         super.load(pTag);
         inputItemHandler.deserializeNBT(pTag.getCompound("inventory"));
-        progress = pTag.getInt("chemical_mixer.progress");
+        progress = pTag.getInt("assembler.progress");
         energyStorage.deserializeNBT(pTag.get("Energy"));
         inputFluidTank.readFromNBT(pTag.getCompound("fluidTank"));
         sidedItemConfig.readFromNBT(pTag.getCompound("itemConfig"));
         sidedFluidConfig.readFromNBT(pTag.getCompound("fluidConfig"));
         outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
-        outputFluidTank.readFromNBT(pTag.getCompound("outputFluidTank"));
     }
 
     private void ConsumePower(int amount) {
@@ -356,23 +328,24 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         FluidStack resultFluid = recipe.getOutputFluid();
 
         if(resultFluid != null && !resultFluid.isEmpty()) {
-            outputFluidTank.fill(resultFluid, IFluidHandler.FluidAction.EXECUTE);
+            //outputFluidTank.fill(resultFluid, IFluidHandler.FluidAction.EXECUTE);
         }
 
         SetNetworkDirty(); // Make sure we mark this block for an update now that we changed inventory content
     }
 
     private boolean hasRecipe() {
-        ChemicalMixerRecipe recipe = getRecipe();
 
-        if(recipe == null) {
-            return false;
-        }
-        ItemStack result = recipe.getOutputItem();
-
-        return canInsertAmountIntoOutputSlot(result.getCount())
-                && canInsertItemIntoOutputSlot(result.getItem())
-                && isOutputFluidValid(recipe.getOutputFluid());
+        return false;
+//        ChemicalMixerRecipe recipe = getRecipe();
+//
+//        if(recipe == null) {
+//            return false;
+//        }
+//        ItemStack result = recipe.getOutputItem();
+//
+//        return canInsertAmountIntoOutputSlot(result.getCount())
+//                && canInsertItemIntoOutputSlot(result.getItem());
     }
 
     private ChemicalMixerRecipe cachedRecipe = null;
@@ -397,15 +370,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         return null;
     }
 
-    private boolean isOutputFluidValid(FluidStack output) {
-
-        FluidStack stack = outputFluidTank.getFluidInTank(0);
-
-        boolean result = (stack.isEmpty() || stack.containsFluid(output)) && stack.getAmount() + output.getAmount() <= outputFluidTank.getTankCapacity(0);
-
-        return result;
-    }
-
     private boolean canInsertItemIntoOutputSlot(Item item) {
         return this.outputItemHandler.getStackInSlot(0).isEmpty() || this.outputItemHandler.getStackInSlot(0).is(item);
     }
@@ -427,10 +391,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         progress--;
 
         if(progress < 0) progress = 0;
-    }
-
-    public FluidTank getFluidOutputTank() {
-        return outputFluidTank.getTank(0);
     }
 
     public LazyOptional<IItemHandler> getInputItemHandler() {
@@ -538,14 +498,10 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
     @Override
     protected void SERVER_WriteUpdateToFlexiPacket(FlexiPacket packet) {
         packet.writeFluidStack(inputFluidTank.getFluidInTank(0));
-        packet.writeFluidStack(inputFluidTank.getFluidInTank(1));
-        packet.writeFluidStack(outputFluidTank.getFluidInTank(0));
     }
 
     @Override
     protected void CLIENT_ReadUpdateFromFlexiPacket(FlexiPacket packet) {
         inputFluidTank.getTank(0).setFluid(packet.readFluidStack());
-        inputFluidTank.getTank(1).setFluid(packet.readFluidStack());
-        outputFluidTank.getTank(0).setFluid(packet.readFluidStack());
     }
 }

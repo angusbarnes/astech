@@ -28,6 +28,7 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.NIC_BLOCK.get());
                         output.accept(ModBlocks.GEM_POLISHING_STATION.get());
                         output.accept(ModBlocks.CHEMICAL_MIXER.get());
+                        output.accept(ModBlocks.ASSEMBLER.get());
                         output.accept(ModBlocks.TROPHY.get());
 
                         //#anchor TAB_REGION

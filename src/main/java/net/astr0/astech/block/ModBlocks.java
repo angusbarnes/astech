@@ -1,6 +1,7 @@
 package net.astr0.astech.block;
 
 import net.astr0.astech.AsTech;
+import net.astr0.astech.block.Assembler.AssemblerBlock;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlock;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlock;
 import net.astr0.astech.item.ModItems;
@@ -56,6 +57,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> CHEMICAL_MIXER = registerBlock("chemical_mixer",
             () -> new ChemicalMixerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
+    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler",
+            () -> new AssemblerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
     //#anchor BLOCK_REGION
 public static final RegistryObject<Block> PISS_WATER_BLOCK = registerBlock("piss_water_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
@@ -130,5 +134,14 @@ public static final RegistryObject<Block> IUMIUM_ORE = registerBlock("iumium_ore
 public static final RegistryObject<Block> DEEPSLATE_IUMIUM_ORE = registerBlock("deepslate_iumium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));
 public static final RegistryObject<Block> NEUTRONIUM_BLOCK = registerBlock("neutronium_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 public static final RegistryObject<Block> SODIUM_SULFATE_BLOCK = registerBlock("sodium_sulfate_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+public static final RegistryObject<Block> BAUXITE_BLOCK = registerBlock("bauxite_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+public static final RegistryObject<Block> BAUXITE_ORE = registerBlock("bauxite_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));
+public static final RegistryObject<Block> DEEPSLATE_BAUXITE_ORE = registerBlock("deepslate_bauxite_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));
+public static final RegistryObject<Block> URANIUM_OXIDE_BLOCK = registerBlock("uranium_oxide_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+public static final RegistryObject<Block> URANIUM_OXIDE_ORE = registerBlock("uranium_oxide_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));
+public static final RegistryObject<Block> DEEPSLATE_URANIUM_OXIDE_ORE = registerBlock("deepslate_uranium_oxide_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));
+public static final RegistryObject<Block> COBALT_BLOCK = registerBlock("cobalt_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+public static final RegistryObject<Block> COBALT_ORE = registerBlock("cobalt_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));
+public static final RegistryObject<Block> DEEPSLATE_COBALT_ORE = registerBlock("deepslate_cobalt_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));
     //#end BLOCK_REGION
 }

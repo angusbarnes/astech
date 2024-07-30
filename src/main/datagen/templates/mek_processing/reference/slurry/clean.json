@@ -6,10 +6,10 @@
   },
   "slurryInput": {
     "amount": 1,
-    "slurry": "astech:dirty_stipnicium"
+    "slurry": "astech:dirty_$FLUID_TYPE$"
   },
   "output": {
-    "slurry": "astech:clean_stipnicium",
+    "slurry": "astech:clean_$FLUID_TYPE$",
     "amount": 1
   },
   "conditions": [

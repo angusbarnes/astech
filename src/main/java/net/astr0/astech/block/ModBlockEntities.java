@@ -1,6 +1,7 @@
 package net.astr0.astech.block;
 
 import net.astr0.astech.AsTech;
+import net.astr0.astech.block.Assembler.AssemblerBlockEntity;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlockEntity;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,6 +23,11 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("chemical_mixer", () ->
                     BlockEntityType.Builder.of(ChemicalMixerBlockEntity::new,
                             ModBlocks.CHEMICAL_MIXER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<AssemblerBlockEntity>> ASSEMBLER_BE =
+            BLOCK_ENTITIES.register("assembler", () ->
+                    BlockEntityType.Builder.of(AssemblerBlockEntity::new,
+                            ModBlocks.ASSEMBLER.get()).build(null));
 
 
     public static void register(IEventBus eventBus) {

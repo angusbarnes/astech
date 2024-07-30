@@ -1,0 +1,17 @@
+{
+  "type": "mekanism:crystallizing",
+  "chemicalType": "slurry",
+  "input": {
+    "amount": 200,
+    "slurry": "astech:clean_$FLUID_TYPE$"
+  },
+  "output": {
+    "item": "astech:$FLUID_TYPE$_crystal"
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ]
+}

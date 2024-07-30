@@ -58,7 +58,7 @@ def layer_images(base_image_path, top_image_path, output_image_path, tint_color,
     # Save the result
     combined_image.save(output_image_path, format='PNG')
 
-def layer_images_but_backwards(base_image_path, top_image_path, output_image_path, tint_color, type):
+def layer_images_but_backwards(base_image_path, top_image_path, output_image_path, tint_color):
     # Open the base image
     base_image = Image.open(base_image_path).convert("RGBA")
     tinted_base_image = blend_overlay(base_image, tint_color)
@@ -68,11 +68,8 @@ def layer_images_but_backwards(base_image_path, top_image_path, output_image_pat
     
     
     # Layer the tinted top image on the base image
-    combined_image = Image.alpha_composite(base_image, tinted_top_image)
+    combined_image = Image.alpha_composite(tinted_base_image, top_image)
 
-    if type == 'gas':
-        combined_image = combined_image.rotate(180)
-    
     # Save the result
     combined_image.save(output_image_path, format='PNG')
 
@@ -145,3 +142,34 @@ def copy_and_overwrite(src, dst):
                 shutil.copy2(src_file, dst_file)
 
     print(f"\nCopy operation completed.")
+
+
+def copy_and_substitute(template_dir, dest_dir, substitutions):
+    def process_file(src, dst):
+        with open(src, 'r') as f:
+            content = f.read()
+        
+        for key, value in substitutions.items():
+            content = content.replace(key, value)
+        
+        with open(dst, 'w') as f:
+            f.write(content)
+
+    for root, dirs, files in os.walk(template_dir):
+        rel_path = os.path.relpath(root, template_dir)
+        dest_root = os.path.join(dest_dir, rel_path)
+
+        # Create directories
+        os.makedirs(dest_root, exist_ok=True)
+
+        # Copy and process files
+        for file in files:
+            src_file = os.path.join(root, file)
+            dst_file = os.path.join(dest_root, file)
+
+            # Check if it's a text file (you might want to adjust this check)
+            if os.path.isfile(src_file) and not file.endswith(('.jpg', '.png', '.gif', '.pdf')):
+                process_file(src_file, dst_file)
+            else:
+                shutil.copy2(src_file, dst_file)
+

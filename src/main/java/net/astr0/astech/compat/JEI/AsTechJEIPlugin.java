@@ -12,6 +12,7 @@ import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.astr0.astech.block;
 
 import java.util.List;
 
@@ -31,8 +32,15 @@ public class AsTechJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
 
-        List<ChemicalMixerRecipe> polishingRecipes = recipeManager.getAllRecipesFor(ModRecipes.CHEMICAL_MIXER_RECIPE_TYPE.get());
+        List<ChemicalMixerRecipe> polishingRecipes = recipeManager
+                .getAllRecipesFor(ModRecipes.CHEMICAL_MIXER_RECIPE_TYPE.get());
         registration.addRecipes(ChemicalMixerCategory.CHEMICAL_MIXER_TYPE, polishingRecipes);
+    }
+
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.CHEMICAL_MIXER.get()),
+                ChemicalMixerCategory.CHEMICAL_MIXER_TYPE);
     }
 
     @Override

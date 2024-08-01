@@ -1,8 +1,34 @@
 {
   "variants": {
-    "facing=north": { "model": "astech:block/chemical_mixer" },
-    "facing=east": { "model": "astech:block/chemical_mixer", "y": 90 },
-    "facing=south": { "model": "astech:block/chemical_mixer", "y": 180 },
-    "facing=west": { "model": "astech:block/chemical_mixer", "y": 270 }
+    "facing=north,active=false": {
+      "model": "astech:block/chemical_mixer"
+    },
+    "facing=south,active=false": {
+      "model": "astech:block/chemical_mixer",
+      "y": 180
+    },
+    "facing=east,active=false": {
+      "model": "astech:block/chemical_mixer",
+      "y": 90
+    },
+    "facing=west,active=false": {
+      "model": "astech:block/chemical_mixer",
+      "y": -90
+    },
+    "facing=north,active=true": {
+      "model": "astech:block/chemical_mixer_active"
+    },
+    "facing=south,active=true": {
+      "model": "astech:block/chemical_mixer_active",
+      "y": 180
+    },
+    "facing=east,active=true": {
+      "model": "astech:block/chemical_mixer_active",
+      "y": 90
+    },
+    "facing=west,active=true": {
+      "model": "astech:block/chemical_mixer_active",
+      "y": -90
+    }
   }
 }

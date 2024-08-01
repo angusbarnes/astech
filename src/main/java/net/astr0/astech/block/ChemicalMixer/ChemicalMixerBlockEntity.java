@@ -301,6 +301,9 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {
 
         if(hasRecipe()) {
+
+            pLevel.setBlock(pPos, pState.setValue(ChemicalMixerBlock.ACTIVE, true), 2 | 8);
+
             if(this.energyStorage.getEnergyStored() < 256) {
                 decreaseCraftingProgress();
             } else {
@@ -318,6 +321,7 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
             }
         } else {
             resetProgress();
+            pLevel.setBlock(pPos, pState.setValue(ChemicalMixerBlock.ACTIVE, false), 2 | 8);
         }
 
         IncrementNetworkTickCount();

@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
@@ -24,16 +25,19 @@ import org.jetbrains.annotations.Nullable;
 
 public class ChemicalMixerBlock extends HorizontalDirectionalBlock implements EntityBlock {
     //public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
     public ChemicalMixerBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+        registerDefaultState(stateDefinition.any().setValue(ACTIVE, false));
     }
 
     @Override
     protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(FACING);
+        builder.add(ACTIVE);
     }
 
     // This is called when the block is destroyed, it over-rides BaseEntityBlock

@@ -21,10 +21,8 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.function.Supplier;
 
 public class ModBlocks {
-
     // This is the global instance of the block registry
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, AsTech.MODID);
-
     // Call this function from the entry point to allow the blocks register to link itself to the eventBus
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
@@ -56,10 +54,20 @@ public class ModBlocks {
             () -> new GemPolishingStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
     public static final RegistryObject<Block> CHEMICAL_MIXER = registerBlock("chemical_mixer",
-            () -> new ChemicalMixerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+            () -> new ChemicalMixerBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
 
     public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler",
-            () -> new AssemblerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+            () -> new AssemblerBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
+
+
+    public static BlockBehaviour.Properties MACHINE_DEFAULT_PROPS = BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
+            .noOcclusion()
+            .sound(SoundType.METAL)
+            .strength(2, 12)
+            .emissiveRendering((a, b, c) -> true)
+            .lightLevel((state) -> {
+                return state.getValue(ChemicalMixerBlock.ACTIVE) ? 13 : 0;
+            });
 
     //#anchor BLOCK_REGION
 public static final RegistryObject<Block> PISS_WATER_BLOCK = registerBlock("piss_water_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));

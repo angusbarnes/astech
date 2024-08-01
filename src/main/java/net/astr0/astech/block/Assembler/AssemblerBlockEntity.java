@@ -10,7 +10,7 @@ import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.SidedConfig;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
-import net.astr0.astech.recipe.ChemicalMixerRecipe;
+import net.astr0.astech.recipe.AssemblerRecipe;
 import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +33,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.PacketDistributor;
@@ -273,6 +272,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {
 
         if(hasRecipe()) {
+            pLevel.setBlock(pPos, pState.setValue(AssemblerBlock.ACTIVE, true), 2 | 8);
             if(this.energyStorage.getEnergyStored() < 256) {
                 decreaseCraftingProgress();
             } else {
@@ -290,6 +290,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
             }
         } else {
             resetProgress();
+            pLevel.setBlock(pPos, pState.setValue(AssemblerBlock.ACTIVE, true), 2 | 8);
         }
 
         IncrementNetworkTickCount();
@@ -300,23 +301,25 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
     }
 
     private void craftItem() {
-        ChemicalMixerRecipe recipe = getRecipe();
+        AssemblerRecipe recipe = getRecipe();
 
         if(recipe == null) return;
 
         int itemsConsumed0 = recipe.calculateConsumedAmountItems(this.inputItemHandler.getStackInSlot(0));
         int itemsConsumed1 = recipe.calculateConsumedAmountItems(this.inputItemHandler.getStackInSlot(1));
         int itemsConsumed2 = recipe.calculateConsumedAmountItems(this.inputItemHandler.getStackInSlot(2));
+        int itemsConsumed3 = recipe.calculateConsumedAmountItems(this.inputItemHandler.getStackInSlot(3));
+        int itemsConsumed4 = recipe.calculateConsumedAmountItems(this.inputItemHandler.getStackInSlot(4));
 
         this.inputItemHandler.extractItem(0, itemsConsumed0, false);
         this.inputItemHandler.extractItem(1, itemsConsumed1, false);
         this.inputItemHandler.extractItem(2, itemsConsumed2, false);
+        this.inputItemHandler.extractItem(3, itemsConsumed3, false);
+        this.inputItemHandler.extractItem(4, itemsConsumed4, false);
 
         int tank0consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(0));
-        int tank1consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(1));
 
         inputFluidTank.getTank(0).drain(tank0consumed, IFluidHandler.FluidAction.EXECUTE);
-        inputFluidTank.getTank(1).drain(tank1consumed, IFluidHandler.FluidAction.EXECUTE);
 
         ItemStack result = recipe.getOutputItem();
 
@@ -325,42 +328,36 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
                     this.outputItemHandler.getStackInSlot(0).getCount() + result.getCount()));
         }
 
-        FluidStack resultFluid = recipe.getOutputFluid();
-
-        if(resultFluid != null && !resultFluid.isEmpty()) {
-            //outputFluidTank.fill(resultFluid, IFluidHandler.FluidAction.EXECUTE);
-        }
-
         SetNetworkDirty(); // Make sure we mark this block for an update now that we changed inventory content
     }
 
     private boolean hasRecipe() {
 
-        return false;
-//        ChemicalMixerRecipe recipe = getRecipe();
-//
-//        if(recipe == null) {
-//            return false;
-//        }
-//        ItemStack result = recipe.getOutputItem();
-//
-//        return canInsertAmountIntoOutputSlot(result.getCount())
-//                && canInsertItemIntoOutputSlot(result.getItem());
+
+        AssemblerRecipe recipe = getRecipe();
+
+        if(recipe == null) {
+            return false;
+        }
+        ItemStack result = recipe.getOutputItem();
+
+        return canInsertAmountIntoOutputSlot(result.getCount())
+                && canInsertItemIntoOutputSlot(result.getItem());
     }
 
-    private ChemicalMixerRecipe cachedRecipe = null;
-    private ChemicalMixerRecipe getRecipe() {
+    private AssemblerRecipe cachedRecipe = null;
+    private AssemblerRecipe getRecipe() {
 
         ItemStack[] inputs = new ItemStack[] { inputItemHandler.getStackInSlot(0), inputItemHandler.getStackInSlot(1), inputItemHandler.getStackInSlot(2) };
 
-        if(cachedRecipe != null && cachedRecipe.matches(inputFluidTank.getFluidInTank(0), inputFluidTank.getFluidInTank(1), inputs)) {
+        if(cachedRecipe != null && cachedRecipe.matches(inputFluidTank.getFluidInTank(0), inputs)) {
             return cachedRecipe;
         }
 
-        List<ChemicalMixerRecipe> recipes = this.level.getRecipeManager().getAllRecipesFor(ModRecipes.CHEMICAL_MIXER_RECIPE_TYPE.get());
+        List<AssemblerRecipe> recipes = this.level.getRecipeManager().getAllRecipesFor(ModRecipes.ASSEMBLER_RECIPE_TYPE.get());
 
-        for(ChemicalMixerRecipe recipe : recipes) {
-            if(recipe.matches(inputFluidTank.getFluidInTank(0), inputFluidTank.getFluidInTank(1), inputs)) {
+        for(AssemblerRecipe recipe : recipes) {
+            if(recipe.matches(inputFluidTank.getFluidInTank(0), inputs)) {
                 cachedRecipe = recipe;
                 return recipe;
             }

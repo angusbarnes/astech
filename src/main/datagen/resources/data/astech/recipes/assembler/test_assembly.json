@@ -1,0 +1,18 @@
+{
+  "type": "astech:assembler",
+  "inputs": [
+    {
+      "item": "minecraft:stick"
+    },
+    { "item": "minecraft:coal" }
+  ],
+  "fluid_input": {
+    "type": "astech:fluid",
+    "amount": 250,
+    "tag": "forge:adamantium"
+  },
+  "item_output": {
+    "item": "minecraft:diamond"
+  },
+  "time": 300
+}

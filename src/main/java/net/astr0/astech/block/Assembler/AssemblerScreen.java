@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.items.IItemHandler;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class AssemblerScreen extends AbstractContainerScreen<AssemblerMenu> {
     protected void init() {
         super.init();
 
-        addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 34, this.topPos + 18));
+        addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 15, this.topPos + 16));
 
         FilteredItemStackHandler inputItemHandler = this.menu.blockEntity.getInputStackHandler();
         addElement(new FilteredItemSlot(inputItemHandler, 0,this.leftPos + 36, this.topPos + 26));
@@ -51,11 +50,11 @@ public class AssemblerScreen extends AbstractContainerScreen<AssemblerMenu> {
 
         MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity);
 
-        IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 30, Icons.SETTINGS, (button) -> {
+        IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 60, this.topPos + 61, Icons.SETTINGS, (button) -> {
             config.ToggleRender();
         });
 
-        IconButton LOCK_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 49, Icons.UNLOCKED, (button) -> {
+        IconButton LOCK_BUTTON = new IconButton(this.leftPos + 79, this.topPos + 61, Icons.UNLOCKED, (button) -> {
             button.setIcon(button.getIcon() == Icons.UNLOCKED ? Icons.LOCKED : Icons.UNLOCKED);
             isLocked = !isLocked;
         });
@@ -79,7 +78,7 @@ public class AssemblerScreen extends AbstractContainerScreen<AssemblerMenu> {
             element.renderBackground(guiGraphics);
         }
 
-        renderEnergyBar(guiGraphics, 154);
+        renderEnergyBar(guiGraphics, 155);
     }
 
     @Override
@@ -113,7 +112,7 @@ public class AssemblerScreen extends AbstractContainerScreen<AssemblerMenu> {
 
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if(menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x, y, 209, 9, menu.getScaledProgress(), 15);
+            guiGraphics.blit(TEXTURE, x, y, 177, 0, menu.getScaledProgress(), 8);
         }
     }
 
@@ -144,7 +143,7 @@ public class AssemblerScreen extends AbstractContainerScreen<AssemblerMenu> {
             element.renderTooltip(guiGraphics, mouseX, mouseY);
         }
 
-        renderProgressArrow(guiGraphics, this.leftPos + 85, this.topPos + 39);
+        renderProgressArrow(guiGraphics, this.leftPos + 74, this.topPos + 48);
 
         renderTooltip(guiGraphics, mouseX, mouseY);
 

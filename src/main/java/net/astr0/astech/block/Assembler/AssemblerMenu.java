@@ -71,7 +71,7 @@ public class AssemblerMenu extends AbstractContainerMenu {
     public int getScaledProgress() {
         int progress = this.data.get(2);
         int maxProgress = this.data.get(3);  // Max Progress
-        int progressArrowSize = 34; // This is the height in pixels of your arrow
+        int progressArrowSize = 28; // This is the height in pixels of your arrow
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }

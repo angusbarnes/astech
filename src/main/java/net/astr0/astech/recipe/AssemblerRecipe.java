@@ -53,8 +53,9 @@ public class AssemblerRecipe extends AsTechRecipeBase {
     public boolean matches(FluidStack fluid1, ItemStack[] itemInputs) {
 
         boolean hasItems = areIngredientsFulfilled(itemInputs);
+        boolean fluidMatches = (input1.testFluid(fluid1) || (input1 == FluidIngredient.EMPTY && fluid1 == FluidStack.EMPTY));
 
-        return input1.testFluid(fluid1) && hasItems;
+        return fluidMatches && hasItems;
     }
 
     public boolean areIngredientsFulfilled(ItemStack[] itemStacks) {

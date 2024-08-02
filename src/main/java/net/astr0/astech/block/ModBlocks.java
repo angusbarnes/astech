@@ -66,7 +66,7 @@ public class ModBlocks {
             .strength(2, 12)
             .emissiveRendering((a, b, c) -> true)
             .lightLevel((state) -> {
-                return state.getValue(ChemicalMixerBlock.ACTIVE) ? 13 : 0;
+                return state.getValue(ChemicalMixerBlock.ACTIVE) ? 9 : 0;
             });
 
     //#anchor BLOCK_REGION

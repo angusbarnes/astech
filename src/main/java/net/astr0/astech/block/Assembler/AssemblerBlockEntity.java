@@ -290,7 +290,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
             }
         } else {
             resetProgress();
-            pLevel.setBlock(pPos, pState.setValue(AssemblerBlock.ACTIVE, true), 2 | 8);
+            pLevel.setBlock(pPos, pState.setValue(AssemblerBlock.ACTIVE, false), 2 | 8);
         }
 
         IncrementNetworkTickCount();

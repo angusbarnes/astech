@@ -12,6 +12,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.astr0.astech.AsTech;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.recipe.AssemblerRecipe;
+import net.astr0.astech.recipe.FluidIngredient;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -43,7 +44,7 @@ public class AssemblerCategory implements IRecipeCategory<AssemblerRecipe> {
 
     @Override
     public Component getTitle() {
-        return Component.literal("Chemical Mixing");
+        return Component.literal("Assembling");
     }
 
     @Override
@@ -58,16 +59,20 @@ public class AssemblerCategory implements IRecipeCategory<AssemblerRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, AssemblerRecipe recipe, IFocusGroup focuses) {
-        FluidStack in1 = recipe.getInput1().getFluidStacks().get(0);
-        int[] amounts = new int[] { in1.getAmount() };
-        int max = Arrays.stream(amounts).max().getAsInt();
 
-        int inH1 = Math.min(56, in1.getAmount() * 56 / max);
+        if (recipe.getInput1() != FluidIngredient.EMPTY) {
+            FluidStack in1 = recipe.getInput1().getFluidStacks().get(0);
+            int[] amounts = new int[] { in1.getAmount() };
+            int max = Arrays.stream(amounts).max().getAsInt();
+
+            int inH1 = Math.min(56, in1.getAmount() * 56 / max);
 
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 14, 15 + (56 - inH1))
-                .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput1().getFluidStacks())
-                .setFluidRenderer(in1.getAmount(), false, 10, inH1);
+            builder.addSlot(RecipeIngredientRole.INPUT, 15, 16 + (56 - inH1))
+                    .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput1().getFluidStacks())
+                    .setFluidRenderer(in1.getAmount(), false, 10, inH1);
+
+        }
 
         Ingredient input1 = recipe.getInputItems().get(0);
         if(input1 != null && !input1.isEmpty()) {

@@ -50,11 +50,11 @@ public class AssemblerScreen extends AbstractContainerScreen<AssemblerMenu> {
 
         MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity);
 
-        IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 60, this.topPos + 61, Icons.SETTINGS, (button) -> {
+        IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 60, this.topPos + 69, Icons.SETTINGS, (button) -> {
             config.ToggleRender();
         });
 
-        IconButton LOCK_BUTTON = new IconButton(this.leftPos + 79, this.topPos + 61, Icons.UNLOCKED, (button) -> {
+        IconButton LOCK_BUTTON = new IconButton(this.leftPos + 79, this.topPos + 69, Icons.UNLOCKED, (button) -> {
             button.setIcon(button.getIcon() == Icons.UNLOCKED ? Icons.LOCKED : Icons.UNLOCKED);
             isLocked = !isLocked;
         });
@@ -112,7 +112,7 @@ public class AssemblerScreen extends AbstractContainerScreen<AssemblerMenu> {
 
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if(menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x, y, 177, 0, menu.getScaledProgress(), 8);
+            guiGraphics.blit(TEXTURE, x, y, 183, 0, menu.getScaledProgress(), 8);
         }
     }
 

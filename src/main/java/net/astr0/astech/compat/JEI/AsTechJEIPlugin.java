@@ -60,7 +60,7 @@ public class AsTechJEIPlugin implements IModPlugin {
         registration.addRecipeClickArea(ChemicalMixerScreen.class, 85, 30, 20, 30,
                 ChemicalMixerCategory.CHEMICAL_MIXER_TYPE);
 
-        registration.addRecipeClickArea(AssemblerScreen.class, 85, 30, 20, 30,
+        registration.addRecipeClickArea(AssemblerScreen.class, 74, 48, 28, 8,
                 AssemblerCategory.ASSEMBLER_TYPE);
     }
 }

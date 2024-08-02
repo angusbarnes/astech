@@ -2,8 +2,8 @@
   "parent": "minecraft:block/orientable_with_bottom",
   "textures": {
     "front": "astech:block/chemical_mixer/overlay_front_active",
-    "side": "astech:block/hull_side",
-    "top": "astech:block/hull_top",
+    "side": "astech:block/chemical_mixer/overlay_side_active",
+    "top": "astech:block/chemical_mixer/overlay_top_active",
     "bottom": "astech:block/hull_bottom"
   }
 }

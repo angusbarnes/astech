@@ -155,7 +155,8 @@ datapack.set_base_dictionary({
     "creativetab.astech_tab": "AsTech Items",
     "block.astech.nic_block": "§cNic Block",
     "block.astech.gem_polishing_station": "Gem Polishing Station",
-    "block.astech.chemical_mixer": "Chemical Mixer"
+    "block.astech.chemical_mixer": "Chemical Mixer",
+    "block.astech.assembler": "Assembler"
 })
 
 static_items = [
@@ -246,6 +247,8 @@ datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_a')
 datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_b')
 datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_c')
 datapack.add_item_tag('forge:genetic_material', 'astech:mutated_genetic_material')
+datapack.add_fluid_tag('forge:flux_resin', 'astech:soldering_flux')
+datapack.add_fluid_tag('forge:flux_resin', 'astech:ammonium_chloride')
 
 TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
 ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'

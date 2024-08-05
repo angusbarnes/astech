@@ -1,0 +1,19 @@
+{
+  "type": "astech:assembler",
+  "inputs": [
+    { "item": "astech:analog_circuit_board" },
+    { "item": "astech:op_amp" },
+    { "item": "astech:capacitor" },
+    { "item": "astech:inductor" },
+    { "item": "astech:diode" }
+  ],
+  "fluid_input": {
+    "type": "astech:fluid",
+    "amount": 50,
+    "tag": "forge:flux_resin"
+  },
+  "item_output": {
+    "item": "astech:analog_circuit"
+  },
+  "time": 300
+}

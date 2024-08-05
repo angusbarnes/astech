@@ -232,6 +232,12 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_URANIUM_OXIDE.get(), Rende
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_URANIUM_OXIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_COBALT.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_COBALT.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_METHANIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_METHANIUM.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SOLDERING_FLUX.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SOLDERING_FLUX.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AMMONIUM_CHLORIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AMMONIUM_CHLORIDE.get(), RenderType.translucent());
         //#end RENDER_REGION
     }
 
@@ -1279,6 +1285,39 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_COBALT.get(), RenderType.tr
             COBALT_FLUID_TYPE, SOURCE_COBALT, FLOWING_COBALT)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("cobalt", SOURCE_COBALT))
             .bucket(ModItems.registerBucketItem("cobalt", SOURCE_COBALT));
+    
+
+    public static final RegistryObject<FluidType> METHANIUM_FLUID_TYPE = registerType("methanium", "", "#fcfffe");
+    public static final RegistryObject<FlowingFluid> SOURCE_METHANIUM = FLUIDS.register("methanium",
+            () -> new ForgeFlowingFluid.Source(ModFluids.METHANIUM_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_METHANIUM = FLUIDS.register("flowing_methanium",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.METHANIUM_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties METHANIUM_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            METHANIUM_FLUID_TYPE, SOURCE_METHANIUM, FLOWING_METHANIUM)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("methanium", SOURCE_METHANIUM))
+            .bucket(ModItems.registerBucketItem("methanium", SOURCE_METHANIUM));
+    
+
+    public static final RegistryObject<FluidType> SOLDERING_FLUX_FLUID_TYPE = registerType("soldering_flux", "", "#f7ecad");
+    public static final RegistryObject<FlowingFluid> SOURCE_SOLDERING_FLUX = FLUIDS.register("soldering_flux",
+            () -> new ForgeFlowingFluid.Source(ModFluids.SOLDERING_FLUX_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_SOLDERING_FLUX = FLUIDS.register("flowing_soldering_flux",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.SOLDERING_FLUX_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties SOLDERING_FLUX_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            SOLDERING_FLUX_FLUID_TYPE, SOURCE_SOLDERING_FLUX, FLOWING_SOLDERING_FLUX)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("soldering_flux", SOURCE_SOLDERING_FLUX))
+            .bucket(ModItems.registerBucketItem("soldering_flux", SOURCE_SOLDERING_FLUX));
+    
+
+    public static final RegistryObject<FluidType> AMMONIUM_CHLORIDE_FLUID_TYPE = registerType("ammonium_chloride", "", "#dcfae4");
+    public static final RegistryObject<FlowingFluid> SOURCE_AMMONIUM_CHLORIDE = FLUIDS.register("ammonium_chloride",
+            () -> new ForgeFlowingFluid.Source(ModFluids.AMMONIUM_CHLORIDE_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_AMMONIUM_CHLORIDE = FLUIDS.register("flowing_ammonium_chloride",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.AMMONIUM_CHLORIDE_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties AMMONIUM_CHLORIDE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            AMMONIUM_CHLORIDE_FLUID_TYPE, SOURCE_AMMONIUM_CHLORIDE, FLOWING_AMMONIUM_CHLORIDE)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("ammonium_chloride", SOURCE_AMMONIUM_CHLORIDE))
+            .bucket(ModItems.registerBucketItem("ammonium_chloride", SOURCE_AMMONIUM_CHLORIDE));
     
     //#end FLUID_REGION
 }

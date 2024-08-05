@@ -713,5 +713,17 @@ public static final RegistryObject<AsTechMaterialItem> COBALT_CLUMP = ITEMS.regi
 public static final RegistryObject<AsTechMaterialItem> COBALT_DIRTY_DUST = ITEMS.register("cobalt_dirty_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "cobalt"));
 public static final RegistryObject<AsTechMaterialItem> COBALT_CRYSTAL = ITEMS.register("cobalt_crystal", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "cobalt"));
 public static final RegistryObject<AsTechMaterialItem> COBALT_SHARD = ITEMS.register("cobalt_shard", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "cobalt"));
+public static final RegistryObject<AsTechMaterialItem> METHANIUM_DUST = ITEMS.register("methanium_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanium"));
+public static final RegistryObject<AsTechMaterialItem> METHANIUM_SCREW = ITEMS.register("methanium_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanium"));
+public static final RegistryObject<AsTechMaterialItem> METHANIUM_ROD = ITEMS.register("methanium_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanium"));
+public static final RegistryObject<AsTechMaterialItem> METHANIUM_INGOT = ITEMS.register("methanium_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanium"));
+public static final RegistryObject<AsTechMaterialItem> METHANIUM_PLATE = ITEMS.register("methanium_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanium"));
+public static final RegistryObject<AsTechMaterialItem> METHANIUM_NUGGET = ITEMS.register("methanium_nugget", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanium"));
+public static final RegistryObject<AsTechMaterialItem> METHANIUM_GEAR = ITEMS.register("methanium_gear", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanium"));
+public static final RegistryObject<AsTechMaterialItem> METHANIUM_RING = ITEMS.register("methanium_ring", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanium"));
+public static final RegistryObject<AsTechMaterialItem> METHANIUM_CURVED_PLATE = ITEMS.register("methanium_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanium"));
+public static final RegistryObject<AsTechMaterialItem> METHANIUM_WIRE = ITEMS.register("methanium_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanium"));
+public static final RegistryObject<AsTechMaterialItem> SOLDERING_FLUX_DUST = ITEMS.register("soldering_flux_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "soldering_flux"));
+public static final RegistryObject<AsTechMaterialItem> AMMONIUM_CHLORIDE_DUST = ITEMS.register("ammonium_chloride_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonium_chloride"));
     //#end MATERIAL_REGION
 }

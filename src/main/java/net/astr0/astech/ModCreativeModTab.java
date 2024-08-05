@@ -792,6 +792,19 @@ output.accept(ModItems.COBALT_CLUMP.get());
 output.accept(ModItems.COBALT_DIRTY_DUST.get());
 output.accept(ModItems.COBALT_CRYSTAL.get());
 output.accept(ModItems.COBALT_SHARD.get());
+output.accept(ModItems.METHANIUM_DUST.get());
+output.accept(ModItems.METHANIUM_SCREW.get());
+output.accept(ModItems.METHANIUM_ROD.get());
+output.accept(ModItems.METHANIUM_INGOT.get());
+output.accept(ModItems.METHANIUM_PLATE.get());
+output.accept(ModItems.METHANIUM_NUGGET.get());
+output.accept(ModItems.METHANIUM_GEAR.get());
+output.accept(ModItems.METHANIUM_RING.get());
+output.accept(ModItems.METHANIUM_CURVED_PLATE.get());
+output.accept(ModItems.METHANIUM_WIRE.get());
+output.accept(ModBlocks.METHANIUM_BLOCK.get());
+output.accept(ModItems.SOLDERING_FLUX_DUST.get());
+output.accept(ModItems.AMMONIUM_CHLORIDE_DUST.get());
                         //#end TAB_REGION
                     }).build());
 }

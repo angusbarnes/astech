@@ -348,7 +348,13 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
     private AssemblerRecipe cachedRecipe = null;
     private AssemblerRecipe getRecipe() {
 
-        ItemStack[] inputs = new ItemStack[] { inputItemHandler.getStackInSlot(0), inputItemHandler.getStackInSlot(1), inputItemHandler.getStackInSlot(2) };
+        ItemStack[] inputs = new ItemStack[] {
+                inputItemHandler.getStackInSlot(0),
+                inputItemHandler.getStackInSlot(1),
+                inputItemHandler.getStackInSlot(2),
+                inputItemHandler.getStackInSlot(3),
+                inputItemHandler.getStackInSlot(4)
+        };
 
         if(cachedRecipe != null && cachedRecipe.matches(inputFluidTank.getFluidInTank(0), inputs)) {
             return cachedRecipe;

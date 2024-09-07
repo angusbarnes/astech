@@ -1,4 +1,4 @@
-package net.astr0.astech.block.Assembler;
+package net.astr0.astech.block.AdvancedAssembler;
 
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.CustomEnergyStorage;
@@ -41,7 +41,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
+public class AdvancedAssemblerBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
     private final FilteredItemStackHandler inputItemHandler = new FilteredItemStackHandler(5) {
@@ -98,7 +98,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
         }
     };
 
-    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(300000, 750, 0);
+    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(3000000, 7500, 0);
 
     private final LazyOptional<IItemHandler> lazyInputItemHandler = LazyOptional.of(() -> inputItemHandler);
     private final LazyOptional<IItemHandler> lazyOutputItemHandler = LazyOptional.of(() -> outputItemHandler);
@@ -109,8 +109,8 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
     private int progress = 0;
     private int maxProgress = 80;
 
-    public AssemblerBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.ASSEMBLER_BE.get(), pPos, pBlockState);
+    public AdvancedAssemblerBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(ModBlockEntities.ADVANCED_ASSEMBLER_BE.get(), pPos, pBlockState);
 
         this.data = new ContainerData() {
             @Override
@@ -119,8 +119,8 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
                     case 0 -> energyStorage.getMaxEnergyStored();
                     // TODO: Turn this into a synced percentage and reconvert to relative amount on client side
                     case 1 -> energyStorage.getEnergyStored();
-                    case 2 -> AssemblerBlockEntity.this.progress;
-                    case 3 -> AssemblerBlockEntity.this.maxProgress;
+                    case 2 -> AdvancedAssemblerBlockEntity.this.progress;
+                    case 3 -> AdvancedAssemblerBlockEntity.this.maxProgress;
                     default -> throw new UnsupportedOperationException("Unexpected value: " + pIndex);
                 };
             }
@@ -128,9 +128,9 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 1 -> AssemblerBlockEntity.this.energyStorage.setEnergy(pValue);
-                    case 2 -> AssemblerBlockEntity.this.progress = pValue;
-                    case 3 -> AssemblerBlockEntity.this.maxProgress = pValue;
+                    case 1 -> AdvancedAssemblerBlockEntity.this.energyStorage.setEnergy(pValue);
+                    case 2 -> AdvancedAssemblerBlockEntity.this.progress = pValue;
+                    case 3 -> AdvancedAssemblerBlockEntity.this.maxProgress = pValue;
                 }
             }
 
@@ -221,7 +221,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new AssemblerMenu(pContainerId, pPlayerInventory, this, this.data);
+        return new AdvancedAssemblerMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 
     @Override
@@ -276,7 +276,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {
 
         if(hasRecipe()) {
-            pLevel.setBlock(pPos, pState.setValue(AssemblerBlock.ACTIVE, true), 2 | 8);
+            pLevel.setBlock(pPos, pState.setValue(AdvancedAssemblerBlock.ACTIVE, true), 2 | 8);
             if(this.energyStorage.getEnergyStored() < 256) {
                 decreaseCraftingProgress();
             } else {
@@ -294,7 +294,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
             }
         } else {
             resetProgress();
-            pLevel.setBlock(pPos, pState.setValue(AssemblerBlock.ACTIVE, false), 2 | 8);
+            pLevel.setBlock(pPos, pState.setValue(AdvancedAssemblerBlock.ACTIVE, false), 2 | 8);
         }
 
         IncrementNetworkTickCount();
@@ -361,7 +361,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
                 inputItemHandler.getStackInSlot(4)
         };
 
-        if(cachedRecipe != null && cachedRecipe.matches(inputFluidTank.getFluidInTank(0), inputs, false)) {
+        if(cachedRecipe != null && cachedRecipe.matches(inputFluidTank.getFluidInTank(0), inputs, true)) {
             return cachedRecipe;
         }
 

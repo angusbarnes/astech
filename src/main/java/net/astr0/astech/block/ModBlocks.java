@@ -1,9 +1,11 @@
 package net.astr0.astech.block;
 
 import net.astr0.astech.AsTech;
+import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerBlock;
 import net.astr0.astech.block.Assembler.AssemblerBlock;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlock;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlock;
+import net.astr0.astech.block.ReactionChamber.ChemicalReactorBlock;
 import net.astr0.astech.item.ModItems;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -58,6 +60,12 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler",
             () -> new AssemblerBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
+
+    public static final RegistryObject<Block> ADVANCED_ASSEMBLER = registerBlock("advanced_assembler",
+            () -> new AdvancedAssemblerBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
+
+    public static final RegistryObject<Block> CHEMICAL_REACTOR = registerBlock("chemical_reactor",
+            () -> new ChemicalReactorBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
 
 
     public static BlockBehaviour.Properties MACHINE_DEFAULT_PROPS = BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)

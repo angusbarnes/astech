@@ -1,4 +1,4 @@
-package net.astr0.astech.block.Assembler;
+package net.astr0.astech.block.AdvancedAssembler;
 
 import net.astr0.astech.block.ITickableBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -23,11 +23,11 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AssemblerBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class AdvancedAssemblerBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
-    public AssemblerBlock(Properties pProperties) {
+    public AdvancedAssemblerBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
         registerDefaultState(stateDefinition.any().setValue(ACTIVE, false));
@@ -51,10 +51,10 @@ public class AssemblerBlock extends HorizontalDirectionalBlock implements Entity
         if (pState.getBlock() != pNewState.getBlock()) {
 
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof AssemblerBlockEntity) {
+            if (blockEntity instanceof AdvancedAssemblerBlockEntity) {
                 // After safety rail checks, use our user defined function
                 // to create the dropped items
-                ((AssemblerBlockEntity) blockEntity).drops();
+                ((AdvancedAssemblerBlockEntity) blockEntity).drops();
             }
         }
 
@@ -66,8 +66,8 @@ public class AssemblerBlock extends HorizontalDirectionalBlock implements Entity
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof AssemblerBlockEntity) {
-                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (AssemblerBlockEntity)entity, pPos);
+            if(entity instanceof AdvancedAssemblerBlockEntity) {
+                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (AdvancedAssemblerBlockEntity)entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
@@ -80,7 +80,7 @@ public class AssemblerBlock extends HorizontalDirectionalBlock implements Entity
     // Implements the EntityBlock interface, which the abstract BaseEntityBlock does not do for us
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new AssemblerBlockEntity(pPos, pState);
+        return new AdvancedAssemblerBlockEntity(pPos, pState);
     }
 
     @Nullable

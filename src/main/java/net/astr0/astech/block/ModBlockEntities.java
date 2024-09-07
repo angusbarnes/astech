@@ -1,9 +1,11 @@
 package net.astr0.astech.block;
 
 import net.astr0.astech.AsTech;
+import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerBlockEntity;
 import net.astr0.astech.block.Assembler.AssemblerBlockEntity;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlockEntity;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlockEntity;
+import net.astr0.astech.block.ReactionChamber.ChemicalReactorBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -28,6 +30,16 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("assembler", () ->
                     BlockEntityType.Builder.of(AssemblerBlockEntity::new,
                             ModBlocks.ASSEMBLER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<AdvancedAssemblerBlockEntity>> ADVANCED_ASSEMBLER_BE =
+            BLOCK_ENTITIES.register("advanced_assembler", () ->
+                    BlockEntityType.Builder.of(AdvancedAssemblerBlockEntity::new,
+                            ModBlocks.ADVANCED_ASSEMBLER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ChemicalReactorBlockEntity>> CHEMICAL_REACTOR_BE =
+            BLOCK_ENTITIES.register("chemical_reactor", () ->
+                    BlockEntityType.Builder.of(ChemicalReactorBlockEntity::new,
+                            ModBlocks.CHEMICAL_REACTOR.get()).build(null));
 
 
     public static void register(IEventBus eventBus) {

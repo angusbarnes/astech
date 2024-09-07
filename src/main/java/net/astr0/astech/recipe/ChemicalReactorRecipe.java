@@ -25,57 +25,33 @@ import java.util.List;
     We find a match. That shouldn't be too hard on the server. This is what PneumaticCraft does. We just requrest all recipes of
     a certain type, and loop through these, rather than requesting with a specific inventory
  */
-public class AssemblerRecipe extends AsTechRecipeBase {
+public class ChemicalReactorRecipe extends AsTechRecipeBase {
 
     private final FluidIngredient input1;
-    private final List<Ingredient> inputItems;
-    private final ItemStack outputItem;
-    private final int processingTime;
-    private final boolean isAdvanced;
+    private final FluidIngredient input2;
+    private final FluidStack outputFluid1;
+    private final FluidStack outputFluid2;
 
-    public AssemblerRecipe(ResourceLocation id, FluidIngredient input1, List<Ingredient> inputItems, ItemStack outputItem, int processingTime, boolean isAdvanced) {
+    private final int processingTime;
+
+    public ChemicalReactorRecipe(ResourceLocation id, FluidIngredient input1, FluidIngredient input2, FluidStack outputFluid1, FluidStack outputFluid2, int processingTime) {
         super(id);
 
-        if(inputItems.size() > 5) {
-            throw new IllegalArgumentException("Too many items, chemical mixer recipes only accepts three items");
-        }
-
-        // Ensure the inputItems list has exactly 3 elements
-        while(inputItems.size() < 5) {
-            inputItems.add(Ingredient.EMPTY);
-        }
 
         this.input1 = input1;
-        this.inputItems = inputItems;
-        this.outputItem = outputItem;
+        this.input2 = input2;
+        this.outputFluid1 = outputFluid1;
+        this.outputFluid2 = outputFluid2;
         this.processingTime = processingTime;
-        this.isAdvanced = isAdvanced;
     }
     
-    public boolean matches(FluidStack fluid1, ItemStack[] itemInputs, boolean advanced) {
+    public boolean matches(FluidStack fluid1, FluidStack fluid2) {
 
-        boolean hasItems = areIngredientsFulfilled(itemInputs);
-        boolean fluidMatches = input1.testFluid(fluid1) || (input1 == FluidIngredient.EMPTY && FluidStack.EMPTY.containsFluid(fluid1));
-        boolean advancedMatches = !isAdvanced || advanced;
+        boolean fluidMatches = input1.testFluid(fluid1) && input1.testFluid(fluid2);
 
-        return fluidMatches && hasItems && advancedMatches;
+        return fluidMatches;
     }
 
-    public boolean areIngredientsFulfilled(ItemStack[] itemStacks) {
-        for (Ingredient ingredient : inputItems) {
-            boolean matched = false;
-            for (ItemStack itemStack : itemStacks) {
-                if (ingredient.test(itemStack)) {
-                    matched = true;
-                    break;
-                }
-            }
-            if (!matched) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     public int calculateConsumedAmount(FluidStack input) {
         if(input1.testFluid(input)) {
@@ -98,18 +74,6 @@ public class AssemblerRecipe extends AsTechRecipeBase {
 
     public FluidIngredient getInput1() {
         return input1;
-    }
-
-    public List<Ingredient> getInputItems() {
-        return inputItems;
-    }
-
-    public ItemStack getOutputItem() {
-        return outputItem.copy();
-    }
-
-    public boolean IsAdvanced() {
-        return isAdvanced;
     }
 
     public int getProcessingTime() {
@@ -136,7 +100,7 @@ public class AssemblerRecipe extends AsTechRecipeBase {
         return ModRecipes.ASSEMBLER_RECIPE_TYPE.get();
     }
 
-    public static class Serializer implements RecipeSerializer<AssemblerRecipe> {
+    public static class Serializer implements RecipeSerializer<ChemicalReactorRecipe> {
         protected static Serializer INSTANCE = new Serializer();
 
         public static Serializer getInstance() {
@@ -144,7 +108,7 @@ public class AssemblerRecipe extends AsTechRecipeBase {
         }
 
         @Override
-        public AssemblerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+        public ChemicalReactorRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
             LogUtils.getLogger().info("RECIPE_DEBUG: attempting to create recipe for id: {}", recipeId);
 
@@ -162,12 +126,12 @@ public class AssemblerRecipe extends AsTechRecipeBase {
             int processingTime = GsonHelper.getAsInt(json, "time", 200);
             boolean isAdvanced = GsonHelper.getAsBoolean(json, "advanced", false);
 
-            return new AssemblerRecipe(recipeId, (FluidIngredient) input1, inputIngredients, outputItem, processingTime, isAdvanced);
+            return new ChemicalReactorRecipe(recipeId, (FluidIngredient) input1, inputIngredients, outputItem, processingTime, isAdvanced);
         }
 
         @Nullable
         @Override
-        public AssemblerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public ChemicalReactorRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             FluidIngredient input1 = (FluidIngredient) Ingredient.fromNetwork(buffer);
 
             int nInputs = buffer.readVarInt();
@@ -180,11 +144,11 @@ public class AssemblerRecipe extends AsTechRecipeBase {
             int processingTime = buffer.readVarInt();
             boolean isAdvanced = buffer.readBoolean();
 
-            return new AssemblerRecipe(recipeId, input1, in, outputItem, processingTime, isAdvanced);
+            return new ChemicalReactorRecipe(recipeId, input1, in, outputItem, processingTime, isAdvanced);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buffer, AssemblerRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, ChemicalReactorRecipe recipe) {
             recipe.write(buffer);
         }
     }

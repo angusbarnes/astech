@@ -1,9 +1,11 @@
 package net.astr0.astech.gui;
 
 import net.astr0.astech.AsTech;
+import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerMenu;
 import net.astr0.astech.block.Assembler.AssemblerMenu;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerMenu;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationMenu;
+import net.astr0.astech.block.ReactionChamber.ChemicalReactorMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -25,6 +27,12 @@ public class ModMenuTypes {
 
     public static final RegistryObject<MenuType<AssemblerMenu>> ASSEMBLER_MENU =
             registerMenuType("assembler_menu", AssemblerMenu::new);
+
+    public static final RegistryObject<MenuType<AdvancedAssemblerMenu>> ADVANCED_ASSEMBLER_MENU =
+            registerMenuType("advanced_assembler_menu", AdvancedAssemblerMenu::new);
+
+    public static final RegistryObject<MenuType<ChemicalReactorMenu>> CHEMICAL_REACTOR_MENU =
+            registerMenuType("chemical_reactor_menu", ChemicalReactorMenu::new);
 
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {

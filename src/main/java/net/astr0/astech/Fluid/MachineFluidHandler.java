@@ -22,7 +22,13 @@ public abstract class MachineFluidHandler implements IFluidHandler {
         tanks = new FluidTank[count];
 
         for (int i = 0; i < count; i++) {
-            tanks[i] = new FluidTank(capacity);
+            tanks[i] = new FluidTank(capacity) {
+                @Override
+                protected void onContentsChanged() {
+                    super.onContentsChanged();
+                    MachineFluidHandler.this.onContentsChanged();
+                }
+            };
         }
     }
 

@@ -24,7 +24,7 @@ import java.util.Collections;
 public class ChemicalMixerCategory implements IRecipeCategory<ChemicalMixerRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(AsTech.MODID, "chemical_mixer");
     public static final ResourceLocation TEXTURE = new ResourceLocation(AsTech.MODID,
-            "textures/gui/chemical_mixer.png");
+            "textures/gui/jei/chemical_mixer.png");
 
     public static final RecipeType<ChemicalMixerRecipe> CHEMICAL_MIXER_TYPE =
             new RecipeType<>(UID, ChemicalMixerRecipe.class);
@@ -33,7 +33,7 @@ public class ChemicalMixerCategory implements IRecipeCategory<ChemicalMixerRecip
     private final IDrawable icon;
 
     public ChemicalMixerCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 85);
+        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 100);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.CHEMICAL_MIXER.get()));
     }
 

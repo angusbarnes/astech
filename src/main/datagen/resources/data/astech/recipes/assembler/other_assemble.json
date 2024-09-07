@@ -9,5 +9,6 @@
     "item_output": {
       "item": "minecraft:dirt"
     },
-    "time": 300
+    "time": 20,
+    "advanced": false
   }

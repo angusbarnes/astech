@@ -156,7 +156,9 @@ datapack.set_base_dictionary({
     "block.astech.nic_block": "§cNic Block",
     "block.astech.gem_polishing_station": "Gem Polishing Station",
     "block.astech.chemical_mixer": "Chemical Mixer",
-    "block.astech.assembler": "Assembler"
+    "block.astech.assembler": "Assembler",
+    "block.astech.advanced_assembler": "Advanced Assembler",
+    "block.astech.chemical_reactor": "Chemical Reactor"
 })
 
 static_items = [

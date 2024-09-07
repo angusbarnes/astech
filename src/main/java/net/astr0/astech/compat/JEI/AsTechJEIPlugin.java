@@ -4,11 +4,10 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.*;
 import net.astr0.astech.AsTech;
-import net.astr0.astech.block.Assembler.AssemblerMenu;
+import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerScreen;
 import net.astr0.astech.block.Assembler.AssemblerScreen;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerScreen;
 import net.astr0.astech.block.ModBlocks;
-import net.astr0.astech.gui.ModMenuTypes;
 import net.astr0.astech.recipe.AssemblerRecipe;
 import net.astr0.astech.recipe.ChemicalMixerRecipe;
 import net.astr0.astech.recipe.ModRecipes;
@@ -52,6 +51,9 @@ public class AsTechJEIPlugin implements IModPlugin {
 
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ASSEMBLER.get()),
                 AssemblerCategory.ASSEMBLER_TYPE);
+
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ADVANCED_ASSEMBLER.get()),
+                AssemblerCategory.ASSEMBLER_TYPE);
     }
 
     @Override
@@ -61,17 +63,20 @@ public class AsTechJEIPlugin implements IModPlugin {
 
         registration.addRecipeClickArea(AssemblerScreen.class, 74, 48, 28, 8,
                 AssemblerCategory.ASSEMBLER_TYPE);
+
+        registration.addRecipeClickArea(AdvancedAssemblerScreen.class, 74, 48, 28, 8,
+                AssemblerCategory.ASSEMBLER_TYPE);
     }
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(
-                AssemblerMenu.class,
-                ModMenuTypes.ASSEMBLER_MENU.get(),
-                AssemblerCategory.ASSEMBLER_TYPE,
-                AssemblerMenu.TE_INVENTORY_FIRST_SLOT_INDEX, 5,
-                AssemblerMenu.VANILLA_FIRST_SLOT_INDEX,
-                AssemblerMenu.VANILLA_SLOT_COUNT
-        );
+//        registration.addRecipeTransferHandler(
+//                AssemblerMenu.class,
+//                ModMenuTypes.ASSEMBLER_MENU.get(),
+//                AssemblerCategory.ASSEMBLER_TYPE,
+//                AssemblerMenu.TE_INVENTORY_FIRST_SLOT_INDEX, 5,
+//                AssemblerMenu.VANILLA_FIRST_SLOT_INDEX,
+//                AssemblerMenu.VANILLA_SLOT_COUNT
+//        );
     }
 }

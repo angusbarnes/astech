@@ -237,8 +237,7 @@ public class FluidIngredient extends Ingredient {
     public boolean testFluid(FluidStack fluidStack) {
         return getFluidList().stream().anyMatch(f ->
                 fluidStack.getFluid() == f &&
-                        fluidStack.getAmount() >= getAmount() &&
-                        matchNBT(fluidStack)
+                        fluidStack.getAmount() >= getAmount()
         );
     }
 

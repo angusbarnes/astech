@@ -1,20 +1,20 @@
 {
     "type": "astech:chemical_reactor",
-    "input1": {
+    "fluid_input_1": {
       "type": "astech:fluid",
       "amount": 200,
       "tag": "forge:methanol"
     },
-    "input2": {
+    "fluid_input_2": {
       "type": "astech:fluid",
       "amount": 200,
       "tag": "forge:oxygen"
     },
-    "output1": {
+    "fluid_output_1": {
       "amount": 300,
       "fluid": "astech:formaldehyde"
     },
-    "output2": {
+    "fluid_output_2": {
       "amount": 100,
       "fluid": "astech:water"
     },

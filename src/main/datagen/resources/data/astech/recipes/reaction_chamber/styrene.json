@@ -1,20 +1,20 @@
 {
     "type": "astech:chemical_reactor",
-    "input1": {
+    "fluid_input_1": {
       "type": "astech:fluid",
       "amount": 700,
       "tag": "forge:ethylbenzene"
     },
-    "input2": {
+    "fluid_input_2": {
       "type": "astech:fluid",
       "amount": 300,
       "tag": "forge:steam"
     },
-    "output1": {
+    "fluid_output_1": {
       "amount": 600,
       "fluid": "astech:styrene"
     },
-    "output2": {
+    "fluid_output_2": {
       "amount": 400,
       "fluid": "astech:hydrogen"
     },

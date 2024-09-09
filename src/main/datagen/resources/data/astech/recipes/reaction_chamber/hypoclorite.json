@@ -1,16 +1,16 @@
 {
     "type": "astech:chemical_reactor",
-    "input1": {
+    "fluid_input_1": {
       "type": "astech:fluid",
       "amount": 200,
       "tag": "forge:ammonia"
     },
-    "input2": {
+    "fluid_input_2": {
       "type": "astech:fluid",
       "amount": 200,
       "tag": "forge:hydrochloric_acid"
     },
-    "output1": {
+    "fluid_output_1": {
       "amount": 400,
       "fluid": "astech:sodium_hypochlorite"
     },

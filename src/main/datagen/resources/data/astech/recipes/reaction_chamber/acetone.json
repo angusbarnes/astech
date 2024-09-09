@@ -1,20 +1,20 @@
 {
     "type": "astech:chemical_reactor",
-    "input1": {
+    "fluid_input_1": {
       "type": "astech:fluid",
       "amount": 600,
       "tag": "forge:isopropanol"
     },
-    "input2": {
+    "fluid_input_2": {
       "type": "astech:fluid",
       "amount": 400,
       "tag": "forge:oxygen"
     },
-    "output1": {
+    "fluid_output_1": {
       "amount": 500,
       "fluid": "astech:acetone"
     },
-    "output2": {
+    "fluid_output_2": {
       "amount": 500,
       "fluid": "astech:water"
     },

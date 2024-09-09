@@ -1,16 +1,16 @@
 {
     "type": "astech:chemical_reactor",
-    "input1": {
+    "fluid_input_1": {
       "type": "astech:fluid",
       "amount": 300,
       "tag": "forge:nitrogen"
     },
-    "input2": {
+    "fluid_input_2": {
       "type": "astech:fluid",
       "amount": 900,
       "tag": "forge:hydrogen"
     },
-    "output1": {
+    "fluid_output_1": {
       "amount": 1000,
       "fluid": "astech:ammonia"
     },

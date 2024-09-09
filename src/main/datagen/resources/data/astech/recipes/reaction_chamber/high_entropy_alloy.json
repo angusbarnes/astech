@@ -1,16 +1,16 @@
 {
     "type": "astech:chemical_reactor",
-    "input1": {
+    "fluid_input_1": {
       "type": "astech:fluid",
       "amount": 500,
       "tag": "forge:neutronium"
     },
-    "input2": {
+    "fluid_input_2": {
       "type": "astech:fluid",
       "amount": 500,
       "tag": "forge:adamantium"
     },
-    "output1": {
+    "fluid_output_1": {
       "amount": 1000,
       "fluid": "astech:high_entropy_alloy"
     },

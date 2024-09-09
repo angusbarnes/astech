@@ -83,21 +83,20 @@ public class ChemicalReactorRecipe extends AsTechRecipeBase {
     @Override
     public void write(FriendlyByteBuf buffer) {
         input1.toNetwork(buffer);
-        buffer.writeVarInt(inputItems.size());
-        inputItems.forEach(i -> i.toNetwork(buffer));
-        buffer.writeItem(outputItem);
+        input2.toNetwork(buffer);
+        outputFluid1.writeToPacket(buffer);
+        outputFluid2.writeToPacket(buffer);
         buffer.writeVarInt(processingTime);
-        buffer.writeBoolean(isAdvanced);
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRecipes.ASSEMBLER_SERIALIZER.get();
+        return ModRecipes.CHEMICAL_REACTOR_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return ModRecipes.ASSEMBLER_RECIPE_TYPE.get();
+        return ModRecipes.CHEMICAL_REACTOR_RECIPE_TYPE.get();
     }
 
     public static class Serializer implements RecipeSerializer<ChemicalReactorRecipe> {
@@ -112,39 +111,32 @@ public class ChemicalReactorRecipe extends AsTechRecipeBase {
 
             LogUtils.getLogger().info("RECIPE_DEBUG: attempting to create recipe for id: {}", recipeId);
 
-            JsonArray inputs = json.get("inputs").getAsJsonArray();
-            List<Ingredient> inputIngredients = new ArrayList<>();
-            for (JsonElement e : inputs) {
-                inputIngredients.add(Ingredient.fromJson(e.getAsJsonObject()));
-            }
+            FluidIngredient input1 = json.has("fluid_input_1") ? FluidIngredient.fromJson(json.get("fluid_input_1")) : FluidIngredient.EMPTY;
+            FluidIngredient input2 = json.has("fluid_input_2") ? FluidIngredient.fromJson(json.get("fluid_input_2")) : FluidIngredient.EMPTY;
 
-            Ingredient input1 = json.has("fluid_input") ? FluidIngredient.fromJson(json.get("fluid_input")) : FluidIngredient.EMPTY;
+            FluidStack output1 = json.has("fluid_output_1") ?
+                    ModCraftingHelper.fluidStackFromJson(json.getAsJsonObject("fluid_output_1")):
+                    FluidStack.EMPTY;
 
-            ItemStack outputItem = json.has("item_output") ?
-                    ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "item_output")) :
-                    ItemStack.EMPTY;
+            FluidStack output2 = json.has("fluid_output_2") ?
+                    ModCraftingHelper.fluidStackFromJson(json.getAsJsonObject("fluid_output_2")):
+                    FluidStack.EMPTY;
+
             int processingTime = GsonHelper.getAsInt(json, "time", 200);
-            boolean isAdvanced = GsonHelper.getAsBoolean(json, "advanced", false);
 
-            return new ChemicalReactorRecipe(recipeId, (FluidIngredient) input1, inputIngredients, outputItem, processingTime, isAdvanced);
+            return new ChemicalReactorRecipe(recipeId, input1, input2, output1, output2, processingTime);
         }
 
         @Nullable
         @Override
         public ChemicalReactorRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             FluidIngredient input1 = (FluidIngredient) Ingredient.fromNetwork(buffer);
-
-            int nInputs = buffer.readVarInt();
-            List<Ingredient> in = new ArrayList<>();
-            for (int i = 0; i < nInputs; i++) {
-                in.add(Ingredient.fromNetwork(buffer));
-            }
-
-            ItemStack outputItem = buffer.readItem();
+            FluidIngredient input2 = (FluidIngredient) Ingredient.fromNetwork(buffer);
+            FluidStack outputFluid1 = FluidStack.readFromPacket(buffer);
+            FluidStack outputFluid2 = FluidStack.readFromPacket(buffer);
             int processingTime = buffer.readVarInt();
-            boolean isAdvanced = buffer.readBoolean();
 
-            return new ChemicalReactorRecipe(recipeId, input1, in, outputItem, processingTime, isAdvanced);
+            return new ChemicalReactorRecipe(recipeId, input1, input2, outputFluid1, outputFluid2, processingTime);
         }
 
         @Override

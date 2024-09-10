@@ -12,7 +12,7 @@
     },
     "fluid_output_1": {
       "amount": 800,
-      "fluid": "astech:lava"
+      "fluid": "minecraft:lava"
     },
     "fluid_output_2": {
       "amount": 200,

@@ -1,22 +1,15 @@
 package net.astr0.astech.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /*
@@ -47,7 +40,15 @@ public class ChemicalReactorRecipe extends AsTechRecipeBase {
     
     public boolean matches(FluidStack fluid1, FluidStack fluid2) {
 
+
         boolean fluidMatches = input1.testFluid(fluid1) && input1.testFluid(fluid2);
+        LogUtils.getLogger().info("Testing {}, {} against {}, {}. RESULT: {}",
+                fluid1.getFluid().toString(),
+                fluid2.getFluid().toString(),
+                input1.getFluidStacks().get(0).getFluid().toString(),
+                input2.getFluidStacks().get(0).getFluid().toString(),
+                fluidMatches
+                );
 
         return fluidMatches;
     }
@@ -56,24 +57,23 @@ public class ChemicalReactorRecipe extends AsTechRecipeBase {
     public int calculateConsumedAmount(FluidStack input) {
         if(input1.testFluid(input)) {
             return input1.getAmount();
+        } else if (input2.testFluid(input)) {
+            return input2.getAmount();
         }
-
-        return 0;
-    }
-
-    public int calculateConsumedAmountItems(ItemStack input) {
-
-        for(Ingredient ingredient : inputItems) {
-            if(ingredient.test(input) && ingredient.getItems().length > 0) {
-                return ingredient.getItems()[0].getCount();
-            }
-        }
-
         return 0;
     }
 
     public FluidIngredient getInput1() {
         return input1;
+    }
+    public FluidIngredient getInput2() {
+        return input2;
+    }
+    public FluidStack getOutput1() {
+        return outputFluid1;
+    }
+    public FluidStack getOutput2() {
+        return outputFluid2;
     }
 
     public int getProcessingTime() {
@@ -109,10 +109,10 @@ public class ChemicalReactorRecipe extends AsTechRecipeBase {
         @Override
         public ChemicalReactorRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            LogUtils.getLogger().info("RECIPE_DEBUG: attempting to create recipe for id: {}", recipeId);
+            LogUtils.getLogger().info("REACTOR RECIPE_DEBUG: attempting to create recipe for id: {}", recipeId);
 
-            FluidIngredient input1 = json.has("fluid_input_1") ? FluidIngredient.fromJson(json.get("fluid_input_1")) : FluidIngredient.EMPTY;
-            FluidIngredient input2 = json.has("fluid_input_2") ? FluidIngredient.fromJson(json.get("fluid_input_2")) : FluidIngredient.EMPTY;
+            FluidIngredient input1 = json.has("fluid_input_1") ? (FluidIngredient) FluidIngredient.fromJson(json.get("fluid_input_1")) : FluidIngredient.EMPTY;
+            FluidIngredient input2 = json.has("fluid_input_2") ? (FluidIngredient) FluidIngredient.fromJson(json.get("fluid_input_2")) : FluidIngredient.EMPTY;
 
             FluidStack output1 = json.has("fluid_output_1") ?
                     ModCraftingHelper.fluidStackFromJson(json.getAsJsonObject("fluid_output_1")):

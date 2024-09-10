@@ -9,7 +9,8 @@ import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.SidedConfig;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
-import net.astr0.astech.recipe.AssemblerRecipe;
+import net.astr0.astech.recipe.ChemicalReactorRecipe;
+import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,7 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -33,6 +33,8 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
 
@@ -276,14 +278,20 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     }
 
     private void craftItem() {
-        AssemblerRecipe recipe = getRecipe();
+        ChemicalReactorRecipe recipe = getRecipe();
 
         if(recipe == null) return;
 
 
         int tank0consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(0));
-
         inputFluidTank.getTank(0).drain(tank0consumed, IFluidHandler.FluidAction.EXECUTE);
+
+        int tank1consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(1));
+        inputFluidTank.getTank(1).drain(tank1consumed, IFluidHandler.FluidAction.EXECUTE);
+
+
+        outputFluidTank.fill(recipe.getOutput1(), IFluidHandler.FluidAction.EXECUTE);
+        outputFluidTank.fill(recipe.getOutput2(), IFluidHandler.FluidAction.EXECUTE);
 
 
         SetNetworkDirty(); // Make sure we mark this block for an update now that we changed inventory content
@@ -292,21 +300,41 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     private boolean hasRecipe() {
 
 
-        AssemblerRecipe recipe = getRecipe();
+        ChemicalReactorRecipe recipe = getRecipe();
 
         if(recipe == null) {
+            LogUtils.getLogger().info("THERE WAS NO RECIPE TO BE FOUND");
             return false;
         }
 
-        ItemStack result = recipe.getOutputItem();
+        LogUtils.getLogger().info("This shit deadass did not match, {}, {} != {}, {}",
+                outputFluidTank.getFluidInTank(0).getFluid().toString(),
+                outputFluidTank.getFluidInTank(1).getFluid().toString(),
+                recipe.getOutput1(),
+                recipe.getOutput1());
 
-        return canInsertAmountIntoOutputSlot(result.getCount())
-                && canInsertItemIntoOutputSlot(result.getItem());
+        return outputFluidTank.canFluidFit(0, recipe.getOutput1())
+                && outputFluidTank.canFluidFit(1, recipe.getOutput2());
     }
 
-    private AssemblerRecipe cachedRecipe = null;
-    private AssemblerRecipe getRecipe() {
+    private ChemicalReactorRecipe cachedRecipe = null;
+    private ChemicalReactorRecipe getRecipe() {
 
+        if(cachedRecipe != null && cachedRecipe.matches(inputFluidTank.getFluidInTank(0), inputFluidTank.getFluidInTank(1))) {
+            return cachedRecipe;
+        }
+
+        List<ChemicalReactorRecipe> recipes = this.level.getRecipeManager().getAllRecipesFor(ModRecipes.CHEMICAL_REACTOR_RECIPE_TYPE.get());
+
+        for(ChemicalReactorRecipe recipe : recipes) {
+            if(recipe.matches(inputFluidTank.getFluidInTank(0), inputFluidTank.getFluidInTank(1))) {
+                cachedRecipe = recipe;
+                this.maxProgress = recipe.getProcessingTime();
+                return recipe;
+            }
+        }
+
+        cachedRecipe = null;
         return null;
     }
 

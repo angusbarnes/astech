@@ -16,7 +16,7 @@
     },
     "fluid_output_2": {
       "amount": 100,
-      "fluid": "astech:water"
+      "fluid": "minecraft:water"
     },
     "time": 600
   }

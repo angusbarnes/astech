@@ -8,8 +8,10 @@ import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerScreen;
 import net.astr0.astech.block.Assembler.AssemblerScreen;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerScreen;
 import net.astr0.astech.block.ModBlocks;
+import net.astr0.astech.block.ReactionChamber.ChemicalReactorScreen;
 import net.astr0.astech.recipe.AssemblerRecipe;
 import net.astr0.astech.recipe.ChemicalMixerRecipe;
+import net.astr0.astech.recipe.ChemicalReactorRecipe;
 import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -29,6 +31,7 @@ public class AsTechJEIPlugin implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new ChemicalMixerCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new AssemblerCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new ChemicalReactorCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -42,6 +45,10 @@ public class AsTechJEIPlugin implements IModPlugin {
         List<AssemblerRecipe> assemblyRecipes = recipeManager
                 .getAllRecipesFor(ModRecipes.ASSEMBLER_RECIPE_TYPE.get());
         registration.addRecipes(AssemblerCategory.ASSEMBLER_TYPE, assemblyRecipes);
+
+        List<ChemicalReactorRecipe> reactorRecipes = recipeManager
+                .getAllRecipesFor(ModRecipes.CHEMICAL_REACTOR_RECIPE_TYPE.get());
+        registration.addRecipes(ChemicalReactorCategory.REACTOR_TYPE, reactorRecipes);
     }
 
     @Override
@@ -54,6 +61,9 @@ public class AsTechJEIPlugin implements IModPlugin {
 
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ADVANCED_ASSEMBLER.get()),
                 AssemblerCategory.ASSEMBLER_TYPE);
+
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.CHEMICAL_REACTOR.get()),
+                ChemicalReactorCategory.REACTOR_TYPE);
     }
 
     @Override
@@ -66,6 +76,9 @@ public class AsTechJEIPlugin implements IModPlugin {
 
         registration.addRecipeClickArea(AdvancedAssemblerScreen.class, 74, 48, 28, 8,
                 AssemblerCategory.ASSEMBLER_TYPE);
+
+        registration.addRecipeClickArea(ChemicalReactorScreen.class, 74, 40, 28, 8,
+                ChemicalReactorCategory.REACTOR_TYPE);
     }
 
     @Override

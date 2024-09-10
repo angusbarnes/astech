@@ -34,7 +34,7 @@ public class ChemicalMixerCategory implements IRecipeCategory<ChemicalMixerRecip
 
     public ChemicalMixerCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 100);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.CHEMICAL_MIXER.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.CHEMICAL_REACTOR.get()));
     }
 
     @Override

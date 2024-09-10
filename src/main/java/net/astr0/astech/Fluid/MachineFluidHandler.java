@@ -213,6 +213,14 @@ public abstract class MachineFluidHandler implements IFluidHandler {
         }
     }
 
+    public boolean canFluidFit(int index, FluidStack fluid) {
+        FluidStack stack = tanks[index].getFluid();
+
+        boolean result = (fluid.isEmpty() || stack.isEmpty() || stack.containsFluid(fluid)) && stack.getAmount() + fluid.getAmount() <= tanks[index].getTankCapacity(0);
+
+        return result;
+    }
+
     public boolean checkSlot(int i) {
         return filters.get(i).isLocked();
     }

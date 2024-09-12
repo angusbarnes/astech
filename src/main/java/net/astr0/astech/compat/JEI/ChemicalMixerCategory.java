@@ -34,7 +34,7 @@ public class ChemicalMixerCategory implements IRecipeCategory<ChemicalMixerRecip
 
     public ChemicalMixerCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 100);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.CHEMICAL_REACTOR.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.CHEMICAL_MIXER.get()));
     }
 
     @Override
@@ -59,9 +59,9 @@ public class ChemicalMixerCategory implements IRecipeCategory<ChemicalMixerRecip
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ChemicalMixerRecipe recipe, IFocusGroup focuses) {
-        FluidStack in1 = recipe.getInput1().getFluidStacks().get(0);
-        FluidStack in2 = recipe.getInput2().getFluidStacks().get(0);
-        FluidStack outF = recipe.getOutputFluid();
+        FluidStack in1 = recipe.getInput1().isEmpty() ? FluidStack.EMPTY : recipe.getInput1().getFluidStacks().get(0);
+        FluidStack in2 = recipe.getInput2().isEmpty() ? FluidStack.EMPTY : recipe.getInput2().getFluidStacks().get(0);
+        FluidStack outF = recipe.getOutputFluid().isEmpty() ? FluidStack.EMPTY : recipe.getOutputFluid();
         int[] amounts = new int[] { in1.getAmount(), in2.getAmount(), outF.getAmount() };
         int max = Arrays.stream(amounts).max().getAsInt();
 
@@ -69,14 +69,16 @@ public class ChemicalMixerCategory implements IRecipeCategory<ChemicalMixerRecip
         int inH2 = Math.min(56, in2.getAmount() * 56 / max);
         int outH = Math.min(56, outF.getAmount() * 56 / max);
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 34, 18 + (56 - inH1))
-                .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput1().getFluidStacks())
-                .setFluidRenderer(in1.getAmount(), false, 10, inH1);
-                //.setOverlay(Helpers.makeTankOverlay(inH1), 0, 0);
-        builder.addSlot(RecipeIngredientRole.INPUT, 48, 18 + (56 - inH2))
-                .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput2().getFluidStacks())
-                .setFluidRenderer(in2.getAmount(), false, 10, inH2);
-                //.setOverlay(Helpers.makeTankOverlay(inH2), 0, 0);
+        if(!recipe.getInput1().isEmpty()) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 34, 18 + (56 - inH1))
+                    .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput1().getFluidStacks())
+                    .setFluidRenderer(in1.getAmount(), false, 10, inH1);
+        }
+        if (!recipe.getInput2().isEmpty()) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 48, 18 + (56 - inH2))
+                    .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput2().getFluidStacks())
+                    .setFluidRenderer(in2.getAmount(), false, 10, inH2);
+        }
 
         Ingredient input1 = recipe.getInputItems().get(0);
         if(input1 != null && !input1.isEmpty()) {

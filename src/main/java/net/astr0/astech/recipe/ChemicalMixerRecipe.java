@@ -52,14 +52,18 @@ public class ChemicalMixerRecipe extends AsTechRecipeBase {
         this.outputFluid = outputFluid;
         this.outputItem = outputItem;
         this.processingTime = processingTime;
+
+        LogUtils.getLogger().info("Created Mixer recipe {}, with {}, {}", id,
+                input1.isEmpty() ? "EMPTY" : input1.getFluidStacks().get(0).getFluid().getFluidType(),
+                input2.isEmpty() ? "EMPTY" : input2.getFluidStacks().get(0).getFluid().getFluidType());
     }
     
     public boolean matches(FluidStack fluid1, FluidStack fluid2, ItemStack[] itemInputs) {
 
         boolean hasItems = areIngredientsFulfilled(itemInputs);
 
-        return (input1.testFluid(fluid1) && input2.testFluid(fluid2)
-                || input2.testFluid(fluid1) && input1.testFluid(fluid2)) && hasItems;
+        return ((input1.testFluid(fluid1) && (input2.testFluid(fluid2) || input2.isEmpty()))
+                || (input2.testFluid(fluid1) && input1.testFluid(fluid2))) && hasItems;
     }
 
     public boolean areIngredientsFulfilled(ItemStack[] itemStacks) {
@@ -162,8 +166,8 @@ public class ChemicalMixerRecipe extends AsTechRecipeBase {
                 inputIngredients.add(Ingredient.fromJson(e.getAsJsonObject()));
             }
 
-            Ingredient input1 = FluidIngredient.fromJson(json.get("fluid_input1"));
-            Ingredient input2 = FluidIngredient.fromJson(json.get("fluid_input2"));
+            Ingredient input1 = json.has("fluid_input1") ? FluidIngredient.fromJson(json.get("fluid_input1")) : FluidIngredient.EMPTY;
+            Ingredient input2 = json.has("fluid_input2") ? FluidIngredient.fromJson(json.get("fluid_input2")) : FluidIngredient.EMPTY;
             FluidStack outputFluid = json.has("fluid_output") ?
                     ModCraftingHelper.fluidStackFromJson(json.getAsJsonObject("fluid_output")):
                     FluidStack.EMPTY;

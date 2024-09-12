@@ -371,7 +371,12 @@ public class AdvancedAssemblerBlockEntity extends AbstractMachineBlockEntity {
             assert inputFluidTank.getFluidInTank(0) == FluidStack.EMPTY;
             if(recipe.matches(inputFluidTank.getFluidInTank(0), inputs, false)) {
                 cachedRecipe = recipe;
-                this.maxProgress = recipe.getProcessingTime();
+                if(recipe.IsAdvanced()) {
+                    this.maxProgress = recipe.getProcessingTime();
+                } else {
+                    this.maxProgress = recipe.getProcessingTime() / 2;
+                }
+
                 return recipe;
             }
         }

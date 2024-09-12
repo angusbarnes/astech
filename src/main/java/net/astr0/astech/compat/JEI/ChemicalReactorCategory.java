@@ -35,7 +35,7 @@ public class ChemicalReactorCategory implements IRecipeCategory<ChemicalReactorR
     private final IDrawableAnimated arrow;
 
     public ChemicalReactorCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 106);
+        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 86);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.CHEMICAL_MIXER.get()));
 
         var arrow = helper.createDrawable(TEXTURE, 183, 0, 28, 8);

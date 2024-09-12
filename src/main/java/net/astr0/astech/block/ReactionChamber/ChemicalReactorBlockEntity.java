@@ -78,7 +78,7 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
         }
     };
 
-    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(2,20000) {
+    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(2,20000, true) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -99,6 +99,8 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
 
     private final LazyOptional<IFluidHandler> lazyInputFluidHandler = LazyOptional.of(() -> inputFluidTank);
     private final LazyOptional<IFluidHandler> lazyOuputFluidHandler = LazyOptional.of(() -> outputFluidTank);
+    private final LazyOptional<IFluidHandler> lazyOuput1FluidHandler = LazyOptional.of(() -> outputFluidTank.getTank(0));
+    private final LazyOptional<IFluidHandler> lazyOuput2FluidHandler = LazyOptional.of(() -> outputFluidTank.getTank(1));
     private final LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
     // Container data is simple data which is synchronised by default over the network
     protected final ContainerData data;
@@ -167,6 +169,8 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
         return switch (type) {
             case SidedConfig.FLUID_INPUT -> lazyInputFluidHandler.cast();
             case SidedConfig.FLUID_OUTPUT -> lazyOuputFluidHandler.cast();
+            case SidedConfig.FLUID_OUTPUT_ONE -> lazyOuput1FluidHandler.cast();
+            case SidedConfig.FLUID_OUTPUT_TWO -> lazyOuput2FluidHandler.cast();
             default -> LazyOptional.empty();
         };
     }
@@ -178,6 +182,9 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
         lazyInputFluidHandler.invalidate();
         lazyEnergyHandler.invalidate();
         lazyOuputFluidHandler.invalidate();
+
+        lazyOuput1FluidHandler.invalidate();
+        lazyOuput2FluidHandler.invalidate();
     }
 
     // User defined helper to get a list of all the items we are holding,
@@ -203,7 +210,7 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     public int[][] getCapTypes() {
         return new int[][] {
                 {SidedConfig.NONE, SidedConfig.ITEM_INPUT, SidedConfig.ITEM_OUTPUT},
-                {SidedConfig.NONE, SidedConfig.FLUID_INPUT, SidedConfig.FLUID_OUTPUT_ONE, SidedConfig.FLUID_OUTPUT_TWO},
+                {SidedConfig.NONE, SidedConfig.FLUID_INPUT, SidedConfig.FLUID_OUTPUT_ONE, SidedConfig.FLUID_OUTPUT_TWO, SidedConfig.FLUID_OUTPUT},
         };
     }
 
@@ -303,15 +310,9 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
         ChemicalReactorRecipe recipe = getRecipe();
 
         if(recipe == null) {
-            LogUtils.getLogger().info("THERE WAS NO RECIPE TO BE FOUND");
             return false;
         }
 
-        LogUtils.getLogger().info("This shit deadass did not match, {}, {} != {}, {}",
-                outputFluidTank.getFluidInTank(0).getFluid().toString(),
-                outputFluidTank.getFluidInTank(1).getFluid().toString(),
-                recipe.getOutput1(),
-                recipe.getOutput1());
 
         return outputFluidTank.canFluidFit(0, recipe.getOutput1())
                 && outputFluidTank.canFluidFit(1, recipe.getOutput2());
@@ -450,11 +451,15 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     protected void SERVER_WriteUpdateToFlexiPacket(FlexiPacket packet) {
         packet.writeFluidStack(inputFluidTank.getFluidInTank(0));
         packet.writeFluidStack(inputFluidTank.getFluidInTank(1));
+        packet.writeFluidStack(outputFluidTank.getFluidInTank(0));
+        packet.writeFluidStack(outputFluidTank.getFluidInTank(1));
     }
 
     @Override
     protected void CLIENT_ReadUpdateFromFlexiPacket(FlexiPacket packet) {
         inputFluidTank.getTank(0).setFluid(packet.readFluidStack());
         inputFluidTank.getTank(1).setFluid(packet.readFluidStack());
+        outputFluidTank.getTank(0).setFluid(packet.readFluidStack());
+        outputFluidTank.getTank(1).setFluid(packet.readFluidStack());
     }
 }

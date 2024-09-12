@@ -41,7 +41,8 @@ public class ChemicalReactorRecipe extends AsTechRecipeBase {
     public boolean matches(FluidStack fluid1, FluidStack fluid2) {
 
 
-        boolean fluidMatches = input1.testFluid(fluid1) && input2.testFluid(fluid2);
+        boolean fluidMatches = (input1.testFluid(fluid1) && input2.testFluid(fluid2))
+                || (input1.testFluid(fluid2) && input2.testFluid(fluid1));
 //        LogUtils.getLogger().info("Testing {}, {} against {}, {}. RESULT: {}",
 //                fluid1.getFluid().toString(),
 //                fluid2.getFluid().toString(),

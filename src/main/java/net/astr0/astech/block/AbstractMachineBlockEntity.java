@@ -1,6 +1,5 @@
 package net.astr0.astech.block;
 
-import com.mojang.logging.LogUtils;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
 import net.astr0.astech.network.INetworkedMachine;
@@ -104,7 +103,7 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
 
     @Override
     public CompoundTag getUpdateTag() {
-        LogUtils.getLogger().info("A block update tag was requested");
+        //LogUtils.getLogger().info("A block update tag was requested");
         return saveWithoutMetadata();
     }
 

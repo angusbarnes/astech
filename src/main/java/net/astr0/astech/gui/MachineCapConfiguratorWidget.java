@@ -16,7 +16,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class MachineCapConfiguratorWidget extends AbstractWidget {
@@ -65,6 +67,7 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
     }
 
     public int GetMode() {return this.mode;}
+    public void SetMode(int mode) {this.mode = mode;}
 
     public MachineCapConfiguratorWidget(int pX, int pY, AbstractMachineBlockEntity be) {
         super(pX, pY, 0, 0, Component.empty());

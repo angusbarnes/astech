@@ -1,6 +1,5 @@
 package net.astr0.astech;
 
-import com.mojang.logging.LogUtils;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidFilter {
@@ -23,7 +22,7 @@ public class FluidFilter {
     public void Lock(FluidStack stack) {
         isLocked = true;
         filterFluidStack = stack.copy();
-        LogUtils.getLogger().info("Filter set as {}", filterFluidStack);
+        //LogUtils.getLogger().info("Filter set as {}", filterFluidStack);
     }
 
     public void Unlock() {

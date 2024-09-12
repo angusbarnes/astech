@@ -17,6 +17,7 @@ public abstract class MachineFluidHandler implements IFluidHandler {
 
     private FluidTank[] tanks;
     final List<FluidFilter> filters;
+    final boolean allowDrain;
 
     public void setTankCount(int count, int capacity) {
         tanks = new FluidTank[count];
@@ -29,10 +30,16 @@ public abstract class MachineFluidHandler implements IFluidHandler {
                     MachineFluidHandler.this.onContentsChanged();
                 }
             };
+
+            tanks[i].setFluid(FluidStack.EMPTY);
         }
     }
 
     public MachineFluidHandler(int tank_count, int capacity) {
+        this(tank_count, capacity, false);
+    }
+
+    public MachineFluidHandler(int tank_count, int capacity, boolean allowDrain) {
         setTankCount(tank_count, capacity);
 
         filters = new ArrayList<>(tank_count);
@@ -40,6 +47,8 @@ public abstract class MachineFluidHandler implements IFluidHandler {
         for(int i = 0; i < tank_count; i++) {
             filters.add(new FluidFilter(false, FluidStack.EMPTY));
         }
+
+        this.allowDrain = allowDrain;
     }
 
     @Override
@@ -90,6 +99,8 @@ public abstract class MachineFluidHandler implements IFluidHandler {
     @Override
     public @NotNull FluidStack drain(FluidStack fluidStack, FluidAction fluidAction) {
 
+        if(!allowDrain) return FluidStack.EMPTY;
+
         for (FluidTank tank : tanks) {
             if (tank.getFluid().isFluidEqual(fluidStack)) {
                 if(fluidAction == FluidAction.EXECUTE) onContentsChanged();
@@ -102,6 +113,8 @@ public abstract class MachineFluidHandler implements IFluidHandler {
 
     @Override
     public @NotNull FluidStack drain(int maxDrain, FluidAction fluidAction) {
+
+        if(!allowDrain) return FluidStack.EMPTY;
 
         for(FluidTank tank : tanks) {
             if(tank.getFluidAmount() > 0) {

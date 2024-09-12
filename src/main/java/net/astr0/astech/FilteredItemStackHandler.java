@@ -148,7 +148,7 @@ public class FilteredItemStackHandler extends ItemStackHandler {
                 ItemStack stack = ItemStack.of(itemTags);
                 filters.get(slot).Lock(stack);
 
-                LogUtils.getLogger().info("Loaded slot {} with filter {}", slot, stack);
+                //LogUtils.getLogger().info("Loaded slot {} with filter {}", slot, stack);
             }
         }
         onLoad();
@@ -161,7 +161,7 @@ public class FilteredItemStackHandler extends ItemStackHandler {
             packet.writeBool(lock);
             if(lock) {
                 packet.writeItemStack(filters.get(i).GetFilter());
-                LogUtils.getLogger().info("Wrote {} to flexipacket for slot {}", filters.get(i).GetFilter(), i);
+                //LogUtils.getLogger().info("Wrote {} to flexipacket for slot {}", filters.get(i).GetFilter(), i);
             }
         }
     }

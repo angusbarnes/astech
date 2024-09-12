@@ -41,10 +41,11 @@ public class ChemicalReactorScreen extends AbstractContainerScreen<ChemicalReact
         addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 36, this.topPos + 16));
         addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 1, this.leftPos + 54, this.topPos + 16));
 
-        addElement(new FluidTankSlot(this.menu.blockEntity.getOutputTank1(), this.leftPos + 110, this.leftPos + 16));
-        addElement(new FluidTankSlot(this.menu.blockEntity.getOutputTank2(), this.leftPos + 129, this.leftPos + 16));
+        addElement(new FluidTankSlot(this.menu.blockEntity.getOutputTank1(), this.leftPos + 110, this.topPos + 16));
+        addElement(new FluidTankSlot(this.menu.blockEntity.getOutputTank2(), this.leftPos + 129, this.topPos + 16));
 
         MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity);
+        config.MODE_SWITCH_BUTTON.clicked(); // This is a phat hack
 
         IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 5, this.topPos + 21, Icons.SETTINGS, (button) -> {
             config.ToggleRender();
@@ -139,7 +140,7 @@ public class ChemicalReactorScreen extends AbstractContainerScreen<ChemicalReact
             element.renderTooltip(guiGraphics, mouseX, mouseY);
         }
 
-        renderProgressArrow(guiGraphics, this.leftPos + 74, this.topPos + 48);
+        renderProgressArrow(guiGraphics, this.leftPos + 74, this.topPos + 40);
 
         renderTooltip(guiGraphics, mouseX, mouseY);
 

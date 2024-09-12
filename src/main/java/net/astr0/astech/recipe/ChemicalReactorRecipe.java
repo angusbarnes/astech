@@ -41,14 +41,14 @@ public class ChemicalReactorRecipe extends AsTechRecipeBase {
     public boolean matches(FluidStack fluid1, FluidStack fluid2) {
 
 
-        boolean fluidMatches = input1.testFluid(fluid1) && input1.testFluid(fluid2);
-        LogUtils.getLogger().info("Testing {}, {} against {}, {}. RESULT: {}",
-                fluid1.getFluid().toString(),
-                fluid2.getFluid().toString(),
-                input1.getFluidStacks().get(0).getFluid().toString(),
-                input2.getFluidStacks().get(0).getFluid().toString(),
-                fluidMatches
-                );
+        boolean fluidMatches = input1.testFluid(fluid1) && input2.testFluid(fluid2);
+//        LogUtils.getLogger().info("Testing {}, {} against {}, {}. RESULT: {}",
+//                fluid1.getFluid().toString(),
+//                fluid2.getFluid().toString(),
+//                input1.getFluidStacks().get(0).getFluid().toString(),
+//                input2.getFluidStacks().get(0).getFluid().toString(),
+//                fluidMatches
+//                );
 
         return fluidMatches;
     }

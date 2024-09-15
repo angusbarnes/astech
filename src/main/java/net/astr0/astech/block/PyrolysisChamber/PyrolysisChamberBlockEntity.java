@@ -9,8 +9,8 @@ import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.SidedConfig;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
-import net.astr0.astech.recipe.ElectrolyticSeperatorRecipe;
 import net.astr0.astech.recipe.ModRecipes;
+import net.astr0.astech.recipe.PyrolysisChamberRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -285,7 +285,7 @@ public class PyrolysisChamberBlockEntity extends AbstractMachineBlockEntity {
     }
 
     private void craftItem() {
-        ElectrolyticSeperatorRecipe recipe = getRecipe();
+        PyrolysisChamberRecipe recipe = getRecipe();
 
         if(recipe == null) return;
 
@@ -303,7 +303,7 @@ public class PyrolysisChamberBlockEntity extends AbstractMachineBlockEntity {
     private boolean hasRecipe() {
 
 
-        ElectrolyticSeperatorRecipe recipe = getRecipe();
+        PyrolysisChamberRecipe recipe = getRecipe();
 
         if(recipe == null) {
             return false;
@@ -314,16 +314,16 @@ public class PyrolysisChamberBlockEntity extends AbstractMachineBlockEntity {
                 && outputFluidTank.canFluidFit(1, recipe.getOutput2());
     }
 
-    private ElectrolyticSeperatorRecipe cachedRecipe = null;
-    private ElectrolyticSeperatorRecipe getRecipe() {
+    private PyrolysisChamberRecipe cachedRecipe = null;
+    private PyrolysisChamberRecipe getRecipe() {
 
         if(cachedRecipe != null && cachedRecipe.matches(inputFluidTank.getFluidInTank(0))) {
             return cachedRecipe;
         }
 
-        List<ElectrolyticSeperatorRecipe> recipes = this.level.getRecipeManager().getAllRecipesFor(ModRecipes.ELECTROLYTIC_SEPERATOR_RECIPE_TYPE.get());
+        List<PyrolysisChamberRecipe> recipes = this.level.getRecipeManager().getAllRecipesFor(ModRecipes.PYROLYSIS_CHAMBER_RECIPE_TYPE.get());
 
-        for(ElectrolyticSeperatorRecipe recipe : recipes) {
+        for(PyrolysisChamberRecipe recipe : recipes) {
             if(recipe.matches(inputFluidTank.getFluidInTank(0))) {
                 cachedRecipe = recipe;
                 this.maxProgress = recipe.getProcessingTime();

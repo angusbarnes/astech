@@ -9,6 +9,7 @@ import net.astr0.astech.block.Assembler.AssemblerScreen;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerScreen;
 import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorScreen;
 import net.astr0.astech.block.ModBlocks;
+import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberScreen;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorScreen;
 import net.astr0.astech.recipe.*;
 import net.minecraft.client.Minecraft;
@@ -31,6 +32,7 @@ public class AsTechJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new AssemblerCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new ChemicalReactorCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new ElectrolyticSeperatorCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new PyrolysisChamberCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -52,6 +54,10 @@ public class AsTechJEIPlugin implements IModPlugin {
         List<ElectrolyticSeperatorRecipe> seperatorRecipes = recipeManager
                 .getAllRecipesFor(ModRecipes.ELECTROLYTIC_SEPERATOR_RECIPE_TYPE.get());
         registration.addRecipes(ElectrolyticSeperatorCategory.SEPERATOR_TYPE, seperatorRecipes);
+
+        List<PyrolysisChamberRecipe> pyroRecipes = recipeManager
+                .getAllRecipesFor(ModRecipes.PYROLYSIS_CHAMBER_RECIPE_TYPE.get());
+        registration.addRecipes(PyrolysisChamberCategory.PYROLYSIS_CHAMBER_TYPE, pyroRecipes);
     }
 
     @Override
@@ -70,6 +76,9 @@ public class AsTechJEIPlugin implements IModPlugin {
 
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTROLYTIC_SEPERATOR.get()),
                 ElectrolyticSeperatorCategory.SEPERATOR_TYPE);
+
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.PYROLYSIS_CHAMBER.get()),
+                PyrolysisChamberCategory.PYROLYSIS_CHAMBER_TYPE);
     }
 
     @Override
@@ -88,6 +97,9 @@ public class AsTechJEIPlugin implements IModPlugin {
 
         registration.addRecipeClickArea(ElectrolyticSeperatorScreen.class, 69, 40, 28, 8,
                 ElectrolyticSeperatorCategory.SEPERATOR_TYPE);
+
+        registration.addRecipeClickArea(PyrolysisChamberScreen.class, 69, 40, 28, 8,
+                PyrolysisChamberCategory.PYROLYSIS_CHAMBER_TYPE);
     }
 
     @Override

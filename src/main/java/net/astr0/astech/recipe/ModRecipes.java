@@ -32,6 +32,10 @@ public class ModRecipes {
     public static final RegistryObject<RecipeSerializer<ElectrolyticSeperatorRecipe>> ELECTROLYTIC_SEPERATOR_SERIALIZER =
             SERIALIZERS.register(ModRecipes.ELECTROLYTIC_SEPERATOR, ElectrolyticSeperatorRecipe.Serializer::getInstance);
 
+    public static final RegistryObject<AsTechRecipeType<PyrolysisChamberRecipe>> PYROLYSIS_CHAMBER_RECIPE_TYPE = registerType(ModRecipes.PYROLYSIS_CHAMBER, AsTechRecipeType::new);
+    public static final RegistryObject<RecipeSerializer<PyrolysisChamberRecipe>> PYROLYSIS_CHAMBER_SERIALIZER =
+            SERIALIZERS.register(ModRecipes.PYROLYSIS_CHAMBER, PyrolysisChamberRecipe.Serializer::getInstance);
+
     public static final RegistryObject<RecipeSerializer<GemPolishingRecipe>> GEM_POLISHING_SERIALIZER =
             SERIALIZERS.register("gem_polishing", () -> GemPolishingRecipe.Serializer.INSTANCE);
 
@@ -52,4 +56,5 @@ public class ModRecipes {
     public static final String REACTION_CHAMBER = "reaction_chamber";
     public static final String CHEMICAL_REACTOR = "chemical_reactor";
     public static final String ELECTROLYTIC_SEPERATOR = "electrolytic_seperator";
+    public static final String PYROLYSIS_CHAMBER = "pyrolysis_chamber";
 }

@@ -3,7 +3,7 @@
     "textures": {
       "front": "astech:block/chemical_reactor/overlay_front_active",
       "side": "astech:block/chemical_reactor/overlay_side_active",
-      "top": "astech:block/advanced_assembler/overlay_top_active",
+      "top": "astech:block/chemical_reactor/overlay_top_active",
       "bottom": "astech:block/opv_bottom"
     }
 }

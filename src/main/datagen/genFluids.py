@@ -159,7 +159,8 @@ datapack.set_base_dictionary({
     "block.astech.assembler": "Assembler",
     "block.astech.advanced_assembler": "Advanced Assembler",
     "block.astech.chemical_reactor": "Chemical Reactor",
-    "block.astech.electrolytic_seperator": "Electrolytic Seperator"
+    "block.astech.electrolytic_seperator": "Electrolytic Seperator",
+    "block.astech.pyrolysis_chamber": "Pyrolysis Chamber"
 })
 
 static_items = [

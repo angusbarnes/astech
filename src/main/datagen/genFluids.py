@@ -158,7 +158,8 @@ datapack.set_base_dictionary({
     "block.astech.chemical_mixer": "Chemical Mixer",
     "block.astech.assembler": "Assembler",
     "block.astech.advanced_assembler": "Advanced Assembler",
-    "block.astech.chemical_reactor": "Chemical Reactor"
+    "block.astech.chemical_reactor": "Chemical Reactor",
+    "block.astech.electrolytic_seperator": "Electrolytic Seperator"
 })
 
 static_items = [

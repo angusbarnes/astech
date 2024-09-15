@@ -28,6 +28,10 @@ public class ModRecipes {
     public static final RegistryObject<RecipeSerializer<ChemicalReactorRecipe>> CHEMICAL_REACTOR_SERIALIZER =
             SERIALIZERS.register(ModRecipes.CHEMICAL_REACTOR, ChemicalReactorRecipe.Serializer::getInstance);
 
+    public static final RegistryObject<AsTechRecipeType<ElectrolyticSeperatorRecipe>> ELECTROLYTIC_SEPERATOR_RECIPE_TYPE = registerType(ModRecipes.ELECTROLYTIC_SEPERATOR, AsTechRecipeType::new);
+    public static final RegistryObject<RecipeSerializer<ElectrolyticSeperatorRecipe>> ELECTROLYTIC_SEPERATOR_SERIALIZER =
+            SERIALIZERS.register(ModRecipes.ELECTROLYTIC_SEPERATOR, ElectrolyticSeperatorRecipe.Serializer::getInstance);
+
     public static final RegistryObject<RecipeSerializer<GemPolishingRecipe>> GEM_POLISHING_SERIALIZER =
             SERIALIZERS.register("gem_polishing", () -> GemPolishingRecipe.Serializer.INSTANCE);
 
@@ -47,4 +51,5 @@ public class ModRecipes {
     public static final String ASSEMBLER = "assembler";
     public static final String REACTION_CHAMBER = "reaction_chamber";
     public static final String CHEMICAL_REACTOR = "chemical_reactor";
+    public static final String ELECTROLYTIC_SEPERATOR = "electrolytic_seperator";
 }

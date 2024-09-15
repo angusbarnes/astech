@@ -52,10 +52,6 @@ public class ChemicalMixerRecipe extends AsTechRecipeBase {
         this.outputFluid = outputFluid;
         this.outputItem = outputItem;
         this.processingTime = processingTime;
-
-        LogUtils.getLogger().info("Created Mixer recipe {}, with {}, {}", id,
-                input1.isEmpty() ? "EMPTY" : input1.getFluidStacks().get(0).getFluid().getFluidType(),
-                input2.isEmpty() ? "EMPTY" : input2.getFluidStacks().get(0).getFluid().getFluidType());
     }
     
     public boolean matches(FluidStack fluid1, FluidStack fluid2, ItemStack[] itemInputs) {

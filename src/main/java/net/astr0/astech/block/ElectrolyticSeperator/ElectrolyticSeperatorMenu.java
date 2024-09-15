@@ -1,4 +1,4 @@
-package net.astr0.astech.block.ReactionChamber;
+package net.astr0.astech.block.ElectrolyticSeperator;
 
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.gui.ModMenuTypes;
@@ -12,23 +12,23 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 
 // The menu acts as the logic behind the screen, which utimately performs the screenspace drawing
-public class ChemicalReactorMenu extends AbstractContainerMenu {
-    public final ChemicalReactorBlockEntity blockEntity;
+public class ElectrolyticSeperatorMenu extends AbstractContainerMenu {
+    public final ElectrolyticSeperatorBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    public ChemicalReactorMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+    public ElectrolyticSeperatorMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
-    public ChemicalReactorMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.CHEMICAL_REACTOR_MENU.get(), pContainerId);
+    public ElectrolyticSeperatorMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(ModMenuTypes.ELECTROLYTIC_SEPERATOR_MENU.get(), pContainerId);
 
         // An inventory is a container type. I don't know why we would be checking this as I believe
         // it refers to the player inventory. I'm guessing it was probably meant to be data instead,
         // as that would correspond to the dataContainer size of two we created in the block entity
         checkContainerSize(inv, 2);
-        blockEntity = ((ChemicalReactorBlockEntity) entity);
+        blockEntity = ((ElectrolyticSeperatorBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
@@ -106,7 +106,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                pPlayer, ModBlocks.CHEMICAL_REACTOR.get());
+                pPlayer, ModBlocks.ELECTROLYTIC_SEPERATOR.get());
     }
 
     public int getEnergy() {

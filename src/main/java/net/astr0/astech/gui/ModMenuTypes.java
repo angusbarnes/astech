@@ -4,6 +4,7 @@ import net.astr0.astech.AsTech;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerMenu;
 import net.astr0.astech.block.Assembler.AssemblerMenu;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerMenu;
+import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorMenu;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationMenu;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -34,6 +35,8 @@ public class ModMenuTypes {
     public static final RegistryObject<MenuType<ChemicalReactorMenu>> CHEMICAL_REACTOR_MENU =
             registerMenuType("chemical_reactor_menu", ChemicalReactorMenu::new);
 
+    public static final RegistryObject<MenuType<ElectrolyticSeperatorMenu>> ELECTROLYTIC_SEPERATOR_MENU =
+            registerMenuType("electrolytic_seperator_menu", ElectrolyticSeperatorMenu::new);
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IForgeMenuType.create(factory));

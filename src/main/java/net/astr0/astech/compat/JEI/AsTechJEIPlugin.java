@@ -7,12 +7,10 @@ import net.astr0.astech.AsTech;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerScreen;
 import net.astr0.astech.block.Assembler.AssemblerScreen;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerScreen;
+import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorScreen;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorScreen;
-import net.astr0.astech.recipe.AssemblerRecipe;
-import net.astr0.astech.recipe.ChemicalMixerRecipe;
-import net.astr0.astech.recipe.ChemicalReactorRecipe;
-import net.astr0.astech.recipe.ModRecipes;
+import net.astr0.astech.recipe.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -32,6 +30,7 @@ public class AsTechJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new ChemicalMixerCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new AssemblerCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new ChemicalReactorCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new ElectrolyticSeperatorCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -49,6 +48,10 @@ public class AsTechJEIPlugin implements IModPlugin {
         List<ChemicalReactorRecipe> reactorRecipes = recipeManager
                 .getAllRecipesFor(ModRecipes.CHEMICAL_REACTOR_RECIPE_TYPE.get());
         registration.addRecipes(ChemicalReactorCategory.REACTOR_TYPE, reactorRecipes);
+
+        List<ElectrolyticSeperatorRecipe> seperatorRecipes = recipeManager
+                .getAllRecipesFor(ModRecipes.ELECTROLYTIC_SEPERATOR_RECIPE_TYPE.get());
+        registration.addRecipes(ElectrolyticSeperatorCategory.SEPERATOR_TYPE, seperatorRecipes);
     }
 
     @Override
@@ -64,6 +67,9 @@ public class AsTechJEIPlugin implements IModPlugin {
 
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.CHEMICAL_REACTOR.get()),
                 ChemicalReactorCategory.REACTOR_TYPE);
+
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTROLYTIC_SEPERATOR.get()),
+                ElectrolyticSeperatorCategory.SEPERATOR_TYPE);
     }
 
     @Override
@@ -79,6 +85,9 @@ public class AsTechJEIPlugin implements IModPlugin {
 
         registration.addRecipeClickArea(ChemicalReactorScreen.class, 74, 40, 28, 8,
                 ChemicalReactorCategory.REACTOR_TYPE);
+
+        registration.addRecipeClickArea(ElectrolyticSeperatorScreen.class, 69, 40, 28, 8,
+                ElectrolyticSeperatorCategory.SEPERATOR_TYPE);
     }
 
     @Override

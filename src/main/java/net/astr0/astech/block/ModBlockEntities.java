@@ -4,6 +4,7 @@ import net.astr0.astech.AsTech;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerBlockEntity;
 import net.astr0.astech.block.Assembler.AssemblerBlockEntity;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlockEntity;
+import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorBlockEntity;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlockEntity;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -40,6 +41,11 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("chemical_reactor", () ->
                     BlockEntityType.Builder.of(ChemicalReactorBlockEntity::new,
                             ModBlocks.CHEMICAL_REACTOR.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ElectrolyticSeperatorBlockEntity>> ELECTROLYTIC_SEPERATOR_BE =
+            BLOCK_ENTITIES.register("electrolytic_seperator", () ->
+                    BlockEntityType.Builder.of(ElectrolyticSeperatorBlockEntity::new,
+                            ModBlocks.ELECTROLYTIC_SEPERATOR.get()).build(null));
 
 
     public static void register(IEventBus eventBus) {

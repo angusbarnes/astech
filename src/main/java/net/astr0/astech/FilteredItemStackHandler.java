@@ -41,7 +41,6 @@ public class FilteredItemStackHandler extends ItemStackHandler {
             // using some kind of GhostTransferHandler or something
             filters.add(new BasicFilter(false, ItemStack.EMPTY));
 
-            LogUtils.getLogger().info("New FilteredItemStackHandler created on thread: {}", Thread.currentThread().getId());
         }
     }
 

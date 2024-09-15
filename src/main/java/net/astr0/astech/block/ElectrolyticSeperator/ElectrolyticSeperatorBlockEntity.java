@@ -1,4 +1,4 @@
-package net.astr0.astech.block.ReactionChamber;
+package net.astr0.astech.block.ElectrolyticSeperator;
 
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.CustomEnergyStorage;
@@ -9,7 +9,7 @@ import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.SidedConfig;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
-import net.astr0.astech.recipe.ChemicalReactorRecipe;
+import net.astr0.astech.recipe.ElectrolyticSeperatorRecipe;
 import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
+public class ElectrolyticSeperatorBlockEntity extends AbstractMachineBlockEntity {
 
 
     protected final SidedConfig sidedItemConfig = new SidedConfig() {
@@ -68,7 +68,7 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
         }
     }
 
-    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(2,10000) {
+    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(1,10000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -78,7 +78,7 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
         }
     };
 
-    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(2,20000, true) {
+    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(2,10000, true) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -107,8 +107,8 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     private int progress = 0;
     private int maxProgress = 80;
 
-    public ChemicalReactorBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.CHEMICAL_REACTOR_BE.get(), pPos, pBlockState);
+    public ElectrolyticSeperatorBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(ModBlockEntities.ELECTROLYTIC_SEPERATOR_BE.get(), pPos, pBlockState);
 
         this.data = new ContainerData() {
             @Override
@@ -116,8 +116,8 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
                 return switch (pIndex) {
                     case 0 -> energyStorage.getMaxEnergyStored();
                     case 1 -> energyStorage.getEnergyStored();
-                    case 2 -> ChemicalReactorBlockEntity.this.progress;
-                    case 3 -> ChemicalReactorBlockEntity.this.maxProgress;
+                    case 2 -> ElectrolyticSeperatorBlockEntity.this.progress;
+                    case 3 -> ElectrolyticSeperatorBlockEntity.this.maxProgress;
                     default -> throw new UnsupportedOperationException("Unexpected value: " + pIndex);
                 };
             }
@@ -125,9 +125,9 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 1 -> ChemicalReactorBlockEntity.this.energyStorage.setEnergy(pValue);
-                    case 2 -> ChemicalReactorBlockEntity.this.progress = pValue;
-                    case 3 -> ChemicalReactorBlockEntity.this.maxProgress = pValue;
+                    case 1 -> ElectrolyticSeperatorBlockEntity.this.energyStorage.setEnergy(pValue);
+                    case 2 -> ElectrolyticSeperatorBlockEntity.this.progress = pValue;
+                    case 3 -> ElectrolyticSeperatorBlockEntity.this.maxProgress = pValue;
                 }
             }
 
@@ -195,7 +195,7 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal("Chemical Reaction Chamber");
+        return Component.literal("Electrolytic Seperator");
     }
 
     // Not sure exactly what this over-rides, but it implements MenuProvider
@@ -203,7 +203,7 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new ChemicalReactorMenu(pContainerId, pPlayerInventory, this, this.data);
+        return new ElectrolyticSeperatorMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 
     @Override
@@ -226,7 +226,7 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     // On chunk load or on updatePacket we can save our basic data to NBT
     @Override
     protected void saveAdditional(CompoundTag pTag) {
-        pTag.putInt("assembler.progress", progress);
+        pTag.putInt("seperator.progress", progress);
         pTag.put("Energy", this.energyStorage.serializeNBT());
         pTag.put("fluidTank", inputFluidTank.writeToNBT(new CompoundTag()));
         pTag.put("outputFluidTank", outputFluidTank.writeToNBT(new CompoundTag()));
@@ -239,7 +239,7 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-        progress = pTag.getInt("assembler.progress");
+        progress = pTag.getInt("seperator.progress");
         energyStorage.deserializeNBT(pTag.get("Energy"));
         inputFluidTank.readFromNBT(pTag.getCompound("fluidTank"));
         outputFluidTank.readFromNBT(pTag.getCompound("outputFluidTank"));
@@ -256,12 +256,12 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {
 
         if(hasRecipe()) {
-            pLevel.setBlock(pPos, pState.setValue(ChemicalReactorBlock.ACTIVE, true), 2 | 8);
-            if(this.energyStorage.getEnergyStored() < 1024) {
+            pLevel.setBlock(pPos, pState.setValue(ElectrolyticSeperatorBlock.ACTIVE, true), 2 | 8);
+            if(this.energyStorage.getEnergyStored() < 512) {
                 decreaseCraftingProgress();
             } else {
                 increaseCraftingProgress();
-                ConsumePower(1024);
+                ConsumePower(512);
             }
 
             // every time we change some shit, call setChanged
@@ -274,7 +274,7 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
             }
         } else {
             resetProgress();
-            pLevel.setBlock(pPos, pState.setValue(ChemicalReactorBlock.ACTIVE, false), 2 | 8);
+            pLevel.setBlock(pPos, pState.setValue(ElectrolyticSeperatorBlock.ACTIVE, false), 2 | 8);
         }
 
         IncrementNetworkTickCount();
@@ -285,17 +285,13 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     }
 
     private void craftItem() {
-        ChemicalReactorRecipe recipe = getRecipe();
+        ElectrolyticSeperatorRecipe recipe = getRecipe();
 
         if(recipe == null) return;
 
 
-        int tank0consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(0));
+        int tank0consumed = recipe.calculateConsumedAmount();
         inputFluidTank.getTank(0).drain(tank0consumed, IFluidHandler.FluidAction.EXECUTE);
-
-        int tank1consumed = recipe.calculateConsumedAmount(inputFluidTank.getFluidInTank(1));
-        inputFluidTank.getTank(1).drain(tank1consumed, IFluidHandler.FluidAction.EXECUTE);
-
 
         outputFluidTank.fill(recipe.getOutput1(), IFluidHandler.FluidAction.EXECUTE);
         outputFluidTank.fill(recipe.getOutput2(), IFluidHandler.FluidAction.EXECUTE);
@@ -307,7 +303,7 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     private boolean hasRecipe() {
 
 
-        ChemicalReactorRecipe recipe = getRecipe();
+        ElectrolyticSeperatorRecipe recipe = getRecipe();
 
         if(recipe == null) {
             return false;
@@ -318,17 +314,17 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
                 && outputFluidTank.canFluidFit(1, recipe.getOutput2());
     }
 
-    private ChemicalReactorRecipe cachedRecipe = null;
-    private ChemicalReactorRecipe getRecipe() {
+    private ElectrolyticSeperatorRecipe cachedRecipe = null;
+    private ElectrolyticSeperatorRecipe getRecipe() {
 
-        if(cachedRecipe != null && cachedRecipe.matches(inputFluidTank.getFluidInTank(0), inputFluidTank.getFluidInTank(1))) {
+        if(cachedRecipe != null && cachedRecipe.matches(inputFluidTank.getFluidInTank(0))) {
             return cachedRecipe;
         }
 
-        List<ChemicalReactorRecipe> recipes = this.level.getRecipeManager().getAllRecipesFor(ModRecipes.CHEMICAL_REACTOR_RECIPE_TYPE.get());
+        List<ElectrolyticSeperatorRecipe> recipes = this.level.getRecipeManager().getAllRecipesFor(ModRecipes.ELECTROLYTIC_SEPERATOR_RECIPE_TYPE.get());
 
-        for(ChemicalReactorRecipe recipe : recipes) {
-            if(recipe.matches(inputFluidTank.getFluidInTank(0), inputFluidTank.getFluidInTank(1))) {
+        for(ElectrolyticSeperatorRecipe recipe : recipes) {
+            if(recipe.matches(inputFluidTank.getFluidInTank(0))) {
                 cachedRecipe = recipe;
                 this.maxProgress = recipe.getProcessingTime();
                 return recipe;
@@ -450,7 +446,6 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     @Override
     protected void SERVER_WriteUpdateToFlexiPacket(FlexiPacket packet) {
         packet.writeFluidStack(inputFluidTank.getFluidInTank(0));
-        packet.writeFluidStack(inputFluidTank.getFluidInTank(1));
         packet.writeFluidStack(outputFluidTank.getFluidInTank(0));
         packet.writeFluidStack(outputFluidTank.getFluidInTank(1));
     }
@@ -458,7 +453,6 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
     @Override
     protected void CLIENT_ReadUpdateFromFlexiPacket(FlexiPacket packet) {
         inputFluidTank.getTank(0).setFluid(packet.readFluidStack());
-        inputFluidTank.getTank(1).setFluid(packet.readFluidStack());
         outputFluidTank.getTank(0).setFluid(packet.readFluidStack());
         outputFluidTank.getTank(1).setFluid(packet.readFluidStack());
     }

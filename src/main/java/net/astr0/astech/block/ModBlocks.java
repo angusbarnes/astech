@@ -4,6 +4,7 @@ import net.astr0.astech.AsTech;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerBlock;
 import net.astr0.astech.block.Assembler.AssemblerBlock;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlock;
+import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorBlock;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlock;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorBlock;
 import net.astr0.astech.item.ModItems;
@@ -67,15 +68,16 @@ public class ModBlocks {
     public static final RegistryObject<Block> CHEMICAL_REACTOR = registerBlock("chemical_reactor",
             () -> new ChemicalReactorBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
 
+    public static final RegistryObject<Block> ELECTROLYTIC_SEPERATOR = registerBlock("electrolytic_seperator",
+            () -> new ElectrolyticSeperatorBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
+
 
     public static BlockBehaviour.Properties MACHINE_DEFAULT_PROPS = BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
             .noOcclusion()
             .sound(SoundType.METAL)
             .strength(2, 12)
             .emissiveRendering((a, b, c) -> true)
-            .lightLevel((state) -> {
-                return state.getValue(ChemicalMixerBlock.ACTIVE) ? 9 : 0;
-            });
+            .lightLevel((state) -> state.getValue(ChemicalMixerBlock.ACTIVE) ? 9 : 0);
 
     //#anchor BLOCK_REGION
 public static final RegistryObject<Block> PISS_WATER_BLOCK = registerBlock("piss_water_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));

@@ -1,6 +1,5 @@
 package net.astr0.astech.gui;
 
-import com.mojang.logging.LogUtils;
 import net.astr0.astech.BlockUtils;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.SidedConfig;
@@ -137,8 +136,6 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
     private final HashMap<Integer, int[]> slotSettings = new HashMap<>(2);
 
     private void incrementSlotType(Supplier<Integer> _mode, Direction dir) {
-
-        LogUtils.getLogger().info("Tried increment with mode: {}", _mode.get());
 
         int currentCap = machine.getSidedConfig(_mode.get()).getCap(dir);
 

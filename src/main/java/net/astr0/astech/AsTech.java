@@ -10,6 +10,8 @@ import net.astr0.astech.block.GemPolisher.GemPolishingBlockEntityRenderer;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationScreen;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.ModBlocks;
+import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberMenu;
+import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberScreen;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorScreen;
 import net.astr0.astech.compat.mek.AsTechSlurries;
 import net.astr0.astech.gui.ModMenuTypes;
@@ -134,6 +136,7 @@ public class AsTech
             MenuScreens.register(ModMenuTypes.ADVANCED_ASSEMBLER_MENU.get(), AdvancedAssemblerScreen::new);
             MenuScreens.register(ModMenuTypes.CHEMICAL_REACTOR_MENU.get(), ChemicalReactorScreen::new);
             MenuScreens.register(ModMenuTypes.ELECTROLYTIC_SEPERATOR_MENU.get(), ElectrolyticSeperatorScreen::new);
+            MenuScreens.register(ModMenuTypes.PYROLYSIS_CHAMBER_MENU.get(), PyrolysisChamberScreen::new);
         }
     }
 }

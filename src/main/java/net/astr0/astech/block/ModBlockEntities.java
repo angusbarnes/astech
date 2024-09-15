@@ -6,6 +6,7 @@ import net.astr0.astech.block.Assembler.AssemblerBlockEntity;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlockEntity;
 import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorBlockEntity;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlockEntity;
+import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberBlockEntity;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -47,6 +48,10 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(ElectrolyticSeperatorBlockEntity::new,
                             ModBlocks.ELECTROLYTIC_SEPERATOR.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<PyrolysisChamberBlockEntity>> PYROLYSIS_CHAMBER_BE =
+            BLOCK_ENTITIES.register("pyrolysis_chamber", () ->
+                    BlockEntityType.Builder.of(PyrolysisChamberBlockEntity::new,
+                            ModBlocks.PYROLYSIS_CHAMBER.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

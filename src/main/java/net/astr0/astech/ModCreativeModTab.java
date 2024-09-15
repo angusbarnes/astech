@@ -33,6 +33,7 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.CHEMICAL_REACTOR.get());
                         output.accept(ModBlocks.TROPHY.get());
                         output.accept(ModBlocks.ELECTROLYTIC_SEPERATOR.get());
+                        output.accept(ModBlocks.PYROLYSIS_CHAMBER.get());
 
                         //#anchor TAB_REGION
 output.accept(ModItems.ABYSSIUM_INGOT.get());

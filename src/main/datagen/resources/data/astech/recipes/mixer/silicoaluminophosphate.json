@@ -1,0 +1,25 @@
+{
+    "type": "astech:chemical_mixer",
+    "inputs" : [
+      {
+        "type": "astech:stacked_item",
+        "tag": "forge:dusts/phosphorus",
+        "count": 6
+      }
+    ],
+    "fluid_input1": {
+      "type": "astech:fluid",
+      "amount": 300,
+      "tag": "forge:tetraethyl_orthosilicate"
+    },
+    "fluid_input2": {
+        "type": "astech:fluid",
+        "amount": 300,
+        "tag": "forge:aluminium_hydroxide"
+      },
+    "fluid_output": {
+      "amount": 700,
+      "fluid": "astech:silicoaluminophosphate"
+    },
+    "time": 400
+}

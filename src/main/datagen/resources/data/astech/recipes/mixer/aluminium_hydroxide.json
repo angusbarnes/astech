@@ -1,0 +1,20 @@
+{
+    "type": "astech:chemical_mixer",
+    "inputs" : [
+      {
+        "type": "astech:stacked_item",
+        "tag": "forge:dusts/aluminium",
+        "count": 6
+      }
+    ],
+    "fluid_input1": {
+      "type": "astech:fluid",
+      "amount": 200,
+      "tag": "forge:sodium_hydroxide"
+    },
+    "fluid_output": {
+      "amount": 200,
+      "fluid": "astech:aluminium_hydroxide"
+    },
+    "time": 200
+}

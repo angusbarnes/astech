@@ -1,0 +1,20 @@
+{
+    "type": "astech:chemical_mixer",
+    "inputs" : [
+      {
+        "type": "astech:stacked_item",
+        "tag": "forge:dusts/fluorite",
+        "count": 3
+      }
+    ],
+    "fluid_input1": {
+      "type": "astech:fluid",
+      "amount": 100,
+      "tag": "forge:sulfuric_acid"
+    },
+    "fluid_output": {
+      "amount": 110,
+      "fluid": "astech:hydrogen_fluoride"
+    },
+    "time": 200
+}

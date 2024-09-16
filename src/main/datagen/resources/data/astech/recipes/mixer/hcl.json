@@ -1,0 +1,20 @@
+{
+    "type": "astech:chemical_mixer",
+    "inputs" : [
+      {
+        "type": "astech:stacked_item",
+        "tag": "forge:dusts/sulfur",
+        "count": 15
+      }
+    ],
+    "fluid_input1": {
+      "type": "astech:fluid",
+      "amount": 1000,
+      "tag": "minecraft:water"
+    },
+    "fluid_output": {
+      "amount": 100,
+      "fluid": "astech:sulfuric_acid"
+    },
+    "time": 200
+}

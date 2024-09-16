@@ -3,11 +3,11 @@
     "fluid_input": {
       "type": "astech:fluid",
       "amount": 600,
-      "tag": "forge:hexafluoropropylene"
+      "tag": "forge:polytetrafluoroethylene"
     },
     "fluid_output_1": {
       "amount": 500,
-      "fluid": "astech:polytetrafluoroethylene"
+      "fluid": "astech:hexafluoropropylene"
     },
     "time": 350
   }

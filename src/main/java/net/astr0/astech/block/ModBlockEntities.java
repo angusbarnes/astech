@@ -4,6 +4,7 @@ import net.astr0.astech.AsTech;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerBlockEntity;
 import net.astr0.astech.block.Assembler.AssemblerBlockEntity;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlockEntity;
+import net.astr0.astech.block.EUVMachine.EUVMachineBlockEntity;
 import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorBlockEntity;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlockEntity;
 import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberBlockEntity;
@@ -52,6 +53,11 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("pyrolysis_chamber", () ->
                     BlockEntityType.Builder.of(PyrolysisChamberBlockEntity::new,
                             ModBlocks.PYROLYSIS_CHAMBER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<EUVMachineBlockEntity>> EUV_MACHINE_BE =
+            BLOCK_ENTITIES.register("euv_machine", () ->
+                    BlockEntityType.Builder.of(EUVMachineBlockEntity::new,
+                            ModBlocks.EUV_MACHINE.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

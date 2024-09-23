@@ -1,0 +1,9 @@
+{
+  "type": "astech:euv_machine",
+  "input": { "item": "astech:diode" },
+  "catalyst": { "item": "minecraft:wooden_sword" },
+  "output": {
+    "item": "astech:analog_circuit"
+  },
+  "time": 60
+}

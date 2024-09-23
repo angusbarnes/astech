@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/orientable_with_bottom",
+    "textures": {
+      "front": "astech:block/euv_machine/overlay_front_active",
+      "side": "astech:block/uxv_side",
+      "top": "astech:block/uxv_side",
+      "bottom": "astech:block/uxv_bottom"
+    }
+  }

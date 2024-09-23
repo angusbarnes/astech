@@ -36,6 +36,10 @@ public class ModRecipes {
     public static final RegistryObject<RecipeSerializer<PyrolysisChamberRecipe>> PYROLYSIS_CHAMBER_SERIALIZER =
             SERIALIZERS.register(ModRecipes.PYROLYSIS_CHAMBER, PyrolysisChamberRecipe.Serializer::getInstance);
 
+    public static final RegistryObject<AsTechRecipeType<EUVMachineRecipe>> EUV_MACHINE_RECIPE_TYPE = registerType(ModRecipes.EUV_MACHINE, AsTechRecipeType::new);
+    public static final RegistryObject<RecipeSerializer<EUVMachineRecipe>> EUV_MACHINE_SERIALIZER =
+            SERIALIZERS.register(ModRecipes.EUV_MACHINE, EUVMachineRecipe.Serializer::getInstance);
+
     public static final RegistryObject<RecipeSerializer<GemPolishingRecipe>> GEM_POLISHING_SERIALIZER =
             SERIALIZERS.register("gem_polishing", () -> GemPolishingRecipe.Serializer.INSTANCE);
 
@@ -57,4 +61,5 @@ public class ModRecipes {
     public static final String CHEMICAL_REACTOR = "chemical_reactor";
     public static final String ELECTROLYTIC_SEPERATOR = "electrolytic_seperator";
     public static final String PYROLYSIS_CHAMBER = "pyrolysis_chamber";
+    public static final String EUV_MACHINE = "euv_machine";
 }

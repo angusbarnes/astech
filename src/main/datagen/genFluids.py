@@ -160,7 +160,8 @@ datapack.set_base_dictionary({
     "block.astech.advanced_assembler": "Advanced Assembler",
     "block.astech.chemical_reactor": "Chemical Reactor",
     "block.astech.electrolytic_seperator": "Electrolytic Seperator",
-    "block.astech.pyrolysis_chamber": "Pyrolysis Chamber"
+    "block.astech.pyrolysis_chamber": "Pyrolysis Chamber",
+    "block.astech.euv_machine": "EUV Machine"
 })
 
 static_items = [
@@ -253,11 +254,13 @@ datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_c')
 datapack.add_item_tag('forge:genetic_material', 'astech:mutated_genetic_material')
 datapack.add_fluid_tag('forge:flux_resin', 'astech:soldering_flux')
 datapack.add_fluid_tag('forge:flux_resin', 'astech:ammonium_chloride')
+datapack.add_fluid_tag('forge:alcohol', '#forge:ethanol')
 
 TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
 ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
 FLUIDS_FILE = '../java/net/astr0/astech/Fluid/ModFluids.java' 
 SLURRY_FILE = '../java/net/astr0/astech/compat/mek/AsTechSlurries.java'
+JEI_FILE = "../java/net/astr0/astech/compat/JEI/AsTechJEIPlugin.java"
 
 for chemdef in chemicals:
     plain_text_name = chemdef['Name']
@@ -273,6 +276,9 @@ for chemdef in chemicals:
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("{fluid_name}", SOURCE_{fluid_name.upper()}))
             .bucket(ModItems.registerBucketItem("{fluid_name}", SOURCE_{fluid_name.upper()}));
     """)
+
+    if chemdef['Description']:
+      datapack.add_text_to_region(JEI_FILE, 'INFO_REGION', f"""registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_{fluid_name.upper()}.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("{chemdef['Description']}"));""")
 
     datapack.add_text_to_region(FLUIDS_FILE, 'RENDER_REGION', f"ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_{fluid_name.upper()}.get(), RenderType.translucent());")
     datapack.add_text_to_region(FLUIDS_FILE, 'RENDER_REGION', f"ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_{fluid_name.upper()}.get(), RenderType.translucent());")

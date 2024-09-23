@@ -4,6 +4,7 @@ import net.astr0.astech.AsTech;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerBlock;
 import net.astr0.astech.block.Assembler.AssemblerBlock;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlock;
+import net.astr0.astech.block.EUVMachine.EUVMachineBlock;
 import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorBlock;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlock;
 import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberBlock;
@@ -74,6 +75,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> PYROLYSIS_CHAMBER = registerBlock("pyrolysis_chamber",
             () -> new PyrolysisChamberBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
+
+    public static final RegistryObject<Block> EUV_MACHINE = registerBlock("euv_machine",
+            () -> new EUVMachineBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
 
 
     public static BlockBehaviour.Properties MACHINE_DEFAULT_PROPS = BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)

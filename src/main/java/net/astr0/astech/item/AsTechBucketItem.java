@@ -32,11 +32,12 @@ import java.util.function.Supplier;
 
 public class AsTechBucketItem extends BucketItem {
     private final String _tooltip_key;
+    private final HazardBehavior _type;
 
-
-    public AsTechBucketItem(Supplier<? extends Fluid> supplier, Properties builder, String tooltip_key) {
+    public AsTechBucketItem(Supplier<? extends Fluid> supplier, Properties builder, String tooltip_key, BehaviorType damageType) {
         super(supplier, builder);
         _tooltip_key = tooltip_key;
+        _type = new HazardBehavior(damageType);
     }
 
     @Override
@@ -70,16 +71,7 @@ public class AsTechBucketItem extends BucketItem {
             // We run all the other logic on both sides, so we can display a count,
             // but the explosion, damage and item removal should happen server side only
             if(count <= 0) {
-                level.explode(null, entity.position().x +0.5, entity.position().y +0.5, entity.position().z +0.5, 3, true, Level.ExplosionInteraction.NONE);
-                stack.setCount(0);
-
-                DamageSource source = level.damageSources().genericKill();
-                if (entity instanceof Player player) {
-                    player.hurt(source, 200f);
-                }
-
-                // Modify this as needed for hazardous materials
-                ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.POISON, 200), pAttacker);
+                _type.apply(entity, level);
             }
             tag.putInt("danger_ttl", count - 1);
 

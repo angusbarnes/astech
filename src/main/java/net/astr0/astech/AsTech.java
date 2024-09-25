@@ -98,9 +98,8 @@ public class AsTech
 
         if(item instanceof AsTechBucketItem) {
             if(stack.getTag() != null && stack.getTag().contains("danger_ttl")) {
-                LogUtils.getLogger().warn(String.format("We found one with a countdown, %d", stack.getTag().getInt("danger_ttl")));
                 MutableComponent timer = MutableComponent.create(ComponentContents.EMPTY);
-                timer.append(String.format("§c%d...", stack.getTag().getInt("danger_ttl")/20));
+                timer.append(String.format("§c%d...", stack.getTag().getInt("danger_ttl")));
                 event.getToolTip().add(timer);
             }
         }

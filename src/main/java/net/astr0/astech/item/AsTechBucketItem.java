@@ -1,6 +1,5 @@
 package net.astr0.astech.item;
 
-import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -8,13 +7,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlockContainer;
@@ -25,6 +23,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import org.jetbrains.annotations.NotNull;
+
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -34,7 +33,7 @@ public class AsTechBucketItem extends BucketItem {
     private final String _tooltip_key;
     private final HazardBehavior _type;
 
-    public AsTechBucketItem(Supplier<? extends Fluid> supplier, Properties builder, String tooltip_key, BehaviorType damageType) {
+    public AsTechBucketItem(Supplier<? extends Fluid> supplier, Properties builder, String tooltip_key, HazardBehavior.BehaviorType damageType) {
         super(supplier, builder);
         _tooltip_key = tooltip_key;
         _type = new HazardBehavior(damageType);
@@ -55,32 +54,8 @@ public class AsTechBucketItem extends BucketItem {
         if(level.isClientSide() || !(entity instanceof LivingEntity livingEntity)) return;
 
         if(livingEntity.tickCount % 20 == 0) {
-            LogUtils.getLogger().warn("Player Damage ticked");
+            _type.apply(stack, (LivingEntity) entity, level);
         }
-
-        CompoundTag tag = stack.getTag();
-
-        if(tag == null)  {
-            tag = new CompoundTag();
-            stack.setTag(tag);
-        }
-
-        if(tag.contains("danger_ttl")) {
-            int count = tag.getInt("danger_ttl");
-
-            // We run all the other logic on both sides, so we can display a count,
-            // but the explosion, damage and item removal should happen server side only
-            if(count <= 0) {
-                _type.apply(entity, level);
-            }
-            tag.putInt("danger_ttl", count - 1);
-
-        } else {
-            tag.putInt("danger_ttl", 80);
-            LogUtils.getLogger().warn("Hm we added a tag, lets see what happends!");
-        }
-            //GTUtil.applyHazardEffects(material, livingEntity, () -> true);
-
     }
 
     public ICapabilityProvider initCapabilities(@NotNull ItemStack stack, @Nullable CompoundTag nbt) {

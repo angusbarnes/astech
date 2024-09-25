@@ -265,6 +265,18 @@ JEI_FILE = "../java/net/astr0/astech/compat/JEI/AsTechJEIPlugin.java"
 for chemdef in chemicals:
     plain_text_name = chemdef['Name']
     fluid_name = chemdef['MATERIAL_ID']
+
+    hazard_types = {
+        'Asphyxiant' : 'HazardBehavior.BehaviorType.SUFFOCATE',
+        'Explosive' : 'HazardBehavior.BehaviorType.EXPLOSION',
+        'Radioactive' : 'HazardBehavior.BehaviorType.RADIO',
+        'Freezing' : 'HazardBehavior.BehaviorType.FREEZE',
+        'Hot' : 'HazardBehavior.BehaviorType.HEAT',
+        'EXTREME' : 'HazardBehavior.BehaviorType.EXTREME'
+    }
+
+    hazard = hazard_types[chemdef['Hazard Type']] if chemdef.get('Hazard Type') in hazard_types else 'HazardBehavior.BehaviorType.NONE'
+
     datapack.add_text_to_region(FLUIDS_FILE, 'FLUID_REGION', f"""
     public static final RegistryObject<FluidType> {fluid_name.upper()}_FLUID_TYPE = registerType("{fluid_name}", "{chemdef['Form']}", "{chemdef['Color']}");
     public static final RegistryObject<FlowingFluid> SOURCE_{fluid_name.upper()} = FLUIDS.register("{fluid_name}",
@@ -274,7 +286,7 @@ for chemdef in chemicals:
     public static final ForgeFlowingFluid.Properties {fluid_name.upper()}_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             {fluid_name.upper()}_FLUID_TYPE, SOURCE_{fluid_name.upper()}, FLOWING_{fluid_name.upper()})
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("{fluid_name}", SOURCE_{fluid_name.upper()}))
-            .bucket(ModItems.registerBucketItem("{fluid_name}", SOURCE_{fluid_name.upper()}));
+            .bucket(ModItems.registerBucketItem("{fluid_name}", SOURCE_{fluid_name.upper()}, {hazard}));
     """)
 
     if chemdef['Description']:

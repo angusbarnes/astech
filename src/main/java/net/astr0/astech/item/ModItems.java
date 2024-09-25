@@ -1,5 +1,7 @@
 package net.astr0.astech.item;
 
+import java.rmi.registry.Registry;
+
 import net.astr0.astech.AsTech;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -32,6 +34,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> DEEZ_NUTS_ITEM = SimpleIngredientItem("deez_nuts", 16);
     public static final RegistryObject<Item> DEEZ_BUTTS_ITEM = SimpleIngredientItem("deez_butts", 32);
+    public static final RegistryObject<Item> ZEOLITE_CATALYST = ITEMS.register("zeolite_catalyst", () -> new Item(new Item.Properties().durability(10)));
     
     //#anchor MATERIAL_REGION
 public static final RegistryObject<Item> ABYSSIUM_INGOT = SimpleIngredientItem("abyssium_ingot", 64);

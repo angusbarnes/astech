@@ -23,10 +23,6 @@ public class ModCreativeModTab {
                     .icon(() -> new ItemStack(ModItems.DEEZ_NUTS_ITEM.get()))
                     .title(Component.translatable("creativetab.astech_tab"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModItems.DEEZ_NUTS_ITEM.get());
-                        output.accept(ModItems.DEEZ_BUTTS_ITEM.get());
-                        output.accept(ModBlocks.NIC_BLOCK.get());
-                        output.accept(ModBlocks.GEM_POLISHING_STATION.get());
                         output.accept(ModBlocks.CHEMICAL_MIXER.get());
                         output.accept(ModBlocks.ASSEMBLER.get());
                         output.accept(ModBlocks.ADVANCED_ASSEMBLER.get());
@@ -35,6 +31,11 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.ELECTROLYTIC_SEPERATOR.get());
                         output.accept(ModBlocks.PYROLYSIS_CHAMBER.get());
                         output.accept(ModBlocks.EUV_MACHINE.get());
+                        output.accept(ModItems.ZEOLITE_CATALYST.get());
+                        output.accept(ModItems.DEEZ_NUTS_ITEM.get());
+                        output.accept(ModItems.DEEZ_BUTTS_ITEM.get());
+                        output.accept(ModBlocks.NIC_BLOCK.get());
+                        output.accept(ModBlocks.GEM_POLISHING_STATION.get());
 
                         //#anchor TAB_REGION
 output.accept(ModItems.ABYSSIUM_INGOT.get());

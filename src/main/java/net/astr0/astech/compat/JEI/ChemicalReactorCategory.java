@@ -92,7 +92,7 @@ public class ChemicalReactorCategory implements IRecipeCategory<ChemicalReactorR
                 .setFluidRenderer(outF1.getAmount(), false, 10, outH1);
 
         if(!(recipe.getOutput2().isEmpty())) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 129, 16 + (56 - outH1))
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 129, 16 + (56 - outH2))
                     .addIngredient(ForgeTypes.FLUID_STACK, recipe.getOutput2())
                     .setFluidRenderer(outF2.getAmount(), false, 10, outH2);
         }

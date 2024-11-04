@@ -151,6 +151,7 @@ datapack = Context('../resources/', 'astech')
 datapack.set_base_dictionary({
     "item.astech.deez_nuts": "Deez Nuts",
     "item.astech.deez_butts": "Deez Butts",
+    "item.astech.zeolite_catalyst": "Zeolite Catalyst",
     "item.astech.god_forged_ingot": "God Forged Ingot",
     "creativetab.astech_tab": "AsTech Items",
     "block.astech.nic_block": "§cNic Block",
@@ -161,12 +162,22 @@ datapack.set_base_dictionary({
     "block.astech.chemical_reactor": "Chemical Reactor",
     "block.astech.electrolytic_seperator": "Electrolytic Seperator",
     "block.astech.pyrolysis_chamber": "Pyrolysis Chamber",
-    "block.astech.euv_machine": "EUV Machine"
+    "block.astech.euv_machine": "EUV Machine",
+    "item.astech.as_an_llm_disc": "Music Disc",
+    "item.astech.as_an_llm_disc.desc": "As a Large Language Model - Ol' Yodel",
+        "item.astech.run_nic_run_disc": "Music Disc",
+    "item.astech.run_nic_run_disc.desc": "STIP NIC! - Grunge Parade",
+        "item.astech.help_of_disc": "Music Disc",
+    "item.astech.help_of_disc.desc": "Help My Mum - w$tPantyParty",
+        "item.astech.stolen_identity_disc": "Music Disc",
+    "item.astech.stolen_identity_disc.desc": "Stolen I.D",
+            "item.astech.bangarang_disc": "Music Disc",
+    "item.astech.bangarang_disc.desc": "Bangarang - Skrillex",
 })
 
 static_items = [
     'backwards_ingot',
-    'unrefined', 
+    'unrefined_substrate', 
     'digital_circuit_board',
     'electronic_circuit_board', 
     'creative_flight_core', 
@@ -203,7 +214,7 @@ static_items = [
     'analog_circuit', 
     'genetic_material_a', 
     'capacitor_array', 
-    'refined', 
+    'refined_substrate', 
     'infinity_totem', 
     'infinity_catalyst', 
     'cosmic_stew', 
@@ -241,7 +252,8 @@ static_items = [
     'wrench', 
     'small_heat_exchanger', 
     'cosmic_meatballs', 
-    'quantum_circuit_board'
+    'quantum_circuit_board',
+    'blank_record'
 ]
 
 
@@ -255,6 +267,19 @@ datapack.add_item_tag('forge:genetic_material', 'astech:mutated_genetic_material
 datapack.add_fluid_tag('forge:flux_resin', 'astech:soldering_flux')
 datapack.add_fluid_tag('forge:flux_resin', 'astech:ammonium_chloride')
 datapack.add_fluid_tag('forge:alcohol', '#forge:ethanol')
+
+datapack.add_item_tag('minecraft:music_discs', 'astech:help_of_disc')
+datapack.add_item_tag('minecraft:music_discs', 'astech:as_an_llm_disc')
+datapack.add_item_tag('minecraft:music_discs', 'astech:run_nic_run_disc')
+datapack.add_item_tag('minecraft:music_discs', 'astech:stolen_identity_disc')
+datapack.add_item_tag('minecraft:music_discs', 'astech:bangarang_disc')
+
+datapack.add_simple_item_model('help_of_disc')
+datapack.add_simple_item_model('bangarang_disc')
+datapack.add_simple_item_model('as_an_llm_disc')
+datapack.add_simple_item_model('run_nic_run_disc')
+datapack.add_simple_item_model('stolen_identity_disc')
+datapack.add_simple_item_model('zeolite_catalyst')
 
 TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
 ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'

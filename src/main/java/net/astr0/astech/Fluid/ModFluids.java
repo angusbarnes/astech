@@ -61,26 +61,18 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AMMONIA.get(), RenderType.
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AMMONIA.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AMMONIUM_CHLORIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AMMONIUM_CHLORIDE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ANILINE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ANILINE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ANTIMONY.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ANTIMONY.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AQUA_REGIA.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AQUA_REGIA.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ARGON.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ARGON.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_AZOTH.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_AZOTH.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BAUXITE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BAUXITE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BENZENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BENZENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BIOLUMINESCENT_COON_JUICE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BIOLUMINESCENT_COON_JUICE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BROMINE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BROMINE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BUTANE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BUTANE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CARBON_TETRACHLORIDE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CARBON_TETRACHLORIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CARBONADIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CARBONADIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CHLORINE.get(), RenderType.translucent());
@@ -95,28 +87,18 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CRYPTIC_ACID.get(), Render
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CRYPTIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CYANOGEN.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_CYANOGEN.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DEUTERIUM.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DEUTERIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DICHLOROMETHANE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DICHLOROMETHANE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DIESEL.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DIESEL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DILITHIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DILITHIUM.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DIMETHYL_ETHER.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DIMETHYL_ETHER.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_DIMETHYL_SULFOXIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_DIMETHYL_SULFOXIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ETHANE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ETHANE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ETHANOL.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ETHANOL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ETHYLENE_GLYCOL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ETHYLENE_GLYCOL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_FENTANYL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_FENTANYL.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_FLUORINE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_FLUORINE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_FLUOROANTIMONIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_FLUOROANTIMONIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_FLUOROSILICIC_ACID.get(), RenderType.translucent());
@@ -139,12 +121,10 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HIGH_ENTROPY_ALLOY.get(), 
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HIGH_ENTROPY_ALLOY.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDRAZINE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDRAZINE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROCARBONIC_BROTH.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDROCARBONIC_BROTH.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROCHLORIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDROCHLORIC_ACID.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROFLUORIC_ACID.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDROFLUORIC_ACID.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROGEN_PEROXIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDROGEN_PEROXIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROGEN.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HYDROGEN.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HYDROGEN_FLUORIDE.get(), RenderType.translucent());
@@ -155,10 +135,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ISOPROPANOL.get(), RenderT
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ISOPROPANOL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_IUMIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_IUMIUM.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_KRYPTON.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_KRYPTON.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_METHANIUM.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_METHANIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_METHANOL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_METHANOL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_METHYL_CHLORIDE.get(), RenderType.translucent());
@@ -169,14 +145,10 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NEON.get(), RenderType.tra
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NEON.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NETHERITE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NETHERITE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NEUTRONIUM.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NEUTRONIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NITRIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NITRIC_ACID.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_NITROGEN.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_NITROGEN.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PERCHLOROETHYLENE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PERCHLOROETHYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PHOSGENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PHOSGENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PHOSPHORIC_ACID.get(), RenderType.translucent());
@@ -191,8 +163,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_POLYVINYL_CHLORIDE.get(), 
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_POLYVINYL_CHLORIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_POTASSIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_POTASSIUM.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PROPANE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PROPANE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PROPYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PROPYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_RADON.get(), RenderType.translucent());
@@ -203,8 +173,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SILICOALUMINOPHOSPHATE.get
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SILICOALUMINOPHOSPHATE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SODIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SODIUM.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SODIUM_BICARBONATE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SODIUM_BICARBONATE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SODIUM_HYDROXIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SODIUM_HYDROXIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SODIUM_HYPOCHLORITE.get(), RenderType.translucent());
@@ -227,12 +195,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TETRAETHYL_ORTHOSILICATE.g
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TETRAETHYL_ORTHOSILICATE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TETRAHYDROFURAN.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TETRAHYDROFURAN.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_THIONYL_CHLORIDE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_THIONYL_CHLORIDE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TITANIUM_TETRACHLORIDE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TITANIUM_TETRACHLORIDE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TOLUENE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TOLUENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TRICHLOROETHYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TRICHLOROETHYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TRICHLOROMETHANE.get(), RenderType.translucent());
@@ -241,14 +203,18 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_UNOBTANIUM.get(), RenderTy
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_UNOBTANIUM.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_URANIUM_OXIDE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_URANIUM_OXIDE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_VINYL_CHLORIDE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_VINYL_CHLORIDE.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_WEAK_HYDROCHLORIC_SOLUTION.get(), RenderType.translucent());
-ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_WEAK_HYDROCHLORIC_SOLUTION.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_XENON.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XENON.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_XYLENE.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_RP_1.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_RP_1.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ANTIMONY_PENTAFLUORIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ANTIMONY_PENTAFLUORIDE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_POLYMETHYL_METHACRYLATE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_POLYMETHYL_METHACRYLATE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_GASEOUS_HYRDOCARBONS.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_GASEOUS_HYRDOCARBONS.get(), RenderType.translucent());
         //#end RENDER_REGION
     }
 
@@ -352,15 +318,15 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("ammonium_chloride", SOURCE_AMMONIUM_CHLORIDE, HazardBehavior.BehaviorType.NONE));
     
 
-    public static final RegistryObject<FluidType> ANILINE_FLUID_TYPE = registerType("aniline", "liquid", "#b2b2b2");
-    public static final RegistryObject<FlowingFluid> SOURCE_ANILINE = FLUIDS.register("aniline",
-            () -> new ForgeFlowingFluid.Source(ModFluids.ANILINE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_ANILINE = FLUIDS.register("flowing_aniline",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.ANILINE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties ANILINE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            ANILINE_FLUID_TYPE, SOURCE_ANILINE, FLOWING_ANILINE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("aniline", SOURCE_ANILINE))
-            .bucket(ModItems.registerBucketItem("aniline", SOURCE_ANILINE, HazardBehavior.BehaviorType.NONE));
+    public static final RegistryObject<FluidType> ANTIMONY_FLUID_TYPE = registerType("antimony", "", "#a095ad");
+    public static final RegistryObject<FlowingFluid> SOURCE_ANTIMONY = FLUIDS.register("antimony",
+            () -> new ForgeFlowingFluid.Source(ModFluids.ANTIMONY_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_ANTIMONY = FLUIDS.register("flowing_antimony",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.ANTIMONY_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties ANTIMONY_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            ANTIMONY_FLUID_TYPE, SOURCE_ANTIMONY, FLOWING_ANTIMONY)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("antimony", SOURCE_ANTIMONY))
+            .bucket(ModItems.registerBucketItem("antimony", SOURCE_ANTIMONY, HazardBehavior.BehaviorType.NONE));
     
 
     public static final RegistryObject<FluidType> AQUA_REGIA_FLUID_TYPE = registerType("aqua_regia", "liquid", "#ffcc00");
@@ -383,28 +349,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             ARGON_FLUID_TYPE, SOURCE_ARGON, FLOWING_ARGON)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("argon", SOURCE_ARGON))
             .bucket(ModItems.registerBucketItem("argon", SOURCE_ARGON, HazardBehavior.BehaviorType.NONE));
-    
-
-    public static final RegistryObject<FluidType> AZOTH_FLUID_TYPE = registerType("azoth", "gas", "#b3ffff");
-    public static final RegistryObject<FlowingFluid> SOURCE_AZOTH = FLUIDS.register("azoth",
-            () -> new ForgeFlowingFluid.Source(ModFluids.AZOTH_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_AZOTH = FLUIDS.register("flowing_azoth",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.AZOTH_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties AZOTH_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            AZOTH_FLUID_TYPE, SOURCE_AZOTH, FLOWING_AZOTH)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("azoth", SOURCE_AZOTH))
-            .bucket(ModItems.registerBucketItem("azoth", SOURCE_AZOTH, HazardBehavior.BehaviorType.FREEZE));
-    
-
-    public static final RegistryObject<FluidType> BAUXITE_FLUID_TYPE = registerType("bauxite", "liquid", "#ad7f53");
-    public static final RegistryObject<FlowingFluid> SOURCE_BAUXITE = FLUIDS.register("bauxite",
-            () -> new ForgeFlowingFluid.Source(ModFluids.BAUXITE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_BAUXITE = FLUIDS.register("flowing_bauxite",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.BAUXITE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties BAUXITE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            BAUXITE_FLUID_TYPE, SOURCE_BAUXITE, FLOWING_BAUXITE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("bauxite", SOURCE_BAUXITE))
-            .bucket(ModItems.registerBucketItem("bauxite", SOURCE_BAUXITE, HazardBehavior.BehaviorType.NONE));
     
 
     public static final RegistryObject<FluidType> BENZENE_FLUID_TYPE = registerType("benzene", "liquid", "#f28e1c");
@@ -438,28 +382,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             BROMINE_FLUID_TYPE, SOURCE_BROMINE, FLOWING_BROMINE)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("bromine", SOURCE_BROMINE))
             .bucket(ModItems.registerBucketItem("bromine", SOURCE_BROMINE, HazardBehavior.BehaviorType.NONE));
-    
-
-    public static final RegistryObject<FluidType> BUTANE_FLUID_TYPE = registerType("butane", "gas", "#ccffff");
-    public static final RegistryObject<FlowingFluid> SOURCE_BUTANE = FLUIDS.register("butane",
-            () -> new ForgeFlowingFluid.Source(ModFluids.BUTANE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_BUTANE = FLUIDS.register("flowing_butane",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.BUTANE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties BUTANE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            BUTANE_FLUID_TYPE, SOURCE_BUTANE, FLOWING_BUTANE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("butane", SOURCE_BUTANE))
-            .bucket(ModItems.registerBucketItem("butane", SOURCE_BUTANE, HazardBehavior.BehaviorType.EXPLOSION));
-    
-
-    public static final RegistryObject<FluidType> CARBON_TETRACHLORIDE_FLUID_TYPE = registerType("carbon_tetrachloride", "liquid", "#cccccc");
-    public static final RegistryObject<FlowingFluid> SOURCE_CARBON_TETRACHLORIDE = FLUIDS.register("carbon_tetrachloride",
-            () -> new ForgeFlowingFluid.Source(ModFluids.CARBON_TETRACHLORIDE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_CARBON_TETRACHLORIDE = FLUIDS.register("flowing_carbon_tetrachloride",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.CARBON_TETRACHLORIDE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties CARBON_TETRACHLORIDE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            CARBON_TETRACHLORIDE_FLUID_TYPE, SOURCE_CARBON_TETRACHLORIDE, FLOWING_CARBON_TETRACHLORIDE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("carbon_tetrachloride", SOURCE_CARBON_TETRACHLORIDE))
-            .bucket(ModItems.registerBucketItem("carbon_tetrachloride", SOURCE_CARBON_TETRACHLORIDE, HazardBehavior.BehaviorType.NONE));
     
 
     public static final RegistryObject<FluidType> CARBONADIUM_FLUID_TYPE = registerType("carbonadium", "liquid", "#666666");
@@ -539,17 +461,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("cyanogen", SOURCE_CYANOGEN, HazardBehavior.BehaviorType.SUFFOCATE));
     
 
-    public static final RegistryObject<FluidType> DEUTERIUM_FLUID_TYPE = registerType("deuterium", "liquid", "#e8fffa");
-    public static final RegistryObject<FlowingFluid> SOURCE_DEUTERIUM = FLUIDS.register("deuterium",
-            () -> new ForgeFlowingFluid.Source(ModFluids.DEUTERIUM_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_DEUTERIUM = FLUIDS.register("flowing_deuterium",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.DEUTERIUM_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties DEUTERIUM_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            DEUTERIUM_FLUID_TYPE, SOURCE_DEUTERIUM, FLOWING_DEUTERIUM)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("deuterium", SOURCE_DEUTERIUM))
-            .bucket(ModItems.registerBucketItem("deuterium", SOURCE_DEUTERIUM, HazardBehavior.BehaviorType.NONE));
-    
-
     public static final RegistryObject<FluidType> DICHLOROMETHANE_FLUID_TYPE = registerType("dichloromethane", "gas", "#c6c6a7");
     public static final RegistryObject<FlowingFluid> SOURCE_DICHLOROMETHANE = FLUIDS.register("dichloromethane",
             () -> new ForgeFlowingFluid.Source(ModFluids.DICHLOROMETHANE_FLUID_PROPERTIES));
@@ -561,17 +472,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("dichloromethane", SOURCE_DICHLOROMETHANE, HazardBehavior.BehaviorType.NONE));
     
 
-    public static final RegistryObject<FluidType> DIESEL_FLUID_TYPE = registerType("diesel", "liquid", "#ffff87");
-    public static final RegistryObject<FlowingFluid> SOURCE_DIESEL = FLUIDS.register("diesel",
-            () -> new ForgeFlowingFluid.Source(ModFluids.DIESEL_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_DIESEL = FLUIDS.register("flowing_diesel",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.DIESEL_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties DIESEL_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            DIESEL_FLUID_TYPE, SOURCE_DIESEL, FLOWING_DIESEL)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("diesel", SOURCE_DIESEL))
-            .bucket(ModItems.registerBucketItem("diesel", SOURCE_DIESEL, HazardBehavior.BehaviorType.NONE));
-    
-
     public static final RegistryObject<FluidType> DILITHIUM_FLUID_TYPE = registerType("dilithium", "liquid", "#e60045");
     public static final RegistryObject<FlowingFluid> SOURCE_DILITHIUM = FLUIDS.register("dilithium",
             () -> new ForgeFlowingFluid.Source(ModFluids.DILITHIUM_FLUID_PROPERTIES));
@@ -581,17 +481,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             DILITHIUM_FLUID_TYPE, SOURCE_DILITHIUM, FLOWING_DILITHIUM)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("dilithium", SOURCE_DILITHIUM))
             .bucket(ModItems.registerBucketItem("dilithium", SOURCE_DILITHIUM, HazardBehavior.BehaviorType.NONE));
-    
-
-    public static final RegistryObject<FluidType> DIMETHYL_ETHER_FLUID_TYPE = registerType("dimethyl_ether", "gas", "#fcfffe");
-    public static final RegistryObject<FlowingFluid> SOURCE_DIMETHYL_ETHER = FLUIDS.register("dimethyl_ether",
-            () -> new ForgeFlowingFluid.Source(ModFluids.DIMETHYL_ETHER_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_DIMETHYL_ETHER = FLUIDS.register("flowing_dimethyl_ether",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.DIMETHYL_ETHER_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties DIMETHYL_ETHER_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            DIMETHYL_ETHER_FLUID_TYPE, SOURCE_DIMETHYL_ETHER, FLOWING_DIMETHYL_ETHER)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("dimethyl_ether", SOURCE_DIMETHYL_ETHER))
-            .bucket(ModItems.registerBucketItem("dimethyl_ether", SOURCE_DIMETHYL_ETHER, HazardBehavior.BehaviorType.NONE));
     
 
     public static final RegistryObject<FluidType> DIMETHYL_SULFOXIDE_FLUID_TYPE = registerType("dimethyl_sulfoxide", "liquid", "#99ccff");
@@ -616,17 +505,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("ethane", SOURCE_ETHANE, HazardBehavior.BehaviorType.EXPLOSION));
     
 
-    public static final RegistryObject<FluidType> ETHANOL_FLUID_TYPE = registerType("ethanol", "liquid", "#ff9999");
-    public static final RegistryObject<FlowingFluid> SOURCE_ETHANOL = FLUIDS.register("ethanol",
-            () -> new ForgeFlowingFluid.Source(ModFluids.ETHANOL_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_ETHANOL = FLUIDS.register("flowing_ethanol",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.ETHANOL_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties ETHANOL_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            ETHANOL_FLUID_TYPE, SOURCE_ETHANOL, FLOWING_ETHANOL)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("ethanol", SOURCE_ETHANOL))
-            .bucket(ModItems.registerBucketItem("ethanol", SOURCE_ETHANOL, HazardBehavior.BehaviorType.NONE));
-    
-
     public static final RegistryObject<FluidType> ETHYLENE_GLYCOL_FLUID_TYPE = registerType("ethylene_glycol", "liquid", "#99ccff");
     public static final RegistryObject<FlowingFluid> SOURCE_ETHYLENE_GLYCOL = FLUIDS.register("ethylene_glycol",
             () -> new ForgeFlowingFluid.Source(ModFluids.ETHYLENE_GLYCOL_FLUID_PROPERTIES));
@@ -647,17 +525,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             FENTANYL_FLUID_TYPE, SOURCE_FENTANYL, FLOWING_FENTANYL)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("fentanyl", SOURCE_FENTANYL))
             .bucket(ModItems.registerBucketItem("fentanyl", SOURCE_FENTANYL, HazardBehavior.BehaviorType.NONE));
-    
-
-    public static final RegistryObject<FluidType> FLUORINE_FLUID_TYPE = registerType("fluorine", "liquid", "#ccffff");
-    public static final RegistryObject<FlowingFluid> SOURCE_FLUORINE = FLUIDS.register("fluorine",
-            () -> new ForgeFlowingFluid.Source(ModFluids.FLUORINE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_FLUORINE = FLUIDS.register("flowing_fluorine",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.FLUORINE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties FLUORINE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            FLUORINE_FLUID_TYPE, SOURCE_FLUORINE, FLOWING_FLUORINE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("fluorine", SOURCE_FLUORINE))
-            .bucket(ModItems.registerBucketItem("fluorine", SOURCE_FLUORINE, HazardBehavior.BehaviorType.NONE));
     
 
     public static final RegistryObject<FluidType> FLUOROANTIMONIC_ACID_FLUID_TYPE = registerType("fluoroantimonic_acid", "liquid", "#ffffdd");
@@ -781,17 +648,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("hydrazine", SOURCE_HYDRAZINE, HazardBehavior.BehaviorType.NONE));
     
 
-    public static final RegistryObject<FluidType> HYDROCARBONIC_BROTH_FLUID_TYPE = registerType("hydrocarbonic_broth", "liquid", "#1e1e1e");
-    public static final RegistryObject<FlowingFluid> SOURCE_HYDROCARBONIC_BROTH = FLUIDS.register("hydrocarbonic_broth",
-            () -> new ForgeFlowingFluid.Source(ModFluids.HYDROCARBONIC_BROTH_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_HYDROCARBONIC_BROTH = FLUIDS.register("flowing_hydrocarbonic_broth",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.HYDROCARBONIC_BROTH_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties HYDROCARBONIC_BROTH_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            HYDROCARBONIC_BROTH_FLUID_TYPE, SOURCE_HYDROCARBONIC_BROTH, FLOWING_HYDROCARBONIC_BROTH)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("hydrocarbonic_broth", SOURCE_HYDROCARBONIC_BROTH))
-            .bucket(ModItems.registerBucketItem("hydrocarbonic_broth", SOURCE_HYDROCARBONIC_BROTH, HazardBehavior.BehaviorType.NONE));
-    
-
     public static final RegistryObject<FluidType> HYDROCHLORIC_ACID_FLUID_TYPE = registerType("hydrochloric_acid", "liquid", "#ff6666");
     public static final RegistryObject<FlowingFluid> SOURCE_HYDROCHLORIC_ACID = FLUIDS.register("hydrochloric_acid",
             () -> new ForgeFlowingFluid.Source(ModFluids.HYDROCHLORIC_ACID_FLUID_PROPERTIES));
@@ -803,15 +659,15 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("hydrochloric_acid", SOURCE_HYDROCHLORIC_ACID, HazardBehavior.BehaviorType.NONE));
     
 
-    public static final RegistryObject<FluidType> HYDROFLUORIC_ACID_FLUID_TYPE = registerType("hydrofluoric_acid", "liquid", "#7e7ecf");
-    public static final RegistryObject<FlowingFluid> SOURCE_HYDROFLUORIC_ACID = FLUIDS.register("hydrofluoric_acid",
-            () -> new ForgeFlowingFluid.Source(ModFluids.HYDROFLUORIC_ACID_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_HYDROFLUORIC_ACID = FLUIDS.register("flowing_hydrofluoric_acid",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.HYDROFLUORIC_ACID_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties HYDROFLUORIC_ACID_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            HYDROFLUORIC_ACID_FLUID_TYPE, SOURCE_HYDROFLUORIC_ACID, FLOWING_HYDROFLUORIC_ACID)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("hydrofluoric_acid", SOURCE_HYDROFLUORIC_ACID))
-            .bucket(ModItems.registerBucketItem("hydrofluoric_acid", SOURCE_HYDROFLUORIC_ACID, HazardBehavior.BehaviorType.EXTREME));
+    public static final RegistryObject<FluidType> HYDROGEN_PEROXIDE_FLUID_TYPE = registerType("hydrogen_peroxide", "liquid", "#7e7ecf");
+    public static final RegistryObject<FlowingFluid> SOURCE_HYDROGEN_PEROXIDE = FLUIDS.register("hydrogen_peroxide",
+            () -> new ForgeFlowingFluid.Source(ModFluids.HYDROGEN_PEROXIDE_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_HYDROGEN_PEROXIDE = FLUIDS.register("flowing_hydrogen_peroxide",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.HYDROGEN_PEROXIDE_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties HYDROGEN_PEROXIDE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            HYDROGEN_PEROXIDE_FLUID_TYPE, SOURCE_HYDROGEN_PEROXIDE, FLOWING_HYDROGEN_PEROXIDE)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("hydrogen_peroxide", SOURCE_HYDROGEN_PEROXIDE))
+            .bucket(ModItems.registerBucketItem("hydrogen_peroxide", SOURCE_HYDROGEN_PEROXIDE, HazardBehavior.BehaviorType.EXTREME));
     
 
     public static final RegistryObject<FluidType> HYDROGEN_FLUID_TYPE = registerType("hydrogen", "gas", "#fff4e6");
@@ -869,28 +725,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("iumium", SOURCE_IUMIUM, HazardBehavior.BehaviorType.RADIO));
     
 
-    public static final RegistryObject<FluidType> KRYPTON_FLUID_TYPE = registerType("krypton", "gas", "#96fff1");
-    public static final RegistryObject<FlowingFluid> SOURCE_KRYPTON = FLUIDS.register("krypton",
-            () -> new ForgeFlowingFluid.Source(ModFluids.KRYPTON_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_KRYPTON = FLUIDS.register("flowing_krypton",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.KRYPTON_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties KRYPTON_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            KRYPTON_FLUID_TYPE, SOURCE_KRYPTON, FLOWING_KRYPTON)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("krypton", SOURCE_KRYPTON))
-            .bucket(ModItems.registerBucketItem("krypton", SOURCE_KRYPTON, HazardBehavior.BehaviorType.NONE));
-    
-
-    public static final RegistryObject<FluidType> METHANIUM_FLUID_TYPE = registerType("methanium", "", "#fcfffe");
-    public static final RegistryObject<FlowingFluid> SOURCE_METHANIUM = FLUIDS.register("methanium",
-            () -> new ForgeFlowingFluid.Source(ModFluids.METHANIUM_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_METHANIUM = FLUIDS.register("flowing_methanium",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.METHANIUM_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties METHANIUM_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            METHANIUM_FLUID_TYPE, SOURCE_METHANIUM, FLOWING_METHANIUM)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("methanium", SOURCE_METHANIUM))
-            .bucket(ModItems.registerBucketItem("methanium", SOURCE_METHANIUM, HazardBehavior.BehaviorType.NONE));
-    
-
     public static final RegistryObject<FluidType> METHANOL_FLUID_TYPE = registerType("methanol", "liquid", "#80d4ff");
     public static final RegistryObject<FlowingFluid> SOURCE_METHANOL = FLUIDS.register("methanol",
             () -> new ForgeFlowingFluid.Source(ModFluids.METHANOL_FLUID_PROPERTIES));
@@ -946,17 +780,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("netherite", SOURCE_NETHERITE, HazardBehavior.BehaviorType.HEAT));
     
 
-    public static final RegistryObject<FluidType> NEUTRONIUM_FLUID_TYPE = registerType("neutronium", "gas", "#0a111a");
-    public static final RegistryObject<FlowingFluid> SOURCE_NEUTRONIUM = FLUIDS.register("neutronium",
-            () -> new ForgeFlowingFluid.Source(ModFluids.NEUTRONIUM_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_NEUTRONIUM = FLUIDS.register("flowing_neutronium",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.NEUTRONIUM_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties NEUTRONIUM_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            NEUTRONIUM_FLUID_TYPE, SOURCE_NEUTRONIUM, FLOWING_NEUTRONIUM)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("neutronium", SOURCE_NEUTRONIUM))
-            .bucket(ModItems.registerBucketItem("neutronium", SOURCE_NEUTRONIUM, HazardBehavior.BehaviorType.EXTREME));
-    
-
     public static final RegistryObject<FluidType> NITRIC_ACID_FLUID_TYPE = registerType("nitric_acid", "liquid", "#ffcc00");
     public static final RegistryObject<FlowingFluid> SOURCE_NITRIC_ACID = FLUIDS.register("nitric_acid",
             () -> new ForgeFlowingFluid.Source(ModFluids.NITRIC_ACID_FLUID_PROPERTIES));
@@ -977,17 +800,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             NITROGEN_FLUID_TYPE, SOURCE_NITROGEN, FLOWING_NITROGEN)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("nitrogen", SOURCE_NITROGEN))
             .bucket(ModItems.registerBucketItem("nitrogen", SOURCE_NITROGEN, HazardBehavior.BehaviorType.NONE));
-    
-
-    public static final RegistryObject<FluidType> PERCHLOROETHYLENE_FLUID_TYPE = registerType("perchloroethylene", "liquid", "#9999cc");
-    public static final RegistryObject<FlowingFluid> SOURCE_PERCHLOROETHYLENE = FLUIDS.register("perchloroethylene",
-            () -> new ForgeFlowingFluid.Source(ModFluids.PERCHLOROETHYLENE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_PERCHLOROETHYLENE = FLUIDS.register("flowing_perchloroethylene",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.PERCHLOROETHYLENE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties PERCHLOROETHYLENE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            PERCHLOROETHYLENE_FLUID_TYPE, SOURCE_PERCHLOROETHYLENE, FLOWING_PERCHLOROETHYLENE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("perchloroethylene", SOURCE_PERCHLOROETHYLENE))
-            .bucket(ModItems.registerBucketItem("perchloroethylene", SOURCE_PERCHLOROETHYLENE, HazardBehavior.BehaviorType.NONE));
     
 
     public static final RegistryObject<FluidType> PHOSGENE_FLUID_TYPE = registerType("phosgene", "gas", "#999966");
@@ -1067,17 +879,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("potassium", SOURCE_POTASSIUM, HazardBehavior.BehaviorType.NONE));
     
 
-    public static final RegistryObject<FluidType> PROPANE_FLUID_TYPE = registerType("propane", "gas", "#ffe6cc");
-    public static final RegistryObject<FlowingFluid> SOURCE_PROPANE = FLUIDS.register("propane",
-            () -> new ForgeFlowingFluid.Source(ModFluids.PROPANE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_PROPANE = FLUIDS.register("flowing_propane",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.PROPANE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties PROPANE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            PROPANE_FLUID_TYPE, SOURCE_PROPANE, FLOWING_PROPANE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("propane", SOURCE_PROPANE))
-            .bucket(ModItems.registerBucketItem("propane", SOURCE_PROPANE, HazardBehavior.BehaviorType.EXPLOSION));
-    
-
     public static final RegistryObject<FluidType> PROPYLENE_FLUID_TYPE = registerType("propylene", "gas", "#ffcc99");
     public static final RegistryObject<FlowingFluid> SOURCE_PROPYLENE = FLUIDS.register("propylene",
             () -> new ForgeFlowingFluid.Source(ModFluids.PROPYLENE_FLUID_PROPERTIES));
@@ -1131,17 +932,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             SODIUM_FLUID_TYPE, SOURCE_SODIUM, FLOWING_SODIUM)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("sodium", SOURCE_SODIUM))
             .bucket(ModItems.registerBucketItem("sodium", SOURCE_SODIUM, HazardBehavior.BehaviorType.EXPLOSION));
-    
-
-    public static final RegistryObject<FluidType> SODIUM_BICARBONATE_FLUID_TYPE = registerType("sodium_bicarbonate", "liquid", "#ffffff");
-    public static final RegistryObject<FlowingFluid> SOURCE_SODIUM_BICARBONATE = FLUIDS.register("sodium_bicarbonate",
-            () -> new ForgeFlowingFluid.Source(ModFluids.SODIUM_BICARBONATE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_SODIUM_BICARBONATE = FLUIDS.register("flowing_sodium_bicarbonate",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.SODIUM_BICARBONATE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties SODIUM_BICARBONATE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            SODIUM_BICARBONATE_FLUID_TYPE, SOURCE_SODIUM_BICARBONATE, FLOWING_SODIUM_BICARBONATE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("sodium_bicarbonate", SOURCE_SODIUM_BICARBONATE))
-            .bucket(ModItems.registerBucketItem("sodium_bicarbonate", SOURCE_SODIUM_BICARBONATE, HazardBehavior.BehaviorType.NONE));
     
 
     public static final RegistryObject<FluidType> SODIUM_HYDROXIDE_FLUID_TYPE = registerType("sodium_hydroxide", "liquid", "#99ccff");
@@ -1265,39 +1055,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("tetrahydrofuran", SOURCE_TETRAHYDROFURAN, HazardBehavior.BehaviorType.NONE));
     
 
-    public static final RegistryObject<FluidType> THIONYL_CHLORIDE_FLUID_TYPE = registerType("thionyl_chloride", "liquid", "#ccff99");
-    public static final RegistryObject<FlowingFluid> SOURCE_THIONYL_CHLORIDE = FLUIDS.register("thionyl_chloride",
-            () -> new ForgeFlowingFluid.Source(ModFluids.THIONYL_CHLORIDE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_THIONYL_CHLORIDE = FLUIDS.register("flowing_thionyl_chloride",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.THIONYL_CHLORIDE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties THIONYL_CHLORIDE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            THIONYL_CHLORIDE_FLUID_TYPE, SOURCE_THIONYL_CHLORIDE, FLOWING_THIONYL_CHLORIDE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("thionyl_chloride", SOURCE_THIONYL_CHLORIDE))
-            .bucket(ModItems.registerBucketItem("thionyl_chloride", SOURCE_THIONYL_CHLORIDE, HazardBehavior.BehaviorType.NONE));
-    
-
-    public static final RegistryObject<FluidType> TITANIUM_TETRACHLORIDE_FLUID_TYPE = registerType("titanium_tetrachloride", "liquid", "#cccccc");
-    public static final RegistryObject<FlowingFluid> SOURCE_TITANIUM_TETRACHLORIDE = FLUIDS.register("titanium_tetrachloride",
-            () -> new ForgeFlowingFluid.Source(ModFluids.TITANIUM_TETRACHLORIDE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_TITANIUM_TETRACHLORIDE = FLUIDS.register("flowing_titanium_tetrachloride",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.TITANIUM_TETRACHLORIDE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties TITANIUM_TETRACHLORIDE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            TITANIUM_TETRACHLORIDE_FLUID_TYPE, SOURCE_TITANIUM_TETRACHLORIDE, FLOWING_TITANIUM_TETRACHLORIDE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("titanium_tetrachloride", SOURCE_TITANIUM_TETRACHLORIDE))
-            .bucket(ModItems.registerBucketItem("titanium_tetrachloride", SOURCE_TITANIUM_TETRACHLORIDE, HazardBehavior.BehaviorType.NONE));
-    
-
-    public static final RegistryObject<FluidType> TOLUENE_FLUID_TYPE = registerType("toluene", "liquid", "#ff6600");
-    public static final RegistryObject<FlowingFluid> SOURCE_TOLUENE = FLUIDS.register("toluene",
-            () -> new ForgeFlowingFluid.Source(ModFluids.TOLUENE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_TOLUENE = FLUIDS.register("flowing_toluene",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.TOLUENE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties TOLUENE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            TOLUENE_FLUID_TYPE, SOURCE_TOLUENE, FLOWING_TOLUENE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("toluene", SOURCE_TOLUENE))
-            .bucket(ModItems.registerBucketItem("toluene", SOURCE_TOLUENE, HazardBehavior.BehaviorType.SUFFOCATE));
-    
-
     public static final RegistryObject<FluidType> TRICHLOROETHYLENE_FLUID_TYPE = registerType("trichloroethylene", "liquid", "#cc9999");
     public static final RegistryObject<FlowingFluid> SOURCE_TRICHLOROETHYLENE = FLUIDS.register("trichloroethylene",
             () -> new ForgeFlowingFluid.Source(ModFluids.TRICHLOROETHYLENE_FLUID_PROPERTIES));
@@ -1342,28 +1099,6 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("uranium_oxide", SOURCE_URANIUM_OXIDE, HazardBehavior.BehaviorType.NONE));
     
 
-    public static final RegistryObject<FluidType> VINYL_CHLORIDE_FLUID_TYPE = registerType("vinyl_chloride", "gas", "#b3ffb3");
-    public static final RegistryObject<FlowingFluid> SOURCE_VINYL_CHLORIDE = FLUIDS.register("vinyl_chloride",
-            () -> new ForgeFlowingFluid.Source(ModFluids.VINYL_CHLORIDE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_VINYL_CHLORIDE = FLUIDS.register("flowing_vinyl_chloride",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.VINYL_CHLORIDE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties VINYL_CHLORIDE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            VINYL_CHLORIDE_FLUID_TYPE, SOURCE_VINYL_CHLORIDE, FLOWING_VINYL_CHLORIDE)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("vinyl_chloride", SOURCE_VINYL_CHLORIDE))
-            .bucket(ModItems.registerBucketItem("vinyl_chloride", SOURCE_VINYL_CHLORIDE, HazardBehavior.BehaviorType.EXTREME));
-    
-
-    public static final RegistryObject<FluidType> WEAK_HYDROCHLORIC_SOLUTION_FLUID_TYPE = registerType("weak_hydrochloric_solution", "", "#ffb3b3");
-    public static final RegistryObject<FlowingFluid> SOURCE_WEAK_HYDROCHLORIC_SOLUTION = FLUIDS.register("weak_hydrochloric_solution",
-            () -> new ForgeFlowingFluid.Source(ModFluids.WEAK_HYDROCHLORIC_SOLUTION_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_WEAK_HYDROCHLORIC_SOLUTION = FLUIDS.register("flowing_weak_hydrochloric_solution",
-            () -> new ForgeFlowingFluid.Flowing(ModFluids.WEAK_HYDROCHLORIC_SOLUTION_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties WEAK_HYDROCHLORIC_SOLUTION_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            WEAK_HYDROCHLORIC_SOLUTION_FLUID_TYPE, SOURCE_WEAK_HYDROCHLORIC_SOLUTION, FLOWING_WEAK_HYDROCHLORIC_SOLUTION)
-            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("weak_hydrochloric_solution", SOURCE_WEAK_HYDROCHLORIC_SOLUTION))
-            .bucket(ModItems.registerBucketItem("weak_hydrochloric_solution", SOURCE_WEAK_HYDROCHLORIC_SOLUTION, HazardBehavior.BehaviorType.NONE));
-    
-
     public static final RegistryObject<FluidType> XENON_FLUID_TYPE = registerType("xenon", "gas", "#3a79ff");
     public static final RegistryObject<FlowingFluid> SOURCE_XENON = FLUIDS.register("xenon",
             () -> new ForgeFlowingFluid.Source(ModFluids.XENON_FLUID_PROPERTIES));
@@ -1384,6 +1119,50 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_XYLENE.get(), RenderType.tr
             XYLENE_FLUID_TYPE, SOURCE_XYLENE, FLOWING_XYLENE)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("xylene", SOURCE_XYLENE))
             .bucket(ModItems.registerBucketItem("xylene", SOURCE_XYLENE, HazardBehavior.BehaviorType.NONE));
+    
+
+    public static final RegistryObject<FluidType> RP_1_FLUID_TYPE = registerType("rp_1", "", "#f0243f");
+    public static final RegistryObject<FlowingFluid> SOURCE_RP_1 = FLUIDS.register("rp_1",
+            () -> new ForgeFlowingFluid.Source(ModFluids.RP_1_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_RP_1 = FLUIDS.register("flowing_rp_1",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.RP_1_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties RP_1_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            RP_1_FLUID_TYPE, SOURCE_RP_1, FLOWING_RP_1)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("rp_1", SOURCE_RP_1))
+            .bucket(ModItems.registerBucketItem("rp_1", SOURCE_RP_1, HazardBehavior.BehaviorType.NONE));
+    
+
+    public static final RegistryObject<FluidType> ANTIMONY_PENTAFLUORIDE_FLUID_TYPE = registerType("antimony_pentafluoride", "", "#f980ff");
+    public static final RegistryObject<FlowingFluid> SOURCE_ANTIMONY_PENTAFLUORIDE = FLUIDS.register("antimony_pentafluoride",
+            () -> new ForgeFlowingFluid.Source(ModFluids.ANTIMONY_PENTAFLUORIDE_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_ANTIMONY_PENTAFLUORIDE = FLUIDS.register("flowing_antimony_pentafluoride",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.ANTIMONY_PENTAFLUORIDE_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties ANTIMONY_PENTAFLUORIDE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            ANTIMONY_PENTAFLUORIDE_FLUID_TYPE, SOURCE_ANTIMONY_PENTAFLUORIDE, FLOWING_ANTIMONY_PENTAFLUORIDE)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("antimony_pentafluoride", SOURCE_ANTIMONY_PENTAFLUORIDE))
+            .bucket(ModItems.registerBucketItem("antimony_pentafluoride", SOURCE_ANTIMONY_PENTAFLUORIDE, HazardBehavior.BehaviorType.NONE));
+    
+
+    public static final RegistryObject<FluidType> POLYMETHYL_METHACRYLATE_FLUID_TYPE = registerType("polymethyl_methacrylate", "", "#979fc7");
+    public static final RegistryObject<FlowingFluid> SOURCE_POLYMETHYL_METHACRYLATE = FLUIDS.register("polymethyl_methacrylate",
+            () -> new ForgeFlowingFluid.Source(ModFluids.POLYMETHYL_METHACRYLATE_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_POLYMETHYL_METHACRYLATE = FLUIDS.register("flowing_polymethyl_methacrylate",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.POLYMETHYL_METHACRYLATE_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties POLYMETHYL_METHACRYLATE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            POLYMETHYL_METHACRYLATE_FLUID_TYPE, SOURCE_POLYMETHYL_METHACRYLATE, FLOWING_POLYMETHYL_METHACRYLATE)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("polymethyl_methacrylate", SOURCE_POLYMETHYL_METHACRYLATE))
+            .bucket(ModItems.registerBucketItem("polymethyl_methacrylate", SOURCE_POLYMETHYL_METHACRYLATE, HazardBehavior.BehaviorType.NONE));
+    
+
+    public static final RegistryObject<FluidType> GASEOUS_HYRDOCARBONS_FLUID_TYPE = registerType("gaseous_hyrdocarbons", "", "#666666");
+    public static final RegistryObject<FlowingFluid> SOURCE_GASEOUS_HYRDOCARBONS = FLUIDS.register("gaseous_hyrdocarbons",
+            () -> new ForgeFlowingFluid.Source(ModFluids.GASEOUS_HYRDOCARBONS_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_GASEOUS_HYRDOCARBONS = FLUIDS.register("flowing_gaseous_hyrdocarbons",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.GASEOUS_HYRDOCARBONS_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties GASEOUS_HYRDOCARBONS_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            GASEOUS_HYRDOCARBONS_FLUID_TYPE, SOURCE_GASEOUS_HYRDOCARBONS, FLOWING_GASEOUS_HYRDOCARBONS)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("gaseous_hyrdocarbons", SOURCE_GASEOUS_HYRDOCARBONS))
+            .bucket(ModItems.registerBucketItem("gaseous_hyrdocarbons", SOURCE_GASEOUS_HYRDOCARBONS, HazardBehavior.BehaviorType.NONE));
     
     //#end FLUID_REGION
 }

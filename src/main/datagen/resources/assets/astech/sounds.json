@@ -1,0 +1,50 @@
+{
+  "empty": {
+    "sounds": []
+  },
+  "help_of": {
+    "sounds": [
+      {
+        "name": "astech:help_of",
+        "stream": true,
+        "volume": 0.54
+      }
+    ]
+  },
+  "as_an_llm": {
+    "sounds": [
+      {
+        "name": "astech:as_an_llm",
+        "stream": true,
+        "volume": 0.6
+      }
+    ]
+  },
+  "run_nic_run_disc": {
+    "sounds": [
+      {
+        "name": "astech:run_nic_run_disc",
+        "stream": true,
+        "volume": 0.7
+      }
+    ]
+  },
+  "stolen_identity": {
+    "sounds": [
+      {
+        "name": "astech:stolen_identity",
+        "stream": true,
+        "volume": 0.6
+      }
+    ]
+  },
+  "bangarang": {
+    "sounds": [
+      {
+        "name": "astech:bangarang",
+        "stream": true,
+        "volume": 0.7
+      }
+    ]
+  }
+}

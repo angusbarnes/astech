@@ -66,6 +66,7 @@ public class AsTech
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModRecipes.register(modEventBus);
+        SoundRegistry.register(modEventBus);
 
         if(ModList.get().isLoaded("mekanism")) {
             AsTechSlurries.SLURRIES.register(modEventBus);

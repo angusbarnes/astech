@@ -16,6 +16,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -160,6 +163,8 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             return getFluidCapability(side);
         } else if (cap == ForgeCapabilities.ENERGY) {
             return lazyEnergyHandler.cast();
+        } else if (cap == ForgeCapabilities.ITEM_HANDLER) {
+            return getItemCapability(side);
         }
 
         return super.getCapability(cap, side); // Allow previous caps in the stack to be checked
@@ -169,6 +174,16 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
         int type = sidedFluidConfig.getCap(side);
         return switch (type) {
             case SidedConfig.FLUID_INPUT -> lazyInputFluidHandler.cast();
+            default -> LazyOptional.empty();
+        };
+    }
+
+    public <T> LazyOptional<T> getItemCapability(Direction side) {
+        int type = sidedItemConfig.getCap(side);
+
+        return switch (type) {
+            case SidedConfig.ITEM_INPUT -> lazyInputItemHandler.cast();
+            case SidedConfig.ITEM_OUTPUT -> lazyOutputItemHandler.cast();
             default -> LazyOptional.empty();
         };
     }
@@ -186,7 +201,12 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
     // User defined helper to get a list of all the items we are holding,
     // this is used to drop those items when this block is destroyed
     public void drops() {
+        SimpleContainer inventory = new SimpleContainer(inputItemHandler.getSlots());
+        for(int i = 0; i < inputItemHandler.getSlots(); i++) {
+            inventory.setItem(i, inputItemHandler.getStackInSlot(i));
+        }
 
+        Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
     @Override
@@ -282,6 +302,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
         progress = 0;
     }
 
+    RandomSource randomRandomSource = RandomSource.create();
     private void craftItem() {
         EUVMachineRecipe recipe = getRecipe(); //TODO can replace all of these calls with a cached recipe check
 
@@ -292,7 +313,8 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
         inputItemHandler.extractItem(0, 1, false);
 
         ItemStack catalyst = inputItemHandler.getStackInSlot(1);
-        if (catalyst.isDamageableItem()) catalyst.setDamageValue(catalyst.getDamageValue() + 1);
+        //if (catalyst.isDamageableItem()) catalyst.setDamageValue(catalyst.getDamageValue() + 1);
+        catalyst.hurt(1, randomRandomSource, null );
         SetNetworkDirty(); // Make sure we mark this block for an update now that we changed inventory content
     }
 
@@ -400,7 +422,11 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
         if (code == 36) {
             // Get the toggled slot lock
             int slot = msg.readInt();
+
+            inputItemHandler.ToggleSlotLock(slot);
+
             FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 36);
+            inputItemHandler.WriteToFlexiPacket(packet);
             // Rebroadcast the change to listening clients
             AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
         } else if (code == 37) {
@@ -447,6 +473,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             CLIENT_ReadUpdateFromFlexiPacket(msg);
         } else if (code == 36) {
             LogUtils.getLogger().info("There was an update to slot locks on the client");
+            inputItemHandler.ReadFromFlexiPacket(msg);
         } else if (code == 37) {
             LogUtils.getLogger().info("There was an update to slot locks on the client");
             inputFluidTank.ReadFromFlexiPacket(msg);

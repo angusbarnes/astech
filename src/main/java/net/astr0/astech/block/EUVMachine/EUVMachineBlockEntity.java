@@ -16,6 +16,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
@@ -26,8 +29,10 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -100,7 +105,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
         }
     };
 
-    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(3000000, 7500, 0);
+    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(3000000, 300000, 0);
 
     private final LazyOptional<IFluidHandler> lazyInputFluidHandler = LazyOptional.of(() -> inputFluidTank);
     private final LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
@@ -110,6 +115,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
     protected final ContainerData data;
     private int progress = 0;
     private int maxProgress = 80;
+    private int currentTemperature = 0;
 
     public EUVMachineBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.EUV_MACHINE_BE.get(), pPos, pBlockState);
@@ -122,6 +128,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
                     case 1 -> energyStorage.getEnergyStored();
                     case 2 -> EUVMachineBlockEntity.this.progress;
                     case 3 -> EUVMachineBlockEntity.this.maxProgress;
+                    case 4 -> EUVMachineBlockEntity.this.currentTemperature;
                     default -> throw new UnsupportedOperationException("Unexpected value: " + pIndex);
                 };
             }
@@ -132,12 +139,13 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
                     case 1 -> EUVMachineBlockEntity.this.energyStorage.setEnergy(pValue);
                     case 2 -> EUVMachineBlockEntity.this.progress = pValue;
                     case 3 -> EUVMachineBlockEntity.this.maxProgress = pValue;
+                    case 4 -> EUVMachineBlockEntity.this.currentTemperature = pValue;
                 }
             }
 
             @Override
             public int getCount() {
-                return 4;
+                return 5;
             }
         };
 
@@ -249,6 +257,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
         pTag.put("fluidTank", inputFluidTank.writeToNBT(new CompoundTag()));
         pTag.put("itemConfig", sidedItemConfig.writeToNBT(new CompoundTag()));
         pTag.put("fluidConfig", sidedFluidConfig.writeToNBT(new CompoundTag()));
+        pTag.putInt("temp", currentTemperature);
         super.saveAdditional(pTag);
     }
 
@@ -259,6 +268,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
         inputItemHandler.deserializeNBT(pTag.getCompound("inventory"));
         outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
         progress = pTag.getInt("euv.progress");
+        currentTemperature = pTag.getInt("temp");
         energyStorage.deserializeNBT(pTag.get("Energy"));
         inputFluidTank.readFromNBT(pTag.getCompound("fluidTank"));
         sidedItemConfig.readFromNBT(pTag.getCompound("itemConfig"));
@@ -270,16 +280,40 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
         setChanged();
     }
 
+    public void RegisterCoolantBlock(BlockPos blockPos) {
+        LogUtils.getLogger().info("Block has change at: {}", blockPos.toShortString());
+    }
+
+    //public Block coolantBlock = null;
+
+    private static final int[][] offsets = {
+            {0, -1, 0},
+            {0, 0, 1},
+            {0, 0, -1},
+            {1, 0, 0},
+            {-1, 0, 0},
+            {0, 1, 0},
+    };
+
     @Override
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {
 
+        for(int[] offset : offsets) {
+            BlockEntity be = pLevel.getBlockEntity(pPos.offset(offset[0], offset[1], offset[2]));
+            if (be instanceof EUVMachineBlockEntity) {
+
+            }
+        }
+
         if(hasRecipe()) {
-            pLevel.setBlock(pPos, pState.setValue(EUVMachineBlock.ACTIVE, true), 2 | 8);
-            if(this.energyStorage.getEnergyStored() < 2048) {
+
+            if(this.energyStorage.getEnergyStored() < 204800) {
                 decreaseCraftingProgress();
+                pLevel.setBlock(pPos, pState.setValue(EUVMachineBlock.ACTIVE, false), 2 | 8 | 16);
             } else {
                 increaseCraftingProgress();
-                ConsumePower(2048);
+                ConsumePower(204800);
+                pLevel.setBlock(pPos, pState.setValue(EUVMachineBlock.ACTIVE, true), 2 | 8 | 16);
             }
 
             // every time we change some shit, call setChanged
@@ -290,9 +324,14 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
                 craftItem();
                 resetProgress();
             }
+
+            if(currentTemperature > 100) {
+                pLevel.explode(null, this.getBlockPos().getX() +0.5, this.getBlockPos().getY() +0.5, this.getBlockPos().getZ() +0.5, 8, true, Level.ExplosionInteraction.BLOCK);
+
+            }
         } else {
             resetProgress();
-            pLevel.setBlock(pPos, pState.setValue(EUVMachineBlock.ACTIVE, false), 2 | 8);
+            pLevel.setBlock(pPos, pState.setValue(EUVMachineBlock.ACTIVE, false), 2 | 8 | 16);
         }
 
         IncrementNetworkTickCount();
@@ -300,21 +339,62 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
 
     private void resetProgress() {
         progress = 0;
+        currentTemperature = currentTemperature - currentTemperature/2;
+
+        if(currentTemperature < 0) {
+            currentTemperature = 0;
+        }
     }
 
-    RandomSource randomRandomSource = RandomSource.create();
+    private static final RandomSource randomRandomSource = RandomSource.create();
+    public static final TagKey<Fluid> PHOTORESIST_TAG = FluidTags.create(new ResourceLocation("forge", "photoresist"));
+    public static final TagKey<Fluid> TIER_1_FLUID = FluidTags.create(new ResourceLocation("forge", "tier_1_photoresist"));
+    public static final TagKey<Fluid> TIER_2_FLUID = FluidTags.create(new ResourceLocation("forge", "tier_2_photoresist"));
     private void craftItem() {
         EUVMachineRecipe recipe = getRecipe(); //TODO can replace all of these calls with a cached recipe check
 
         if(recipe == null) return;
 
         //TODO: CONSUME A FIXED AMOUNT OF THE PHOTORESIST???
-        outputItemHandler.insertItem(0, recipe.getOutputItem(), false);
-        inputItemHandler.extractItem(0, 1, false);
 
-        ItemStack catalyst = inputItemHandler.getStackInSlot(1);
-        //if (catalyst.isDamageableItem()) catalyst.setDamageValue(catalyst.getDamageValue() + 1);
-        catalyst.hurt(1, randomRandomSource, null );
+        if(inputFluidTank.getTank(0).getFluidAmount() < 100) {
+            return; // We do not work if we have no photoresist
+        }
+
+        if(inputFluidTank.getTank(0).getFluid().getRawFluid().is(TIER_1_FLUID)) {
+            inputFluidTank.getTank(0).drain(100, IFluidHandler.FluidAction.EXECUTE);
+
+
+            inputItemHandler.extractItem(0, 1, false);
+
+            ItemStack catalyst = inputItemHandler.getStackInSlot(1);
+            //if (catalyst.isDamageableItem()) catalyst.setDamageValue(catalyst.getDamageValue() + 1);
+            catalyst.hurt(1, randomRandomSource, null );
+
+            // This will theoretically make it a 50/50
+            if(randomRandomSource.nextBoolean()) {
+                outputItemHandler.insertItem(0, recipe.getOutputItem(), false);
+            }
+
+        } else if (inputFluidTank.getTank(0).getFluid().getRawFluid().is(TIER_2_FLUID)) {
+
+            LogUtils.getLogger().info("Tier 2 Recipe");
+            inputFluidTank.getTank(0).drain(100, IFluidHandler.FluidAction.EXECUTE);
+
+
+            inputItemHandler.extractItem(0, 1, false);
+
+            ItemStack catalyst = inputItemHandler.getStackInSlot(1);
+            //if (catalyst.isDamageableItem()) catalyst.setDamageValue(catalyst.getDamageValue() + 1);
+            catalyst.hurt(1, randomRandomSource, null );
+
+            outputItemHandler.insertItem(0, recipe.getOutputItem(), false);
+
+        } else {
+            //LogUtils.getLogger().info("No Recipe");
+            return;
+        }
+
         SetNetworkDirty(); // Make sure we mark this block for an update now that we changed inventory content
     }
 
@@ -327,6 +407,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             return false;
         }
 
+        maxProgress = recipe.getProcessingTime() * 20;
 
         //TODO: This could be simplified a lot
         return canInsertAmountIntoOutputSlot(recipe.getOutputItem().getCount())
@@ -347,10 +428,12 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             if(recipe.matches(inputItemHandler.getStackInSlot(0), inputItemHandler.getStackInSlot(1))) {
                 cachedRecipe = recipe;
                 this.maxProgress = recipe.getProcessingTime();
+                //LogUtils.getLogger().info("Found Recipe");
                 return recipe;
             }
         }
 
+        //LogUtils.getLogger().info("Did not Found Recipe");
         cachedRecipe = null;
         return null;
     }
@@ -370,12 +453,15 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
 
     private void increaseCraftingProgress() {
         progress++;
+        currentTemperature = (progress * 150)/maxProgress ;
     }
 
     private void decreaseCraftingProgress() {
         progress--;
 
         if(progress < 0) progress = 0;
+
+        currentTemperature -= progress;
     }
 
     public MachineFluidHandler getInputFluidHandler() {

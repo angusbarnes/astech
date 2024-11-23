@@ -1,7 +1,6 @@
 package net.astr0.astech.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -49,7 +48,7 @@ public class IconButton extends AbstractButton {
 
     public void setIcon(Icons.Icon icon) {
         iconToDraw = icon;
-        LogUtils.getLogger().info("Button was clicked -> set icon was called {}", icon.toString());
+        //LogUtils.getLogger().info("Button was clicked -> set icon was called {}", icon.toString());
     }
 
     public Icons.Icon getIcon() {

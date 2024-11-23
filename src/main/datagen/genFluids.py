@@ -152,9 +152,11 @@ datapack.set_base_dictionary({
     "item.astech.deez_nuts": "Deez Nuts",
     "item.astech.deez_butts": "Deez Butts",
     "item.astech.zeolite_catalyst": "Zeolite Catalyst",
+    "item.astech.monocrystalline_silicon": "Monocrystalline Silicon Boole",
     "item.astech.god_forged_ingot": "God Forged Ingot",
     "creativetab.astech_tab": "AsTech Items",
     "block.astech.nic_block": "§cNic Block",
+    "block.astech.cleanroom_wall": "Cleanroom Wall",
     "block.astech.gem_polishing_station": "Gem Polishing Station",
     "block.astech.chemical_mixer": "Chemical Mixer",
     "block.astech.assembler": "Assembler",
@@ -206,7 +208,6 @@ static_items = [
     'analog_circuit_board', 
     'steel_upgrade', 
     'transistor', 
-    'monocrystalline_silicon', 
     'antimatter_tormentum',
     'photonic_flux_capacitor',
     'abyssium_ingot',
@@ -267,6 +268,16 @@ datapack.add_item_tag('forge:genetic_material', 'astech:mutated_genetic_material
 datapack.add_fluid_tag('forge:flux_resin', 'astech:soldering_flux')
 datapack.add_fluid_tag('forge:flux_resin', 'astech:ammonium_chloride')
 datapack.add_fluid_tag('forge:alcohol', '#forge:ethanol')
+#datapack.add_fluid_tag('forge:tier_1_photoresist', '#forge:phenolic_acid')
+datapack.add_fluid_tag('forge:tier_2_photoresist', 'astech:polymethyl_methacrylate')
+#datapack.add_fluid_tag('forge:photoresist', '#forge:tier_1_photoresist')
+datapack.add_fluid_tag('forge:photoresist', '#forge:tier_2_photoresist')
+
+
+datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_helmet')
+datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_chestplate')
+datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_leggings')
+datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_boots')
 
 datapack.add_item_tag('minecraft:music_discs', 'astech:help_of_disc')
 datapack.add_item_tag('minecraft:music_discs', 'astech:as_an_llm_disc')
@@ -280,6 +291,7 @@ datapack.add_simple_item_model('as_an_llm_disc')
 datapack.add_simple_item_model('run_nic_run_disc')
 datapack.add_simple_item_model('stolen_identity_disc')
 datapack.add_simple_item_model('zeolite_catalyst')
+datapack.add_simple_item_model('monocrystalline_silicon')
 
 TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
 ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
@@ -353,8 +365,7 @@ for chemdef in chemicals:
     add_simple_tint_item(datapack, f"{fluid_name}_curved_plate", f"{plain_text_name} Curved Plate", chemdef["Color"], './templates/curved_plate.png', fluid_name)
     add_simple_tint_item(datapack, f"{fluid_name}_wire", f"{plain_text_name} Wire", chemdef["Color"], './templates/wire.png', fluid_name)
     add_simple_tint_block(datapack, f"{fluid_name}_block", f"{plain_text_name} Block", chemdef["Color"], get_texture(fluid_name, block_textures))
-    datapack.add_block_tag("minecraft:mineable/pickaxe", f"astech:{fluid_name}_block")
-    datapack.add_simple_block_loot(f"{fluid_name}_block")
+
     datapack.add_item_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
     datapack.add_block_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
     

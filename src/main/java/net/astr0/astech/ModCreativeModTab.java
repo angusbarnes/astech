@@ -32,6 +32,7 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.PYROLYSIS_CHAMBER.get());
                         output.accept(ModBlocks.EUV_MACHINE.get());
                         output.accept(ModItems.ZEOLITE_CATALYST.get());
+                        output.accept(ModItems.SILICON_BOOLE.get());
                         output.accept(ModItems.HELP_OF_DISC.get());
                         output.accept(ModItems.BANGARANG_DISC.get());
                         output.accept(ModItems.AS_AN_LLM_DISC.get());
@@ -40,6 +41,7 @@ public class ModCreativeModTab {
                         output.accept(ModItems.DEEZ_NUTS_ITEM.get());
                         output.accept(ModItems.DEEZ_BUTTS_ITEM.get());
                         output.accept(ModBlocks.NIC_BLOCK.get());
+                        output.accept(ModBlocks.CLEANROOM_BLOCK.get());
                         output.accept(ModBlocks.GEM_POLISHING_STATION.get());
 
                         //#anchor TAB_REGION
@@ -86,7 +88,6 @@ output.accept(ModItems.INFINITY_TOTEM.get());
 output.accept(ModItems.INTERPLANETARY_MINING_LENS.get());
 output.accept(ModItems.MATTER_CLUSTER.get());
 output.accept(ModItems.MEMORY_MANAGEMENT_UNIT.get());
-output.accept(ModItems.MONOCRYSTALLINE_SILICON.get());
 output.accept(ModItems.MOSFET.get());
 output.accept(ModItems.MULTI_BIOME_MINING_LENS.get());
 output.accept(ModItems.MUTATED_GENETIC_MATERIAL.get());

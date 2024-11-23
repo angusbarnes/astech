@@ -39,7 +39,7 @@ public class EUVMachineScreen extends AbstractContainerScreen<EUVMachineMenu> {
     protected void init() {
         super.init();
 
-        //addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 44, this.topPos + 16));
+        addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 33, this.topPos + 16));
 
         FilteredItemStackHandler handler = this.menu.blockEntity.getInputStackHandler();
         addElement(new FilteredItemSlot(handler, 0,this.leftPos + 54, this.topPos + 34));
@@ -145,6 +145,8 @@ public class EUVMachineScreen extends AbstractContainerScreen<EUVMachineMenu> {
         renderTooltip(guiGraphics, mouseX, mouseY);
 
         renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
+
+        guiGraphics.drawString(this.font, String.format("Temp: %d%%", this.menu.getTemp()), this.leftPos + 90, this.topPos + 69, GraphicsUtils.DEFAULT_INVENTORY_TEXT_COLOR);
     }
 
     private void renderEnergyTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, int x) {

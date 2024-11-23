@@ -1,6 +1,7 @@
 package net.astr0.astech.compat.JEI;
 
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -11,8 +12,10 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.astr0.astech.AsTech;
+import net.astr0.astech.block.EUVMachine.EUVMachineBlockEntity;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.recipe.EUVMachineRecipe;
+import net.astr0.astech.recipe.FluidIngredient;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -61,6 +64,12 @@ public class EUVMachineCategory implements IRecipeCategory<EUVMachineRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, EUVMachineRecipe recipe, IFocusGroup focuses) {
+
+        builder.addSlot(RecipeIngredientRole.INPUT, 33, 16)
+                .addIngredients(ForgeTypes.FLUID_STACK, FluidIngredient.of(100, EUVMachineBlockEntity.PHOTORESIST_TAG).getFluidStacks())
+                .setFluidRenderer(100, false, 10, 56);
+
+
         Ingredient input = recipe.getInput();
         if(input != null && !input.isEmpty()) {
             builder.addSlot(RecipeIngredientRole.INPUT, 54, 34).addIngredients(input);

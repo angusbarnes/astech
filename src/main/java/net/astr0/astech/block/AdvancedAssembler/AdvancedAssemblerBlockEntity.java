@@ -276,12 +276,13 @@ public class AdvancedAssemblerBlockEntity extends AbstractMachineBlockEntity {
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {
 
         if(hasRecipe()) {
-            pLevel.setBlock(pPos, pState.setValue(AdvancedAssemblerBlock.ACTIVE, true), 2 | 8);
             if(this.energyStorage.getEnergyStored() < 256) {
                 decreaseCraftingProgress();
+                pLevel.setBlock(pPos, pState.setValue(AdvancedAssemblerBlock.ACTIVE, false), 2 | 8);
             } else {
                 increaseCraftingProgress();
                 ConsumePower(256);
+                pLevel.setBlock(pPos, pState.setValue(AdvancedAssemblerBlock.ACTIVE, true), 2 | 8);
             }
 
             // every time we change some shit, call setChanged

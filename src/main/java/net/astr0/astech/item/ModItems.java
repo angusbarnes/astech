@@ -36,6 +36,7 @@ public class ModItems {
     public static final RegistryObject<Item> DEEZ_NUTS_ITEM = SimpleIngredientItem("deez_nuts", 16);
     public static final RegistryObject<Item> DEEZ_BUTTS_ITEM = SimpleIngredientItem("deez_butts", 32);
     public static final RegistryObject<Item> ZEOLITE_CATALYST = ITEMS.register("zeolite_catalyst", () -> new Item(new Item.Properties().durability(10)));
+    public static final RegistryObject<Item> SILICON_BOOLE = ITEMS.register("monocrystalline_silicon", () -> new Item(new Item.Properties().durability(100)));
     public static final RegistryObject<Item> HELP_OF_DISC = ITEMS.register("help_of_disc", () -> new RecordItem(9, () -> SoundRegistry.help_of.get(), new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 20 * 163));
     public static final RegistryObject<Item> AS_AN_LLM_DISC = ITEMS.register("as_an_llm_disc", () -> new RecordItem(9, () -> SoundRegistry.as_an_llm.get(), new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 20 * 275));
     public static final RegistryObject<Item> RUN_NIC_RUN_DISC = ITEMS.register("run_nic_run_disc", () -> new RecordItem(9, () -> SoundRegistry.run_nic_run_disc.get(), new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 20 * 106));
@@ -88,7 +89,6 @@ public static final RegistryObject<Item> INFINITY_TOTEM = SimpleIngredientItem("
 public static final RegistryObject<Item> INTERPLANETARY_MINING_LENS = SimpleIngredientItem("interplanetary_mining_lens", 64);
 public static final RegistryObject<Item> MATTER_CLUSTER = SimpleIngredientItem("matter_cluster", 64);
 public static final RegistryObject<Item> MEMORY_MANAGEMENT_UNIT = SimpleIngredientItem("memory_management_unit", 64);
-public static final RegistryObject<Item> MONOCRYSTALLINE_SILICON = SimpleIngredientItem("monocrystalline_silicon", 64);
 public static final RegistryObject<Item> MOSFET = SimpleIngredientItem("mosfet", 64);
 public static final RegistryObject<Item> MULTI_BIOME_MINING_LENS = SimpleIngredientItem("multi_biome_mining_lens", 64);
 public static final RegistryObject<Item> MUTATED_GENETIC_MATERIAL = SimpleIngredientItem("mutated_genetic_material", 64);

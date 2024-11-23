@@ -20,7 +20,7 @@ public class EUVMachineMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public EUVMachineMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5));
     }
 
     public EUVMachineMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
@@ -29,7 +29,7 @@ public class EUVMachineMenu extends AbstractContainerMenu {
         // An inventory is a container type. I don't know why we would be checking this as I believe
         // it refers to the player inventory. I'm guessing it was probably meant to be data instead,
         // as that would correspond to the dataContainer size of two we created in the block entity
-        checkContainerSize(inv, 2);
+        checkContainerSize(inv, 5);
         blockEntity = ((EUVMachineBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
@@ -59,6 +59,8 @@ public class EUVMachineMenu extends AbstractContainerMenu {
     public boolean isCrafting() {
         return data.get(2) > 0;
     }
+
+    public int getTemp() { return  data.get(4);}
 
     //TODO: fix this when we change the underlying container sync
     public int getScaledProgress() {

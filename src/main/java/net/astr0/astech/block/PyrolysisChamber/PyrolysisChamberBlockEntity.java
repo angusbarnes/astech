@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.astr0.astech.CustomEnergyStorage;
 import net.astr0.astech.DirectionTranslator;
 import net.astr0.astech.Fluid.MachineFluidHandler;
+import net.astr0.astech.SoundRegistry;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.SidedConfig;
@@ -137,6 +138,9 @@ public class PyrolysisChamberBlockEntity extends AbstractMachineBlockEntity {
             }
         };
 
+        setSoundEvent(SoundRegistry.wet_machine.get());
+        setSoundPlaytime(8);
+
         sidedItemConfig.setCap(Direction.UP, SidedConfig.ITEM_INPUT);
         sidedItemConfig.setCap(Direction.EAST, SidedConfig.ITEM_INPUT);
         sidedItemConfig.setCap(Direction.DOWN, SidedConfig.ITEM_OUTPUT);
@@ -256,12 +260,13 @@ public class PyrolysisChamberBlockEntity extends AbstractMachineBlockEntity {
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {
 
         if(hasRecipe()) {
-            pLevel.setBlock(pPos, pState.setValue(PyrolysisChamberBlock.ACTIVE, true), 2 | 8);
             if(this.energyStorage.getEnergyStored() < 512) {
                 decreaseCraftingProgress();
+                updateActiveState(false);
             } else {
                 increaseCraftingProgress();
                 ConsumePower(512);
+                updateActiveState(true);
             }
 
             // every time we change some shit, call setChanged
@@ -274,7 +279,7 @@ public class PyrolysisChamberBlockEntity extends AbstractMachineBlockEntity {
             }
         } else {
             resetProgress();
-            pLevel.setBlock(pPos, pState.setValue(PyrolysisChamberBlock.ACTIVE, false), 2 | 8);
+            updateActiveState(false);
         }
 
         IncrementNetworkTickCount();

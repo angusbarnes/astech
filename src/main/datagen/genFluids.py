@@ -157,6 +157,7 @@ datapack.set_base_dictionary({
     "creativetab.astech_tab": "AsTech Items",
     "block.astech.nic_block": "§cNic Block",
     "block.astech.cleanroom_wall": "Cleanroom Wall",
+    "block.astech.coolant_block": "Coolant Block",
     "block.astech.gem_polishing_station": "Gem Polishing Station",
     "block.astech.chemical_mixer": "Chemical Mixer",
     "block.astech.assembler": "Assembler",
@@ -272,6 +273,9 @@ datapack.add_fluid_tag('forge:alcohol', '#forge:ethanol')
 datapack.add_fluid_tag('forge:tier_2_photoresist', 'astech:polymethyl_methacrylate')
 #datapack.add_fluid_tag('forge:photoresist', '#forge:tier_1_photoresist')
 datapack.add_fluid_tag('forge:photoresist', '#forge:tier_2_photoresist')
+
+datapack.add_fluid_tag('forge:tier_1_coolant', 'astech:methyl_chloride')
+datapack.add_fluid_tag('forge:tier_2_coolant', 'astech:gelid_cryotheum')
 
 
 datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_helmet')

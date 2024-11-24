@@ -1,11 +1,13 @@
-package net.astr0.astech.block.EUVMachine;
+package net.astr0.astech.block.CoolantBlock;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.astr0.astech.AsTech;
-import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.GraphicsUtils;
-import net.astr0.astech.gui.*;
+import net.astr0.astech.gui.AsTechGuiElement;
+import net.astr0.astech.gui.FilteredFluidTankSlot;
+import net.astr0.astech.gui.IconButton;
+import net.astr0.astech.gui.Icons;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -19,11 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 // This only gets registered on the client side
-public class EUVMachineScreen extends AbstractContainerScreen<EUVMachineMenu> {
+public class CoolantBlockScreen extends AbstractContainerScreen<CoolantBlockMenu> {
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(AsTech.MODID, "textures/gui/lithography_machine.png");
+            new ResourceLocation(AsTech.MODID, "textures/gui/coolant_block_gui.png");
 
-    public EUVMachineScreen(EUVMachineMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
+    public CoolantBlockScreen(CoolantBlockMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }
 
@@ -39,26 +41,13 @@ public class EUVMachineScreen extends AbstractContainerScreen<EUVMachineMenu> {
     protected void init() {
         super.init();
 
-        addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 33, this.topPos + 16));
-
-        FilteredItemStackHandler handler = this.menu.blockEntity.getInputStackHandler();
-        addElement(new FilteredItemSlot(handler, 0,this.leftPos + 54, this.topPos + 34));
-        addElement(new FilteredItemSlot(handler, 1,this.leftPos + 81, this.topPos + 47));
-
-        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity);
-
-        IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 5, this.topPos + 21, Icons.SETTINGS, (button) -> {
-            config.ToggleRender();
-        });
+        addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 44, this.topPos + 16));
 
         IconButton LOCK_BUTTON = new IconButton(this.leftPos + 5, this.topPos + 43, Icons.UNLOCKED, (button) -> {
             button.setIcon(button.getIcon() == Icons.UNLOCKED ? Icons.LOCKED : Icons.UNLOCKED);
             isLocked = !isLocked;
         });
-
         this.addRenderableWidget(LOCK_BUTTON);
-        this.addRenderableWidget(SETTINGS_BUTTON);
-        this.addRenderableWidget(config);
     }
 
     @Override
@@ -75,7 +64,6 @@ public class EUVMachineScreen extends AbstractContainerScreen<EUVMachineMenu> {
             element.renderBackground(guiGraphics);
         }
 
-        renderEnergyBar(guiGraphics, 155);
     }
 
     @Override
@@ -104,27 +92,10 @@ public class EUVMachineScreen extends AbstractContainerScreen<EUVMachineMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
-        pGuiGraphics.drawString(this.font, Component.literal("Extreme Ultraviolet Lithography"), 5, 5, GraphicsUtils.DEFAULT_INVENTORY_TEXT_COLOR, false);
+        pGuiGraphics.drawString(this.font, Component.literal("Coolant Block"), 5, 5, GraphicsUtils.DEFAULT_INVENTORY_TEXT_COLOR, false);
     }
 
-    private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
-        if(menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x, y, 183, 0, menu.getScaledProgress(), 8);
-        }
-    }
 
-    private void renderEnergyBar(GuiGraphics guiGraphics, int x) {
-
-        int height = getEnergyHeight(menu.getMaxEnergy(), menu.getEnergy());
-        guiGraphics.blit(TEXTURE,
-                this.leftPos + x,
-                getEnergyY(height),
-                178,
-                9,
-                10,
-                height
-        );
-    }
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
@@ -140,24 +111,12 @@ public class EUVMachineScreen extends AbstractContainerScreen<EUVMachineMenu> {
             element.renderTooltip(guiGraphics, mouseX, mouseY);
         }
 
-        renderProgressArrow(guiGraphics, this.leftPos + 75, this.topPos + 38);
 
         renderTooltip(guiGraphics, mouseX, mouseY);
 
-        renderEnergyTooltip(guiGraphics, mouseX, mouseY, 154);
 
         guiGraphics.drawString(this.font, String.format("Temp: %.2f%%", ((float)this.menu.getTemp()/3f)), this.leftPos + 90, this.topPos + 69, GraphicsUtils.DEFAULT_INVENTORY_TEXT_COLOR);
     }
 
-    private void renderEnergyTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY, int x) {
 
-        int fluidHeight = getEnergyHeight(menu.getMaxEnergy(), menu.getEnergy());
-
-        if(!isHovering(x, getEnergyY(fluidHeight) -this.topPos, 10, fluidHeight, mouseX, mouseY)) return;
-
-        List<Component> tips = new ArrayList<>(2);
-        tips.add(Component.literal("Energy"));
-        tips.add(Component.literal("§7%.2f%%".formatted(((float)menu.getEnergy()/ menu.getMaxEnergy()) * 100)));
-        guiGraphics.renderComponentTooltip(this.font, tips, mouseX, mouseY);
-    }
 }

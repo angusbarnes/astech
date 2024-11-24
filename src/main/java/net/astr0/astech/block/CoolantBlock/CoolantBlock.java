@@ -1,4 +1,4 @@
-package net.astr0.astech.block.ReactionChamber;
+package net.astr0.astech.block.CoolantBlock;
 
 import net.astr0.astech.block.ITickableBlockEntity;
 import net.astr0.astech.block.ModBlocks;
@@ -20,46 +20,31 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ChemicalReactorBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class CoolantBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
-    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
-    public ChemicalReactorBlock(Properties pProperties) {
+    public CoolantBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
-        registerDefaultState(stateDefinition.any().setValue(ACTIVE, false));
+        registerDefaultState(stateDefinition.any().setValue(ModBlocks.BLOCKSTATE_ACTIVE, false));
     }
 
     @Override
     protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(FACING);
-        builder.add(ACTIVE);
+        builder.add(ModBlocks.BLOCKSTATE_ACTIVE);
     }
 
     // This is called when the block is destroyed, it over-rides BaseEntityBlock
     @Override
     @SuppressWarnings("deprecation")
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-
-        // The block state may changed when a texture is changed,
-        // or the block is rotated. We should confirm that the original block has actually been removed,
-        // ie; we have a different block
-        if (pState.getBlock() != pNewState.getBlock()) {
-
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ChemicalReactorBlockEntity) {
-                // After safety rail checks, use our user defined function
-                // to create the dropped items
-                ((ChemicalReactorBlockEntity) blockEntity).drops();
-            }
-        }
 
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
@@ -69,8 +54,8 @@ public class ChemicalReactorBlock extends HorizontalDirectionalBlock implements 
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof ChemicalReactorBlockEntity) {
-                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (ChemicalReactorBlockEntity)entity, pPos);
+            if(entity instanceof CoolantBlockEntity) {
+                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (CoolantBlockEntity)entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
@@ -83,7 +68,7 @@ public class ChemicalReactorBlock extends HorizontalDirectionalBlock implements 
     // Implements the EntityBlock interface, which the abstract BaseEntityBlock does not do for us
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new ChemicalReactorBlockEntity(pPos, pState);
+        return new CoolantBlockEntity(pPos, pState);
     }
 
     @Nullable
@@ -104,6 +89,9 @@ public class ChemicalReactorBlock extends HorizontalDirectionalBlock implements 
             double d0 = (double)pPos.getX() + 0.5D;
             double d1 = (double)pPos.getY();
             double d2 = (double)pPos.getZ() + 0.5D;
+//            if (pRandom.nextDouble() < 0.05D) {
+//                pLevel.playLocalSound(d0, d1, d2, SoundRegistry.laser_machine.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
+//            }
 
             Direction direction = pState.getValue(FACING);
             Direction.Axis direction$axis = direction.getAxis();
@@ -111,7 +99,7 @@ public class ChemicalReactorBlock extends HorizontalDirectionalBlock implements 
             double d5 = direction$axis == Direction.Axis.X ? (double)direction.getStepX() * 0.52D : d4;
             double d6 = pRandom.nextDouble() * 9.0D / 16.0D;
             double d7 = direction$axis == Direction.Axis.Z ? (double)direction.getStepZ() * 0.52D : d4;
-            pLevel.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+            pLevel.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
         }
     }
 }

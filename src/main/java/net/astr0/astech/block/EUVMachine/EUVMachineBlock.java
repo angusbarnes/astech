@@ -1,9 +1,12 @@
 package net.astr0.astech.block.EUVMachine;
 
 import net.astr0.astech.block.ITickableBlockEntity;
+import net.astr0.astech.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +20,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
@@ -25,19 +27,18 @@ import org.jetbrains.annotations.Nullable;
 
 public class EUVMachineBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
-    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
     public EUVMachineBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
-        registerDefaultState(stateDefinition.any().setValue(ACTIVE, false));
+        registerDefaultState(stateDefinition.any().setValue(ModBlocks.BLOCKSTATE_ACTIVE, false));
     }
 
     @Override
     protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(FACING);
-        builder.add(ACTIVE);
+        builder.add(ModBlocks.BLOCKSTATE_ACTIVE);
     }
 
     // This is called when the block is destroyed, it over-rides BaseEntityBlock
@@ -94,5 +95,24 @@ public class EUVMachineBlock extends HorizontalDirectionalBlock implements Entit
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
 
         return ITickableBlockEntity.getTickerHelper(pLevel);
+    }
+
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+        if (pState.getValue(ModBlocks.BLOCKSTATE_ACTIVE)) {
+            double d0 = (double)pPos.getX() + 0.5D;
+            double d1 = (double)pPos.getY();
+            double d2 = (double)pPos.getZ() + 0.5D;
+//            if (pRandom.nextDouble() < 0.05D) {
+//                pLevel.playLocalSound(d0, d1, d2, SoundRegistry.laser_machine.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
+//            }
+
+            Direction direction = pState.getValue(FACING);
+            Direction.Axis direction$axis = direction.getAxis();
+            double d4 = pRandom.nextDouble() * 0.6D - 0.3D;
+            double d5 = direction$axis == Direction.Axis.X ? (double)direction.getStepX() * 0.52D : d4;
+            double d6 = pRandom.nextDouble() * 9.0D / 16.0D;
+            double d7 = direction$axis == Direction.Axis.Z ? (double)direction.getStepZ() * 0.52D : d4;
+            pLevel.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+        }
     }
 }

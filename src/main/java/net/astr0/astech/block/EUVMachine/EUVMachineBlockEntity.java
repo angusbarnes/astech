@@ -5,6 +5,7 @@ import net.astr0.astech.CustomEnergyStorage;
 import net.astr0.astech.DirectionTranslator;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.Fluid.MachineFluidHandler;
+import net.astr0.astech.SoundRegistry;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.SidedConfig;
@@ -29,7 +30,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
@@ -116,6 +116,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
     private int progress = 0;
     private int maxProgress = 80;
     private int currentTemperature = 0;
+    private int _baseTemp = 0;
 
     public EUVMachineBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.EUV_MACHINE_BE.get(), pPos, pBlockState);
@@ -148,6 +149,9 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
                 return 5;
             }
         };
+
+        setSoundEvent(SoundRegistry.laser_machine.get());
+        setSoundPlaytime(9);
 
         sidedItemConfig.setCap(Direction.UP, SidedConfig.ITEM_INPUT);
         sidedItemConfig.setCap(Direction.EAST, SidedConfig.ITEM_INPUT);
@@ -280,40 +284,28 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
         setChanged();
     }
 
-    public void RegisterCoolantBlock(BlockPos blockPos) {
-        LogUtils.getLogger().info("Block has change at: {}", blockPos.toShortString());
+
+    public void Cool(int amount) {
+        currentTemperature -= amount;
+        if (currentTemperature < 0) currentTemperature = 0;
     }
 
-    //public Block coolantBlock = null;
-
-    private static final int[][] offsets = {
-            {0, -1, 0},
-            {0, 0, 1},
-            {0, 0, -1},
-            {1, 0, 0},
-            {-1, 0, 0},
-            {0, 1, 0},
-    };
 
     @Override
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {
-
-        for(int[] offset : offsets) {
-            BlockEntity be = pLevel.getBlockEntity(pPos.offset(offset[0], offset[1], offset[2]));
-            if (be instanceof EUVMachineBlockEntity) {
-
-            }
-        }
 
         if(hasRecipe()) {
 
             if(this.energyStorage.getEnergyStored() < 204800) {
                 decreaseCraftingProgress();
-                pLevel.setBlock(pPos, pState.setValue(EUVMachineBlock.ACTIVE, false), 2 | 8 | 16);
+                updateActiveState(false);
+                //LogUtils.getLogger().info("ENERGY DEPLETE TICK TEMP: {}", currentTemperature);
             } else {
                 increaseCraftingProgress();
                 ConsumePower(204800);
-                pLevel.setBlock(pPos, pState.setValue(EUVMachineBlock.ACTIVE, true), 2 | 8 | 16);
+                updateActiveState(true);
+                //LogUtils.getLogger().info("CRAFT INCREASE TEMP: {}", currentTemperature);
+                //level.playSound(null, getBlockPos(), SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 3f, 1.0F);
             }
 
             // every time we change some shit, call setChanged
@@ -323,23 +315,28 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             if(hasProgressFinished()) {
                 craftItem();
                 resetProgress();
+                //LogUtils.getLogger().info("CRAFT COMPLETE: {}", currentTemperature);
             }
 
-            if(currentTemperature > 100) {
+            if(currentTemperature > 300) {
                 pLevel.explode(null, this.getBlockPos().getX() +0.5, this.getBlockPos().getY() +0.5, this.getBlockPos().getZ() +0.5, 8, true, Level.ExplosionInteraction.BLOCK);
 
             }
         } else {
             resetProgress();
-            pLevel.setBlock(pPos, pState.setValue(EUVMachineBlock.ACTIVE, false), 2 | 8 | 16);
+            updateActiveState(false);
+           // LogUtils.getLogger().info("HAS NO RECIPE TEMP: {}", currentTemperature);
         }
+
+//        LogUtils.getLogger().info("END TICK TEMP: {}", currentTemperature);
+//        LogUtils.getLogger().info("========================");
 
         IncrementNetworkTickCount();
     }
 
     private void resetProgress() {
         progress = 0;
-        currentTemperature = currentTemperature - currentTemperature/2;
+        currentTemperature -= 1;
 
         if(currentTemperature < 0) {
             currentTemperature = 0;
@@ -361,7 +358,13 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             return; // We do not work if we have no photoresist
         }
 
-        if(inputFluidTank.getTank(0).getFluid().getRawFluid().is(TIER_1_FLUID)) {
+//        LogUtils.getLogger().info("Craft Recipe");
+//        LogUtils.getLogger().info("Fluid has tags: {}", inputFluidTank.getTank(0).getFluid().getFluid().builtInRegistryHolder().tags().toList().toString());
+
+        if(inputFluidTank.getTank(0).getFluid().getFluid().is(TIER_1_FLUID)) {
+
+            //LogUtils.getLogger().info("Tier 1");
+
             inputFluidTank.getTank(0).drain(100, IFluidHandler.FluidAction.EXECUTE);
 
 
@@ -376,9 +379,11 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
                 outputItemHandler.insertItem(0, recipe.getOutputItem(), false);
             }
 
-        } else if (inputFluidTank.getTank(0).getFluid().getRawFluid().is(TIER_2_FLUID)) {
+        } else if (inputFluidTank.getTank(0).getFluid().getFluid().is(TIER_2_FLUID)) {
 
-            LogUtils.getLogger().info("Tier 2 Recipe");
+            //LogUtils.getLogger().info("Tier 2");
+
+            //LogUtils.getLogger().info("Tier 2 Recipe");
             inputFluidTank.getTank(0).drain(100, IFluidHandler.FluidAction.EXECUTE);
 
 
@@ -390,9 +395,8 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
 
             outputItemHandler.insertItem(0, recipe.getOutputItem(), false);
 
-        } else {
-            //LogUtils.getLogger().info("No Recipe");
-            return;
+            //LogUtils.getLogger().info("We should have output an item");
+
         }
 
         SetNetworkDirty(); // Make sure we mark this block for an update now that we changed inventory content
@@ -407,7 +411,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             return false;
         }
 
-        maxProgress = recipe.getProcessingTime() * 20;
+        //maxProgress = recipe.getProcessingTime() * 20;
 
         //TODO: This could be simplified a lot
         return canInsertAmountIntoOutputSlot(recipe.getOutputItem().getCount())
@@ -422,12 +426,16 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             return cachedRecipe;
         }
 
+        if (inputFluidTank.getTank(0).getFluidAmount() < 100 || !inputFluidTank.getTank(0).getFluid().getFluid().is(PHOTORESIST_TAG)) {
+            return null; // We dont got the facilities
+        }
+
         List<EUVMachineRecipe> recipes = this.level.getRecipeManager().getAllRecipesFor(ModRecipes.EUV_MACHINE_RECIPE_TYPE.get());
 
         for(EUVMachineRecipe recipe : recipes) {
             if(recipe.matches(inputItemHandler.getStackInSlot(0), inputItemHandler.getStackInSlot(1))) {
                 cachedRecipe = recipe;
-                this.maxProgress = recipe.getProcessingTime();
+                this.maxProgress = recipe.getProcessingTime() * 20;
                 //LogUtils.getLogger().info("Found Recipe");
                 return recipe;
             }
@@ -453,7 +461,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
 
     private void increaseCraftingProgress() {
         progress++;
-        currentTemperature = (progress * 150)/maxProgress ;
+        currentTemperature += 1;
     }
 
     private void decreaseCraftingProgress() {
@@ -461,7 +469,8 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
 
         if(progress < 0) progress = 0;
 
-        currentTemperature -= progress;
+        currentTemperature -= 1;
+        if(currentTemperature <0) currentTemperature = 0;
     }
 
     public MachineFluidHandler getInputFluidHandler() {

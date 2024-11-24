@@ -46,5 +46,41 @@
         "volume": 0.7
       }
     ]
-  }
+  },
+  "laser_machine": {
+    "sounds": [
+      {
+        "name": "astech:laser_machine",
+        "stream": false,
+        "volume": 0.7
+      }
+    ]
+  },
+  "generic_machine": {
+    "sounds": [
+      {
+        "name": "astech:generic_machine",
+        "stream": false,
+        "volume": 0.8
+      }
+    ]
+  },
+  "wet_machine": {
+    "sounds": [
+      {
+        "name": "astech:wet_machine",
+        "stream": false,
+        "volume": 0.8
+      }
+    ]
+  },
+"electric_machine": {
+  "sounds": [
+    {
+      "name": "astech:electric_machine",
+      "stream": false,
+      "volume": 0.8
+    }
+  ]
+}
 }

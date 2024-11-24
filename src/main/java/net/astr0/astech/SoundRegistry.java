@@ -16,6 +16,10 @@ public class SoundRegistry {
     public static RegistryObject<SoundEvent> run_nic_run_disc = SOUND_REG.register("run_nic_run_disc", () -> makeSound("run_nic_run_disc"));
     public static RegistryObject<SoundEvent> stolen_identity = SOUND_REG.register("stolen_identity", () -> makeSound("stolen_identity"));
     public static RegistryObject<SoundEvent> bangarang = SOUND_REG.register("bangarang", () -> makeSound("bangarang"));
+    public static RegistryObject<SoundEvent> laser_machine = SOUND_REG.register("laser_machine", () -> makeSound("laser_machine"));
+    public static RegistryObject<SoundEvent> generic_machine = SOUND_REG.register("generic_machine", () -> makeSound("generic_machine"));
+    public static RegistryObject<SoundEvent> wet_machine = SOUND_REG.register("wet_machine", () -> makeSound("wet_machine"));
+    public static RegistryObject<SoundEvent> electric_machine = SOUND_REG.register("electric_machine", () -> makeSound("electric_machine"));
 
     public static void register(IEventBus eventBus) {
         SOUND_REG.register(eventBus);

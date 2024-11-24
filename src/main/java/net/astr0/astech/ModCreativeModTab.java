@@ -42,6 +42,7 @@ public class ModCreativeModTab {
                         output.accept(ModItems.DEEZ_BUTTS_ITEM.get());
                         output.accept(ModBlocks.NIC_BLOCK.get());
                         output.accept(ModBlocks.CLEANROOM_BLOCK.get());
+                        output.accept(ModBlocks.COOLANT_BLOCK.get());
                         output.accept(ModBlocks.GEM_POLISHING_STATION.get());
 
                         //#anchor TAB_REGION

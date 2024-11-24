@@ -5,6 +5,7 @@ import net.astr0.astech.Fluid.ModFluids;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerScreen;
 import net.astr0.astech.block.Assembler.AssemblerScreen;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerScreen;
+import net.astr0.astech.block.CoolantBlock.CoolantBlockScreen;
 import net.astr0.astech.block.EUVMachine.EUVMachineScreen;
 import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorScreen;
 import net.astr0.astech.block.GemPolisher.GemPolishingBlockEntityRenderer;
@@ -138,6 +139,7 @@ public class AsTech
             MenuScreens.register(ModMenuTypes.ELECTROLYTIC_SEPERATOR_MENU.get(), ElectrolyticSeperatorScreen::new);
             MenuScreens.register(ModMenuTypes.PYROLYSIS_CHAMBER_MENU.get(), PyrolysisChamberScreen::new);
             MenuScreens.register(ModMenuTypes.EUV_MACHINE_MENU.get(), EUVMachineScreen::new);
+            MenuScreens.register(ModMenuTypes.COOLANT_BLOCK_MENU.get(), CoolantBlockScreen::new);
         }
     }
 }

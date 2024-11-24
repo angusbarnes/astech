@@ -302,13 +302,13 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
         if(hasRecipe()) {
 
-            pLevel.setBlock(pPos, pState.setValue(ChemicalMixerBlock.ACTIVE, true), 2 | 8);
-
             if(this.energyStorage.getEnergyStored() < 256) {
                 decreaseCraftingProgress();
+                updateActiveState(false);
             } else {
                 increaseCraftingProgress();
                 ConsumePower(256);
+                updateActiveState(true);
             }
 
             // every time we change some shit, call setChanged
@@ -321,7 +321,7 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
             }
         } else {
             resetProgress();
-            pLevel.setBlock(pPos, pState.setValue(ChemicalMixerBlock.ACTIVE, false), 2 | 8);
+            updateActiveState(false);
         }
 
         IncrementNetworkTickCount();

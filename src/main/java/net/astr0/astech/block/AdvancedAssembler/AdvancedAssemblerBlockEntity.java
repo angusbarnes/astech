@@ -278,11 +278,11 @@ public class AdvancedAssemblerBlockEntity extends AbstractMachineBlockEntity {
         if(hasRecipe()) {
             if(this.energyStorage.getEnergyStored() < 256) {
                 decreaseCraftingProgress();
-                pLevel.setBlock(pPos, pState.setValue(AdvancedAssemblerBlock.ACTIVE, false), 2 | 8);
+                updateActiveState(false);
             } else {
                 increaseCraftingProgress();
                 ConsumePower(256);
-                pLevel.setBlock(pPos, pState.setValue(AdvancedAssemblerBlock.ACTIVE, true), 2 | 8);
+                updateActiveState(true);
             }
 
             // every time we change some shit, call setChanged
@@ -295,7 +295,7 @@ public class AdvancedAssemblerBlockEntity extends AbstractMachineBlockEntity {
             }
         } else {
             resetProgress();
-            pLevel.setBlock(pPos, pState.setValue(AdvancedAssemblerBlock.ACTIVE, false), 2 | 8);
+            updateActiveState(false);
         }
 
         IncrementNetworkTickCount();

@@ -4,6 +4,7 @@ import net.astr0.astech.AsTech;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerBlock;
 import net.astr0.astech.block.Assembler.AssemblerBlock;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlock;
+import net.astr0.astech.block.CoolantBlock.CoolantBlock;
 import net.astr0.astech.block.EUVMachine.EUVMachineBlock;
 import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorBlock;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlock;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.MapColor;
@@ -26,6 +28,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.function.Supplier;
 
 public class ModBlocks {
+    public static final BooleanProperty BLOCKSTATE_ACTIVE = BooleanProperty.create("active");
     // This is the global instance of the block registry
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, AsTech.MODID);
     // Call this function from the entry point to allow the blocks register to link itself to the eventBus
@@ -82,13 +85,16 @@ public class ModBlocks {
     public static final RegistryObject<Block> EUV_MACHINE = registerBlock("euv_machine",
             () -> new EUVMachineBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
 
+    public static final RegistryObject<Block> COOLANT_BLOCK = registerBlock("coolant_block",
+            () -> new CoolantBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
+
 
     public static BlockBehaviour.Properties MACHINE_DEFAULT_PROPS = BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
             .noOcclusion()
             .sound(SoundType.METAL)
             .strength(2, 12)
             .emissiveRendering((a, b, c) -> true)
-            .lightLevel((state) -> state.getValue(ChemicalMixerBlock.ACTIVE) ? 9 : 0);
+            .lightLevel((state) -> state.getValue(BLOCKSTATE_ACTIVE) ? 9 : 0);
 
     //#anchor BLOCK_REGION
 public static final RegistryObject<Block> ADAMANTIUM_BLOCK = registerBlock("adamantium_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));

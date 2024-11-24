@@ -4,6 +4,7 @@ import net.astr0.astech.AsTech;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerMenu;
 import net.astr0.astech.block.Assembler.AssemblerMenu;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerMenu;
+import net.astr0.astech.block.CoolantBlock.CoolantBlockMenu;
 import net.astr0.astech.block.EUVMachine.EUVMachineMenu;
 import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorMenu;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationMenu;
@@ -45,6 +46,9 @@ public class ModMenuTypes {
 
     public static final RegistryObject<MenuType<EUVMachineMenu>> EUV_MACHINE_MENU =
             registerMenuType("euv_machine_menu", EUVMachineMenu::new);
+
+    public static final RegistryObject<MenuType<CoolantBlockMenu>> COOLANT_BLOCK_MENU =
+            registerMenuType("coolant_block_menu", CoolantBlockMenu::new);
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IForgeMenuType.create(factory));

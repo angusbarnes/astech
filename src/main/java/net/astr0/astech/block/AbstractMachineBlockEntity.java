@@ -1,5 +1,6 @@
 package net.astr0.astech.block;
 
+import net.astr0.astech.SoundRegistry;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
 import net.astr0.astech.network.INetworkedMachine;
@@ -9,6 +10,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -27,9 +30,29 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
         super(pType, pPos, pBlockState);
     }
 
+
+    protected void updateActiveState(boolean activeState) {
+
+        // We only change the block state if there was an actual change
+        if(activeState != isActive) {
+            isActive = activeState;
+
+            if (getBlockState().hasProperty(ModBlocks.BLOCKSTATE_ACTIVE)) {
+                if(level != null) {
+                    level.setBlock(worldPosition, getBlockState().setValue(ModBlocks.BLOCKSTATE_ACTIVE, isActive), 2 | 8 | 16);
+                }
+            }
+        }
+    }
+
+    private boolean isActive = false;
+
+
+    private int _internalTickCount = 0;
+    private int _internalSecondCount = 0;
+
     // This logic is a userDefined name for a tick function
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-
         // Only tick on the server, the server should still sync
         if(this.level == null || this.level.isClientSide())
             return;
@@ -42,10 +65,36 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
         }
 
         tickOnServer(pLevel, pPos, pState);
+
+        if (_internalTickCount % 20 == 0) {
+            _internalSecondCount++;
+        }
+
+        if (isActive && _internalSecondCount > soundPlaytime) {
+            level.playSound(null, getBlockPos(), machineSound, SoundSource.BLOCKS);
+            _internalSecondCount = 0;
+        }
+
+        _internalTickCount++;
+    }
+
+    private SoundEvent machineSound = SoundRegistry.generic_machine.get();
+    protected void setSoundEvent(SoundEvent pSoundEvent) {
+        machineSound = pSoundEvent;
+    }
+
+    private int soundPlaytime = 4;
+
+    protected void setSoundPlaytime(int pSoundPlaytime) {
+        soundPlaytime = pSoundPlaytime;
     }
 
     public LevelChunk getLevelChunk() {
         return this.level.getChunkAt(this.getBlockPos());
+    }
+
+    protected int getinternalTickCount() {
+        return _internalTickCount;
     }
 
     // This only ticks on the server

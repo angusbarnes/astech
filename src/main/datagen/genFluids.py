@@ -90,11 +90,11 @@ def CONFIGURED_ORE_FEATURE(ore_name, max_vein_size = 9):
         }
     )
 
-def FORGE_BIOME_MODIFIER(ore_name):
+def FORGE_BIOME_MODIFIER(ore_name, biome_tag = "#minecraft:is_overworld"):
     return JSON(
         {
             "type": "forge:add_features",
-            "biomes": "#minecraft:is_overworld",
+            "biomes": biome_tag,
             "features": f"astech:ore_{ore_name}_placed",
             "step": "underground_ores"
         }
@@ -336,16 +336,34 @@ for item in sorted(static_items):
 
 
 earth_ores = [
-    'chlorine',
-    'nitrogen',
-    'sodium',
-    'potassium'
+    ('chlorine', "#minecraft:is_overworld"),
+    ('nitrogen', "#minecraft:is_overworld"),
+    ('sodium', "#minecraft:is_overworld"),
+    ('potassium', "#minecraft:is_overworld"),
+    ('antimony', "ad_astra:glacio_snowy_barrens"),
+    ('antimony', "ad_astra:glacio_ice_peaks"),
+    ('iumium', "ad_astra:glacio_snowy_barrens"),
+    ('iumium', "ad_astra:glacio_ice_peaks"),
+    ('xenon', "ad_astra:infernal_venus_barrens"),
+    ('xenon', "ad_astra:venus_wastelands"),
+    ('radon', "ad_astra:infernal_venus_barrens"),
+    ('radon', "ad_astra:venus_wastelands"),
+    ('neon', "ad_astra:infernal_venus_barrens"),
+    ('neon', "ad_astra:venus_wastelands"),
+    ('adamantium', "ad_astra:mercury_deltas"),
+    ('carbonadium', "ad_astra:mercury_deltas"),
+    ('cobalt', "ad_astra:martian_canyon_creek"),
+    ('cobalt', "ad_astra:martian_polar_caps"),
+    ('cobalt', "ad_astra:martian_wastelands"),
+    ('bromine', "ad_astra:martian_canyon_creek"),
+    ('bromine', "ad_astra:martian_polar_caps"),
+    ('bromine', "ad_astra:martian_wastelands"),
 ]
 
-for ore in earth_ores:
+for ore, biome_tag in earth_ores:
     placed_feature = PLACED_ORE_FEATURE(ore)
     configured_feature = CONFIGURED_ORE_FEATURE(ore)
-    biome_modifier = FORGE_BIOME_MODIFIER(ore)
+    biome_modifier = FORGE_BIOME_MODIFIER(ore, biome_tag=biome_tag)
 
     with open(f'./resources/data/astech/worldgen/placed_feature/ore_{ore}_placed.json', 'w') as placed_feature_file:
         placed_feature_file.write(placed_feature)

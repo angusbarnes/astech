@@ -28,6 +28,78 @@ def UNCOMPACTING_RECIPE(from_item, to_item):
         }
     )
 
+def PLACED_ORE_FEATURE(ore_name, max_veins_per_chunk = 4):
+    return JSON(
+        {
+            "feature": f"astech:{ore_name}_ore",
+            "placement": [
+                {
+                    "type": "minecraft:count",
+                    "count": max_veins_per_chunk
+                },
+                {
+                    "type": "minecraft:in_square"
+                },
+                {
+                    "height": {
+                    "min_inclusive": {
+                        "absolute": -64
+                    },
+                    "max_inclusive": {
+                        "absolute": 36
+                    },
+                    "type": "minecraft:trapezoid"
+                    },
+                    "type": "minecraft:height_range"
+                },
+                {
+                    "type": "minecraft:biome"
+                }
+            ]
+        }
+    )
+
+def CONFIGURED_ORE_FEATURE(ore_name, max_vein_size = 9):
+    return JSON(
+        {
+            "type": "minecraft:ore",
+            "config": {
+                "size": max_vein_size,
+                "discard_chance_on_air_exposure": 0,
+                "targets": [
+                    {
+                        "target": {
+                            "predicate_type": "minecraft:tag_match",
+                            "tag": "minecraft:stone_ore_replaceables"
+                        },
+                        "state": {
+                            "Name": f"astech:{ore_name}_ore"
+                        }
+                    },
+                    {
+                        "target": {
+                            "predicate_type": "minecraft:tag_match",
+                            "tag": "minecraft:deepslate_ore_replaceables"
+                        },
+                        "state": {
+                            "Name": f"astech:deepslate_{ore_name}_ore"
+                        }
+                    }
+                ]
+            }
+        }
+    )
+
+def FORGE_BIOME_MODIFIER(ore_name):
+    return JSON(
+        {
+            "type": "forge:add_features",
+            "biomes": "#minecraft:is_overworld",
+            "features": f"astech:ore_{ore_name}_placed",
+            "step": "underground_ores"
+        }
+    )
+
 def merge_json_file(json_file_path, new_data):
     # Load existing data from the JSON file if it exists
     if os.path.exists(json_file_path):
@@ -261,6 +333,28 @@ static_items = [
 
 for item in sorted(static_items):
     add_static_asset_item(datapack, item, item.replace('_', ' ').title())
+
+
+earth_ores = [
+    'chlorine',
+    'nitrogen',
+    'sodium',
+    'potassium'
+]
+
+for ore in earth_ores:
+    placed_feature = PLACED_ORE_FEATURE(ore)
+    configured_feature = CONFIGURED_ORE_FEATURE(ore)
+    biome_modifier = FORGE_BIOME_MODIFIER(ore)
+
+    with open(f'./resources/data/astech/worldgen/placed_feature/ore_{ore}_placed.json', 'w') as placed_feature_file:
+        placed_feature_file.write(placed_feature)
+
+    with open(f'./resources/data/astech/forge/biome_modifier/astech/{ore}_ore.json', 'w') as modifier_file:
+        modifier_file.write(biome_modifier)
+
+    with open(f'./resources/data/astech/worldgen/configured_feature/{ore}_ore.json', 'w') as configured_feature_file:
+        configured_feature_file.write(configured_feature)
 
 datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_a')
 datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_b')

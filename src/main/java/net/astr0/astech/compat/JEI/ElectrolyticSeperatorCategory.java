@@ -1,5 +1,6 @@
 package net.astr0.astech.compat.JEI;
 
+import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -77,14 +78,15 @@ public class ElectrolyticSeperatorCategory implements IRecipeCategory<Electrolyt
 
         builder.addSlot(RecipeIngredientRole.INPUT, 44, 16 + (56 - inH1))
                 .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput1().getFluidStacks())
-                .setFluidRenderer(in1.getAmount(), false, 10, inH1);
+                .setFluidRenderer(in1.getAmount(), false, 10, inH1)
+                .addTooltipCallback(AsTechJEIPlugin.defaultOutputTooltip(recipe.getInput1()));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 110, 16 + (56 - outH1))
                 .addIngredient(ForgeTypes.FLUID_STACK, recipe.getOutput1())
                 .setFluidRenderer(outF1.getAmount(), false, 10, outH1);
 
         if(!(recipe.getOutput2().isEmpty())) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 129, 16 + (56 - outH1))
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 129, 16 + (56 - outH2))
                     .addIngredient(ForgeTypes.FLUID_STACK, recipe.getOutput2())
                     .setFluidRenderer(outF2.getAmount(), false, 10, outH2);
         }

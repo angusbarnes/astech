@@ -2,10 +2,7 @@ package net.astr0.astech.item;
 
 import net.astr0.astech.AsTech;
 import net.astr0.astech.SoundRegistry;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -42,12 +39,17 @@ public class ModItems {
     public static final RegistryObject<Item> RUN_NIC_RUN_DISC = ITEMS.register("run_nic_run_disc", () -> new RecordItem(9, () -> SoundRegistry.run_nic_run_disc.get(), new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 20 * 106));
     public static final RegistryObject<Item> STOLEN_IDENTITY_DISC = ITEMS.register("stolen_identity_disc", () -> new RecordItem(9, () -> SoundRegistry.stolen_identity.get(), new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 20 * 130));
     public static final RegistryObject<Item> BANGARANG_DISC = ITEMS.register("bangarang_disc", () -> new RecordItem(9, () -> SoundRegistry.bangarang.get(), new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 20 * 218));
+    public static final RegistryObject<Item> FINAL_DISC = ITEMS.register("mir_disc", () -> new RecordItem(9, () -> SoundRegistry.final_song.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 20 * 211){
+        @Override
+        public boolean isFoil(ItemStack pStack) {
+            return true;
+        }
+    });
 
 
 
     //#anchor MATERIAL_REGION
 public static final RegistryObject<Item> ABYSSIUM_INGOT = SimpleIngredientItem("abyssium_ingot", 64);
-public static final RegistryObject<Item> AEROGEL = SimpleIngredientItem("aerogel", 64);
 public static final RegistryObject<Item> ANALOG_CIRCUIT = SimpleIngredientItem("analog_circuit", 64);
 public static final RegistryObject<Item> ANALOG_CIRCUIT_BOARD = SimpleIngredientItem("analog_circuit_board", 64);
 public static final RegistryObject<Item> AND_GATE = SimpleIngredientItem("and_gate", 64);
@@ -153,15 +155,6 @@ public static final RegistryObject<AsTechMaterialItem> AEROGEL_CURVED_PLATE = IT
 public static final RegistryObject<AsTechMaterialItem> AEROGEL_WIRE = ITEMS.register("aerogel_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "aerogel"));
 public static final RegistryObject<AsTechMaterialItem> ALUMINIUM_HYDROXIDE_DUST = ITEMS.register("aluminium_hydroxide_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "aluminium_hydroxide"));
 public static final RegistryObject<AsTechMaterialItem> AMMONIA_DUST = ITEMS.register("ammonia_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
-public static final RegistryObject<AsTechMaterialItem> AMMONIA_SCREW = ITEMS.register("ammonia_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
-public static final RegistryObject<AsTechMaterialItem> AMMONIA_ROD = ITEMS.register("ammonia_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
-public static final RegistryObject<AsTechMaterialItem> AMMONIA_INGOT = ITEMS.register("ammonia_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
-public static final RegistryObject<AsTechMaterialItem> AMMONIA_PLATE = ITEMS.register("ammonia_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
-public static final RegistryObject<AsTechMaterialItem> AMMONIA_NUGGET = ITEMS.register("ammonia_nugget", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
-public static final RegistryObject<AsTechMaterialItem> AMMONIA_GEAR = ITEMS.register("ammonia_gear", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
-public static final RegistryObject<AsTechMaterialItem> AMMONIA_RING = ITEMS.register("ammonia_ring", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
-public static final RegistryObject<AsTechMaterialItem> AMMONIA_CURVED_PLATE = ITEMS.register("ammonia_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
-public static final RegistryObject<AsTechMaterialItem> AMMONIA_WIRE = ITEMS.register("ammonia_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonia"));
 public static final RegistryObject<AsTechMaterialItem> AMMONIUM_CHLORIDE_DUST = ITEMS.register("ammonium_chloride_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ammonium_chloride"));
 public static final RegistryObject<AsTechMaterialItem> ANTIMONY_DUST = ITEMS.register("antimony_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "antimony"));
 public static final RegistryObject<AsTechMaterialItem> ANTIMONY_SCREW = ITEMS.register("antimony_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "antimony"));
@@ -179,7 +172,6 @@ public static final RegistryObject<AsTechMaterialItem> ANTIMONY_DIRTY_DUST = ITE
 public static final RegistryObject<AsTechMaterialItem> ANTIMONY_CRYSTAL = ITEMS.register("antimony_crystal", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "antimony"));
 public static final RegistryObject<AsTechMaterialItem> ANTIMONY_SHARD = ITEMS.register("antimony_shard", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "antimony"));
 public static final RegistryObject<AsTechMaterialItem> AQUA_REGIA_DUST = ITEMS.register("aqua_regia_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "aqua_regia"));
-public static final RegistryObject<AsTechMaterialItem> ARGON_DUST = ITEMS.register("argon_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "argon"));
 public static final RegistryObject<AsTechMaterialItem> BENZENE_DUST = ITEMS.register("benzene_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "benzene"));
 public static final RegistryObject<AsTechMaterialItem> BENZENE_SCREW = ITEMS.register("benzene_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "benzene"));
 public static final RegistryObject<AsTechMaterialItem> BENZENE_ROD = ITEMS.register("benzene_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "benzene"));
@@ -284,6 +276,11 @@ public static final RegistryObject<AsTechMaterialItem> DILITHIUM_GEAR = ITEMS.re
 public static final RegistryObject<AsTechMaterialItem> DILITHIUM_RING = ITEMS.register("dilithium_ring", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "dilithium"));
 public static final RegistryObject<AsTechMaterialItem> DILITHIUM_CURVED_PLATE = ITEMS.register("dilithium_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "dilithium"));
 public static final RegistryObject<AsTechMaterialItem> DILITHIUM_WIRE = ITEMS.register("dilithium_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "dilithium"));
+public static final RegistryObject<AsTechMaterialItem> RAW_DILITHIUM = ITEMS.register("raw_dilithium", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "dilithium"));
+public static final RegistryObject<AsTechMaterialItem> DILITHIUM_CLUMP = ITEMS.register("dilithium_clump", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "dilithium"));
+public static final RegistryObject<AsTechMaterialItem> DILITHIUM_DIRTY_DUST = ITEMS.register("dilithium_dirty_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "dilithium"));
+public static final RegistryObject<AsTechMaterialItem> DILITHIUM_CRYSTAL = ITEMS.register("dilithium_crystal", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "dilithium"));
+public static final RegistryObject<AsTechMaterialItem> DILITHIUM_SHARD = ITEMS.register("dilithium_shard", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "dilithium"));
 public static final RegistryObject<AsTechMaterialItem> DIMETHYL_SULFOXIDE_DUST = ITEMS.register("dimethyl_sulfoxide_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "dimethyl_sulfoxide"));
 public static final RegistryObject<AsTechMaterialItem> ETHANE_DUST = ITEMS.register("ethane_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ethane"));
 public static final RegistryObject<AsTechMaterialItem> ETHYLENE_GLYCOL_DUST = ITEMS.register("ethylene_glycol_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ethylene_glycol"));
@@ -320,15 +317,6 @@ public static final RegistryObject<AsTechMaterialItem> GELID_CRYOTHEUM_RING = IT
 public static final RegistryObject<AsTechMaterialItem> GELID_CRYOTHEUM_CURVED_PLATE = ITEMS.register("gelid_cryotheum_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "gelid_cryotheum"));
 public static final RegistryObject<AsTechMaterialItem> GELID_CRYOTHEUM_WIRE = ITEMS.register("gelid_cryotheum_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "gelid_cryotheum"));
 public static final RegistryObject<AsTechMaterialItem> GHASTLY_LIQUID_DUST = ITEMS.register("ghastly_liquid_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ghastly_liquid"));
-public static final RegistryObject<AsTechMaterialItem> GHASTLY_LIQUID_SCREW = ITEMS.register("ghastly_liquid_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ghastly_liquid"));
-public static final RegistryObject<AsTechMaterialItem> GHASTLY_LIQUID_ROD = ITEMS.register("ghastly_liquid_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ghastly_liquid"));
-public static final RegistryObject<AsTechMaterialItem> GHASTLY_LIQUID_INGOT = ITEMS.register("ghastly_liquid_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ghastly_liquid"));
-public static final RegistryObject<AsTechMaterialItem> GHASTLY_LIQUID_PLATE = ITEMS.register("ghastly_liquid_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ghastly_liquid"));
-public static final RegistryObject<AsTechMaterialItem> GHASTLY_LIQUID_NUGGET = ITEMS.register("ghastly_liquid_nugget", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ghastly_liquid"));
-public static final RegistryObject<AsTechMaterialItem> GHASTLY_LIQUID_GEAR = ITEMS.register("ghastly_liquid_gear", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ghastly_liquid"));
-public static final RegistryObject<AsTechMaterialItem> GHASTLY_LIQUID_RING = ITEMS.register("ghastly_liquid_ring", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ghastly_liquid"));
-public static final RegistryObject<AsTechMaterialItem> GHASTLY_LIQUID_CURVED_PLATE = ITEMS.register("ghastly_liquid_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ghastly_liquid"));
-public static final RegistryObject<AsTechMaterialItem> GHASTLY_LIQUID_WIRE = ITEMS.register("ghastly_liquid_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ghastly_liquid"));
 public static final RegistryObject<AsTechMaterialItem> GRAPHENE_DUST = ITEMS.register("graphene_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "graphene"));
 public static final RegistryObject<AsTechMaterialItem> GRAPHENE_SCREW = ITEMS.register("graphene_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "graphene"));
 public static final RegistryObject<AsTechMaterialItem> GRAPHENE_ROD = ITEMS.register("graphene_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "graphene"));
@@ -407,15 +395,6 @@ public static final RegistryObject<AsTechMaterialItem> IUMIUM_DIRTY_DUST = ITEMS
 public static final RegistryObject<AsTechMaterialItem> IUMIUM_CRYSTAL = ITEMS.register("iumium_crystal", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "iumium"));
 public static final RegistryObject<AsTechMaterialItem> IUMIUM_SHARD = ITEMS.register("iumium_shard", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "iumium"));
 public static final RegistryObject<AsTechMaterialItem> METHANOL_DUST = ITEMS.register("methanol_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanol"));
-public static final RegistryObject<AsTechMaterialItem> METHANOL_SCREW = ITEMS.register("methanol_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanol"));
-public static final RegistryObject<AsTechMaterialItem> METHANOL_ROD = ITEMS.register("methanol_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanol"));
-public static final RegistryObject<AsTechMaterialItem> METHANOL_INGOT = ITEMS.register("methanol_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanol"));
-public static final RegistryObject<AsTechMaterialItem> METHANOL_PLATE = ITEMS.register("methanol_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanol"));
-public static final RegistryObject<AsTechMaterialItem> METHANOL_NUGGET = ITEMS.register("methanol_nugget", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanol"));
-public static final RegistryObject<AsTechMaterialItem> METHANOL_GEAR = ITEMS.register("methanol_gear", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanol"));
-public static final RegistryObject<AsTechMaterialItem> METHANOL_RING = ITEMS.register("methanol_ring", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanol"));
-public static final RegistryObject<AsTechMaterialItem> METHANOL_CURVED_PLATE = ITEMS.register("methanol_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanol"));
-public static final RegistryObject<AsTechMaterialItem> METHANOL_WIRE = ITEMS.register("methanol_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methanol"));
 public static final RegistryObject<AsTechMaterialItem> METHYL_CHLORIDE_DUST = ITEMS.register("methyl_chloride_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methyl_chloride"));
 public static final RegistryObject<AsTechMaterialItem> METHYL_ETHYL_KETONE_DUST = ITEMS.register("methyl_ethyl_ketone_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methyl_ethyl_ketone"));
 public static final RegistryObject<AsTechMaterialItem> METHYL_ETHYL_KETONE_SCREW = ITEMS.register("methyl_ethyl_ketone_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "methyl_ethyl_ketone"));
@@ -443,7 +422,6 @@ public static final RegistryObject<AsTechMaterialItem> NEON_DIRTY_DUST = ITEMS.r
 public static final RegistryObject<AsTechMaterialItem> NEON_CRYSTAL = ITEMS.register("neon_crystal", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "neon"));
 public static final RegistryObject<AsTechMaterialItem> NEON_SHARD = ITEMS.register("neon_shard", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "neon"));
 public static final RegistryObject<AsTechMaterialItem> NETHERITE_DUST = ITEMS.register("netherite_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "netherite"));
-public static final RegistryObject<AsTechMaterialItem> NITRIC_ACID_DUST = ITEMS.register("nitric_acid_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "nitric_acid"));
 public static final RegistryObject<AsTechMaterialItem> NITROGEN_DUST = ITEMS.register("nitrogen_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "nitrogen"));
 public static final RegistryObject<AsTechMaterialItem> NITROGEN_SCREW = ITEMS.register("nitrogen_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "nitrogen"));
 public static final RegistryObject<AsTechMaterialItem> NITROGEN_ROD = ITEMS.register("nitrogen_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "nitrogen"));
@@ -483,21 +461,6 @@ public static final RegistryObject<AsTechMaterialItem> POLYVINYL_CHLORIDE_GEAR =
 public static final RegistryObject<AsTechMaterialItem> POLYVINYL_CHLORIDE_RING = ITEMS.register("polyvinyl_chloride_ring", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "polyvinyl_chloride"));
 public static final RegistryObject<AsTechMaterialItem> POLYVINYL_CHLORIDE_CURVED_PLATE = ITEMS.register("polyvinyl_chloride_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "polyvinyl_chloride"));
 public static final RegistryObject<AsTechMaterialItem> POLYVINYL_CHLORIDE_WIRE = ITEMS.register("polyvinyl_chloride_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "polyvinyl_chloride"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_DUST = ITEMS.register("potassium_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_SCREW = ITEMS.register("potassium_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_ROD = ITEMS.register("potassium_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_INGOT = ITEMS.register("potassium_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_PLATE = ITEMS.register("potassium_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_NUGGET = ITEMS.register("potassium_nugget", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_GEAR = ITEMS.register("potassium_gear", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_RING = ITEMS.register("potassium_ring", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_CURVED_PLATE = ITEMS.register("potassium_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_WIRE = ITEMS.register("potassium_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> RAW_POTASSIUM = ITEMS.register("raw_potassium", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_CLUMP = ITEMS.register("potassium_clump", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_DIRTY_DUST = ITEMS.register("potassium_dirty_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_CRYSTAL = ITEMS.register("potassium_crystal", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
-public static final RegistryObject<AsTechMaterialItem> POTASSIUM_SHARD = ITEMS.register("potassium_shard", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "potassium"));
 public static final RegistryObject<AsTechMaterialItem> PROPYLENE_DUST = ITEMS.register("propylene_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "propylene"));
 public static final RegistryObject<AsTechMaterialItem> RADON_DUST = ITEMS.register("radon_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "radon"));
 public static final RegistryObject<AsTechMaterialItem> RADON_SCREW = ITEMS.register("radon_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "radon"));
@@ -604,21 +567,7 @@ public static final RegistryObject<AsTechMaterialItem> TRICHLOROMETHANE_RING = I
 public static final RegistryObject<AsTechMaterialItem> TRICHLOROMETHANE_CURVED_PLATE = ITEMS.register("trichloromethane_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "trichloromethane"));
 public static final RegistryObject<AsTechMaterialItem> TRICHLOROMETHANE_WIRE = ITEMS.register("trichloromethane_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "trichloromethane"));
 public static final RegistryObject<AsTechMaterialItem> UNOBTANIUM_DUST = ITEMS.register("unobtanium_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "unobtanium"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_DUST = ITEMS.register("uranium_oxide_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_SCREW = ITEMS.register("uranium_oxide_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_ROD = ITEMS.register("uranium_oxide_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_INGOT = ITEMS.register("uranium_oxide_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_PLATE = ITEMS.register("uranium_oxide_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_NUGGET = ITEMS.register("uranium_oxide_nugget", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_GEAR = ITEMS.register("uranium_oxide_gear", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_RING = ITEMS.register("uranium_oxide_ring", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_CURVED_PLATE = ITEMS.register("uranium_oxide_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_WIRE = ITEMS.register("uranium_oxide_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> RAW_URANIUM_OXIDE = ITEMS.register("raw_uranium_oxide", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_CLUMP = ITEMS.register("uranium_oxide_clump", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_DIRTY_DUST = ITEMS.register("uranium_oxide_dirty_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_CRYSTAL = ITEMS.register("uranium_oxide_crystal", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
-public static final RegistryObject<AsTechMaterialItem> URANIUM_OXIDE_SHARD = ITEMS.register("uranium_oxide_shard", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "uranium_oxide"));
+public static final RegistryObject<AsTechMaterialItem> CATALYSED_URANIUM_DUST = ITEMS.register("catalysed_uranium_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "catalysed_uranium"));
 public static final RegistryObject<AsTechMaterialItem> XENON_DUST = ITEMS.register("xenon_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "xenon"));
 public static final RegistryObject<AsTechMaterialItem> XENON_SCREW = ITEMS.register("xenon_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "xenon"));
 public static final RegistryObject<AsTechMaterialItem> XENON_ROD = ITEMS.register("xenon_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "xenon"));
@@ -648,5 +597,27 @@ public static final RegistryObject<AsTechMaterialItem> RP_1_DUST = ITEMS.registe
 public static final RegistryObject<AsTechMaterialItem> ANTIMONY_PENTAFLUORIDE_DUST = ITEMS.register("antimony_pentafluoride_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "antimony_pentafluoride"));
 public static final RegistryObject<AsTechMaterialItem> POLYMETHYL_METHACRYLATE_DUST = ITEMS.register("polymethyl_methacrylate_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "polymethyl_methacrylate"));
 public static final RegistryObject<AsTechMaterialItem> GASEOUS_HYRDOCARBONS_DUST = ITEMS.register("gaseous_hyrdocarbons_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "gaseous_hyrdocarbons"));
+public static final RegistryObject<AsTechMaterialItem> ACETYLENE_DUST = ITEMS.register("acetylene_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "acetylene"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_DUST = ITEMS.register("phosphorus_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_SCREW = ITEMS.register("phosphorus_screw", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_ROD = ITEMS.register("phosphorus_rod", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_INGOT = ITEMS.register("phosphorus_ingot", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_PLATE = ITEMS.register("phosphorus_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_NUGGET = ITEMS.register("phosphorus_nugget", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_GEAR = ITEMS.register("phosphorus_gear", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_RING = ITEMS.register("phosphorus_ring", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_CURVED_PLATE = ITEMS.register("phosphorus_curved_plate", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_WIRE = ITEMS.register("phosphorus_wire", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> RAW_PHOSPHORUS = ITEMS.register("raw_phosphorus", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_CLUMP = ITEMS.register("phosphorus_clump", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_DIRTY_DUST = ITEMS.register("phosphorus_dirty_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_CRYSTAL = ITEMS.register("phosphorus_crystal", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> PHOSPHORUS_SHARD = ITEMS.register("phosphorus_shard", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "phosphorus"));
+public static final RegistryObject<AsTechMaterialItem> NATURAL_GAS_DUST = ITEMS.register("natural_gas_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "natural_gas"));
+public static final RegistryObject<AsTechMaterialItem> SILICON_TETRACHLORIDE_DUST = ITEMS.register("silicon_tetrachloride_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "silicon_tetrachloride"));
+public static final RegistryObject<AsTechMaterialItem> ENERGISED_NAQADAH_DUST = ITEMS.register("energised_naqadah_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "energised_naqadah"));
+public static final RegistryObject<AsTechMaterialItem> MONOCRYSTALINE_SILICON_DUST = ITEMS.register("monocrystaline_silicon_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "monocrystaline_silicon"));
+public static final RegistryObject<AsTechMaterialItem> REFINED_SILICON_DUST = ITEMS.register("refined_silicon_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "refined_silicon"));
+public static final RegistryObject<AsTechMaterialItem> TREATED_BIODIESEL_DUST = ITEMS.register("treated_biodiesel_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "treated_biodiesel"));
     //#end MATERIAL_REGION
 }

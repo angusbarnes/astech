@@ -20,6 +20,7 @@ public class SoundRegistry {
     public static RegistryObject<SoundEvent> generic_machine = SOUND_REG.register("generic_machine", () -> makeSound("generic_machine"));
     public static RegistryObject<SoundEvent> wet_machine = SOUND_REG.register("wet_machine", () -> makeSound("wet_machine"));
     public static RegistryObject<SoundEvent> electric_machine = SOUND_REG.register("electric_machine", () -> makeSound("electric_machine"));
+    public static RegistryObject<SoundEvent> final_song = SOUND_REG.register("nevergonna", () -> makeSound("nevergonna"));
 
     public static void register(IEventBus eventBus) {
         SOUND_REG.register(eventBus);

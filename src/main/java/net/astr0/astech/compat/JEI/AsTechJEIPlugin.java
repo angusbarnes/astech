@@ -3,6 +3,7 @@ package net.astr0.astech.compat.JEI;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.forge.ForgeTypes;
+import mezz.jei.api.gui.ingredient.IRecipeSlotTooltipCallback;
 import mezz.jei.api.registration.*;
 import net.astr0.astech.AsTech;
 import net.astr0.astech.Fluid.ModFluids;
@@ -18,8 +19,11 @@ import net.astr0.astech.recipe.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
@@ -77,7 +81,6 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ADAMANTIUM.get()
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ALUMINIUM_HYDROXIDE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used as an antacid and in the manufacture of aluminum compounds."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_AMMONIA.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used in fertilizers and as a refrigerant gas. Environmental toxicity; can be explosive but kinda rarely"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_AQUA_REGIA.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A mixture of nitric acid and hydrochloric acid capable of dissolving gold."));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ARGON.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A noble gas used in welding and as a protective atmosphere for growing silicon and germanium crystals."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_BENZENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("An important industrial solvent and precursor in the production of various chemicals. Cat 1 carcinogen"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_BROMINE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used in flame retardants and some types of medication."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_CARBONADIUM.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A malleable and resilient fictional alloy used in various sci-fi contexts."));
@@ -102,7 +105,6 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_METHANOL.get().g
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_METHYL_CHLORIDE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used as a refrigerant and in the production of silicone polymers."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_METHYL_ETHYL_KETONE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A solvent used in the production of plastics and textiles."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_NEON.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A noble gas used in neon signs and high-voltage indicators."));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_NITRIC_ACID.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used in the production of fertilizers and explosives."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_NITROGEN.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Makes up 78% of the Earth's atmosphere and is used in the production of ammonia."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_PHOSGENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A highly toxic gas used in the production of plastics and pesticides."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_PHOSPHORIC_ACID.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used in fertilizers, food flavoring, and rust removal."));
@@ -172,6 +174,16 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_XYLENE.get().get
 
         registration.addRecipeClickArea(EUVMachineScreen.class, 75, 40, 28, 8,
                 EUVMachineCategory.EUV_MACHINE_TYPE);
+    }
+
+    public static IRecipeSlotTooltipCallback defaultOutputTooltip(FluidIngredient fluid) {
+
+        return (recipeSlotView, tooltip) -> {
+            TagKey<Fluid> tag = fluid.getFluidTagKey();
+            if(tag != null) {
+                tooltip.add(Component.literal(String.format("§7Accepts any %s", tag.location().toString())));
+            }
+        };
     }
 
     @Override

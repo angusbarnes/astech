@@ -78,7 +78,8 @@ public class AssemblerCategory implements IRecipeCategory<AssemblerRecipe> {
 
             builder.addSlot(RecipeIngredientRole.INPUT, 15, 16 + (56 - inH1))
                     .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput1().getFluidStacks())
-                    .setFluidRenderer(in1.getAmount(), false, 10, inH1);
+                    .setFluidRenderer(in1.getAmount(), false, 10, inH1)
+                    .addTooltipCallback(AsTechJEIPlugin.defaultOutputTooltip(recipe.getInput1()));
 
         }
 

@@ -190,6 +190,11 @@ public class FluidIngredient extends Ingredient {
         return fluids;
     }
 
+
+    public TagKey<Fluid> getFluidTagKey() {
+        return fluidTagKey;
+    }
+
     @Override
     public boolean isEmpty() {
         return getFluidList().isEmpty() || getFluidList().stream().allMatch(f -> f == Fluids.EMPTY);

@@ -12,7 +12,7 @@
       "    A    "
     ],
     "key": {
-      "A": { "tag": "forge:ingots/neutronium" },
+      "A": { "tag": "forge:ingots/neutron" },
       "B": { "item": "astech:endest_pearl" },
       "C": { "tag": "forge:genetic_material" },
       "D": { "item": "astech:infinity_nugget" },

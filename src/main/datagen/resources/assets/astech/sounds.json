@@ -47,6 +47,15 @@
       }
     ]
   },
+  "nevergonna": {
+    "sounds": [
+      {
+        "name": "astech:nevergonna",
+        "stream": true,
+        "volume": 0.7
+      }
+    ]
+  },
   "laser_machine": {
     "sounds": [
       {

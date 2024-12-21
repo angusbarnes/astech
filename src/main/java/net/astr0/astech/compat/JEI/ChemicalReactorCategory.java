@@ -79,11 +79,13 @@ public class ChemicalReactorCategory implements IRecipeCategory<ChemicalReactorR
 
         builder.addSlot(RecipeIngredientRole.INPUT, 36, 16 + (56 - inH1))
                 .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput1().getFluidStacks())
-                .setFluidRenderer(in1.getAmount(), false, 10, inH1);
+                .setFluidRenderer(in1.getAmount(), false, 10, inH1)
+                .addTooltipCallback(AsTechJEIPlugin.defaultOutputTooltip(recipe.getInput1()));
         //.setOverlay(Helpers.makeTankOverlay(inH1), 0, 0);
         builder.addSlot(RecipeIngredientRole.INPUT, 54, 16 + (56 - inH2))
                 .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput2().getFluidStacks())
-                .setFluidRenderer(in2.getAmount(), false, 10, inH2);
+                .setFluidRenderer(in2.getAmount(), false, 10, inH2)
+                .addTooltipCallback(AsTechJEIPlugin.defaultOutputTooltip(recipe.getInput2()));
         //.setOverlay(Helpers.makeTankOverlay(inH2), 0, 0);
 
 

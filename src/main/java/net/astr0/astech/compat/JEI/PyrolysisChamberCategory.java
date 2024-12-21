@@ -77,7 +77,8 @@ public class PyrolysisChamberCategory implements IRecipeCategory<PyrolysisChambe
 
         builder.addSlot(RecipeIngredientRole.INPUT, 44, 16 + (56 - inH1))
                 .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput1().getFluidStacks())
-                .setFluidRenderer(in1.getAmount(), false, 10, inH1);
+                .setFluidRenderer(in1.getAmount(), false, 10, inH1)
+                .addTooltipCallback(AsTechJEIPlugin.defaultOutputTooltip(recipe.getInput1()));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 110, 16 + (56 - outH1))
                 .addIngredient(ForgeTypes.FLUID_STACK, recipe.getOutput1())

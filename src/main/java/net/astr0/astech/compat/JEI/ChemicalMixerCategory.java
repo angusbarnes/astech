@@ -72,12 +72,14 @@ public class ChemicalMixerCategory implements IRecipeCategory<ChemicalMixerRecip
         if(!recipe.getInput1().isEmpty()) {
             builder.addSlot(RecipeIngredientRole.INPUT, 34, 18 + (56 - inH1))
                     .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput1().getFluidStacks())
-                    .setFluidRenderer(in1.getAmount(), false, 10, inH1);
+                    .setFluidRenderer(in1.getAmount(), false, 10, inH1)
+                    .addTooltipCallback(AsTechJEIPlugin.defaultOutputTooltip(recipe.getInput1()));
         }
         if (!recipe.getInput2().isEmpty()) {
             builder.addSlot(RecipeIngredientRole.INPUT, 48, 18 + (56 - inH2))
                     .addIngredients(ForgeTypes.FLUID_STACK, recipe.getInput2().getFluidStacks())
-                    .setFluidRenderer(in2.getAmount(), false, 10, inH2);
+                    .setFluidRenderer(in2.getAmount(), false, 10, inH2)
+                    .addTooltipCallback(AsTechJEIPlugin.defaultOutputTooltip(recipe.getInput2()));
         }
 
         Ingredient input1 = recipe.getInputItems().get(0);

@@ -36,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 public class CoolantBlockEntity extends AbstractMachineBlockEntity {
 
 
-    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(1,10000) {
+    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(1,10000, true) {
         @Override
         protected void onContentsChanged() {
             setChanged();

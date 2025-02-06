@@ -850,6 +850,8 @@ for chemdef in chemicals:
 
     datapack.add_item_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
     datapack.add_block_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
+    datapack.add_simple_block_loot(f"{fluid_name}_block")
+    datapack.add_block_tag(f"minecraft:mineable/pickaxe", f"astech:{fluid_name}_block")
     
     datapack.add_item_tag(f"forge:ingots/{fluid_name}", f"astech:{fluid_name}_ingot")
     datapack.add_item_tag(f"forge:nuggets/{fluid_name}", f"astech:{fluid_name}_nugget")

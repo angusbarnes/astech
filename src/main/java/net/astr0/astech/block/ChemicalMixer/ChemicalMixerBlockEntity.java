@@ -112,7 +112,7 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         }
     };
 
-    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(1,20000) {
+    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(1,20000, true) {
         @Override
         protected void onContentsChanged() {
             setChanged();

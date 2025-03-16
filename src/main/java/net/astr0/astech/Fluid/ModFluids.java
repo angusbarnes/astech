@@ -225,6 +225,12 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_REFINED_SILICON.get(), Ren
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_REFINED_SILICON.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TREATED_BIODIESEL.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TREATED_BIODIESEL.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_POTASSIUM_DICHROMATE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_POTASSIUM_DICHROMATE.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HIGH_CARBON_STEEL_52100.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HIGH_CARBON_STEEL_52100.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ENGINEERED_ALLOY.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ENGINEERED_ALLOY.get(), RenderType.translucent());
         //#end RENDER_REGION
     }
 
@@ -1205,7 +1211,7 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TREATED_BIODIESEL.get(), Re
     public static final ForgeFlowingFluid.Properties MONOCRYSTALINE_SILICON_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             MONOCRYSTALINE_SILICON_FLUID_TYPE, SOURCE_MONOCRYSTALINE_SILICON, FLOWING_MONOCRYSTALINE_SILICON)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("monocrystaline_silicon", SOURCE_MONOCRYSTALINE_SILICON))
-            .bucket(ModItems.registerBucketItem("monocrystaline_silicon", SOURCE_MONOCRYSTALINE_SILICON, HazardBehavior.BehaviorType.NONE));
+            .bucket(ModItems.registerBucketItem("monocrystaline_silicon", SOURCE_MONOCRYSTALINE_SILICON, HazardBehavior.BehaviorType.SUFFOCATE));
     
 
     public static final RegistryObject<FluidType> REFINED_SILICON_FLUID_TYPE = registerType("refined_silicon", "", "#666666");
@@ -1228,6 +1234,39 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TREATED_BIODIESEL.get(), Re
             TREATED_BIODIESEL_FLUID_TYPE, SOURCE_TREATED_BIODIESEL, FLOWING_TREATED_BIODIESEL)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("treated_biodiesel", SOURCE_TREATED_BIODIESEL))
             .bucket(ModItems.registerBucketItem("treated_biodiesel", SOURCE_TREATED_BIODIESEL, HazardBehavior.BehaviorType.NONE));
+    
+
+    public static final RegistryObject<FluidType> POTASSIUM_DICHROMATE_FLUID_TYPE = registerType("potassium_dichromate", "", "#d91455");
+    public static final RegistryObject<FlowingFluid> SOURCE_POTASSIUM_DICHROMATE = FLUIDS.register("potassium_dichromate",
+            () -> new ForgeFlowingFluid.Source(ModFluids.POTASSIUM_DICHROMATE_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_POTASSIUM_DICHROMATE = FLUIDS.register("flowing_potassium_dichromate",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.POTASSIUM_DICHROMATE_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties POTASSIUM_DICHROMATE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            POTASSIUM_DICHROMATE_FLUID_TYPE, SOURCE_POTASSIUM_DICHROMATE, FLOWING_POTASSIUM_DICHROMATE)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("potassium_dichromate", SOURCE_POTASSIUM_DICHROMATE))
+            .bucket(ModItems.registerBucketItem("potassium_dichromate", SOURCE_POTASSIUM_DICHROMATE, HazardBehavior.BehaviorType.SUFFOCATE));
+    
+
+    public static final RegistryObject<FluidType> HIGH_CARBON_STEEL_52100_FLUID_TYPE = registerType("high_carbon_steel_52100", "", "#2b2b29");
+    public static final RegistryObject<FlowingFluid> SOURCE_HIGH_CARBON_STEEL_52100 = FLUIDS.register("high_carbon_steel_52100",
+            () -> new ForgeFlowingFluid.Source(ModFluids.HIGH_CARBON_STEEL_52100_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_HIGH_CARBON_STEEL_52100 = FLUIDS.register("flowing_high_carbon_steel_52100",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.HIGH_CARBON_STEEL_52100_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties HIGH_CARBON_STEEL_52100_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            HIGH_CARBON_STEEL_52100_FLUID_TYPE, SOURCE_HIGH_CARBON_STEEL_52100, FLOWING_HIGH_CARBON_STEEL_52100)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("high_carbon_steel_52100", SOURCE_HIGH_CARBON_STEEL_52100))
+            .bucket(ModItems.registerBucketItem("high_carbon_steel_52100", SOURCE_HIGH_CARBON_STEEL_52100, HazardBehavior.BehaviorType.NONE));
+    
+
+    public static final RegistryObject<FluidType> ENGINEERED_ALLOY_FLUID_TYPE = registerType("engineered_alloy", "", "#666666");
+    public static final RegistryObject<FlowingFluid> SOURCE_ENGINEERED_ALLOY = FLUIDS.register("engineered_alloy",
+            () -> new ForgeFlowingFluid.Source(ModFluids.ENGINEERED_ALLOY_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_ENGINEERED_ALLOY = FLUIDS.register("flowing_engineered_alloy",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.ENGINEERED_ALLOY_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties ENGINEERED_ALLOY_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            ENGINEERED_ALLOY_FLUID_TYPE, SOURCE_ENGINEERED_ALLOY, FLOWING_ENGINEERED_ALLOY)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("engineered_alloy", SOURCE_ENGINEERED_ALLOY))
+            .bucket(ModItems.registerBucketItem("engineered_alloy", SOURCE_ENGINEERED_ALLOY, HazardBehavior.BehaviorType.NONE));
     
     //#end FLUID_REGION
 }

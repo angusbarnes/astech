@@ -689,7 +689,17 @@ static_items = [
     'small_heat_exchanger', 
     'cosmic_meatballs', 
     'quantum_circuit_board',
-    'blank_record'
+    'blank_record',
+    'tier_2_rocket_fin',
+    'tier_3_rocket_fin',
+    'tier_4_rocket_fin',
+    'tier_2_rocket_nose_cone',
+    'tier_3_rocket_nose_cone',
+    'tier_4_rocket_nose_cone',
+    'rocket_fuselage',
+    'tier_2_rocket_fuselage',
+    'tier_3_rocket_fuselage',
+    'tier_4_rocket_fuselage',
 ]
 
 

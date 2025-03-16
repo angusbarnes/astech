@@ -165,5 +165,7 @@ public static final RegistryObject<Block> XYLENE_BLOCK = registerBlock("xylene_b
 public static final RegistryObject<Block> PHOSPHORUS_BLOCK = registerBlock("phosphorus_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 public static final RegistryObject<Block> PHOSPHORUS_ORE = registerBlock("phosphorus_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));
 public static final RegistryObject<Block> DEEPSLATE_PHOSPHORUS_ORE = registerBlock("deepslate_phosphorus_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));
+public static final RegistryObject<Block> HIGH_CARBON_STEEL_52100_BLOCK = registerBlock("high_carbon_steel_52100_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+public static final RegistryObject<Block> ENGINEERED_ALLOY_BLOCK = registerBlock("engineered_alloy_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
     //#end BLOCK_REGION
 }

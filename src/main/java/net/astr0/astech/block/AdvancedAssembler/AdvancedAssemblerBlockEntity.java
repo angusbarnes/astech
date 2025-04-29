@@ -459,7 +459,7 @@ public class AdvancedAssemblerBlockEntity extends AbstractMachineBlockEntity {
             FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 36);
             inputItemHandler.WriteToFlexiPacket(packet);
             // Rebroadcast the change to listening clients
-            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
+            SERVER_RebroadcastToClients(packet);
         } else if (code == 37) {
             // Get the toggled slot lock
             int slot = msg.readInt();
@@ -469,7 +469,7 @@ public class AdvancedAssemblerBlockEntity extends AbstractMachineBlockEntity {
             FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 37);
             inputFluidTank.WriteToFlexiPacket(packet);
             // Rebroadcast the change to listening clients
-            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
+            SERVER_RebroadcastToClients(packet);
         } else if (code == 38) {
             // Get the toggled slot lock
             int slot = msg.readInt();

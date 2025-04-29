@@ -65,6 +65,16 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(CoolantBlockEntity::new,
                             ModBlocks.COOLANT_BLOCK.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<CoolantBlockEntity>> FLUID_INPUT_HATCH_BE =
+            BLOCK_ENTITIES.register("fluid_input_hatch", () ->
+                    BlockEntityType.Builder.of(CoolantBlockEntity::new,
+                            ModBlocks.FLUID_INPUT_HATCH_BLOCK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<CoolantBlockEntity>> FLUID_OUTPUT_HATCH_BE =
+            BLOCK_ENTITIES.register("fluid_output_hatch", () ->
+                    BlockEntityType.Builder.of(CoolantBlockEntity::new,
+                            ModBlocks.FLUID_OUTPUT_HATCH_BLOCK.get()).build(null));
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

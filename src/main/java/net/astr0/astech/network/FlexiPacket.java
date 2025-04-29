@@ -92,7 +92,7 @@ public class FlexiPacket {
         ctx.get().enqueueWork(() -> {
 
             if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT)  {
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> FlexiPacketHandler.handlePacket(msg, ctx));
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientFlexiPacketHandler.handlePacket(msg, ctx));
             } else {
                 var player = ctx.get().getSender();
 

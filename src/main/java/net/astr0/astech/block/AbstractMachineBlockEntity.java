@@ -125,6 +125,7 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
     @Override
     public void SetNetworkDirty() {
         _isNetworkDirty = true;
+        setChanged();
     }
 
     @Override
@@ -173,4 +174,7 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
 
     protected abstract void SERVER_WriteUpdateToFlexiPacket(FlexiPacket packet);
     protected abstract void CLIENT_ReadUpdateFromFlexiPacket(FlexiPacket packet);
+    protected void SERVER_RebroadcastToClients(FlexiPacket packet) {
+        AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
+    }
 }

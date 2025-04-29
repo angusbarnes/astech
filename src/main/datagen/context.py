@@ -208,6 +208,10 @@ class Context:
                 if master_tag_value not in self.MASTER_TAGS[namespace][master_path]:
                     self.MASTER_TAGS[namespace][master_path].append(master_tag_value)
 
+    def make_block_mineable(self, astech_block_id):
+        self.add_simple_block_loot(astech_block_id)
+        self.add_block_tag(f"minecraft:mineable/pickaxe", f"astech:{astech_block_id}")
+
     @staticmethod
     def _insert_text_in_region(file_path, region, new_text):
         # Define the anchors

@@ -269,6 +269,8 @@ datapack.set_base_dictionary({
     "block.astech.nic_block": "§cNic Block",
     "block.astech.cleanroom_wall": "Cleanroom Wall",
     "block.astech.coolant_block": "Coolant Block",
+    "block.astech.input_fluid_hatch": "Input Fluid Hatch",
+    "block.astech.output_fluid_hatch": "Output Fluid Hatch",
     "block.astech.gem_polishing_station": "Gem Polishing Station",
     "block.astech.chemical_mixer": "Chemical Mixer",
     "block.astech.assembler": "Assembler",
@@ -746,6 +748,8 @@ earth_ores = [
 #     with open(f'./resources/data/astech/worldgen/configured_feature/{ore}_ore.json', 'w') as configured_feature_file:
 #         configured_feature_file.write(configured_feature)
 
+
+
 datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_a')
 datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_b')
 datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_c')
@@ -760,6 +764,20 @@ datapack.add_fluid_tag('forge:photoresist', '#forge:tier_2_photoresist')
 
 datapack.add_fluid_tag('forge:tier_1_coolant', 'astech:methyl_chloride')
 datapack.add_fluid_tag('forge:tier_2_coolant', 'astech:gelid_cryotheum')
+
+
+
+datapack.make_block_mineable("fluid_input_hatch")
+datapack.make_block_mineable("fluid_output_hatch")
+datapack.make_block_mineable("assembler")
+datapack.make_block_mineable("advanced_assembler")
+datapack.make_block_mineable("chemical_reactor")
+datapack.make_block_mineable("electrolytic_seperator")
+datapack.make_block_mineable("pyrolysis_chamber")
+datapack.make_block_mineable("euv_machine")
+datapack.make_block_mineable("coolant_block")
+datapack.make_block_mineable("cleanroom_wall")
+datapack.make_block_mineable("nic_block")
 
 
 datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_helmet')

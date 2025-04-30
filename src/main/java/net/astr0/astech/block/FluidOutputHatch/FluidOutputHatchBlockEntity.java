@@ -70,7 +70,7 @@ public class FluidOutputHatchBlockEntity extends AbstractMachineBlockEntity {
             return lazyFluidHandler.cast();
         }
 
-        return super.getCapability(cap);
+        return super.getCapability(cap, side);
     }
 
     @Override

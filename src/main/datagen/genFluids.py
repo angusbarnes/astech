@@ -274,6 +274,8 @@ datapack.set_base_dictionary({
     "block.astech.gem_polishing_station": "Gem Polishing Station",
     "block.astech.chemical_mixer": "Chemical Mixer",
     "block.astech.assembler": "Assembler",
+    "block.astech.fluid_output_hatch": "Fluid Output Hatch",
+    "block.astech.fluid_input_hatch": "Fluid Input Hatch",
     "block.astech.advanced_assembler": "Advanced Assembler",
     "block.astech.chemical_reactor": "Chemical Reactor",
     "block.astech.electrolytic_seperator": "Electrolytic Seperator",
@@ -765,7 +767,11 @@ datapack.add_fluid_tag('forge:photoresist', '#forge:tier_2_photoresist')
 datapack.add_fluid_tag('forge:tier_1_coolant', 'astech:methyl_chloride')
 datapack.add_fluid_tag('forge:tier_2_coolant', 'astech:gelid_cryotheum')
 
+datapack.add_block_item_model("fluid_input_hatch")
+datapack.add_simple_block_model("fluid_input_hatch")
 
+datapack.add_block_item_model("fluid_output_hatch")
+datapack.add_simple_block_model("fluid_output_hatch")
 
 datapack.make_block_mineable("fluid_input_hatch")
 datapack.make_block_mineable("fluid_output_hatch")

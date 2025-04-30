@@ -32,6 +32,7 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.PYROLYSIS_CHAMBER.get());
                         output.accept(ModBlocks.EUV_MACHINE.get());
                         output.accept(ModBlocks.FLUID_INPUT_HATCH_BLOCK.get());
+                        output.accept(ModBlocks.FLUID_OUTPUT_HATCH_BLOCK.get());
                         output.accept(ModItems.ZEOLITE_CATALYST.get());
                         output.accept(ModItems.SILICON_BOOLE.get());
                         output.accept(ModItems.HELP_OF_DISC.get());

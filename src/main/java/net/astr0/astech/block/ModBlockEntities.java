@@ -7,6 +7,8 @@ import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlockEntity;
 import net.astr0.astech.block.CoolantBlock.CoolantBlockEntity;
 import net.astr0.astech.block.EUVMachine.EUVMachineBlockEntity;
 import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorBlockEntity;
+import net.astr0.astech.block.FluidInputHatch.FluidInputHatchBlockEntity;
+import net.astr0.astech.block.FluidOutputHatch.FluidOutputHatchBlockEntity;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlockEntity;
 import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberBlockEntity;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorBlockEntity;
@@ -65,14 +67,14 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(CoolantBlockEntity::new,
                             ModBlocks.COOLANT_BLOCK.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<CoolantBlockEntity>> FLUID_INPUT_HATCH_BE =
+    public static final RegistryObject<BlockEntityType<FluidInputHatchBlockEntity>> FLUID_INPUT_HATCH_BE =
             BLOCK_ENTITIES.register("fluid_input_hatch", () ->
-                    BlockEntityType.Builder.of(CoolantBlockEntity::new,
+                    BlockEntityType.Builder.of(FluidInputHatchBlockEntity::new,
                             ModBlocks.FLUID_INPUT_HATCH_BLOCK.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<CoolantBlockEntity>> FLUID_OUTPUT_HATCH_BE =
+    public static final RegistryObject<BlockEntityType<FluidOutputHatchBlockEntity>> FLUID_OUTPUT_HATCH_BE =
             BLOCK_ENTITIES.register("fluid_output_hatch", () ->
-                    BlockEntityType.Builder.of(CoolantBlockEntity::new,
+                    BlockEntityType.Builder.of(FluidOutputHatchBlockEntity::new,
                             ModBlocks.FLUID_OUTPUT_HATCH_BLOCK.get()).build(null));
 
     public static void register(IEventBus eventBus) {

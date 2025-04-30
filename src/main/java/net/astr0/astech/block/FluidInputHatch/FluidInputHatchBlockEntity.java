@@ -57,6 +57,12 @@ public class FluidInputHatchBlockEntity extends AbstractMachineBlockEntity {
         return null;
     }
 
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        lazyFluidHandler.invalidate();
+    }
+
     // We only support fluid handlers on all sides for this block
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {

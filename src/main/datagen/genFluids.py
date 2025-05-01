@@ -269,13 +269,12 @@ datapack.set_base_dictionary({
     "block.astech.nic_block": "§cNic Block",
     "block.astech.cleanroom_wall": "Cleanroom Wall",
     "block.astech.coolant_block": "Coolant Block",
-    "block.astech.input_fluid_hatch": "Input Fluid Hatch",
-    "block.astech.output_fluid_hatch": "Output Fluid Hatch",
     "block.astech.gem_polishing_station": "Gem Polishing Station",
     "block.astech.chemical_mixer": "Chemical Mixer",
     "block.astech.assembler": "Assembler",
     "block.astech.fluid_output_hatch": "Fluid Output Hatch",
     "block.astech.fluid_input_hatch": "Fluid Input Hatch",
+    "block.astech.energy_input_hatch": "Energy Input Hatch",
     "block.astech.advanced_assembler": "Advanced Assembler",
     "block.astech.chemical_reactor": "Chemical Reactor",
     "block.astech.electrolytic_seperator": "Electrolytic Seperator",
@@ -770,10 +769,14 @@ datapack.add_fluid_tag('forge:tier_2_coolant', 'astech:gelid_cryotheum')
 datapack.add_block_item_model("fluid_input_hatch")
 datapack.add_simple_block_model("fluid_input_hatch")
 
+datapack.add_block_item_model("energy_input_hatch")
+datapack.add_simple_block_model("energy_input_hatch")
+
 datapack.add_block_item_model("fluid_output_hatch")
 datapack.add_simple_block_model("fluid_output_hatch")
 
 datapack.make_block_mineable("fluid_input_hatch")
+datapack.make_block_mineable("energy_input_hatch")
 datapack.make_block_mineable("fluid_output_hatch")
 datapack.make_block_mineable("assembler")
 datapack.make_block_mineable("advanced_assembler")

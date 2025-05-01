@@ -7,7 +7,7 @@ import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlock;
 import net.astr0.astech.block.CoolantBlock.CoolantBlock;
 import net.astr0.astech.block.EUVMachine.EUVMachineBlock;
 import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorBlock;
-import net.astr0.astech.block.FluidInputHatch.FluidInputHatchBlock;
+import net.astr0.astech.block.EnergyInputHatch.EnergyInputHatchBlock;
 import net.astr0.astech.block.FluidOutputHatch.FluidOutputHatchBlock;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationBlock;
 import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberBlock;
@@ -91,10 +91,13 @@ public class ModBlocks {
             () -> new CoolantBlock(ModBlocks.MACHINE_DEFAULT_PROPS));
 
     public static final RegistryObject<Block> FLUID_INPUT_HATCH_BLOCK = registerBlock("fluid_input_hatch",
-            () -> new FluidInputHatchBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+            () -> new EnergyInputHatchBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
     public static final RegistryObject<Block> FLUID_OUTPUT_HATCH_BLOCK = registerBlock("fluid_output_hatch",
             () -> new FluidOutputHatchBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+
+    public static final RegistryObject<Block> ENERGY_INPUT_HATCH_BLOCK = registerBlock("energy_input_hatch",
+            () -> new EnergyInputHatchBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
 
     public static BlockBehaviour.Properties MACHINE_DEFAULT_PROPS = BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)

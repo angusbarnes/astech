@@ -33,7 +33,7 @@ public abstract class AbstractMultiblockControllerBlockEntity extends BlockEntit
         if (level == null) return false;
 
         BlockState controllerState = level.getBlockState(worldPosition);
-        Direction facing = controllerState.getValue(FACING);
+        Direction facing = controllerState.getValue(BlockEntityProperties.FACING);
 
         for (Map.Entry<BlockPos, MultiblockMatcher> entry : getStructurePattern().entrySet()) {
             BlockPos relativeOffset = entry.getKey();

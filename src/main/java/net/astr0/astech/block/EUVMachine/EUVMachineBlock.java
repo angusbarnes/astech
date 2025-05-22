@@ -1,5 +1,6 @@
 package net.astr0.astech.block.EUVMachine;
 
+import net.astr0.astech.block.BlockEntityProperties;
 import net.astr0.astech.block.ITickableBlockEntity;
 import net.astr0.astech.block.ModBlocks;
 import net.minecraft.core.BlockPos;
@@ -31,14 +32,14 @@ public class EUVMachineBlock extends HorizontalDirectionalBlock implements Entit
     public EUVMachineBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
-        registerDefaultState(stateDefinition.any().setValue(ModBlocks.BLOCKSTATE_ACTIVE, false));
+        registerDefaultState(stateDefinition.any().setValue(BlockEntityProperties.ACTIVE, false));
     }
 
     @Override
     protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(FACING);
-        builder.add(ModBlocks.BLOCKSTATE_ACTIVE);
+        builder.add(BlockEntityProperties.ACTIVE);
     }
 
     // This is called when the block is destroyed, it over-rides BaseEntityBlock

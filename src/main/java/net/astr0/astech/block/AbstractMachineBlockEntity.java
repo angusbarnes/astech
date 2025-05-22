@@ -37,9 +37,9 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
         if(activeState != isActive) {
             isActive = activeState;
 
-            if (getBlockState().hasProperty(ModBlocks.BLOCKSTATE_ACTIVE)) {
+            if (getBlockState().hasProperty(BlockEntityProperties.ACTIVE)) {
                 if(level != null) {
-                    level.setBlock(worldPosition, getBlockState().setValue(ModBlocks.BLOCKSTATE_ACTIVE, isActive), 2 | 8 | 16);
+                    level.setBlock(worldPosition, getBlockState().setValue(BlockEntityProperties.ACTIVE, isActive), 2 | 8 | 16);
                 }
             }
         }

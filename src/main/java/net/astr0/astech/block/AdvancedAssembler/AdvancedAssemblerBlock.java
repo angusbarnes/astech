@@ -1,5 +1,6 @@
 package net.astr0.astech.block.AdvancedAssembler;
 
+import net.astr0.astech.block.BlockEntityProperties;
 import net.astr0.astech.block.ITickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
@@ -25,19 +25,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class AdvancedAssemblerBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
-    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
-
     public AdvancedAssemblerBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
-        registerDefaultState(stateDefinition.any().setValue(ACTIVE, false));
+        registerDefaultState(stateDefinition.any().setValue(BlockEntityProperties.ACTIVE, false));
     }
 
     @Override
     protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(FACING);
-        builder.add(ACTIVE);
+        builder.add(BlockEntityProperties.ACTIVE);
     }
 
     // This is called when the block is destroyed, it over-rides BaseEntityBlock

@@ -2,6 +2,7 @@ package net.astr0.astech.compat.JEI;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.ingredient.IRecipeSlotTooltipCallback;
 import mezz.jei.api.registration.*;
@@ -22,7 +23,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -73,6 +73,9 @@ public class AsTechJEIPlugin implements IModPlugin {
                 .getAllRecipesFor(ModRecipes.EUV_MACHINE_RECIPE_TYPE.get());
         registration.addRecipes(EUVMachineCategory.EUV_MACHINE_TYPE, euvRecipes);
 
+        registration.addIngredientInfo(new ItemStack(ModBlocks.STIPNICIUM_ORE.get().asItem()), VanillaTypes.ITEM_STACK, Component.literal("Can be found underground on mars in small veins"));
+        registration.addIngredientInfo(new ItemStack(ModBlocks.BROMINE_ORE.get().asItem()), VanillaTypes.ITEM_STACK, Component.literal("Can be found underground on mars in small veins"));
+        registration.addIngredientInfo(new ItemStack(ModBlocks.COBALT_ORE.get().asItem()), VanillaTypes.ITEM_STACK, Component.literal("Can be found underground on mars in small veins"));
         //#anchor INFO_REGION
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ACETIC_ACID.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("The main component of vinegar apart from water."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ACETONE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A common solvent used in nail polish remover."));

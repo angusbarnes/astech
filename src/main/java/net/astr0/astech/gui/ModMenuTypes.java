@@ -10,6 +10,7 @@ import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorMenu;
 import net.astr0.astech.block.GemPolisher.GemPolishingStationMenu;
 import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberMenu;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorMenu;
+import net.astr0.astech.item.CableToolMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -49,6 +50,9 @@ public class ModMenuTypes {
 
     public static final RegistryObject<MenuType<CoolantBlockMenu>> COOLANT_BLOCK_MENU =
             registerMenuType("coolant_block_menu", CoolantBlockMenu::new);
+
+    public static final RegistryObject<MenuType<CableToolMenu>> CABLE_TOOL_MENU =
+            registerMenuType("cable_tool_menu", CableToolMenu::new);
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IForgeMenuType.create(factory));

@@ -48,6 +48,7 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.CLEANROOM_BLOCK.get());
                         output.accept(ModBlocks.COOLANT_BLOCK.get());
                         output.accept(ModBlocks.GEM_POLISHING_STATION.get());
+                        output.accept(ModItems.CABLE_LAYING_TOOL.get());
 
                         //#anchor TAB_REGION
 output.accept(ModItems.ABYSSIUM_INGOT.get());

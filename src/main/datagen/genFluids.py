@@ -264,6 +264,7 @@ datapack.set_base_dictionary({
     "item.astech.deez_butts": "Deez Butts",
     "item.astech.zeolite_catalyst": "Zeolite Catalyst",
     "item.astech.monocrystalline_silicon": "Monocrystalline Silicon Boole",
+    "item.astech.cable_laying_tool": "Cable Laying Tool",
     "item.astech.god_forged_ingot": "God Forged Ingot",
     "creativetab.astech_tab": "AsTech Items",
     "block.astech.nic_block": "§cNic Block",
@@ -809,6 +810,7 @@ datapack.add_simple_item_model('mir_disc')
 datapack.add_simple_item_model('stolen_identity_disc')
 datapack.add_simple_item_model('zeolite_catalyst')
 datapack.add_simple_item_model('monocrystalline_silicon')
+datapack.add_simple_item_model('cable_laying_tool')
 
 TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
 ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
@@ -889,6 +891,8 @@ for chemdef in chemicals:
     datapack.add_block_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
     datapack.add_simple_block_loot(f"{fluid_name}_block")
     datapack.add_block_tag(f"minecraft:mineable/pickaxe", f"astech:{fluid_name}_block")
+
+    datapack.add_block_tag("astech:cable_block", "minecraft:deepslate")
     
     datapack.add_item_tag(f"forge:ingots/{fluid_name}", f"astech:{fluid_name}_ingot")
     datapack.add_item_tag(f"forge:nuggets/{fluid_name}", f"astech:{fluid_name}_nugget")

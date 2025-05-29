@@ -17,6 +17,7 @@ import net.astr0.astech.block.ReactionChamber.ChemicalReactorScreen;
 import net.astr0.astech.compat.mek.AsTechSlurries;
 import net.astr0.astech.gui.ModMenuTypes;
 import net.astr0.astech.item.AsTechBucketItem;
+import net.astr0.astech.item.CableToolScreen;
 import net.astr0.astech.item.ModItems;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.recipe.ModRecipes;
@@ -140,6 +141,7 @@ public class AsTech
             MenuScreens.register(ModMenuTypes.PYROLYSIS_CHAMBER_MENU.get(), PyrolysisChamberScreen::new);
             MenuScreens.register(ModMenuTypes.EUV_MACHINE_MENU.get(), EUVMachineScreen::new);
             MenuScreens.register(ModMenuTypes.COOLANT_BLOCK_MENU.get(), CoolantBlockScreen::new);
+            MenuScreens.register(ModMenuTypes.CABLE_TOOL_MENU.get(), CableToolScreen::new);
         }
     }
 }

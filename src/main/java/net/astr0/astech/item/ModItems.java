@@ -45,6 +45,7 @@ public class ModItems {
             return true;
         }
     });
+    public static final RegistryObject<Item> CABLE_LAYING_TOOL = ITEMS.register("cable_laying_tool", () -> new CableLayingToolItem(new Item.Properties().durability(1000).rarity(Rarity.EPIC)));
 
 
 

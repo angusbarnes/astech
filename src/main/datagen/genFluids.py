@@ -837,7 +837,7 @@ for chemdef in chemicals:
     hazard = hazard_types[chemdef['Hazard Type']] if chemdef.get('Hazard Type') in hazard_types else 'HazardBehavior.BehaviorType.NONE'
 
     datapack.add_text_to_region(FLUIDS_FILE, 'FLUID_REGION', f"""
-    public static final RegistryObject<FluidType> {fluid_name.upper()}_FLUID_TYPE = registerType("{fluid_name}", "{chemdef['Form']}", "{chemdef['Color']}");
+    public static final RegistryObject<FluidType> {fluid_name.upper()}_FLUID_TYPE = registerType("{fluid_name}", "{chemdef['Form']}", "{chemdef['Color']}", {hazard});
     public static final RegistryObject<FlowingFluid> SOURCE_{fluid_name.upper()} = FLUIDS.register("{fluid_name}",
             () -> new ForgeFlowingFluid.Source(ModFluids.{fluid_name.upper()}_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_{fluid_name.upper()} = FLUIDS.register("flowing_{fluid_name}",
@@ -845,7 +845,7 @@ for chemdef in chemicals:
     public static final ForgeFlowingFluid.Properties {fluid_name.upper()}_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             {fluid_name.upper()}_FLUID_TYPE, SOURCE_{fluid_name.upper()}, FLOWING_{fluid_name.upper()})
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("{fluid_name}", SOURCE_{fluid_name.upper()}))
-            .bucket(ModItems.registerBucketItem("{fluid_name}", SOURCE_{fluid_name.upper()}, {hazard}));
+            .bucket(ModItems.registerBucketItem("{fluid_name}", SOURCE_{fluid_name.upper()}));
     """)
 
     if chemdef['Description']:

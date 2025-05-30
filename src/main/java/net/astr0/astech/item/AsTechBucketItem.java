@@ -1,5 +1,6 @@
 package net.astr0.astech.item;
 
+import net.astr0.astech.Fluid.AsTechChemicalFluidType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -35,14 +36,14 @@ import java.util.function.Supplier;
 
 public class AsTechBucketItem extends BucketItem {
     private final String _tooltip_key;
-    private final HazardBehavior _type;
+    private final Supplier<HazardBehavior> _typeSupplier;
 
     public static final TagKey<Item> myItemTag = ItemTags.create(new ResourceLocation("forge", "chemical_protection"));
 
-    public AsTechBucketItem(Supplier<? extends Fluid> supplier, Properties builder, String tooltip_key, HazardBehavior.BehaviorType damageType) {
+    public AsTechBucketItem(Supplier<? extends Fluid> supplier, Properties builder, String tooltip_key) {
         super(supplier, builder);
         _tooltip_key = tooltip_key;
-        _type = new HazardBehavior(damageType);
+        _typeSupplier = () -> ((AsTechChemicalFluidType) supplier.get().getFluidType()).getHazardBehavior();
     }
 
     @Override
@@ -66,7 +67,7 @@ public class AsTechBucketItem extends BucketItem {
 //                    LogUtils.getLogger().info("Checked {} against {} and found that it failed. Had {}",
 //                        armorPiece.getDisplayName().getString(), myItemTag.toString(), armorPiece.getTags().toList().toString()
 //                    );
-                    _type.apply(stack, (LivingEntity) entity, level);
+                    _typeSupplier.get().apply(stack, (LivingEntity) entity, level);
                     return;
                 }
             }

@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.astr0.astech.AsTech;
 import net.astr0.astech.Fluid.helpers.AsTechFluidType;
 import net.astr0.astech.gui.TintColor;
+import net.astr0.astech.item.HazardBehavior;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
@@ -44,8 +45,10 @@ public class AsTechChemicalFluidType extends FluidType {
     private final int tintColor;
     private final Vector3f fogColor;
     private final AsTechFluidType type;
+    private final HazardBehavior hazardBehavior;
 
-    public AsTechChemicalFluidType(TintColor tint, AsTechFluidType type, final Properties properties) {
+
+    public AsTechChemicalFluidType(TintColor tint, AsTechFluidType type, final Properties properties, HazardBehavior.BehaviorType hazardType) {
         super(properties);
 
         this.tintColor = tint.getTintColor();
@@ -65,6 +68,12 @@ public class AsTechChemicalFluidType extends FluidType {
         }
 
         this.overlayTexture = WATER_STILL_RL;
+
+        hazardBehavior = new HazardBehavior(hazardType);
+    }
+
+    public HazardBehavior getHazardBehavior() {
+        return hazardBehavior;
     }
 
     @Override

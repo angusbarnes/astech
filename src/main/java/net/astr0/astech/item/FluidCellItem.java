@@ -1,6 +1,6 @@
 package net.astr0.astech.item;
 
-import com.mojang.logging.LogUtils;
+import net.astr0.astech.Fluid.AsTechChemicalFluidType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -8,10 +8,15 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -56,6 +61,27 @@ public class FluidCellItem extends Item {
     @Override
     public @Nullable ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
         return new FluidHandlerItemCapability(stack);
+    }
+
+    public static final TagKey<Item> myItemTag = ItemTags.create(new ResourceLocation("forge", "chemical_protection"));
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+
+        super.inventoryTick(stack, level, entity, slotId, isSelected);
+        if(level.isClientSide() || !(entity instanceof LivingEntity livingEntity)) return;
+
+        Fluid fluid = getFluid(stack).getFluid();
+
+        if (fluid.getFluidType() instanceof AsTechChemicalFluidType hazardousFluid) {
+            if(livingEntity.tickCount % 20 == 0) {
+                for(ItemStack armorPiece : livingEntity.getArmorSlots()) {
+                    if (!armorPiece.is(myItemTag)) {
+                        hazardousFluid.getHazardBehavior().apply(stack, (LivingEntity) entity, level);
+                        return;
+                    }
+                }
+            }
+        }
     }
 
     // Add tooltip to show fluid contents
@@ -451,15 +477,13 @@ public class FluidCellItem extends Item {
         public static void registerSpawnEggColors(RegisterColorHandlersEvent.Item event) {
 
             event.register((stack, tintIndex) -> {
-                LogUtils.getLogger().info("We finna try tint some shit ayeeeeeeeeeeeeeeeeeeeeeeeeee");
+
                 if (tintIndex == 1) { // layer1 (overlay) gets tinted
                     FluidStack fluid = FluidCellItem.getFluid(stack);
                     if (!fluid.isEmpty()) {
                         // Get fluid color using client extensions
                         IClientFluidTypeExtensions fluidExtensions = IClientFluidTypeExtensions.of(fluid.getFluid());
                         int fluidColor = fluidExtensions.getTintColor(fluid);
-
-                        LogUtils.getLogger().info("Fluid be: {} with color: {}", fluid.getFluid().getFluidType().toString(), fluidColor);
 
                         // If no specific tint color, try block colors as fallback
                         if (fluidColor == -1 || fluidColor == 0xFFFFFF) {
@@ -481,7 +505,7 @@ public class FluidCellItem extends Item {
 
                         return fluidColor;
                     }
-                    return 0x000000; // Transparent/black when empty
+                    return 0x333333; // Transparent/black when empty
                 }
                 return 0xFFFFFF; // No tinting for layer0 (base)
             }, ModItems.FLUID_CELL.get());

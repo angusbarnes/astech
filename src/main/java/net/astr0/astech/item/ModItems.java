@@ -13,10 +13,10 @@ public class ModItems {
 
     // This is the global instance of the items registry
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, AsTech.MODID);
-    public static RegistryObject<Item> registerBucketItem(String fluidName, RegistryObject<FlowingFluid> source, HazardBehavior.BehaviorType hazard) {
+    public static RegistryObject<Item> registerBucketItem(String fluidName, RegistryObject<FlowingFluid> source) {
         return ITEMS.register(String.format("%s_bucket", fluidName),
                 () -> new AsTechBucketItem(source,
-                        new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), String.format("tooltip.%s.fluid", fluidName), hazard));
+                        new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), String.format("tooltip.%s.fluid", fluidName)));
     }
 
 

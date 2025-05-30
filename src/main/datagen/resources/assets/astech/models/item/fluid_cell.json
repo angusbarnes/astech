@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "astech:item/fluid_cell_base",
+    "layer1": "astech:item/fluid_cell_overlay"
+  }
+}

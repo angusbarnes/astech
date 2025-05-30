@@ -260,6 +260,9 @@ headers, chemicals = get_chemical_defs("chems.csv")
 datapack = Context('../resources/', 'astech')
 
 datapack.set_base_dictionary({
+    "item.astech.fluid_cell" : "Fluid Cell",
+    "tooltip.fluid_cell.contents": "Contains: %s (%d/%d mB)",
+    "tooltip.fluid_cell.empty": "Empty",
     "item.astech.deez_nuts": "Deez Nuts",
     "item.astech.deez_butts": "Deez Butts",
     "item.astech.zeolite_catalyst": "Zeolite Catalyst",

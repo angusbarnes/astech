@@ -46,6 +46,8 @@ public class ModItems {
         }
     });
     public static final RegistryObject<Item> CABLE_LAYING_TOOL = ITEMS.register("cable_laying_tool", () -> new CableLayingToolItem(new Item.Properties().durability(1000).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> FLUID_CELL = ITEMS.register("fluid_cell",
+            () -> new FluidCellItem(new Item.Properties().stacksTo(1)));
 
 
 

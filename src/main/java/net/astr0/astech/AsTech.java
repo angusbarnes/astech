@@ -142,6 +142,8 @@ public class AsTech
             MenuScreens.register(ModMenuTypes.EUV_MACHINE_MENU.get(), EUVMachineScreen::new);
             MenuScreens.register(ModMenuTypes.COOLANT_BLOCK_MENU.get(), CoolantBlockScreen::new);
             MenuScreens.register(ModMenuTypes.CABLE_TOOL_MENU.get(), CableToolScreen::new);
+
         }
+
     }
 }

@@ -21,6 +21,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -57,13 +58,27 @@ public class CableLayingToolItem extends Item {
 
     private Item filter_item;
 
+    private Block client_render_block = Blocks.GREEN_STAINED_GLASS;
+
+    public BlockState getRenderBlockState() {
+        return client_render_block.defaultBlockState();
+    }
+
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         Player player = context.getPlayer();
         ItemStack stack = context.getItemInHand();
 
-        if (level.isClientSide || player == null) return InteractionResult.SUCCESS;
+        BlockPos clickPos = context.getClickedPos();
+        BlockPos targetPos = clickPos.relative(context.getClickedFace());
+
+        if (level.isClientSide || player == null) {
+            if (player != null && player.isShiftKeyDown()) {
+                client_render_block = level.getBlockState(clickPos).getBlock();
+            }
+            return InteractionResult.SUCCESS;
+        }
 
         if(!player.isCrouching() && player instanceof ServerPlayer serverPlayer) {
 
@@ -78,19 +93,15 @@ public class CableLayingToolItem extends Item {
         }
 
         CompoundTag tag = stack.getOrCreateTag();
-        BlockPos clickPos = context.getClickedPos();
-        BlockPos targetPos = clickPos.relative(context.getClickedFace());
-
 
 
         boolean isCableBlock = level.getBlockState(clickPos).getTags().anyMatch(blockTagKey -> blockTagKey.equals(BlockTags.create(new ResourceLocation("astech","cable_block"))));
 
-        if (!isCableBlock) {
-            return InteractionResult.SUCCESS;
-        }
+//        if (!isCableBlock) {
+//            return InteractionResult.SUCCESS;
+//        }
 
-
-        if (!tag.contains("start")) {
+        if (!tag.contains("start") && isCableBlock) {
             tag.put("start", NbtUtils.writeBlockPos(targetPos));
             filter_item = level.getBlockState(clickPos).getBlock().asItem();
             LogUtils.getLogger().info("====> Filter Item Set: {}", filter_item.getDescriptionId());
@@ -117,10 +128,10 @@ public class CableLayingToolItem extends Item {
     private boolean layCables(Level level, BlockPos start, BlockPos end, ItemStack toolStack, Player player) {
         LogUtils.getLogger().info("====> Attempting to lay cables");
 
-        if (!isStraightLine(start, end)) {
-            player.displayClientMessage(Component.literal("Can only lay in a straight line!"), true);
-            return false;
-        }
+//        if (!isStraightLine(start, end)) {
+//            player.displayClientMessage(Component.literal("Can only lay in a straight line!"), true);
+//            return false;
+//        }
 
         LogUtils.getLogger().info("====> Cable was straight");
 
@@ -151,29 +162,27 @@ public class CableLayingToolItem extends Item {
         return true;
     }
 
-    private boolean isStraightLine(BlockPos a, BlockPos b) {
-        return (a.getX() == b.getX() && a.getY() == b.getY()) ||
-                (a.getX() == b.getX() && a.getZ() == b.getZ()) ||
-                (a.getY() == b.getY() && a.getZ() == b.getZ());
-    }
+//    private boolean isStraightLine(BlockPos a, BlockPos b) {
+//        return (a.getX() == b.getX() && a.getY() == b.getY()) ||
+//                (a.getX() == b.getX() && a.getZ() == b.getZ()) ||
+//                (a.getY() == b.getY() && a.getZ() == b.getZ());
+//    }
 
     private List<BlockPos> getLineBetween(BlockPos start, BlockPos end) {
-        List<BlockPos> list = new ArrayList<>();
-        Direction dir = Direction.getNearest(
-                Integer.compare(end.getX(), start.getX()),
-                Integer.compare(end.getY(), start.getY()),
-                Integer.compare(end.getZ(), start.getZ())
-        );
+        List<BlockPos> path = new ArrayList<>();
+        int dx = Integer.compare(end.getX(), start.getX());
+        int dy = Integer.compare(end.getY(), start.getY());
+        int dz = Integer.compare(end.getZ(), start.getZ());
+
         BlockPos current = start;
-
-        list.add(current);
-
         while (!current.equals(end)) {
-            current = current.relative(dir);
-            list.add(current);
+            path.add(current);
+            if (current.getX() != end.getX()) current = current.offset(dx, 0, 0);
+            else if (current.getY() != end.getY()) current = current.offset(0, dy, 0);
+            else if (current.getZ() != end.getZ()) current = current.offset(0, 0, dz);
         }
-
-        return list;
+        path.add(end);
+        return path;
     }
 
     private ItemStack findFirstPlaceableBlock(ItemStackHandler handler, Level level, BlockPos pos) {

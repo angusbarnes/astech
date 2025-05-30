@@ -893,6 +893,7 @@ for chemdef in chemicals:
     datapack.add_block_tag(f"minecraft:mineable/pickaxe", f"astech:{fluid_name}_block")
 
     datapack.add_block_tag("astech:cable_block", "minecraft:deepslate")
+    datapack.add_block_tag("astech:cable_block", "mekanism:basic_universal_cable")
     
     datapack.add_item_tag(f"forge:ingots/{fluid_name}", f"astech:{fluid_name}_ingot")
     datapack.add_item_tag(f"forge:nuggets/{fluid_name}", f"astech:{fluid_name}_nugget")

@@ -14,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -34,7 +33,7 @@ public class CableRenderHandler {
     public static void onRenderWorldLast(RenderLevelStageEvent event) {
 
         // Only render after all world blocks have been rendered correctly
-        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_LEVEL)
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS)
             return;
 
 
@@ -50,19 +49,18 @@ public class CableRenderHandler {
             BlockPos startPos = NbtUtils.readBlockPos(tag.getCompound("start"));
 
             // Get target pos (e.g., from raytrace or camera pos)
-            BlockHitResult hit = (BlockHitResult) mc.hitResult;
-            if (hit == null) return;
+            if (!(mc.hitResult instanceof BlockHitResult hit)) return;
 
             BlockPos endPos = hit.getBlockPos().relative(hit.getDirection());
 
             List<BlockPos> path = getStraightLinePath(startPos, endPos);
 
             // Render ghost blocks for each block in the path
-            renderGhostBlocks(event.getPoseStack(), path, event.getCamera());
+            renderGhostBlocks(event.getPoseStack(), path, event.getCamera(), toolItem.getRenderBlockState());
         }
     }
 
-    private static void renderGhostBlocks(PoseStack poseStack, List<BlockPos> path, Camera camera) {
+    private static void renderGhostBlocks(PoseStack poseStack, List<BlockPos> path, Camera camera, BlockState blockToRender) {
         Vec3 cameraPos = camera.getPosition();
         Minecraft mc = Minecraft.getInstance();
         BlockRenderDispatcher blockRenderer = mc.getBlockRenderer();
@@ -85,8 +83,6 @@ public class CableRenderHandler {
         // Begin rendering translucent quads
         buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
 
-        // Define the ghost block state (you can change this to any block you want)
-        BlockState ghostBlockState = Blocks.WHITE_STAINED_GLASS.defaultBlockState();
 
         // Render each ghost block
         for (BlockPos pos : path) {
@@ -94,7 +90,7 @@ public class CableRenderHandler {
             poseStack.translate(pos.getX(), pos.getY(), pos.getZ());
 
             // Render the block model with translucency
-            renderGhostBlock(blockRenderer, buffer, poseStack, ghostBlockState, pos);
+            renderGhostBlock(blockRenderer, buffer, poseStack, blockToRender, pos);
 
             poseStack.popPose();
         }

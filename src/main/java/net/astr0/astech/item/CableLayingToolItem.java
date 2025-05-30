@@ -97,14 +97,11 @@ public class CableLayingToolItem extends Item {
 
         boolean isCableBlock = level.getBlockState(clickPos).getTags().anyMatch(blockTagKey -> blockTagKey.equals(BlockTags.create(new ResourceLocation("astech","cable_block"))));
 
-//        if (!isCableBlock) {
-//            return InteractionResult.SUCCESS;
-//        }
 
         if (!tag.contains("start") && isCableBlock) {
             tag.put("start", NbtUtils.writeBlockPos(targetPos));
             filter_item = level.getBlockState(clickPos).getBlock().asItem();
-            LogUtils.getLogger().info("====> Filter Item Set: {}", filter_item.getDescriptionId());
+
             player.displayClientMessage(Component.literal("Start point set."), true);
         } else {
             BlockPos start = NbtUtils.readBlockPos(tag.getCompound("start"));
@@ -126,25 +123,13 @@ public class CableLayingToolItem extends Item {
     }
 
     private boolean layCables(Level level, BlockPos start, BlockPos end, ItemStack toolStack, Player player) {
-        LogUtils.getLogger().info("====> Attempting to lay cables");
-
-//        if (!isStraightLine(start, end)) {
-//            player.displayClientMessage(Component.literal("Can only lay in a straight line!"), true);
-//            return false;
-//        }
-
-        LogUtils.getLogger().info("====> Cable was straight");
 
         ItemStackHandler inventory = getInventory(toolStack);
         List<BlockPos> path = getLineBetween(start, end);
         int placed = 0;
 
-        LogUtils.getLogger().info("====> Path Length: {}", path.size());
-
         for (BlockPos pos : path) {
-            LogUtils.getLogger().info("====> Checking {}. Found: {}", pos.toShortString(), level.getBlockState(pos).getBlock().getName());
             if (!level.getBlockState(pos).isAir()) continue;
-            LogUtils.getLogger().info("====> Block was air: {}", pos.toShortString());
 
             ItemStack toPlace = findFirstPlaceableBlock(inventory, level, pos, stack -> stack.getItem() == filter_item);;
             if (!toPlace.isEmpty()) {
@@ -152,8 +137,6 @@ public class CableLayingToolItem extends Item {
                 level.setBlock(pos, block.defaultBlockState(), 3);
                 toPlace.shrink(1);
                 placed++;
-            } else {
-                LogUtils.getLogger().info("====> To Place was empty");
             }
         }
 
@@ -162,11 +145,6 @@ public class CableLayingToolItem extends Item {
         return true;
     }
 
-//    private boolean isStraightLine(BlockPos a, BlockPos b) {
-//        return (a.getX() == b.getX() && a.getY() == b.getY()) ||
-//                (a.getX() == b.getX() && a.getZ() == b.getZ()) ||
-//                (a.getY() == b.getY() && a.getZ() == b.getZ());
-//    }
 
     private List<BlockPos> getLineBetween(BlockPos start, BlockPos end) {
         List<BlockPos> path = new ArrayList<>();
@@ -192,7 +170,6 @@ public class CableLayingToolItem extends Item {
     private ItemStack findFirstPlaceableBlock(ItemStackHandler handler, Level level, BlockPos pos, @Nullable Predicate<ItemStack> filter) {
         for (int i = 0; i < handler.getSlots(); i++) {
             ItemStack stack = handler.getStackInSlot(i);
-            LogUtils.getLogger().info("====> Found stack: {}", stack.getItem().getDescriptionId());
 
             if (stack.isEmpty()) continue;
 

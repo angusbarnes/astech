@@ -13,7 +13,7 @@ import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 
-// The menu acts as the logic behind the screen, which utimately performs the screenspace drawing
+// The menu acts as the logic behind the screen, which ultimately performs the screenspace drawing
 public class AssemblerMenu extends AbstractContainerMenu {
     public final AssemblerBlockEntity blockEntity;
     private final Level level;
@@ -39,7 +39,7 @@ public class AssemblerMenu extends AbstractContainerMenu {
 
         // Get the item handler capability from our block entity, if it exists,
         // create (menu)Slot objects for it. We map these slots to corresponding item handler indexes
-        // The ItemHanlder cap is the ultimate authority on what can go in which index,
+        // The ItemHandler cap is the ultimate authority on what can go in which index,
         // These are high level helper classes which wrap an IItemHandler
         // This uses a top left origin on the textures
         this.blockEntity.getInputItemHandler().ifPresent(iItemHandler -> {

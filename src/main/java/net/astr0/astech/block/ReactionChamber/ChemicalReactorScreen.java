@@ -7,7 +7,6 @@ import net.astr0.astech.GraphicsUtils;
 import net.astr0.astech.gui.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -18,18 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 // This only gets registered on the client side
-public class ChemicalReactorScreen extends AbstractContainerScreen<ChemicalReactorMenu> {
+public class ChemicalReactorScreen extends AsTechGuiScreen<ChemicalReactorMenu> {
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(AsTech.MODID, "textures/gui/chemical_reactor.png");
 
     public ChemicalReactorScreen(ChemicalReactorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
-    }
-
-    public final List<AsTechGuiElement> guiElements = new ArrayList<>();
-
-    protected void addElement(AsTechGuiElement element) {
-        guiElements.add(element);
     }
 
     private boolean isLocked = true;

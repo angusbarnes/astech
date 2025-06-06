@@ -17,6 +17,7 @@ import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorScreen;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberScreen;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorScreen;
+import net.astr0.astech.gui.AsTechGuiScreen;
 import net.astr0.astech.gui.ModMenuTypes;
 import net.astr0.astech.item.ModItems;
 import net.astr0.astech.recipe.*;
@@ -186,6 +187,9 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_XYLENE.get().get
 
         registration.addRecipeClickArea(EUVMachineScreen.class, 75, 40, 28, 8,
                 EUVMachineCategory.EUV_MACHINE_TYPE);
+
+
+        registration.addGhostIngredientHandler(AsTechGuiScreen.class, new GhostIngredientHandler());
     }
 
     public static IRecipeSlotTooltipCallback defaultOutputTooltip(FluidIngredient fluid) {

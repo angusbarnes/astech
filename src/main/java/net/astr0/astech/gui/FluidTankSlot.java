@@ -1,6 +1,7 @@
 package net.astr0.astech.gui;
 
 import net.astr0.astech.GraphicsUtils;
+import net.astr0.astech.compat.JEI.GhostIngredientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -17,7 +18,7 @@ import org.joml.Vector4f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FluidTankSlot extends AsTechGuiElement {
+public class FluidTankSlot extends AbstractGuiSlot {
 
     public static final int TANK_HEIGHT = 56;
     protected final FluidTank fluidTank;
@@ -25,9 +26,18 @@ public class FluidTankSlot extends AsTechGuiElement {
 
     public FluidTankSlot(FluidTank tank, int x, int y) {
 
-        super(x, y);
+        super(x, y, 10, TANK_HEIGHT);
 
         this.fluidTank = tank;
+    }
+
+    @Override
+    public boolean canAcceptGhostIngredient(GhostIngredientHandler.DraggedIngredient ingredient) {
+        return false;
+    }
+
+    @Override
+    public void handleFilterDrop(GhostIngredientHandler.DraggedIngredient ingredient) {
     }
 
     public void renderBackground(GuiGraphics guiGraphics) {

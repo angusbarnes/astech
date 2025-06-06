@@ -1,6 +1,8 @@
 package net.astr0.astech.gui;
 
+import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.MachineFluidHandler;
+import net.astr0.astech.compat.JEI.GhostIngredientHandler;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.network.FlexiPacket;
 import net.minecraft.client.gui.GuiGraphics;
@@ -25,6 +27,24 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
         }
 
         super.render(guiGraphics, mouseX, mouseY);
+    }
+
+    @Override
+    public void handleFilterDrop(GhostIngredientHandler.DraggedIngredient ingredient) {
+        if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid fluid) {
+            // Here we would set the filter and update the server
+            LogUtils.getLogger().info("We reached the item slot with fluid {}", fluid.stack().getFluid().toString());
+        }
+    }
+
+    //TODO: Check filter settings here as well as if it is a fluid
+    @Override
+    public boolean canAcceptGhostIngredient(GhostIngredientHandler.DraggedIngredient ingredient) {
+        if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid fluid) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

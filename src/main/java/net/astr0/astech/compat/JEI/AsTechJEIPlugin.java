@@ -9,6 +9,7 @@ import mezz.jei.api.registration.*;
 import net.astr0.astech.AsTech;
 import net.astr0.astech.Fluid.ModFluids;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerScreen;
+import net.astr0.astech.block.Assembler.AssemblerMenu;
 import net.astr0.astech.block.Assembler.AssemblerScreen;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerScreen;
 import net.astr0.astech.block.EUVMachine.EUVMachineScreen;
@@ -16,6 +17,7 @@ import net.astr0.astech.block.ElectrolyticSeperator.ElectrolyticSeperatorScreen;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberScreen;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorScreen;
+import net.astr0.astech.gui.ModMenuTypes;
 import net.astr0.astech.recipe.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -44,6 +46,7 @@ public class AsTechJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new PyrolysisChamberCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new EUVMachineCategory(registration.getJeiHelpers().getGuiHelper()));
     }
+
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
@@ -191,13 +194,13 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_XYLENE.get().get
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-//        registration.addRecipeTransferHandler(
-//                AssemblerMenu.class,
-//                ModMenuTypes.ASSEMBLER_MENU.get(),
-//                AssemblerCategory.ASSEMBLER_TYPE,
-//                AssemblerMenu.TE_INVENTORY_FIRST_SLOT_INDEX, 5,
-//                AssemblerMenu.VANILLA_FIRST_SLOT_INDEX,
-//                AssemblerMenu.VANILLA_SLOT_COUNT
-//        );
+        registration.addRecipeTransferHandler(
+                AssemblerMenu.class,
+                ModMenuTypes.ASSEMBLER_MENU.get(),
+                AssemblerCategory.ASSEMBLER_TYPE,
+                AssemblerMenu.TE_INVENTORY_FIRST_SLOT_INDEX, 5,
+                AssemblerMenu.VANILLA_FIRST_SLOT_INDEX,
+                AssemblerMenu.VANILLA_SLOT_COUNT
+        );
     }
 }

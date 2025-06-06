@@ -18,6 +18,7 @@ import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.block.PyrolysisChamber.PyrolysisChamberScreen;
 import net.astr0.astech.block.ReactionChamber.ChemicalReactorScreen;
 import net.astr0.astech.gui.ModMenuTypes;
+import net.astr0.astech.item.ModItems;
 import net.astr0.astech.recipe.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -45,6 +46,11 @@ public class AsTechJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new ElectrolyticSeperatorCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new PyrolysisChamberCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new EUVMachineCategory(registration.getJeiHelpers().getGuiHelper()));
+    }
+
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
+        registration.useNbtForSubtypes(ModItems.FLUID_CELL.get());
     }
 
 

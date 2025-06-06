@@ -401,6 +401,19 @@ public class FluidCellItem extends Item {
         return false;
     }
 
+    public static void SetCellFluid(ItemStack stack, Fluid fluid) {
+        LazyOptional<IFluidHandlerItem> handlerOpt = stack.getCapability(
+                ForgeCapabilities.FLUID_HANDLER_ITEM);
+
+        if (!handlerOpt.isPresent()) return;
+
+        IFluidHandlerItem handler = handlerOpt.orElse(null);
+        if (handler == null) return;
+
+        // Todo: Potentially filling bug if we have variable size fluid containers
+        handler.fill(new FluidStack(fluid, 1000), IFluidHandler.FluidAction.EXECUTE);
+    }
+
     /**
      * Helper method to fill a cell with fluid
      */

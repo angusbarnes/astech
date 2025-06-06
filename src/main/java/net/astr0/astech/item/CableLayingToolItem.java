@@ -72,24 +72,13 @@ public class CableLayingToolItem extends Item {
         BlockPos clickPos = context.getClickedPos();
         BlockPos targetPos = clickPos.relative(context.getClickedFace());
 
-        if (level.isClientSide || player == null) {
+        if ((level.isClientSide || player == null)) {
             if (player != null && player.isShiftKeyDown()) {
                 client_render_block = level.getBlockState(clickPos).getBlock();
             }
             return InteractionResult.SUCCESS;
         }
 
-        if(!player.isCrouching() && player instanceof ServerPlayer serverPlayer) {
-
-            NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(
-                    (id, inv, p) -> new CableToolMenu(id, inv, stack),
-                    Component.literal("Cable Tool")
-            ), buffer -> {
-                buffer.writeItem(stack);
-            });
-
-            return InteractionResultHolder.sidedSuccess(stack, level.isClientSide()).getResult();
-        }
 
         CompoundTag tag = stack.getOrCreateTag();
 
@@ -97,11 +86,27 @@ public class CableLayingToolItem extends Item {
         boolean isCableBlock = level.getBlockState(clickPos).getTags().anyMatch(blockTagKey -> blockTagKey.equals(ModTags.BLOCK_CABLE));
 
 
-        if (!tag.contains("start") && isCableBlock) {
-            tag.put("start", NbtUtils.writeBlockPos(targetPos));
-            filter_item = level.getBlockState(clickPos).getBlock().asItem();
+        if (!tag.contains("start")) {
 
-            player.displayClientMessage(Component.literal("Start point set."), true);
+            ServerPlayer serverPlayer = (ServerPlayer) player;
+
+            if(!player.isCrouching()) {
+
+                NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(
+                        (id, inv, p) -> new CableToolMenu(id, inv, stack),
+                        Component.literal("Cable Tool")
+                ), buffer -> {
+                    buffer.writeItem(stack);
+                });
+
+                return InteractionResultHolder.sidedSuccess(stack, level.isClientSide()).getResult();
+            } else if (isCableBlock) {
+                tag.put("start", NbtUtils.writeBlockPos(targetPos));
+                filter_item = level.getBlockState(clickPos).getBlock().asItem();
+
+                player.displayClientMessage(Component.literal("Start point set."), true);
+            }
+
         } else {
             BlockPos start = NbtUtils.readBlockPos(tag.getCompound("start"));
             player.displayClientMessage(Component.literal(String.format("End point set. Ready to lay cable. %s", start.toShortString())), false);
@@ -211,6 +216,7 @@ public class CableLayingToolItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+
             NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(
                     (id, inv, p) -> new CableToolMenu(id, inv, stack),
                     Component.literal("Cable Tool")

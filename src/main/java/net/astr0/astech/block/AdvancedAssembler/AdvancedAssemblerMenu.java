@@ -58,6 +58,30 @@ public class AdvancedAssemblerMenu extends AbstractContainerMenu {
                     return false;
                 }
             });
+
+            this.addSlot(new SlotItemHandler(iItemHandler, 1, 125, 26) {
+                @Override
+
+                public boolean mayPlace(@NotNull ItemStack stack) {
+                    return false;
+                }
+            });
+
+            this.addSlot(new SlotItemHandler(iItemHandler, 2, 107, 44) {
+                @Override
+
+                public boolean mayPlace(@NotNull ItemStack stack) {
+                    return false;
+                }
+            });
+
+            this.addSlot(new SlotItemHandler(iItemHandler, 3, 125, 44) {
+                @Override
+
+                public boolean mayPlace(@NotNull ItemStack stack) {
+                    return false;
+                }
+            });
         });
 
         addDataSlots(data);

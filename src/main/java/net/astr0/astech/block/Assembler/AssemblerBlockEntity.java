@@ -22,7 +22,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -52,7 +51,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
         }
     };
 
-    private final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
+    private final ItemStackHandler outputItemHandler = new ItemStackHandler(4) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -329,8 +328,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
         ItemStack result = recipe.getOutputItem();
 
         if(result != null && !result.isEmpty()) {
-            this.outputItemHandler.setStackInSlot(0, new ItemStack(result.getItem(),
-                    this.outputItemHandler.getStackInSlot(0).getCount() + result.getCount()));
+            insertItemStackIntoOutputSlot(result);
         }
 
         SetNetworkDirty(); // Make sure we mark this block for an update now that we changed inventory content
@@ -347,8 +345,7 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
 
         ItemStack result = recipe.getOutputItem();
 
-        return canInsertAmountIntoOutputSlot(result.getCount())
-                && canInsertItemIntoOutputSlot(result.getItem());
+        return canInsertItemStackIntoOutputSlot(result);
     }
 
     private AssemblerRecipe cachedRecipe = null;
@@ -381,13 +378,27 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
         return null;
     }
 
-    private boolean canInsertItemIntoOutputSlot(Item item) {
-        return this.outputItemHandler.getStackInSlot(0).isEmpty() || this.outputItemHandler.getStackInSlot(0).is(item);
+    private boolean canInsertItemStackIntoOutputSlot(ItemStack item) {
+        for(int i = 0; i < this.outputItemHandler.getSlots(); i++) {
+            ItemStack remainder = this.outputItemHandler.insertItem(i, item, true);
+
+            if (remainder == ItemStack.EMPTY) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
+    private void insertItemStackIntoOutputSlot(ItemStack item) {
+        for(int i = 0; i < this.outputItemHandler.getSlots(); i++) {
+            ItemStack remainder = this.outputItemHandler.insertItem(i, item, true);
 
-    private boolean canInsertAmountIntoOutputSlot(int count) {
-        return this.outputItemHandler.getStackInSlot(0).getCount() + count <= this.outputItemHandler.getStackInSlot(0).getMaxStackSize();
+            if (remainder == ItemStack.EMPTY) {
+                this.outputItemHandler.insertItem(i, item, false);
+                return;
+            }
+        }
     }
 
     private boolean hasProgressFinished() {

@@ -12,7 +12,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.astr0.astech.AsTech;
-import net.astr0.astech.block.EUVMachine.EUVMachineBlockEntity;
+import net.astr0.astech.ModTags;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.recipe.EUVMachineRecipe;
 import net.astr0.astech.recipe.FluidIngredient;
@@ -66,7 +66,7 @@ public class EUVMachineCategory implements IRecipeCategory<EUVMachineRecipe> {
     public void setRecipe(IRecipeLayoutBuilder builder, EUVMachineRecipe recipe, IFocusGroup focuses) {
 
         builder.addSlot(RecipeIngredientRole.INPUT, 33, 16)
-                .addIngredients(ForgeTypes.FLUID_STACK, FluidIngredient.of(100, EUVMachineBlockEntity.PHOTORESIST_TAG).getFluidStacks())
+                .addIngredients(ForgeTypes.FLUID_STACK, FluidIngredient.of(100, ModTags.PHOTORESIST_TAG).getFluidStacks())
                 .setFluidRenderer(100, false, 10, 56);
 
 

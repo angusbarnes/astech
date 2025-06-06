@@ -1,6 +1,7 @@
 package net.astr0.astech.item;
 
 import net.astr0.astech.Fluid.AsTechChemicalFluidType;
+import net.astr0.astech.ModTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -8,12 +9,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -63,7 +61,6 @@ public class FluidCellItem extends Item {
         return new FluidHandlerItemCapability(stack);
     }
 
-    public static final TagKey<Item> myItemTag = ItemTags.create(new ResourceLocation("forge", "chemical_protection"));
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
 
@@ -75,7 +72,7 @@ public class FluidCellItem extends Item {
         if (fluid.getFluidType() instanceof AsTechChemicalFluidType hazardousFluid) {
             if(livingEntity.tickCount % 20 == 0) {
                 for(ItemStack armorPiece : livingEntity.getArmorSlots()) {
-                    if (!armorPiece.is(myItemTag)) {
+                    if (!armorPiece.is(ModTags.CHEMICAL_PROTECTION)) {
                         hazardousFluid.getHazardBehavior().apply(stack, (LivingEntity) entity, level);
                         return;
                     }

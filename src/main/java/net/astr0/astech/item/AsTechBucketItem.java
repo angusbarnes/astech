@@ -1,21 +1,18 @@
 package net.astr0.astech.item;
 
 import net.astr0.astech.Fluid.AsTechChemicalFluidType;
+import net.astr0.astech.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -37,8 +34,6 @@ import java.util.function.Supplier;
 public class AsTechBucketItem extends BucketItem {
     private final String _tooltip_key;
     private final Supplier<HazardBehavior> _typeSupplier;
-
-    public static final TagKey<Item> myItemTag = ItemTags.create(new ResourceLocation("forge", "chemical_protection"));
 
     public AsTechBucketItem(Supplier<? extends Fluid> supplier, Properties builder, String tooltip_key) {
         super(supplier, builder);
@@ -63,7 +58,7 @@ public class AsTechBucketItem extends BucketItem {
         if(livingEntity.tickCount % 20 == 0) {
             for(ItemStack armorPiece : livingEntity.getArmorSlots()) {
                 // If even a single piece isnt chemically protective, apply hazard effect
-                if (!armorPiece.is(myItemTag)) {
+                if (!armorPiece.is(ModTags.CHEMICAL_PROTECTION)) {
 //                    LogUtils.getLogger().info("Checked {} against {} and found that it failed. Had {}",
 //                        armorPiece.getDisplayName().getString(), myItemTag.toString(), armorPiece.getTags().toList().toString()
 //                    );

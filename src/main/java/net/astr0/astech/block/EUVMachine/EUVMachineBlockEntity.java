@@ -1,11 +1,8 @@
 package net.astr0.astech.block.EUVMachine;
 
 import com.mojang.logging.LogUtils;
-import net.astr0.astech.CustomEnergyStorage;
-import net.astr0.astech.DirectionTranslator;
-import net.astr0.astech.FilteredItemStackHandler;
+import net.astr0.astech.*;
 import net.astr0.astech.Fluid.MachineFluidHandler;
-import net.astr0.astech.SoundRegistry;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.SidedConfig;
@@ -17,9 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
@@ -32,7 +26,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -344,9 +337,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
     }
 
     private static final RandomSource randomRandomSource = RandomSource.create();
-    public static final TagKey<Fluid> PHOTORESIST_TAG = FluidTags.create(new ResourceLocation("forge", "photoresist"));
-    public static final TagKey<Fluid> TIER_1_FLUID = FluidTags.create(new ResourceLocation("forge", "tier_1_photoresist"));
-    public static final TagKey<Fluid> TIER_2_FLUID = FluidTags.create(new ResourceLocation("forge", "tier_2_photoresist"));
+
     private void craftItem() {
         EUVMachineRecipe recipe = getRecipe(); //TODO can replace all of these calls with a cached recipe check
 
@@ -361,7 +352,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
 //        LogUtils.getLogger().info("Craft Recipe");
 //        LogUtils.getLogger().info("Fluid has tags: {}", inputFluidTank.getTank(0).getFluid().getFluid().builtInRegistryHolder().tags().toList().toString());
 
-        if(inputFluidTank.getTank(0).getFluid().getFluid().is(TIER_1_FLUID)) {
+        if(inputFluidTank.getTank(0).getFluid().getFluid().is(ModTags.TIER_1_PHOTORESIST)) {
 
             //LogUtils.getLogger().info("Tier 1");
 
@@ -379,7 +370,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
                 outputItemHandler.insertItem(0, recipe.getOutputItem(), false);
             }
 
-        } else if (inputFluidTank.getTank(0).getFluid().getFluid().is(TIER_2_FLUID)) {
+        } else if (inputFluidTank.getTank(0).getFluid().getFluid().is(ModTags.TIER_2_PHOTORESIST)) {
 
             //LogUtils.getLogger().info("Tier 2");
 
@@ -426,7 +417,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             return cachedRecipe;
         }
 
-        if (inputFluidTank.getTank(0).getFluidAmount() < 100 || !inputFluidTank.getTank(0).getFluid().getFluid().is(PHOTORESIST_TAG)) {
+        if (inputFluidTank.getTank(0).getFluidAmount() < 100 || !inputFluidTank.getTank(0).getFluid().getFluid().is(ModTags.PHOTORESIST_TAG)) {
             return null; // We dont got the facilities
         }
 

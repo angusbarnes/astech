@@ -2,6 +2,7 @@ package net.astr0.astech.block.CoolantBlock;
 
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.MachineFluidHandler;
+import net.astr0.astech.ModTags;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.EUVMachine.EUVMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
@@ -12,10 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -187,12 +185,11 @@ public class CoolantBlockEntity extends AbstractMachineBlockEntity {
         return inputFluidTank;
     }
 
-    public static final TagKey<Fluid> TIER_1_FLUID = FluidTags.create(new ResourceLocation("forge", "tier_1_coolant"));
-    public static final TagKey<Fluid> TIER_2_FLUID = FluidTags.create(new ResourceLocation("forge", "tier_2_coolant"));
+
     public int CategorizeFluidGrade(Fluid fluid) {
-        if(fluid.is(TIER_1_FLUID)) {
+        if(fluid.is(ModTags.TIER_1_COOLANT)) {
             return TIER_1_COOL_AMOUNT;
-        } else if(fluid.is(TIER_2_FLUID)) {
+        } else if(fluid.is(ModTags.TIER_2_COOLANT)) {
             return TIER_2_COOL_AMOUNT;
         } else {
             return BASE_COOL_AMOUNT;

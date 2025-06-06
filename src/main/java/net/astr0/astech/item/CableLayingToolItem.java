@@ -2,14 +2,13 @@ package net.astr0.astech.item;
 
 
 import com.mojang.logging.LogUtils;
+import net.astr0.astech.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -95,7 +94,7 @@ public class CableLayingToolItem extends Item {
         CompoundTag tag = stack.getOrCreateTag();
 
 
-        boolean isCableBlock = level.getBlockState(clickPos).getTags().anyMatch(blockTagKey -> blockTagKey.equals(BlockTags.create(new ResourceLocation("astech","cable_block"))));
+        boolean isCableBlock = level.getBlockState(clickPos).getTags().anyMatch(blockTagKey -> blockTagKey.equals(ModTags.BLOCK_CABLE));
 
 
         if (!tag.contains("start") && isCableBlock) {

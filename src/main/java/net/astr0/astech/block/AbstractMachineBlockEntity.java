@@ -1,9 +1,9 @@
 package net.astr0.astech.block;
 
+import com.mojang.logging.LogUtils;
+import net.astr0.astech.BlockEntityStateManager;
 import net.astr0.astech.SoundRegistry;
-import net.astr0.astech.network.AsTechNetworkHandler;
-import net.astr0.astech.network.FlexiPacket;
-import net.astr0.astech.network.INetworkedMachine;
+import net.astr0.astech.network.IHasStateManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -22,12 +22,19 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractMachineBlockEntity extends BlockEntity implements MenuProvider, ITickableBlockEntity, INetworkedMachine {
-    public AbstractMachineBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+public abstract class AbstractMachineBlockEntity extends BlockEntity implements MenuProvider, ITickableBlockEntity, IHasStateManager {
+    public AbstractMachineBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int managedStates) {
         super(pType, pPos, pBlockState);
+
+        StateManager = new BlockEntityStateManager(this, managedStates);
+    }
+
+    protected BlockEntityStateManager StateManager;
+
+    public BlockEntityStateManager getStateManager() {
+        return StateManager;
     }
 
 
@@ -58,9 +65,8 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
             return;
 
         if(IsNetworkUpdateDue()) {
-            FlexiPacket update = new FlexiPacket(this.getBlockPos(), 69);
-            SERVER_WriteUpdateToFlexiPacket(update);
-            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), update);
+            LogUtils.getLogger().info("Running network update");
+            StateManager.PerformNetworkServerSynchronisation();
             ResetNetworkTick();
         }
 
@@ -100,13 +106,6 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
     // This only ticks on the server
     public abstract void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState);
 
-    @Override
-    abstract public void updateServer(FlexiPacket msg);
-
-    @Override
-    abstract public void updateClient(FlexiPacket msg);
-
-    private boolean _isNetworkDirty = false;
     private int _networkTickCount = 0;
 
     protected void IncrementNetworkTickCount() {
@@ -115,30 +114,19 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
 
     protected void ResetNetworkTick() {
         _networkTickCount = 0;
-        _isNetworkDirty = false;
     }
 
+    // 3 Ticks is a sync latency of 150 ms or roughly a 7 Hz rate
     protected boolean IsNetworkUpdateDue() {
-        return _isNetworkDirty && _networkTickCount > 2;
+        return _networkTickCount > 3;
     }
 
-    @Override
-    public void SetNetworkDirty() {
-        _isNetworkDirty = true;
-        setChanged();
-    }
-
-    @Override
-    public boolean IsNetworkDirty() {
-        return _isNetworkDirty;
-    }
 
     protected void TriggerBlockUpdate() {
         if(level!= null && !level.isClientSide()) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }
     }
-
 
     // Called by our block update logic, which occurs when the inventory is updated
     @Nullable
@@ -166,15 +154,5 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return null;
-    }
-
-    abstract public int[][] getCapTypes();
-
-    abstract public SidedConfig getSidedConfig(int mode);
-
-    protected abstract void SERVER_WriteUpdateToFlexiPacket(FlexiPacket packet);
-    protected abstract void CLIENT_ReadUpdateFromFlexiPacket(FlexiPacket packet);
-    protected void SERVER_RebroadcastToClients(FlexiPacket packet) {
-        AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
     }
 }

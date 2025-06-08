@@ -41,7 +41,7 @@ public class ChemicalMixerScreen extends AsTechGuiScreen<ChemicalMixerMenu> {
         addElement(new FilteredItemSlot(inputItemHandler, 1,this.leftPos + 62, this.topPos + 38));
         addElement(new FilteredItemSlot(inputItemHandler, 2,this.leftPos + 62, this.topPos + 58));
 
-        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity);
+        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity, menu.blockEntity.sidedItemConfig, menu.blockEntity.sidedFluidConfig);
 
         IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 30, Icons.SETTINGS, (button) -> {
             config.ToggleRender();

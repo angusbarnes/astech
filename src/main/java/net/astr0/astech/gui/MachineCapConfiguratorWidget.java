@@ -65,10 +65,13 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
         }
     }
 
+    private SidedConfig _itemConfig = null;
+    private SidedConfig _fluidConfig = null;
+
     public int GetMode() {return this.mode;}
     public void SetMode(int mode) {this.mode = mode;}
 
-    public MachineCapConfiguratorWidget(int pX, int pY, AbstractMachineBlockEntity be) {
+    public MachineCapConfiguratorWidget(int pX, int pY, AbstractMachineBlockEntity be, SidedConfig itemConfig, SidedConfig fluidConfig) {
         super(pX, pY, 0, 0, Component.empty());
 
         BlockPos pos = be.getBlockPos();
@@ -113,10 +116,12 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
 
         MODE_SWITCH_BUTTON = new UIButton(Icons.ITEM, new TintColor(255, 255, 255, 255), pX - 19, pY - 19, "Mode: §eItems", (button) -> {
             if (mode == ITEM_MODE) {
+                if (_fluidConfig == null) return;
                 mode = FLUID_MODE;
                 button.SetTooltip("Mode: §9Fluid");
                 button.SetIconToDraw(Icons.FLUID);
             } else if (mode == FLUID_MODE) {
+                if (_itemConfig == null) return;
                 mode = ITEM_MODE;
                 button.SetTooltip("Mode: §eItems");
                 button.SetIconToDraw(Icons.ITEM);
@@ -127,32 +132,63 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
             }
         });
 
-        slotSettings.put(ITEM_MODE, be.getCapTypes()[ITEM_MODE]);
-        slotSettings.put(FLUID_MODE, be.getCapTypes()[FLUID_MODE]);
+        if (itemConfig != null) {
+            slotSettings.put(ITEM_MODE, itemConfig.getSupportedCaps());
+        } else {
+            slotSettings.put(ITEM_MODE, new SidedConfig.Capability[0]);
+        }
+
+        if (itemConfig != null) {
+            slotSettings.put(FLUID_MODE, fluidConfig.getSupportedCaps());
+        } else {
+            slotSettings.put(FLUID_MODE, new SidedConfig.Capability[0]);
+        }
+
+        _fluidConfig = fluidConfig;
+        _itemConfig = itemConfig;
 
         machine = be;
     }
 
-    private final HashMap<Integer, int[]> slotSettings = new HashMap<>(2);
+    private final HashMap<Integer, SidedConfig.Capability[]> slotSettings = new HashMap<>(2);
 
     private void incrementSlotType(Supplier<Integer> _mode, Direction dir) {
 
-        int currentCap = machine.getSidedConfig(_mode.get()).getCap(dir);
+        if (_mode.get() == ITEM_MODE) {
+            SidedConfig.Capability currentCap = _itemConfig.get(dir);
 
-        int index = 0;
-        for(Integer cap :slotSettings.get(_mode.get())) {
-            if(cap == currentCap) {
-                break;
+            int index = 0;
+            for(SidedConfig.Capability cap :slotSettings.get(_mode.get())) {
+                if(cap == currentCap) {
+                    break;
+                }
+                index++;
             }
-            index++;
+
+            _itemConfig.SetCapOnClient(dir, slotSettings.get(_mode.get())[(index + 1) % slotSettings.get(_mode.get()).length]);
+        } else {
+            SidedConfig.Capability currentCap = _fluidConfig.get(dir);
+
+            int index = 0;
+            for(SidedConfig.Capability cap :slotSettings.get(_mode.get())) {
+                if(cap == currentCap) {
+                    break;
+                }
+                index++;
+            }
+
+            _fluidConfig.SetCapOnClient(dir, slotSettings.get(_mode.get())[(index + 1) % slotSettings.get(_mode.get()).length]);
         }
 
-        machine.getSidedConfig(_mode.get()).setCap(dir, slotSettings.get(_mode.get())[(index + 1) % slotSettings.get(_mode.get()).length]);
     }
 
     private SlotFormat getSlotFormat(Supplier<Integer> mode, Direction dir) {
-        //LogUtils.getLogger().info("Retriveing format with mode: {}", mode.get());
-        return SidedConfig.GetCapFormat(machine.getSidedConfig(mode.get()).getCap(dir));
+
+        if (mode.get() == ITEM_MODE) {
+            return SidedConfig.getFormat(_itemConfig.get(dir));
+        } else {
+            return SidedConfig.getFormat(_fluidConfig.get(dir));
+        }
     }
 
     public void RefreshSlotUI() {

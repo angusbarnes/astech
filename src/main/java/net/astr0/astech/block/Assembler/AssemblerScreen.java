@@ -41,7 +41,7 @@ public class AssemblerScreen extends AsTechGuiScreen<AssemblerMenu> {
         addElement(new FilteredItemSlot(inputItemHandler, 3,this.leftPos + 36, this.topPos + 44));
         addElement(new FilteredItemSlot(inputItemHandler, 4,this.leftPos + 54, this.topPos + 44));
 
-        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity);
+        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity, menu.blockEntity.sidedItemConfig, menu.blockEntity.sidedFluidConfig);
 
         IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 60, this.topPos + 69, Icons.SETTINGS, (button) -> {
             config.ToggleRender();

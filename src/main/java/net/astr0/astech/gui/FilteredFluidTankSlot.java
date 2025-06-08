@@ -3,8 +3,6 @@ package net.astr0.astech.gui;
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
-import net.astr0.astech.network.AsTechNetworkHandler;
-import net.astr0.astech.network.FlexiPacket;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -32,7 +30,7 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
     @Override
     public void handleFilterDrop(GhostIngredientHandler.DraggedIngredient ingredient) {
         if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid fluid) {
-            // Here we would set the filter and update the server
+            handler.setFluidFilterOnClient(tankIndex, fluid.stack());// Here we would set the filter and update the server
             LogUtils.getLogger().info("We reached the item slot with fluid {}", fluid.stack().getFluid().toString());
         }
     }
@@ -52,11 +50,14 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
         // We will not handle any click events that occur outside our bounds
         if(!isHovering(this.x, this.y, 10, 58, mouseX, mouseY)) return false;
 
+        //TODO: Re-implement fluid clearing
         int message_code = isShifting ? 38 : 37;
 
-        FlexiPacket packet = new FlexiPacket(be.getBlockPos(), message_code);
-        packet.writeInt(this.tankIndex);
-        AsTechNetworkHandler.INSTANCE.sendToServer(packet);
+        if (handler.checkSlot(this.tankIndex)) {
+            handler.clearFluidFilterOnClient(tankIndex);
+        } else {
+            handler.setFluidFilterOnClient(tankIndex, handler.getFluidInTank(tankIndex));
+        }
 
         return true;
     }

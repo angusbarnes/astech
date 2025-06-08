@@ -1,10 +1,13 @@
 package net.astr0.astech.Fluid;
 
+import com.mojang.logging.LogUtils;
 import net.astr0.astech.FluidFilter;
-import net.astr0.astech.network.FlexiPacket;
+import net.astr0.astech.network.IHasStateManager;
+import net.astr0.astech.network.IStateManaged;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -13,11 +16,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class MachineFluidHandler implements IFluidHandler {
+public class MachineFluidHandler implements IFluidHandler, IStateManaged {
 
     private FluidTank[] tanks;
     final List<FluidFilter> filters;
     final boolean allowDrain;
+    final IHasStateManager stateManager;
 
     public void setTankCount(int count, int capacity) {
         tanks = new FluidTank[count];
@@ -27,7 +31,8 @@ public abstract class MachineFluidHandler implements IFluidHandler {
                 @Override
                 protected void onContentsChanged() {
                     super.onContentsChanged();
-                    MachineFluidHandler.this.onContentsChanged();
+                    LogUtils.getLogger().info("Tank contents were changed");
+                    MachineFluidHandler.this.networkIsDirty = true;
                 }
             };
 
@@ -35,11 +40,11 @@ public abstract class MachineFluidHandler implements IFluidHandler {
         }
     }
 
-    public MachineFluidHandler(int tank_count, int capacity) {
-        this(tank_count, capacity, false);
+    public MachineFluidHandler(IHasStateManager manager, String ID, int tank_count, int capacity) {
+        this(manager, ID, tank_count, capacity, false);
     }
 
-    public MachineFluidHandler(int tank_count, int capacity, boolean allowDrain) {
+    public MachineFluidHandler(IHasStateManager manager, String ID, int tank_count, int capacity, boolean allowDrain) {
         setTankCount(tank_count, capacity);
 
         filters = new ArrayList<>(tank_count);
@@ -49,6 +54,26 @@ public abstract class MachineFluidHandler implements IFluidHandler {
         }
 
         this.allowDrain = allowDrain;
+        stateManager = manager;
+        indentifier = ID;
+    }
+
+    public void setFluidFilterOnClient(int slot, FluidStack fitler) {
+        if(slot > this.getTanks()) {
+            throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
+        }
+
+        filters.get(slot).Lock(fitler);
+        stateManager.getStateManager().sendClientUpdateByName(getStateName());
+    }
+
+    public void clearFluidFilterOnClient(int slot) {
+        if(slot > this.getTanks()) {
+            throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
+        }
+
+        filters.get(slot).Unlock();
+        stateManager.getStateManager().sendClientUpdateByName(getStateName());
     }
 
     @Override
@@ -88,7 +113,7 @@ public abstract class MachineFluidHandler implements IFluidHandler {
                     || tanks[i].getFluidAmount() <= 0)
                     && filters.get(i).TestFilterForMatch(fluidStack)
             ) {
-                if(fluidAction == FluidAction.EXECUTE) onContentsChanged();
+                if(fluidAction == FluidAction.EXECUTE) networkIsDirty = true;
                 return tanks[i].fill(fluidStack, fluidAction);
             }
         }
@@ -103,7 +128,7 @@ public abstract class MachineFluidHandler implements IFluidHandler {
 
         for (FluidTank tank : tanks) {
             if (tank.getFluid().isFluidEqual(fluidStack)) {
-                if(fluidAction == FluidAction.EXECUTE) onContentsChanged();
+                if(fluidAction == FluidAction.EXECUTE) networkIsDirty = true;
                 return tank.drain(fluidStack, fluidAction);
             }
         }
@@ -121,15 +146,13 @@ public abstract class MachineFluidHandler implements IFluidHandler {
 
                 // Only trigger a change call back if a drain action is acutally executed
                 // no need to tell anyone about simulations
-                if(fluidAction == FluidAction.EXECUTE) onContentsChanged();
+                if(fluidAction == FluidAction.EXECUTE) networkIsDirty = true;
 
                 return tank.drain(maxDrain, fluidAction);
             }
         }
         return FluidStack.EMPTY;
     }
-
-    protected abstract void onContentsChanged();
 
     // ChatGPT wrote these. There is a few potential bug conditions,
     // but I don't really expect these to ever occur
@@ -175,28 +198,6 @@ public abstract class MachineFluidHandler implements IFluidHandler {
         }
     }
 
-    public void WriteToFlexiPacket(FlexiPacket packet) {
-        for(int i = 0; i < filters.size(); i++) {
-
-            boolean lock = filters.get(i).isLocked();
-            packet.writeBool(lock);
-            if(lock) {
-                packet.writeFluidStack(filters.get(i).GetFilter());
-            }
-        }
-    }
-
-    public void ReadFromFlexiPacket(FlexiPacket packet) {
-        for(int i = 0; i < filters.size(); i++) {
-
-            boolean lock = packet.readBool();
-            filters.get(i).setLocked(lock);
-            if(lock) {
-                filters.get(i).Lock(packet.readFluidStack());
-            }
-        }
-    }
-
     public void LockSot(int i) {
         if(i > this.getTanks()) {
             throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
@@ -234,11 +235,101 @@ public abstract class MachineFluidHandler implements IFluidHandler {
         return result;
     }
 
+
     public boolean checkSlot(int i) {
         return filters.get(i).isLocked();
     }
 
     public FluidStack getFilterForSlot(int slot) {
         return filters.get(slot).GetFilter();
+    }
+
+    final String indentifier;
+    public String getStateName() {
+        return "FH_" + indentifier;
+    }
+
+    // Serialization to NBT
+    public CompoundTag writeToTag() {
+        CompoundTag tag = new CompoundTag();
+        writeToNBT(tag);
+        return tag;
+    }
+
+    public void loadFromTag(CompoundTag tag) {
+        readFromNBT(tag);
+    }
+
+    // We need to mark as network dirty when there is fluid content changes,
+    // and when there updates from the client
+    boolean networkIsDirty = false;
+    public boolean isNetworkDirty() {
+        return networkIsDirty;
+    } // used for automatic server->client
+
+
+    //TODO: Optimise these to remove redudant information updates
+    //Only some of this data changes
+    public void writeNetworkEncoding(FriendlyByteBuf buf) {
+
+        LogUtils.getLogger().info("FluidHandler is being encoded on the server");
+
+        for(FluidTank tank : tanks) {
+            buf.writeFluidStack(tank.getFluid());
+        }
+
+        for (FluidFilter filter : filters) {
+
+            boolean lock = filter.isLocked();
+            buf.writeBoolean(lock);
+            if (lock) {
+                buf.writeFluidStack(filter.GetFilter());
+            }
+        }
+
+        networkIsDirty = false; // We are synching data, so no longer dirty
+    }
+
+    public void readNetworkEncoding(FriendlyByteBuf buf) {
+        LogUtils.getLogger().info("FluidHandler is being decoded on the server");
+        for(FluidTank tank : tanks) {
+            tank.setFluid(buf.readFluidStack());
+        }
+
+        for (FluidFilter filter : filters) {
+
+            boolean lock = buf.readBoolean();
+            filter.setLocked(lock);
+            if (lock) {
+                filter.Lock(buf.readFluidStack());
+            }
+        }
+    }
+
+    // For client→server update flow
+    // We only care about filters since they are the only thing the client is allowed
+    // to control
+    public void writeClientUpdate(FriendlyByteBuf buf) {
+        for (FluidFilter filter : filters) {
+
+            boolean lock = filter.isLocked();
+            buf.writeBoolean(lock);
+            if (lock) {
+                buf.writeFluidStack(filter.GetFilter());
+            }
+        }
+    }
+
+    public void applyClientUpdate(FriendlyByteBuf buf) {
+        for (FluidFilter filter : filters) {
+
+            boolean lock = buf.readBoolean();
+            filter.setLocked(lock);
+            if (lock) {
+                filter.Lock(buf.readFluidStack());
+            }
+        }
+
+        networkIsDirty = true;
     }
 }

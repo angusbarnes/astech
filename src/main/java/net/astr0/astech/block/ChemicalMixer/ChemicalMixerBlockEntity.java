@@ -1,6 +1,5 @@
 package net.astr0.astech.block.ChemicalMixer;
 
-import com.mojang.logging.LogUtils;
 import net.astr0.astech.CustomEnergyStorage;
 import net.astr0.astech.DirectionTranslator;
 import net.astr0.astech.FilteredItemStackHandler;
@@ -8,8 +7,6 @@ import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
 import net.astr0.astech.block.SidedConfig;
-import net.astr0.astech.network.AsTechNetworkHandler;
-import net.astr0.astech.network.FlexiPacket;
 import net.astr0.astech.recipe.ChemicalMixerRecipe;
 import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
@@ -36,7 +33,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -58,75 +54,28 @@ import java.util.List;
 public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
-    private final FilteredItemStackHandler inputItemHandler = new FilteredItemStackHandler(3) {
-
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-        }
-    };
+    private final FilteredItemStackHandler inputItemHandler;
 
     private final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
-        }
+        } //TODO: review if this is actually necessary
     };
 
-    protected final SidedConfig sidedItemConfig = new SidedConfig() {
-        @Override
-        protected void onContentsChanged() {
-            CLIENT_sideConfigUpdated(0);
-        }
-    };
-    protected final SidedConfig sidedFluidConfig = new SidedConfig() {
-        @Override
-        protected void onContentsChanged() {
-            CLIENT_sideConfigUpdated(1);
-        }
-    };
+    protected final SidedConfig sidedItemConfig;
+    protected final SidedConfig sidedFluidConfig;
 
-    private void CLIENT_sideConfigUpdated(int i) {
+    private final MachineFluidHandler inputFluidTank;
 
-        if(level != null && !level.isClientSide()) {
-            throw new IllegalStateException("This shit should not run on the server");
-        }
-
-        FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 430);
-        packet.writeInt(i);
-
-        packet.writeSidedConfig(i == 0 ? sidedItemConfig : sidedFluidConfig);
-
-        if(level != null && level.isClientSide()) {
-            AsTechNetworkHandler.INSTANCE.sendToServer(packet);
-        }
-    }
-
-    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(2,10000) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
-
-            SetNetworkDirty();
-
-        }
-    };
-
-    private final MachineFluidHandler outputFluidTank = new MachineFluidHandler(1,20000, true) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
-
-            SetNetworkDirty();
-        }
-    };
+    private final MachineFluidHandler outputFluidTank;
 
     private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(300000, 750, 0);
 
-    private final LazyOptional<IItemHandler> lazyInputItemHandler = LazyOptional.of(() -> inputItemHandler);
+    private final LazyOptional<IItemHandler> lazyInputItemHandler;
     private final LazyOptional<IItemHandler> lazyOutputItemHandler = LazyOptional.of(() -> outputItemHandler);
-    private final LazyOptional<IFluidHandler> lazyInputFluidHandler = LazyOptional.of(() -> inputFluidTank);
-    private final LazyOptional<IFluidHandler> lazyOutputFluidHandler = LazyOptional.of(() -> outputFluidTank);
+    private final LazyOptional<IFluidHandler> lazyInputFluidHandler;
+    private final LazyOptional<IFluidHandler> lazyOutputFluidHandler;
     private final LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
     // Container data is simple data which is synchronised by default over the network
     protected final ContainerData data;
@@ -134,7 +83,7 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
     private int maxProgress = 80;
 
     public ChemicalMixerBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.CHEMICAL_MIXER_BE.get(), pPos, pBlockState);
+        super(ModBlockEntities.CHEMICAL_MIXER_BE.get(), pPos, pBlockState, 3);
 
         this.data = new ContainerData() {
             @Override
@@ -164,15 +113,39 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
             }
         };
 
-        sidedItemConfig.setCap(Direction.UP, SidedConfig.ITEM_INPUT);
-        sidedItemConfig.setCap(Direction.EAST, SidedConfig.ITEM_INPUT);
-        sidedItemConfig.setCap(Direction.DOWN, SidedConfig.ITEM_OUTPUT);
-        sidedItemConfig.setCap(Direction.WEST, SidedConfig.ITEM_OUTPUT);
+        inputItemHandler = StateManager.addManagedState(new FilteredItemStackHandler(this,3));
+        lazyInputItemHandler = LazyOptional.of(() -> inputItemHandler);
 
-        sidedFluidConfig.setCap(Direction.UP, SidedConfig.FLUID_INPUT);
-        sidedFluidConfig.setCap(Direction.EAST, SidedConfig.FLUID_INPUT);
-        sidedFluidConfig.setCap(Direction.DOWN, SidedConfig.FLUID_OUTPUT);
-        sidedFluidConfig.setCap(Direction.WEST, SidedConfig.FLUID_OUTPUT);
+        inputFluidTank = StateManager.addManagedState(new MachineFluidHandler(this,"INPUT",2,10000));
+        lazyInputFluidHandler = LazyOptional.of(() -> inputFluidTank);
+
+        outputFluidTank = StateManager.addManagedState(new MachineFluidHandler(this, "OUTPUT",1,20000, true));
+        lazyOutputFluidHandler = LazyOptional.of(() -> outputFluidTank);
+
+        sidedItemConfig = StateManager.addManagedState(new SidedConfig(this, "ITEM"));
+        sidedFluidConfig = StateManager.addManagedState(new SidedConfig(this, "FLUID"));
+
+        sidedFluidConfig.setSupportedCaps(
+                SidedConfig.Capability.NONE,
+                SidedConfig.Capability.FLUID_INPUT,
+                SidedConfig.Capability.FLUID_OUTPUT
+        );
+
+        sidedItemConfig.setSupportedCaps(
+                SidedConfig.Capability.NONE,
+                SidedConfig.Capability.ITEM_INPUT,
+                SidedConfig.Capability.ITEM_OUTPUT
+        );
+
+        sidedItemConfig.setNoUpdate(Direction.UP, SidedConfig.Capability.ITEM_INPUT);
+        sidedItemConfig.setNoUpdate(Direction.EAST, SidedConfig.Capability.ITEM_INPUT);
+        sidedItemConfig.setNoUpdate(Direction.DOWN, SidedConfig.Capability.ITEM_OUTPUT);
+        sidedItemConfig.setNoUpdate(Direction.WEST, SidedConfig.Capability.ITEM_OUTPUT);
+
+        sidedFluidConfig.setNoUpdate(Direction.UP, SidedConfig.Capability.FLUID_INPUT);
+        sidedFluidConfig.setNoUpdate(Direction.EAST, SidedConfig.Capability.FLUID_INPUT);
+        sidedFluidConfig.setNoUpdate(Direction.DOWN, SidedConfig.Capability.FLUID_OUTPUT);
+        sidedFluidConfig.setNoUpdate(Direction.WEST, SidedConfig.Capability.FLUID_OUTPUT);
     }
 
     @Override
@@ -196,20 +169,20 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
     }
 
     public <T> LazyOptional<T> getFluidCapability(Direction side) {
-        int type = sidedFluidConfig.getCap(side);
+        SidedConfig.Capability type = sidedFluidConfig.get(side);
         return switch (type) {
-            case SidedConfig.FLUID_INPUT -> lazyInputFluidHandler.cast();
-            case SidedConfig.FLUID_OUTPUT -> lazyOutputFluidHandler.cast();
+            case FLUID_INPUT -> lazyInputFluidHandler.cast();
+            case FLUID_OUTPUT -> lazyOutputFluidHandler.cast();
             default -> LazyOptional.empty();
         };
     }
 
     public <T> LazyOptional<T> getItemCapability(Direction side) {
-        int type = sidedItemConfig.getCap(side);
+        SidedConfig.Capability type = sidedItemConfig.get(side);
 
         return switch (type) {
-            case SidedConfig.ITEM_INPUT -> lazyInputItemHandler.cast();
-            case SidedConfig.ITEM_OUTPUT -> lazyOutputItemHandler.cast();
+            case ITEM_INPUT -> lazyInputItemHandler.cast();
+            case ITEM_OUTPUT -> lazyOutputItemHandler.cast();
             default -> LazyOptional.empty();
         };
     }
@@ -247,33 +220,13 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         return new ChemicalMixerMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 
-    @Override
-    public int[][] getCapTypes() {
-        return new int[][] {
-                {SidedConfig.NONE, SidedConfig.ITEM_INPUT, SidedConfig.ITEM_OUTPUT},
-                {SidedConfig.NONE, SidedConfig.FLUID_INPUT, SidedConfig.FLUID_OUTPUT},
-        };
-    }
-
-    @Override
-    public SidedConfig getSidedConfig(int mode) {
-        if(mode == 0) {
-            return sidedItemConfig;
-        } else {
-            return sidedFluidConfig;
-        }
-    }
 
     // On chunk load or on updatePacket we can save our basic data to NBT
     @Override
     protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory", inputItemHandler.serializeNBT());
         pTag.putInt("chemical_mixer.progress", progress);
         pTag.put("Energy", this.energyStorage.serializeNBT());
-        pTag.put("fluidTank", inputFluidTank.writeToNBT(new CompoundTag()));
-        pTag.put("outputFluidTank", outputFluidTank.writeToNBT(new CompoundTag()));
-        pTag.put("itemConfig", sidedItemConfig.writeToNBT(new CompoundTag()));
-        pTag.put("fluidConfig", sidedFluidConfig.writeToNBT(new CompoundTag()));
+        pTag.put("sm_data", StateManager.saveToNBT());
         pTag.put("outputInventory", outputItemHandler.serializeNBT());
         super.saveAdditional(pTag);
     }
@@ -282,14 +235,10 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-        inputItemHandler.deserializeNBT(pTag.getCompound("inventory"));
         progress = pTag.getInt("chemical_mixer.progress");
         energyStorage.deserializeNBT(pTag.get("Energy"));
-        inputFluidTank.readFromNBT(pTag.getCompound("fluidTank"));
-        sidedItemConfig.readFromNBT(pTag.getCompound("itemConfig"));
-        sidedFluidConfig.readFromNBT(pTag.getCompound("fluidConfig"));
         outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
-        outputFluidTank.readFromNBT(pTag.getCompound("outputFluidTank"));
+        StateManager.loadFromNBT(pTag.getCompound("sm_data"));
     }
 
     private void ConsumePower(int amount) {
@@ -363,7 +312,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
             outputFluidTank.fill(resultFluid, IFluidHandler.FluidAction.EXECUTE);
         }
 
-        SetNetworkDirty(); // Make sure we mark this block for an update now that we changed inventory content
     }
 
     private boolean hasRecipe() {
@@ -453,103 +401,4 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         return inputItemHandler;
     }
 
-    @Override
-    public void updateServer(FlexiPacket msg) {
-
-        int code = msg.GetCode();
-
-        // Throw if we don't have loaded level on server
-        if(!(this.level != null && !this.level.isClientSide())) {
-            throw new IllegalStateException("updateServer() should never run on the client! The level is either null or client side.");
-        }
-
-        // This is the filter update code
-        if (code == 430) {
-            int _mode = msg.readInt();
-
-            // Handle sided update
-            if(_mode == 0) {
-                msg.readSidedConfig(sidedItemConfig);
-            } else {
-                msg.readSidedConfig(sidedFluidConfig);
-            }
-
-            // Rebroadcast update to tracking clients
-            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), msg);
-        }
-
-        if (code == 36) {
-            // Get the toggled slot lock
-            int slot = msg.readInt();
-
-            inputItemHandler.ToggleSlotLock(slot);
-
-            FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 36);
-            inputItemHandler.WriteToFlexiPacket(packet);
-            // Rebroadcast the change to listening clients
-            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
-        } else if (code == 37) {
-            // Get the toggled slot lock
-            int slot = msg.readInt();
-
-            inputFluidTank.ToggleSlotLock(slot);
-
-            FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 37);
-            inputFluidTank.WriteToFlexiPacket(packet);
-            // Rebroadcast the change to listening clients
-            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
-        } else if (code == 38) {
-            // Get the toggled slot lock
-            int slot = msg.readInt();
-
-            inputFluidTank.getTank(slot).setFluid(FluidStack.EMPTY);
-            SetNetworkDirty(); // Make sure the fluid changes is synced on next update
-        }
-
-        // A server update should always mark this block as dirty for saves
-        setChanged();
-    }
-
-    @Override
-    public void updateClient(FlexiPacket msg) {
-        if(this.level !=null && !this.level.isClientSide()) {
-            throw new IllegalStateException("updateClient() should never run on the server! The level is either null or server side.");
-        }
-
-        int code = msg.GetCode();
-
-        // This is the filter update code
-        if (code == 430) {
-            int _mode = msg.readInt();
-
-            // Handle sided update
-            if(_mode == 0) {
-                msg.readSidedConfig(sidedItemConfig);
-            } else {
-                msg.readSidedConfig(sidedFluidConfig);
-            }
-        } else if (code == 69) {
-            CLIENT_ReadUpdateFromFlexiPacket(msg);
-        } else if (code == 36) {
-            LogUtils.getLogger().info("There was an update to slot locks on the client");
-            inputItemHandler.ReadFromFlexiPacket(msg);
-        } else if (code == 37) {
-            LogUtils.getLogger().info("There was an update to slot locks on the client");
-            inputFluidTank.ReadFromFlexiPacket(msg);
-        }
-    }
-
-    @Override
-    protected void SERVER_WriteUpdateToFlexiPacket(FlexiPacket packet) {
-        packet.writeFluidStack(inputFluidTank.getFluidInTank(0));
-        packet.writeFluidStack(inputFluidTank.getFluidInTank(1));
-        packet.writeFluidStack(outputFluidTank.getFluidInTank(0));
-    }
-
-    @Override
-    protected void CLIENT_ReadUpdateFromFlexiPacket(FlexiPacket packet) {
-        inputFluidTank.getTank(0).setFluid(packet.readFluidStack());
-        inputFluidTank.getTank(1).setFluid(packet.readFluidStack());
-        outputFluidTank.getTank(0).setFluid(packet.readFluidStack());
-    }
 }

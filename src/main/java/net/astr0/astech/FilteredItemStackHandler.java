@@ -1,53 +1,63 @@
 package net.astr0.astech;
 
-import com.mojang.logging.LogUtils;
-import net.astr0.astech.network.FlexiPacket;
+import net.astr0.astech.network.IHasStateManager;
+import net.astr0.astech.network.IStateManaged;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class FilteredItemStackHandler extends ItemStackHandler {
+// We are not responsible for managing inventory synchronisation. That gets handled by the container
+// menu implementation in Forge. We must sync any additional extraneous state however,
+// such as our filter settings
+public class FilteredItemStackHandler extends ItemStackHandler implements IStateManaged {
 
-    final List<BasicFilter> filters;
+    final BasicFilter[] filters;
+    private boolean _networkDirty = false;
+    private final IHasStateManager stateManager;
 
-    public FilteredItemStackHandler(int size) {
+
+    public FilteredItemStackHandler(IHasStateManager manager, int size) {
         super(size);
 
-        filters = new ArrayList<>(size);
+        filters = new BasicFilter[size];
 
         for(int i = 0; i < size; i++) {
-            // We must load the correct values into each filter when we read the NBT
-            // Each one will contain a bool, if the bool is true, then we also read
-            // a string the represents the filter.
-
-            // Filters should only exist on the server?????
-            // I think we should be allowed to send the slot index over the network
-            // to lock the underling itemhandler.
-            // If the fields only exist correctly on the server then we might see some strange behaviour
-            // when clicking items into slots (See if maybe they rebound??)
-            // It will be safest to sync filter updates back to tracking clients after applying the lock
-
-            // Visually, the UI can check with the itemHandler to see if this slot has a lock
-            // THIS WILL ACTUALLY REQUIRE CORRECT DATA SYNC ANYWAY
-            // This may require some small reworks of the UI code to create some high level
-            // helpers/abstract API to simplify the filtering state
-            // Eventually we would like to also be able to set filters from JEI, which seems plausible
-            // using some kind of GhostTransferHandler or something
-            filters.add(new BasicFilter(false, ItemStack.EMPTY));
-
+            filters[i] = new BasicFilter(false, ItemStack.EMPTY);
         }
+
+        stateManager = manager;
+    }
+
+    public void setFilterOnClient(int slot, ItemStack filter) {
+        if(slot > this.getSlots()) {
+            throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
+        }
+
+        filters[slot].Lock(filter);
+
+        //TODO: Can optimise these look ups be telling filtered item handlers what their ID's are
+        stateManager.getStateManager().sendClientUpdateByName(getStateName());
+    }
+
+    public void clearFilterOnClient(int slot) {
+        if(slot > this.getSlots()) {
+            throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
+        }
+
+        filters[slot].Unlock();
+
+        stateManager.getStateManager().sendClientUpdateByName(getStateName());
     }
 
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack)
     {
-        return filters.get(slot).TestFilterForMatch(stack);
+        return filters[slot].TestFilterForMatch(stack);
     }
 
     public void LockSot(int i) {
@@ -55,7 +65,7 @@ public class FilteredItemStackHandler extends ItemStackHandler {
             throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
         }
 
-        filters.get(i).Lock(getStackInSlot(i));
+        filters[i].Lock(getStackInSlot(i));
     }
 
     public void UnlockSot(int i) {
@@ -63,7 +73,7 @@ public class FilteredItemStackHandler extends ItemStackHandler {
             throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
         }
 
-        filters.get(i).Unlock();
+        filters[i].Unlock();
     }
 
     public void ToggleSlotLock(int i) {
@@ -71,7 +81,7 @@ public class FilteredItemStackHandler extends ItemStackHandler {
             throw new IndexOutOfBoundsException("Request lock index is outside the range of this StackHandler");
         }
 
-        if (filters.get(i).isLocked()) {
+        if (filters[i].isLocked()) {
             UnlockSot(i);
         } else {
             LockSot(i);
@@ -80,16 +90,15 @@ public class FilteredItemStackHandler extends ItemStackHandler {
     }
 
     @Override
-    public CompoundTag serializeNBT()
-    {
+    public CompoundTag serializeNBT() {
         ListTag filterTagList = new ListTag();
         for (int i = 0; i < stacks.size(); i++)
         {
-            if (filters.get(i).isLocked())
+            if (filters[i].isLocked())
             {
                 CompoundTag filterTag = new CompoundTag();
                 filterTag.putInt("Slot", i);
-                filters.get(i).GetFilter().save(filterTag);
+                filters[i].GetFilter().save(filterTag);
                 filterTagList.add(filterTag);
             }
         }
@@ -113,11 +122,11 @@ public class FilteredItemStackHandler extends ItemStackHandler {
     }
 
     public boolean checkSlot(int i) {
-        return filters.get(i).isLocked();
+        return filters[i].isLocked();
     }
 
     public ItemStack getFilterForSlot(int slot) {
-        return filters.get(slot).GetFilter();
+        return filters[slot].GetFilter();
     }
 
     @Override
@@ -145,7 +154,7 @@ public class FilteredItemStackHandler extends ItemStackHandler {
             if (slot >= 0 && slot < stacks.size())
             {
                 ItemStack stack = ItemStack.of(itemTags);
-                filters.get(slot).Lock(stack);
+                filters[slot].Lock(stack);
 
                 //LogUtils.getLogger().info("Loaded slot {} with filter {}", slot, stack);
             }
@@ -153,27 +162,67 @@ public class FilteredItemStackHandler extends ItemStackHandler {
         onLoad();
     }
 
-    public void WriteToFlexiPacket(FlexiPacket packet) {
-        for(int i = 0; i < filters.size(); i++) {
+    @Override
+    public boolean isNetworkDirty() {
+        return _networkDirty;
+    }
 
-            boolean lock = filters.get(i).isLocked();
-            packet.writeBool(lock);
-            if(lock) {
-                packet.writeItemStack(filters.get(i).GetFilter());
+    @Override
+    public void writeNetworkEncoding(FriendlyByteBuf buf) {
+        writeClientUpdate(buf);
+    }
+
+    // ItemHandler is a special case where the server data that needs to be
+    // synched to the client is the same as the client to server data (Filters only)
+    @Override
+    public void readNetworkEncoding(FriendlyByteBuf buf) {
+        applyClientUpdate(buf);
+    }
+
+    @Override
+    // Item Handler stuff is handled by forge and container menus,
+    // so to issue an update from the client for this state, we only care about filters
+    // TODO: this could be optimised to only send changed slots
+    public void writeClientUpdate(FriendlyByteBuf buf) {
+        for (BasicFilter filter : filters) {
+
+            boolean lock = filter.isLocked();
+            buf.writeBoolean(lock);
+            if (lock) {
+                // This might not support NBT filtering and will only do basic filters
+                // May need to come back to this if noticing bugs with complex ingreients
+                buf.writeItemStack(filter.GetFilter(), true);
                 //LogUtils.getLogger().info("Wrote {} to flexipacket for slot {}", filters.get(i).GetFilter(), i);
             }
         }
     }
 
-    public void ReadFromFlexiPacket(FlexiPacket packet) {
-        for(int i = 0; i < filters.size(); i++) {
+    @Override
+    public void applyClientUpdate(FriendlyByteBuf buf) {
+        _networkDirty = true; // Only client filter updates can make this dirty
 
-            boolean lock = packet.readBool();
-            filters.get(i).setLocked(lock);
-            if(lock) {
-                filters.get(i).Lock(packet.readItemStack());
-                LogUtils.getLogger().info("Read {} from flexipacket for slot {}", filters.get(i).GetFilter(), i);
+        for (BasicFilter filter : filters) {
+            boolean lock = buf.readBoolean();
+            filter.setLocked(lock);
+            if (lock) {
+                filter.Lock(buf.readItem());
             }
         }
+
+    }
+
+    @Override
+    public String getStateName() {
+        return "SH_FILTERED";
+    }
+
+    @Override
+    public CompoundTag writeToTag() {
+        return serializeNBT();
+    }
+
+    @Override
+    public void loadFromTag(CompoundTag tag) {
+        deserializeNBT(tag);
     }
 }

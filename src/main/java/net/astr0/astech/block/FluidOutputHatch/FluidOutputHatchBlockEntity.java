@@ -3,8 +3,6 @@ package net.astr0.astech.block.FluidOutputHatch;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
-import net.astr0.astech.block.SidedConfig;
-import net.astr0.astech.network.FlexiPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -19,17 +17,15 @@ import org.jetbrains.annotations.Nullable;
 public class FluidOutputHatchBlockEntity extends AbstractMachineBlockEntity {
 
 
-    private final MachineFluidHandler fluidHandler = new MachineFluidHandler(1, 10000, true) {
-        @Override
-        protected void onContentsChanged() {
-            SetNetworkDirty();
-        }
-    };
+    private final MachineFluidHandler fluidHandler;
 
-    private final LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.of(() -> fluidHandler);
+    private final LazyOptional<IFluidHandler> lazyFluidHandler;
 
     public FluidOutputHatchBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.FLUID_OUTPUT_HATCH_BE.get(), pPos, pBlockState);
+        super(ModBlockEntities.FLUID_OUTPUT_HATCH_BE.get(), pPos, pBlockState, 1);
+
+        fluidHandler = StateManager.addManagedState(new MachineFluidHandler(this,"INPUT", 1, 10000, true));
+        lazyFluidHandler = LazyOptional.of(() -> fluidHandler);
     }
 
     // We can use this in other parts of our multiblock to drain from the input
@@ -41,21 +37,6 @@ public class FluidOutputHatchBlockEntity extends AbstractMachineBlockEntity {
     @Override
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {}
 
-    @Override
-    public void updateServer(FlexiPacket msg) {}
-
-    @Override
-    public void updateClient(FlexiPacket msg) {}
-
-    @Override
-    public int[][] getCapTypes() {
-        return new int[0][];
-    }
-
-    @Override
-    public SidedConfig getSidedConfig(int mode) {
-        return null;
-    }
 
     @Override
     public void invalidateCaps() {
@@ -71,15 +52,5 @@ public class FluidOutputHatchBlockEntity extends AbstractMachineBlockEntity {
         }
 
         return super.getCapability(cap, side);
-    }
-
-    @Override
-    protected void SERVER_WriteUpdateToFlexiPacket(FlexiPacket packet) {
-        fluidHandler.WriteToFlexiPacket(packet);
-    }
-
-    @Override
-    protected void CLIENT_ReadUpdateFromFlexiPacket(FlexiPacket packet) {
-        fluidHandler.ReadFromFlexiPacket(packet);
     }
 }

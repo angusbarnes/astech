@@ -37,7 +37,7 @@ public class ChemicalReactorScreen extends AsTechGuiScreen<ChemicalReactorMenu> 
         addElement(new FluidTankSlot(this.menu.blockEntity.getOutputTank1(), this.leftPos + 110, this.topPos + 16));
         addElement(new FluidTankSlot(this.menu.blockEntity.getOutputTank2(), this.leftPos + 129, this.topPos + 16));
 
-        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity);
+        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity, null, menu.blockEntity.sidedFluidConfig);
         config.MODE_SWITCH_BUTTON.clicked(); // This is a phat hack
 
         IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 5, this.topPos + 21, Icons.SETTINGS, (button) -> {

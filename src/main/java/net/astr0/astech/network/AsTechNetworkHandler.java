@@ -17,6 +17,8 @@ public class AsTechNetworkHandler {
 
     public static void onCommonSetup() {
         INSTANCE.registerMessage(0, FlexiPacket.class, FlexiPacket::encode, FlexiPacket::new, FlexiPacket::handle);
+        INSTANCE.registerMessage(1, ServerToClientStateSyncPacket.class, ServerToClientStateSyncPacket::encode, ServerToClientStateSyncPacket::new, ServerToClientStateSyncPacket::handle);
+        INSTANCE.registerMessage(2, ClientToServerStateUpdatePacket.class, ClientToServerStateUpdatePacket::encode, ClientToServerStateUpdatePacket::new, ClientToServerStateUpdatePacket::handle);
     }
 
 }

@@ -1,14 +1,10 @@
 package net.astr0.astech.block.CoolantBlock;
 
-import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.ModTags;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.EUVMachine.EUVMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
-import net.astr0.astech.block.SidedConfig;
-import net.astr0.astech.network.AsTechNetworkHandler;
-import net.astr0.astech.network.FlexiPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -25,32 +21,22 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class CoolantBlockEntity extends AbstractMachineBlockEntity {
 
 
-    private final MachineFluidHandler inputFluidTank = new MachineFluidHandler(1,10000, true) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
+    private final MachineFluidHandler inputFluidTank;
 
-            SetNetworkDirty();
-
-        }
-    };
-
-    private final LazyOptional<IFluidHandler> lazyInputFluidHandler = LazyOptional.of(() -> inputFluidTank);
+    private final LazyOptional<IFluidHandler> lazyInputFluidHandler;
     // Container data is simple data which is synchronised by default over the network
     protected final ContainerData data;
     private int currentTemperature = 0;
 
     public CoolantBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.COOLANT_BLOCK_BE.get(), pPos, pBlockState);
+        super(ModBlockEntities.COOLANT_BLOCK_BE.get(), pPos, pBlockState, 1);
 
         this.data = new ContainerData() {
             @Override
@@ -73,6 +59,9 @@ public class CoolantBlockEntity extends AbstractMachineBlockEntity {
                 return 1;
             }
         };
+
+        inputFluidTank = StateManager.addManagedState(new MachineFluidHandler(this, "INPUT",1,10000, true));
+        lazyInputFluidHandler = LazyOptional.of(() -> inputFluidTank);
 
         setSoundEvent(SoundEvents.FIRE_EXTINGUISH);
         setSoundPlaytime(9);
@@ -106,16 +95,6 @@ public class CoolantBlockEntity extends AbstractMachineBlockEntity {
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return new CoolantBlockMenu(pContainerId, pPlayerInventory, this, this.data);
-    }
-
-    @Override
-    public int[][] getCapTypes() {
-        return new int[0][];
-    }
-
-    @Override
-    public SidedConfig getSidedConfig(int mode) {
-        return null;
     }
 
     // On chunk load or on updatePacket we can save our basic data to NBT
@@ -174,7 +153,6 @@ public class CoolantBlockEntity extends AbstractMachineBlockEntity {
 
             if(applied) {
                 setChanged();
-                SetNetworkDirty();
             }
         }
 
@@ -196,62 +174,4 @@ public class CoolantBlockEntity extends AbstractMachineBlockEntity {
         }
     }
 
-
-    @Override
-    public void updateServer(FlexiPacket msg) {
-
-        int code = msg.GetCode();
-
-        // Throw if we don't have loaded level on server
-        if(!(this.level != null && !this.level.isClientSide())) {
-            throw new IllegalStateException("updateServer() should never run on the client! The level is either null or client side.");
-        }
-
-      if (code == 37) {
-            // Get the toggled slot lock
-            int slot = msg.readInt();
-
-            inputFluidTank.ToggleSlotLock(slot);
-
-            FlexiPacket packet = new FlexiPacket(this.getBlockPos(), 37);
-            inputFluidTank.WriteToFlexiPacket(packet);
-            // Rebroadcast the change to listening clients
-            AsTechNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(this::getLevelChunk), packet);
-        } else if (code == 38) {
-            // Get the toggled slot lock
-            int slot = msg.readInt();
-
-            inputFluidTank.getTank(0).setFluid(FluidStack.EMPTY);
-            SetNetworkDirty(); // Make sure the fluid changes is synced on next update
-        }
-
-        // A server update should always mark this block as dirty for saves
-        setChanged();
-    }
-
-    @Override
-    public void updateClient(FlexiPacket msg) {
-        if(this.level !=null && !this.level.isClientSide()) {
-            throw new IllegalStateException("updateClient() should never run on the server! The level is either null or server side.");
-        }
-
-        int code = msg.GetCode();
-
-        if (code == 69) {
-            CLIENT_ReadUpdateFromFlexiPacket(msg);
-        } else if (code == 37) {
-            LogUtils.getLogger().info("There was an update to slot locks on the client");
-            inputFluidTank.ReadFromFlexiPacket(msg);
-        }
-    }
-
-    @Override
-    protected void SERVER_WriteUpdateToFlexiPacket(FlexiPacket packet) {
-        packet.writeFluidStack(inputFluidTank.getFluidInTank(0));
-    }
-
-    @Override
-    protected void CLIENT_ReadUpdateFromFlexiPacket(FlexiPacket packet) {
-        inputFluidTank.getTank(0).setFluid(packet.readFluidStack());
-    }
 }

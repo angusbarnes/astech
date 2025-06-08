@@ -3,8 +3,6 @@ package net.astr0.astech.block.EnergyInputHatch;
 import net.astr0.astech.CustomEnergyStorage;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
-import net.astr0.astech.block.SidedConfig;
-import net.astr0.astech.network.FlexiPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ContainerData;
@@ -25,7 +23,7 @@ public class EnergyInputHatchBlockEntity extends AbstractMachineBlockEntity {
     private final LazyOptional<IEnergyStorage> lazyEnergyStorage = LazyOptional.of(() -> energyStorage);
     protected final ContainerData data;
     public EnergyInputHatchBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.ENERGY_INPUT_HATCH_BE.get(), pPos, pBlockState);
+        super(ModBlockEntities.ENERGY_INPUT_HATCH_BE.get(), pPos, pBlockState, 0);
 
         this.data = new ContainerData() {
             @Override
@@ -60,21 +58,6 @@ public class EnergyInputHatchBlockEntity extends AbstractMachineBlockEntity {
     @Override
     public void tickOnServer(Level pLevel, BlockPos pPos, BlockState pState) {}
 
-    @Override
-    public void updateServer(FlexiPacket msg) {}
-
-    @Override
-    public void updateClient(FlexiPacket msg) {}
-
-    @Override
-    public int[][] getCapTypes() {
-        return new int[0][];
-    }
-
-    @Override
-    public SidedConfig getSidedConfig(int mode) {
-        return null;
-    }
 
     @Override
     public void invalidateCaps() {
@@ -91,10 +74,4 @@ public class EnergyInputHatchBlockEntity extends AbstractMachineBlockEntity {
 
         return super.getCapability(cap, side);
     }
-
-    @Override
-    protected void SERVER_WriteUpdateToFlexiPacket(FlexiPacket packet) { }
-
-    @Override
-    protected void CLIENT_ReadUpdateFromFlexiPacket(FlexiPacket packet) { }
 }

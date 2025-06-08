@@ -38,7 +38,7 @@ public class EUVMachineScreen extends AsTechGuiScreen<EUVMachineMenu> {
         addElement(new FilteredItemSlot(handler, 0,this.leftPos + 54, this.topPos + 34));
         addElement(new FilteredItemSlot(handler, 1,this.leftPos + 81, this.topPos + 47));
 
-        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity);
+        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity, menu.blockEntity.sidedItemConfig, menu.blockEntity.sidedFluidConfig);
 
         IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 5, this.topPos + 21, Icons.SETTINGS, (button) -> {
             config.ToggleRender();

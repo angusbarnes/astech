@@ -4,8 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
-import net.astr0.astech.network.AsTechNetworkHandler;
-import net.astr0.astech.network.FlexiPacket;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -25,9 +23,13 @@ public class FilteredItemSlot extends AbstractGuiSlot {
     @Override
     public boolean canAcceptGhostIngredient(GhostIngredientHandler.DraggedIngredient ingredient) {
         if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Item item) {
+            LogUtils.getLogger().info("Slot was checked for drag potential: True");
+
             return true;
+
         }
 
+        LogUtils.getLogger().info("Slot was checked for drag potential: False, {}", ingredient);
         return false;
     }
 
@@ -36,6 +38,7 @@ public class FilteredItemSlot extends AbstractGuiSlot {
         if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Item item) {
             // Here we would set the filter and update the server
             LogUtils.getLogger().info("We reached the item slot with item{}", item.stack().getItem().toString());
+            handler.setFilterOnClient(slotIndex, item.stack());
         }
     }
 
@@ -59,9 +62,12 @@ public class FilteredItemSlot extends AbstractGuiSlot {
     public boolean handleClick(BlockEntity be, double mouseX, double mouseY, int mouseButton, boolean isShifting) {
         if(!isHovering(this.x, this.y, 16, 16, mouseX, mouseY)) return false;
 
-        FlexiPacket packet = new FlexiPacket(be.getBlockPos(), 36);
-        packet.writeInt(this.slotIndex);
-        AsTechNetworkHandler.INSTANCE.sendToServer(packet);
+        if (handler.checkSlot(slotIndex)) {
+            handler.clearFilterOnClient(slotIndex);
+        } else {
+            // HERE WE NEED TO INSTEAD SET THE SLOT LOCALLY AND THEN SEND AN UPDATE PACKET
+            handler.setFilterOnClient(slotIndex, handler.getStackInSlot(slotIndex));
+        }
 
         return true;
     }

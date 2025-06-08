@@ -1,9 +1,7 @@
 package net.astr0.astech.network;
 
 import io.netty.buffer.Unpooled;
-import net.astr0.astech.block.SidedConfig;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -66,23 +64,6 @@ public class FlexiPacket {
         return internalBuffer.readInt();
     }
 
-    public void writeSidedConfig(SidedConfig sidedConfig) {
-        writeInt(sidedConfig.getCap(Direction.NORTH));
-        writeInt(sidedConfig.getCap(Direction.SOUTH));
-        writeInt(sidedConfig.getCap(Direction.EAST));
-        writeInt(sidedConfig.getCap(Direction.WEST));
-        writeInt(sidedConfig.getCap(Direction.UP));
-        writeInt(sidedConfig.getCap(Direction.DOWN));
-    }
-
-    public void readSidedConfig(SidedConfig sidedConfig) {
-        sidedConfig.setNoUpdate(Direction.NORTH, readInt());
-        sidedConfig.setNoUpdate(Direction.SOUTH, readInt());
-        sidedConfig.setNoUpdate(Direction.EAST, readInt());
-        sidedConfig.setNoUpdate(Direction.WEST, readInt());
-        sidedConfig.setNoUpdate(Direction.UP, readInt());
-        sidedConfig.setNoUpdate(Direction.DOWN, readInt());
-    }
 
     public FluidStack readFluidStack() {
         return internalBuffer.readFluidStack();

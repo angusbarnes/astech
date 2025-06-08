@@ -1,75 +1,150 @@
 package net.astr0.astech.block;
 
-import net.astr0.astech.gui.MachineCapConfiguratorWidget;
+import net.astr0.astech.gui.MachineCapConfiguratorWidget.SlotFormat;
 import net.astr0.astech.gui.TintColor;
+import net.astr0.astech.network.IHasStateManager;
+import net.astr0.astech.network.IStateManaged;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.Tag;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.Arrays;
+import java.util.EnumMap;
 
-public abstract class SidedConfig {
-    private final int[] capMap;
+public class SidedConfig implements IStateManaged {
 
-    public SidedConfig() {
-        capMap = new int[Direction.values().length];
+    private final IHasStateManager stateManager;
+    private Capability[] supportedCapabilities = new Capability[0];
 
-        Arrays.fill(capMap, NONE);
+    @Override
+    public String getStateName() {
+        return name;
     }
 
-    public CompoundTag writeToNBT(CompoundTag tag) {
-        tag.put("capMap", new IntArrayTag(capMap));
+    @Override
+    public CompoundTag writeToTag() {
+        CompoundTag tag = new CompoundTag();
+        int[] capOrdinals = Arrays.stream(Direction.values())
+                .mapToInt(dir -> get(dir).ordinal())
+                .toArray();
+        tag.putIntArray("capMap", capOrdinals);
         return tag;
     }
 
-    // Method to read from NBT
-    public void readFromNBT(CompoundTag tag) {
+    @Override
+    public void loadFromTag(CompoundTag tag) {
         if (tag.contains("capMap", Tag.TAG_INT_ARRAY)) {
-            int[] loadedCapMap = tag.getIntArray("capMap");
-            System.arraycopy(loadedCapMap, 0, capMap, 0, Math.min(loadedCapMap.length, capMap.length));
+            int[] data = tag.getIntArray("capMap");
+            Direction[] directions = Direction.values();
+            for (int i = 0; i < Math.min(data.length, directions.length); i++) {
+                caps.put(directions[i], Capability.fromOrdinal(data[i]));
+            }
         }
     }
 
-    public void setCap(Direction dir, int capType) {
-        capMap[dir.ordinal()] = capType;
-        onContentsChanged();
+
+    private boolean isDirty = false;
+    @Override
+    public boolean isNetworkDirty() {
+        return isDirty;
     }
 
-    public int getCap(@NotNull Direction dir) {
-        return capMap[dir.ordinal()];
+    @Override
+    public void writeNetworkEncoding(FriendlyByteBuf buf) {
+        isDirty = false;
+        for (Direction dir : Direction.values()) {
+            buf.writeEnum(get(dir));
+        }
     }
 
-    protected abstract void onContentsChanged();
-
-    public void setNoUpdate(Direction dir, int capType) {
-        capMap[dir.ordinal()] = capType;
+    @Override
+    public void readNetworkEncoding(FriendlyByteBuf buf) {
+        for (Direction dir : Direction.values()) {
+            setNoUpdate(dir, buf.readEnum(Capability.class));
+        }
     }
 
-    public static final int NONE = 0;
-    public static final int ITEM_INPUT = 1;
-    public static final int ITEM_OUTPUT = 2;
-    public static final int FLUID_INPUT = 3;
-    public static final int FLUID_OUTPUT = 4;
-    public static final int FLUID_OUTPUT_ONE = 5;
-    public static final int FLUID_OUTPUT_TWO = 6;
+    @Override
+    public void writeClientUpdate(FriendlyByteBuf buf) {
+        writeNetworkEncoding(buf);
+    }
 
-    private static final MachineCapConfiguratorWidget.SlotFormat[] formats = new MachineCapConfiguratorWidget.SlotFormat[] {
-            new MachineCapConfiguratorWidget.SlotFormat(new TintColor(255, 255, 255), "§7NONE (0)"),
-            new MachineCapConfiguratorWidget.SlotFormat(new TintColor(255, 255, 85), "§eINPUT (1)"),
-            new MachineCapConfiguratorWidget.SlotFormat(new TintColor(85, 85, 255), "§9OUTPUT (2)"),
-            new MachineCapConfiguratorWidget.SlotFormat(new TintColor(255, 170, 0), "§6INPUT (3)"),
-            new MachineCapConfiguratorWidget.SlotFormat(new TintColor(255, 85, 255), "§dOUTPUT (4)"),
-            new MachineCapConfiguratorWidget.SlotFormat(new TintColor(255, 85, 85), "§cOUTPUT 1 (5)"),
-            new MachineCapConfiguratorWidget.SlotFormat(new TintColor(0, 170, 170), "§3OUTPUT 2 (6)"),
-            new MachineCapConfiguratorWidget.SlotFormat(new TintColor(40, 40, 40), "§4FIXME"),
+    @Override
+    public void applyClientUpdate(FriendlyByteBuf buf) {
+        isDirty = true;
+
+        readNetworkEncoding(buf);
+    }
+
+    public enum Capability {
+        NONE,
+        ITEM_INPUT,
+        ITEM_OUTPUT,
+        FLUID_INPUT,
+        FLUID_OUTPUT,
+        FLUID_OUTPUT_ONE,
+        FLUID_OUTPUT_TWO,
+        UNKNOWN;
+
+        public static Capability fromOrdinal(int ordinal) {
+            return ordinal < 0 || ordinal >= values().length ? UNKNOWN : values()[ordinal];
+        }
+    }
+
+    private final EnumMap<Direction, Capability> caps = new EnumMap<>(Direction.class);
+
+    private final String name;
+    public SidedConfig(IHasStateManager manager, String identifier) {
+        for (Direction dir : Direction.values()) {
+            caps.put(dir, Capability.NONE);
+        }
+
+        name = "SC_" + identifier;
+
+        stateManager = manager;
+    }
+
+    public void set(Direction dir, Capability cap) {
+        caps.put(dir, cap);
+    }
+
+    public void setNoUpdate(Direction dir, Capability cap) {
+        caps.put(dir, cap);
+    }
+
+    public Capability get(Direction dir) {
+        return caps.getOrDefault(dir, Capability.NONE);
+    }
+
+    public void SetCapOnClient(Direction dir, Capability cap) {
+        caps.put(dir, cap);
+        stateManager.getStateManager().sendClientUpdateByName(getStateName());
+    }
+
+
+    public void setSupportedCaps(Capability... cap) {
+        supportedCapabilities = cap;
+    }
+
+    public Capability[] getSupportedCaps() {
+        return supportedCapabilities;
+    }
+
+
+    private static final SlotFormat[] formats = new SlotFormat[] {
+            new SlotFormat(new TintColor(255, 255, 255), "§7NONE"),
+            new SlotFormat(new TintColor(255, 255, 85), "§eITEM INPUT"),
+            new SlotFormat(new TintColor(85, 85, 255), "§9ITEM OUTPUT"),
+            new SlotFormat(new TintColor(255, 170, 0), "§6FLUID INPUT"),
+            new SlotFormat(new TintColor(255, 85, 255), "§dFLUID OUTPUT"),
+            new SlotFormat(new TintColor(255, 85, 85), "§cFLUID OUTPUT 1"),
+            new SlotFormat(new TintColor(0, 170, 170), "§3FLUID OUTPUT 2"),
+            new SlotFormat(new TintColor(40, 40, 40), "§4UNKNOWN"),
     };
-    public static MachineCapConfiguratorWidget.SlotFormat GetCapFormat(int capType) {
-        if (capType < 0 || capType >= formats.length) {
-            capType = 7;
-        }
 
-        return formats[capType];
+    public static SlotFormat getFormat(Capability cap) {
+        int index = cap.ordinal();
+        return formats[Math.min(index, formats.length - 1)];
     }
 }

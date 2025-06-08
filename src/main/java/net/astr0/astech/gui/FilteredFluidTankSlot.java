@@ -35,10 +35,9 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
         }
     }
 
-    //TODO: Check filter settings here as well as if it is a fluid
     @Override
     public boolean canAcceptGhostIngredient(GhostIngredientHandler.DraggedIngredient ingredient) {
-        if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid fluid) {
+        if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid && !handler.checkSlot(this.tankIndex)) {
             return true;
         }
 

@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class FilteredItemSlot extends AbstractGuiSlot {
@@ -19,10 +20,9 @@ public class FilteredItemSlot extends AbstractGuiSlot {
         slotIndex = itemSlotIndex;
     }
 
-    //TODO: Check if the slot is empty here
     @Override
     public boolean canAcceptGhostIngredient(GhostIngredientHandler.DraggedIngredient ingredient) {
-        if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Item item) {
+        if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Item && handler.getStackInSlot(slotIndex) == ItemStack.EMPTY) {
             LogUtils.getLogger().info("Slot was checked for drag potential: True");
 
             return true;

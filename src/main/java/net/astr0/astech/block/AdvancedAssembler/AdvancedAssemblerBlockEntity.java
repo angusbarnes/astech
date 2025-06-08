@@ -73,7 +73,6 @@ public class AdvancedAssemblerBlockEntity extends AbstractMachineBlockEntity {
             public int get(int pIndex) {
                 return switch (pIndex) {
                     case 0 -> energyStorage.getMaxEnergyStored();
-                    // TODO: Turn this into a synced percentage and reconvert to relative amount on client side
                     case 1 -> energyStorage.getEnergyStored();
                     case 2 -> AdvancedAssemblerBlockEntity.this.progress;
                     case 3 -> AdvancedAssemblerBlockEntity.this.maxProgress;
@@ -173,7 +172,6 @@ public class AdvancedAssemblerBlockEntity extends AbstractMachineBlockEntity {
 
     // User defined helper to get a list of all the items we are holding,
     // this is used to drop those items when this block is destroyed
-    // TODO: FIX BUG IN ALL BLOCK ENTITIES TO ALSO DROP ITEM IN OUTPUT HANDLER
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(inputItemHandler.getSlots() + outputItemHandler.getSlots());
         for(int i = 0; i < inputItemHandler.getSlots(); i++) {

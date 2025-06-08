@@ -173,7 +173,6 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
 
     // User defined helper to get a list of all the items we are holding,
     // this is used to drop those items when this block is destroyed
-    // TODO: FIX BUG IN ALL BLOCK ENTITIES TO ALSO DROP ITEM IN OUTPUT HANDLER
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(inputItemHandler.getSlots() + outputItemHandler.getSlots());
         for(int i = 0; i < inputItemHandler.getSlots(); i++) {

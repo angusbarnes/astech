@@ -181,9 +181,13 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
     // User defined helper to get a list of all the items we are holding,
     // this is used to drop those items when this block is destroyed
     public void drops() {
-        SimpleContainer inventory = new SimpleContainer(inputItemHandler.getSlots());
+        SimpleContainer inventory = new SimpleContainer(inputItemHandler.getSlots() + outputItemHandler.getSlots());
         for(int i = 0; i < inputItemHandler.getSlots(); i++) {
             inventory.setItem(i, inputItemHandler.getStackInSlot(i));
+        }
+
+        for(int i = 0; i < outputItemHandler.getSlots(); i++) {
+            inventory.setItem(inputItemHandler.getSlots() + i, outputItemHandler.getStackInSlot(i));
         }
 
         Containers.dropContents(this.level, this.worldPosition, inventory);

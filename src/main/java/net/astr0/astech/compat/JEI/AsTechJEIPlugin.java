@@ -338,13 +338,14 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ENGINEERED_ALLOY
         registration.addGhostIngredientHandler(AsTechGuiScreen.class, new GhostIngredientHandler());
     }
 
+    //TODO: Finish cleaning this up
     public static IRecipeSlotTooltipCallback defaultOutputTooltip(FluidIngredient fluid) {
 
         return (recipeSlotView, tooltip) -> {
             TagKey<Fluid> tag = fluid.getFluidTagKey();
-            if(tag != null) {
-                tooltip.add(Component.literal(String.format("Ã‚Â§7Accepts any %s", tag.location().toString())));
-            }
+//            if(tag != null) {
+//                tooltip.add(Component.literal(String.format("Ã‚Â§7Accepts any %s", tag.location().toString())));
+//            }
         };
     }
 

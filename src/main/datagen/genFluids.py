@@ -110,7 +110,7 @@ def CRYSTALISE(chemical_tag, output_dust):
                 "amount": 144
                 },
                 {
-                    "tag": "forge:dusts"
+                    "tag": "forge:dusts/salt"
                 }
             ],
             "result": [

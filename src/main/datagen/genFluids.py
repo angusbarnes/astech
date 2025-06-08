@@ -190,7 +190,7 @@ def get_texture(filename, textures):
     
     return textures[texture_index]
 
-def add_simple_tint_item(ctx: Context, item_id: str, item_name, tint, template_file, material_name):
+def add_simple_tint_item(ctx: Context, item_id: str, item_name, tint, template_file, material_name, hazard):
 
     TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
     ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
@@ -200,11 +200,11 @@ def add_simple_tint_item(ctx: Context, item_id: str, item_name, tint, template_f
     texture = blend_overlay(template, hex_to_rgb(tint))
     texture.save(f'../resources/assets/astech/textures/item/{item_id}.png', format='PNG')
     ctx.add_translation(f"item.astech.{item_id}", f"{item_name}")
-    ctx.add_text_to_region(ITEM_FILE, 'MATERIAL_REGION', f"""public static final RegistryObject<AsTechMaterialItem> {item_id.upper()} = ITEMS.register("{item_id}", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "{material_name}"));""")
+    ctx.add_text_to_region(ITEM_FILE, 'MATERIAL_REGION', f"""public static final RegistryObject<AsTechMaterialItem> {item_id.upper()} = ITEMS.register("{item_id}", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "{material_name}", {hazard}));""")
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
     ctx.add_simple_item_model(f'{item_id}')
 
-def add_mek_tint_item(ctx: Context, item_id: str, item_name, tint, template_file, overlay, material_name):
+def add_mek_tint_item(ctx: Context, item_id: str, item_name, tint, template_file, overlay, material_name, hazard):
 
     TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
     ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
@@ -213,7 +213,7 @@ def add_mek_tint_item(ctx: Context, item_id: str, item_name, tint, template_file
     layer_images_but_backwards(template_file, overlay, f'../resources/assets/astech/textures/item/{item_id}.png', hex_to_rgb(tint))
 
     ctx.add_translation(f"item.astech.{item_id}", f"{item_name}")
-    ctx.add_text_to_region(ITEM_FILE, 'MATERIAL_REGION', f"""public static final RegistryObject<AsTechMaterialItem> {item_id.upper()} = ITEMS.register("{item_id}", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "{material_name}"));""")
+    ctx.add_text_to_region(ITEM_FILE, 'MATERIAL_REGION', f"""public static final RegistryObject<AsTechMaterialItem> {item_id.upper()} = ITEMS.register("{item_id}", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "{material_name}", {hazard}));""")
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
     ctx.add_simple_item_model(f'{item_id}')
 
@@ -848,8 +848,15 @@ for chemdef in chemicals:
             .bucket(ModItems.registerBucketItem("{fluid_name}", SOURCE_{fluid_name.upper()}));
     """)
 
-    if chemdef['Description']:
-      datapack.add_text_to_region(JEI_FILE, 'INFO_REGION', f"""registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_{fluid_name.upper()}.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("{chemdef['Description']}"));""")
+    if hazard != 'HazardBehavior.BehaviorType.NONE':
+        datapack.add_text_to_region(JEI_FILE, 'INFO_REGION', 
+            f"""registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_{fluid_name.upper()}.get().getSource(), 1000), 
+            ForgeTypes.FLUID_STACK, 
+            Component.literal("{chemdef['Description']}"),
+            Component.literal("\\nThis chemical is §c§nHazardous§r and may inflict {hazard.split('.')[-1]}. §6Chemical protection§r is recommended.")
+            );""")
+    else:
+        datapack.add_text_to_region(JEI_FILE, 'INFO_REGION', f"""registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_{fluid_name.upper()}.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("{chemdef['Description']}"));""")
 
     datapack.add_text_to_region(FLUIDS_FILE, 'RENDER_REGION', f"ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_{fluid_name.upper()}.get(), RenderType.translucent());")
     datapack.add_text_to_region(FLUIDS_FILE, 'RENDER_REGION', f"ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_{fluid_name.upper()}.get(), RenderType.translucent());")
@@ -872,22 +879,22 @@ for chemdef in chemicals:
 
     layer_images(base_image_path, top_image_path, output_image_path, hex_to_rgb(chemdef["Color"]), chemdef['Form'])
 
-    add_simple_tint_item(datapack, f"{fluid_name}_dust", f"{plain_text_name} Dust", chemdef["Color"], get_texture(fluid_name, dust_textures), fluid_name)
+    add_simple_tint_item(datapack, f"{fluid_name}_dust", f"{plain_text_name} Dust", chemdef["Color"], get_texture(fluid_name, dust_textures), fluid_name, hazard)
     datapack.add_item_tag(f"forge:dusts/{fluid_name}", f"astech:{fluid_name}_dust")
 
     datapack.add_generic_recipe(f"thermal/crystal/crystal_{fluid_name}", CRYSTALISE(fluid_name, fluid_name))
 
     if chemdef['Type'] == 'Chemical': continue
 
-    add_simple_tint_item(datapack, f"{fluid_name}_screw", f"{plain_text_name} Screw", chemdef["Color"], './templates/screw.png', fluid_name)
-    add_simple_tint_item(datapack, f"{fluid_name}_rod", f"{plain_text_name} Rod", chemdef["Color"], get_texture(fluid_name, rod_textures), fluid_name)
-    add_simple_tint_item(datapack, f"{fluid_name}_ingot", f"{plain_text_name} Ingot", chemdef["Color"], get_texture(fluid_name, ingot_textures), fluid_name)
-    add_simple_tint_item(datapack, f"{fluid_name}_plate", f"{plain_text_name} Plate", chemdef["Color"], get_texture(fluid_name, plate_textures), fluid_name)
-    add_simple_tint_item(datapack, f"{fluid_name}_nugget", f"{plain_text_name} Nugget", chemdef["Color"], get_texture(fluid_name, nugget_textures), fluid_name)
-    add_simple_tint_item(datapack, f"{fluid_name}_gear", f"{plain_text_name} Gear", chemdef["Color"], get_texture(fluid_name, gear_textures), fluid_name)
-    add_simple_tint_item(datapack, f"{fluid_name}_ring", f"{plain_text_name} Ring", chemdef["Color"], './templates/ring.png', fluid_name)
-    add_simple_tint_item(datapack, f"{fluid_name}_curved_plate", f"{plain_text_name} Curved Plate", chemdef["Color"], './templates/curved_plate.png', fluid_name)
-    add_simple_tint_item(datapack, f"{fluid_name}_wire", f"{plain_text_name} Wire", chemdef["Color"], './templates/wire.png', fluid_name)
+    # add_simple_tint_item(datapack, f"{fluid_name}_screw", f"{plain_text_name} Screw", chemdef["Color"], './templates/screw.png', fluid_name, hazard)
+    add_simple_tint_item(datapack, f"{fluid_name}_rod", f"{plain_text_name} Rod", chemdef["Color"], get_texture(fluid_name, rod_textures), fluid_name, hazard)
+    add_simple_tint_item(datapack, f"{fluid_name}_ingot", f"{plain_text_name} Ingot", chemdef["Color"], get_texture(fluid_name, ingot_textures), fluid_name, hazard)
+    add_simple_tint_item(datapack, f"{fluid_name}_plate", f"{plain_text_name} Plate", chemdef["Color"], get_texture(fluid_name, plate_textures), fluid_name, hazard)
+    add_simple_tint_item(datapack, f"{fluid_name}_nugget", f"{plain_text_name} Nugget", chemdef["Color"], get_texture(fluid_name, nugget_textures), fluid_name, hazard)
+    add_simple_tint_item(datapack, f"{fluid_name}_gear", f"{plain_text_name} Gear", chemdef["Color"], get_texture(fluid_name, gear_textures), fluid_name, hazard)
+    # add_simple_tint_item(datapack, f"{fluid_name}_ring", f"{plain_text_name} Ring", chemdef["Color"], './templates/ring.png', fluid_name, hazard)
+    # add_simple_tint_item(datapack, f"{fluid_name}_curved_plate", f"{plain_text_name} Curved Plate", chemdef["Color"], './templates/curved_plate.png', fluid_name, hazard)
+    add_simple_tint_item(datapack, f"{fluid_name}_wire", f"{plain_text_name} Wire", chemdef["Color"], './templates/wire.png', fluid_name, hazard)
     add_simple_tint_block(datapack, f"{fluid_name}_block", f"{plain_text_name} Block", chemdef["Color"], get_texture(fluid_name, block_textures))
 
     datapack.add_item_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
@@ -909,7 +916,7 @@ for chemdef in chemicals:
     datapack.add_generic_recipe(f"thermal/melt/melt_{fluid_name}", MELT(fluid_name, fluid_name))
 
     if chemdef['Type'] == 'Element':
-        add_simple_tint_item(datapack, f"raw_{fluid_name}", f"Raw {plain_text_name}", chemdef["Color"], get_texture(fluid_name, raw_ore_textures), fluid_name)
+        add_simple_tint_item(datapack, f"raw_{fluid_name}", f"Raw {plain_text_name}", chemdef["Color"], get_texture(fluid_name, raw_ore_textures), fluid_name, hazard)
         datapack.add_item_tag(f"forge:raw_materials/{fluid_name}", f"astech:raw_{fluid_name}")
         datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_raw', f"forge:raw_materials/{fluid_name}", f"astech:{fluid_name}_ingot")
         add_simple_ore_block(datapack, f"{fluid_name}_ore", f"{plain_text_name} Ore", chemdef["Color"], get_texture(fluid_name, ore_textures))
@@ -928,13 +935,13 @@ for chemdef in chemicals:
 
         datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_ore', f"forge:ores/{fluid_name}", f"astech:{fluid_name}_ingot")
 
-        add_mek_tint_item(datapack, f"{fluid_name}_clump", f"{plain_text_name} Clump", chemdef["Color"], CLUMP_TEXTURE, CLUMP_TEXTURE_OVERLAY, fluid_name)
+        add_mek_tint_item(datapack, f"{fluid_name}_clump", f"{plain_text_name} Clump", chemdef["Color"], CLUMP_TEXTURE, CLUMP_TEXTURE_OVERLAY, fluid_name, hazard)
         datapack.add_item_tag(f"mekanism:clumps/{fluid_name}", f"astech:{fluid_name}_clump")
-        add_mek_tint_item(datapack, f"{fluid_name}_dirty_dust", f"{plain_text_name} Dirty Dust", chemdef["Color"], DIRTY_DUST_TEXTURE, DIRTY_DUST_TEXTURE_OVERLAY, fluid_name)
+        add_mek_tint_item(datapack, f"{fluid_name}_dirty_dust", f"{plain_text_name} Dirty Dust", chemdef["Color"], DIRTY_DUST_TEXTURE, DIRTY_DUST_TEXTURE_OVERLAY, fluid_name, hazard)
         datapack.add_item_tag(f"mekanism:dirty_dusts/{fluid_name}", f"astech:{fluid_name}_dirty_dust")
-        add_mek_tint_item(datapack, f"{fluid_name}_crystal", f"{plain_text_name} Crystal", chemdef["Color"], CRYSTAL_TEXTURE, CRYSTAL_TEXTURE_OVERLAY, fluid_name)
+        add_mek_tint_item(datapack, f"{fluid_name}_crystal", f"{plain_text_name} Crystal", chemdef["Color"], CRYSTAL_TEXTURE, CRYSTAL_TEXTURE_OVERLAY, fluid_name, hazard)
         datapack.add_item_tag(f"mekanism:crystals/{fluid_name}", f"astech:{fluid_name}_crystal")
-        add_mek_tint_item(datapack, f"{fluid_name}_shard", f"{plain_text_name} Shard", chemdef["Color"], SHARD_TEXTURE, SHARD_TEXTURE_OVERLAY, fluid_name)
+        add_mek_tint_item(datapack, f"{fluid_name}_shard", f"{plain_text_name} Shard", chemdef["Color"], SHARD_TEXTURE, SHARD_TEXTURE_OVERLAY, fluid_name, hazard)
         datapack.add_item_tag(f"mekanism:shards/{fluid_name}", f"astech:{fluid_name}_shard")
 
         # Example usage
@@ -1025,19 +1032,19 @@ for chemdef in chemicals:
 }}
 """)
     
-    datapack.add_generic_recipe(f"compat/mek/sawing/{fluid_name}_nugget_to_screw", f"""{{
-  "type": "mekanism:sawing",
-  "input": {{
-    "ingredient": {{
-      "item": "astech:{fluid_name}_nugget"
-    }}
-  }},
-  "mainOutput": {{
-    "count": 1,
-    "item": "astech:{fluid_name}_screw"
-  }}
-}}
-""")
+#     datapack.add_generic_recipe(f"compat/mek/sawing/{fluid_name}_nugget_to_screw", f"""{{
+#   "type": "mekanism:sawing",
+#   "input": {{
+#     "ingredient": {{
+#       "item": "astech:{fluid_name}_nugget"
+#     }}
+#   }},
+#   "mainOutput": {{
+#     "count": 1,
+#     "item": "astech:{fluid_name}_screw"
+#   }}
+# }}
+# """)
     
     datapack.add_generic_recipe(f"crafting/{fluid_name}_nugget_to_ingot", f"""{{
   "type": "minecraft:crafting_shaped",

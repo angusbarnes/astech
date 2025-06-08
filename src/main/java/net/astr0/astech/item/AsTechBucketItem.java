@@ -44,6 +44,9 @@ public class AsTechBucketItem extends BucketItem {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(Component.translatable(_tooltip_key));
+        if (_typeSupplier.get().hasBehaviour()) {
+            pTooltipComponents.add(Component.literal("§c§n*HAZARDOUS*§r"));
+        }
         pTooltipComponents.add(Component.literal("§9AsTech Industrial§r"));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }

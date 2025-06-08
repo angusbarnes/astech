@@ -9,17 +9,26 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+
+//TODO: Rework hazard behaviours to bring all equipment and entities checks inside
+// This will reduce code duplication and allow for more dynamic conditions per behaviour
 public class HazardBehavior {
 
     private final Behavior behavior;
+    private final BehaviorType type;
 
     public HazardBehavior(BehaviorType behaviorType) {
         this.behavior = behaviorType.getBehavior();
+        type = behaviorType;
     }
 
     // Call the behavior's logic in the update loop
     public void apply(ItemStack stack, LivingEntity entity, Level level) {
         behavior.execute(stack, entity, level);
+    }
+
+    public boolean hasBehaviour() {
+        return type != BehaviorType.NONE;
     }
 
     public interface Behavior {

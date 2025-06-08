@@ -241,7 +241,7 @@ class Context:
         lines = lines[:start_index + 1] + [new_text + "\n"] + lines[end_index:]
         
         # Write the modified content back to the file
-        with open(file_path, 'w') as file:
+        with open(file_path, 'w', encoding="utf-8") as file:
             file.writelines(lines)
 
     def write_to_disk(self):

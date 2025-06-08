@@ -62,7 +62,6 @@ public class EUVMachineMenu extends AbstractContainerMenu {
 
     public int getTemp() { return  data.get(4);}
 
-    //TODO: fix this when we change the underlying container sync
     public int getScaledProgress() {
         int progress = this.data.get(2);
         int maxProgress = this.data.get(3);  // Max Progress
@@ -86,7 +85,7 @@ public class EUVMachineMenu extends AbstractContainerMenu {
     public static final int VANILLA_FIRST_SLOT_INDEX = 0;
     public static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
-    // THIS YOU HAVE TO DEFINE! //TODO FIX THIS HERE FOR 3 TOTAL AND 2 INPUTS
+    // THIS YOU HAVE TO DEFINE!
     private static final int TE_INVENTORY_SLOT_COUNT = 3;  // must be the number of slots you have!
     private static final int TE_INVENTORY_INPUT_COUNT = 2;
     @Override

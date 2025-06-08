@@ -38,19 +38,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-// Todo:
-// - We need to prevent output handlers from being able to be input into
-// - We need to tidy up side config stuff
-// - Implement Recipe Type, Recipe Process and JEI Recipe Categories and transfer handlers
-// - Clean up print statements
-// - Enable fluid draining and filling from buckets in GUI
-//   ---> this might involve some custom fluidSlot type bullshit. IDK how to do that
-// - Somehow support AE2 style click and drag to set filters from JEI
-// - add OK button to only update side config when pressed, or menu closed
-// Data generators would be good to add too
-// Add fluid texture variations
-// Tie hazardous materials to actual underlying data
-// Fix energy percentage synced by ContainerData
 public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
@@ -90,7 +77,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
             public int get(int pIndex) {
                 return switch (pIndex) {
                     case 0 -> energyStorage.getMaxEnergyStored();
-                    // TODO: Turn this into a synced percentage and reconvert to relative amount on client side
                     case 1 -> energyStorage.getEnergyStored();
                     case 2 -> ChemicalMixerBlockEntity.this.progress;
                     case 3 -> ChemicalMixerBlockEntity.this.maxProgress;

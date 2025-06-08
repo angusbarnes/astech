@@ -91,7 +91,6 @@ public class AssemblerMenu extends AbstractContainerMenu {
         return data.get(2) > 0;
     }
 
-    //TODO: fix this when we change the underlying container sync
     public int getScaledProgress() {
         int progress = this.data.get(2);
         int maxProgress = this.data.get(3);  // Max Progress

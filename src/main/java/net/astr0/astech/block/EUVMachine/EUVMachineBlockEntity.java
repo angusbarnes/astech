@@ -299,7 +299,6 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
 
         if(recipe == null) return;
 
-        //TODO: CONSUME A FIXED AMOUNT OF THE PHOTORESIST???
 
         if(inputFluidTank.getTank(0).getFluidAmount() < 100) {
             return; // We do not work if we have no photoresist

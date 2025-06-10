@@ -853,7 +853,7 @@ for chemdef in chemicals:
             f"""registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_{fluid_name.upper()}.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
             Component.literal("{chemdef['Description']}"),
-            Component.literal("\\nThis chemical is §c§nHazardous§r and may inflict {hazard.split('.')[-1]}. §6Chemical protection§r is recommended.")
+            Component.literal("\\nThis chemical is §c§nHazardous§r and may inflict {hazard.split('.')[-1]}. §6Chemical protection§r§0 is recommended.")
             );""")
     else:
         datapack.add_text_to_region(JEI_FILE, 'INFO_REGION', f"""registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_{fluid_name.upper()}.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("{chemdef['Description']}"));""")

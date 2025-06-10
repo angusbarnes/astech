@@ -1,94 +1,102 @@
-Name,MATERIAL_ID,Type,Formula,Color,Form,Should Ingot?,Should Dust?,Is Hazardous,Hazard Type,Decomposition,Description
-Acetic Acid,acetic_acid,Chemical,C2H4O2,#ff6666,liquid,No,Yes,No,,,The main component of vinegar apart from water.
-Acetone,acetone,Chemical,C3H6O,#e7e4e4,liquid,No,No,Yes,Explosive,,A common solvent used in nail polish remover.
-Acrolein,acrolein,Chemical,C3H4O,#cc9966,liquid,,,,,,Used in the production of acrylic acid and its esters.
-Adamantium,adamantium,Element,Ad,#cccccc,liquid,Yes,Yes,No,,,A fictional virtually indestructible metal alloy from the Marvel universe.
-Aerogel,aerogel,Compound,,#d7ebb7,gas,Yes,Yes,,,,
-Aluminium Hydroxide,aluminium_hydroxide,Chemical,Al(OH)3,#a8e5eb,gas,Yes,Yes,No,,,Used as an antacid and in the manufacture of aluminum compounds.
-Ammonia,ammonia,Chemical,NH3,#b2dfdb,gas,No,Yes,No,,Ammonium nitrate used in dynamite,Used in fertilizers and as a refrigerant gas. Environmental toxicity; can be explosive but kinda rarely
-Ammonium Chloride,ammonium_chloride,Chemical,NH4Cl,#dcfae4,,,,,,,
-Antimony,antimony,Element,Sb,#a095ad,,,,,,,
-Aqua Regia,aqua_regia,Chemical,HNO3+HCl,#ffcc00,liquid,No,No,No,Explosive,,A mixture of nitric acid and hydrochloric acid capable of dissolving gold.
-Benzene,benzene,Compound,C6H6,#f28e1c,liquid,Yes,Yes,Yes,EXTREME,,An important industrial solvent and precursor in the production of various chemicals. Cat 1 carcinogen
-Bioluminescent Coon Juice,bioluminescent_coon_juice,Compound,Organic Compound,#00ff55,liquid,Yes,Yes,No,,,
-Bromine,bromine,Element,Br2,#ff3300,liquid,Yes,Yes,No,,,Used in flame retardants and some types of medication.
-Carbonadium,carbonadium,Element,Cbd,#666666,liquid,Yes,Yes,No,,,A malleable and resilient fictional alloy used in various sci-fi contexts.
-Chlorine,chlorine,Element,Cl2,#d4ff00,gas,No,Yes,No,,"Can easily become chlorine gas, HCl",Used as a disinfectant and in the production of PVC.
-Chlorobenzene,chlorobenzene,Chemical,C6H5Cl,#57186e,liquid,,,,,,
-Chlorodifluoromethane,chlorodifluoromethane,Chemical,CHClF2,#d4ffe8,,,,,,,
-Cobalt,cobalt,Element,Co,#0e389c,liquid,,,,,,
-Cryptic Acid,cryptic_acid,Chemical,§kJKSD,#DD33DD,liquid,No,No,No,,,"Hmm, what is this strange substrance"
-Cyanogen,cyanogen,Compound,C2N2,#ccffff,gas,No,No,Yes,Asphyxiant,,A highly toxic gas used in chemical synthesis and fumigation.
-Dichloromethane,dichloromethane,Chemical,CH2Cl2,#c6c6a7,gas,No,No,No,,,A solvent used in paint removers and degreasing agents.
-Dilithium,dilithium,Element,Li2,#e60045,liquid,No,Yes,No,Freezing,,A fictional element used as a power source in the Star Trek universe.
-Dimethyl Sulfoxide,dimethyl_sulfoxide,Chemical,C2H6OS,#99ccff,liquid,No,Yes,No,,,A solvent with the ability to penetrate biological membranes.
-Ethane,ethane,Chemical,C2H6,#ebba34,gas,No,No,Yes,Explosive,,A component of natural gas used as a feedstock for ethylene production.
-Ethylene Glycol,ethylene_glycol,Compound,C2H6O2,#99ccff,liquid,No,Yes,No,,,Used as antifreeze in cooling and heating systems.
-Fentanyl,fentanyl,Compound,C22H28N2O,#19ffdd,liquid,Yes,Yes,No,,,
-Fluoroantimonic Acid,fluoroantimonic_acid,Chemical,HSbF6,#ffffdd,liquid,No,No,Yes,EXTREME,,
-Fluorosilicic Acid,fluorosilicic_acid,Chemical,H2SiF6,#99cc99,liquid,No,No,No,,,Used in water fluoridation and in the production of ceramics.
-Formaldehyde,formaldehyde,Chemical,CH2O,#ccffcc,gas,No,No,Yes,EXTREME,,Used in the production of resins and as a preservative.
-Gelid Cryotheum,gelid_cryotheum,Compound,(CH2OH)2+H2O+Snow,#549eff,liquid,No,No,Yes,Freezing,,
-Ghastly Liquid,ghastly_liquid,Chemical,Organic Compound,#f4e6ff,liquid,Yes,Yes,Yes,Asphyxiant,,
-Graphene,graphene,Compound,C6,#191a19,liquid,Yes,Yes,,,,
-Helium,helium,Element,He,#f7ecad,gas,No,No,No,,,
-Hexafluoropropylene,hexafluoropropylene,Compound,C3F6,#99ffff,gas,,,No,,polytetrafluoroethylene,Used in the production of fluoropolymers.
-Hexane,hexane,Chemical,C6H14,#ffd700,liquid,No,No,No,,,Used as a solvent in the extraction of vegetable oils.
-High Entropy Alloy,high_entropy_alloy,Compound,,#b6b5ff,liquid,Yes,Yes,Yes,Explosive,,
-Hydrazine,hydrazine,Chemical,N2H4,#ccffcc,liquid,No,Yes,No,,,Used as a rocket propellant and in fuel cells.
-Hydrochloric Acid,hydrochloric_acid,Chemical,HCl,#ff6666,liquid,No,No,No,,,A strong acid used in many industrial processes including metal refining.
-Hydrogen Peroxide,hydrogen_peroxide,Chemical,H2O2,#7e7ecf,liquid,No,No,Yes,EXTREME,,
-Hydrogen,hydrogen,Chemical,H2,#fff4e6,gas,No,No,Yes,Explosive,,The lightest and most abundant chemical element in the universe.
-Hydrogen Fluoride,hydrogen_fluoride,Chemical,HF,#e2bdff,,,,,Hot,,
-Hydrogen Sulfide,hydrogen_sulfide,Compound,H2S,#ffff99,gas,No,Yes,Yes,Asphyxiant,,A toxic gas with a characteristic smell of rotten eggs.
-Isopropanol,isopropanol,Chemical,C3H8O,#cc99ff,liquid,No,No,No,,,Commonly known as rubbing alcohol used as a disinfectant.
-Iumium,iumium,Element,,#ff903b,liquid,Yes,Yes,Yes,Radioactive,,
-Methanol,methanol,Chemical,CH3OH,#80d4ff,liquid,No,No,No,,,Used as a solvent antifreeze and fuel.
-Methyl Chloride,methyl_chloride,Chemical,CH3Cl,#ffcc99,gas,No,No,Yes,,,Used as a refrigerant and in the production of silicone polymers.
-Methyl Ethyl Ketone,methyl_ethyl_ketone,Compound,C4H8O,#e6ccff,liquid,No,Yes,No,,,A solvent used in the production of plastics and textiles.
-Neon,neon,Element,Ne,#ff5ccd,gas,No,Yes,No,,,A noble gas used in neon signs and high-voltage indicators.
-Netherite,netherite,Chemical,,#301e05,liquid,No,No,Yes,Hot,,
-Nitrogen,nitrogen,Element,N2,#8a8dff,gas,No,No,No,,,Makes up 78% of the Earth's atmosphere and is used in the production of ammonia.
-Phosgene,phosgene,Chemical,COCl2,#999966,gas,No,No,Yes,Asphyxiant,,A highly toxic gas used in the production of plastics and pesticides.
-Phosphoric Acid,phosphoric_acid,Chemical,H3PO4,#ccff99,liquid,No,No,No,,,"Used in fertilizers, food flavoring, and rust removal."
-Piranha,piranha,Chemical,(H2SO4)(H2O2),#f2f0d5,liquid,No,No,Yes,EXTREME,,Fully hectic acid; used similarly to aqua regia and HF
-Piss Water,piss_water,Compound,Urine,#ebba34,liquid,No,Yes,No,,,A slang term for urine which is primarily water with dissolved waste products.
-Polytetrafluoroethylene,polytetrafluoroethylene,Chemical,C2F4,#c6fff8,liquid,Yes,Yes,No,,,A polymer commonly used in non-stick coatings for cookware.
-Polyvinyl chloride,polyvinyl_chloride,Compound,(C2H3Cl)n,#e8fffa,liquid,Yes,Yes,No,,,The world's third-most widely produced synthetic polymer of plastic.
-Propylene,propylene,Chemical,C3H6,#ffcc99,gas,Yes,Yes,,,,A key raw material in the production of polypropylene plastics.
-Radon,radon,Element,Rn,#ffd700,gas,No,No,Yes,Radioactive,,A radioactive noble gas used in some types of cancer treatment.
-Rocket Fuel,rocket_fuel,Chemical,,#c9d400,gas,,,,,,
-Silicoaluminophosphate,silicoaluminophosphate,Chemical,SAPO-34,#83decf,,,,,,,
-Sodium,sodium,Element,Na,#ffaf54,gas,Yes,Yes,Yes,Explosive,,
-Sodium Hydroxide,sodium_hydroxide,Chemical,NaOH,#99ccff,liquid,No,Yes,Yes,,,A strong base used in soap making and chemical manufacturing.
-Sodium Hypochlorite,sodium_hypochlorite,Compound,NaClO,#99ff99,liquid,No,Yes,No,,,Used as a bleaching agent and disinfectant.
-Sodium Sulfate,sodium_sulfate,Compound,,#590033,liquid,,,,,,
-Soldering Flux,soldering_flux,Chemical,C19H29CO2H,#f7ecad,,,,,,,
-Stipnicium,stipnicium,Element,St,#ff4245,liquid,Yes,Yes,No,,,
-Styrene,styrene,Compound,C8H8,#ff9999,liquid,Yes,Yes,No,,,Used in the production of polystyrene plastics and resins.
-Styrene Butadiene,styrene_butadiene,Compound,C12H14,#2b2b29,liquid,Yes,Yes,No,,,
-Sulfuric Acid,sulfuric_acid,Chemical,H2SO4,#ffcc00,liquid,No,No,No,,,A highly corrosive acid used in industrial processes and battery acid.
-Tetrachloroethylene,tetrachloroethylene,Chemical,C2Cl4,#999999,liquid,,,,,,Used as a solvent in dry cleaning and metal degreasing.
-Tetraethyl orthosilicate,tetraethyl_orthosilicate,Chemical,SiC8H20O4,#ffffff,,,,,,,
-Tetrahydrofuran,tetrahydrofuran,Chemical,C4H8O,#e6e6e6,liquid,No,No,No,,,A solvent used in the production of polymers.
-Trichloroethylene,trichloroethylene,Chemical,C2HCl3,#cc9999,liquid,No,No,Yes,EXTREME,,Used as a solvent and in the manufacturing of hydrofluorocarbon refrigerants.
-Trichloromethane,trichloromethane,Compound,CHCl3,#fDfeed,liquid,No,Yes,No,,,This be chloroform
-Unobtanium,unobtanium,Chemical,Ubt,#ff66cc,liquid,No,No,Yes,Radioactive,cryptic_acid,A rare and highly valuable fictional material with exceptional properties.
-Catalysed Uranium,catalysed_uranium,Chemical,UO2,#488257,liquid,,,,,,
-Xenon,xenon,Element,Xe,#3a79ff,gas,Yes,Yes,No,,,A noble gas used in high-intensity lamps and ion propulsion systems in spacecraft.
-Xylene,xylene,Compound,C8H10,#f8cfff,liquid,No,Yes,No,Freezing,,"Used as a solvent in the printing, rubber and leather industries."
-RP-1,rp_1,Chemical,Refined Kerosene,#f0243f,,,,,,,
-Antimony Pentafluoride,antimony_pentafluoride,Chemical,SbF5,#f980ff,,,,,,,
-Polymethyl Methacrylate,polymethyl_methacrylate,Chemical,C5H8O2,#979fc7,,,,,,,
-Gaseous Hyrdocarbons,gaseous_hyrdocarbons,Chemical,Hm,#666666,,,,,,,
-Acetylene,acetylene,Chemical,C2H2,#ffffff,,,,,,,
-Phosphorus,phosphorus,Element,P,#7d2718,,,,,,,
-Natural Gas,natural_gas,Chemical,Dino Farts,#ffcc99,,,,,,,
-Silicon Tetrachloride,silicon_tetrachloride,Chemical,SiCl4,#fc7303,,,,,,,
-Energised Naqadah,energised_naqadah,Chemical,,#c6fff8,,,,,,,
-Monocrystaline Silicon,monocrystaline_silicon,Chemical,Si,#2b2b29,,,,,Asphyxiant,,
-Refined Silicon,refined_silicon,Chemical,Si4H+,#666666,,,,,,,
-Treated Biodiesel,treated_biodiesel,Chemical,,#999966,,,,,,,
-Potassium Dichromate,potassium_dichromate,Chemical,K2Cr2O7,#d91455,,,,,Asphyxiant,,
-High Carbon Steel 52100,high_carbon_steel_52100,Compound,1% Carbon,#2b2b29,,,,,,,
-Engineered Alloy,engineered_alloy,Compound,,#666666,,,,,,,
+Name,MATERIAL_ID,Type,Formula,Base,Color,Form,Should Ingot?,Should Dust?,Is Hazardous,Hazard Type,Decomposition,Description
+Acetic Acid,acetic_acid,Chemical,C2H4O2,-3,#ff6666,liquid,No,Yes,No,,,The main component of vinegar apart from water.
+Acetone,acetone,Chemical,C3H6O,-2,#e7e4e4,liquid,No,No,Yes,Explosive,,A common solvent used in nail polish remover.
+Acrolein,acrolein,Chemical,C3H4O,,#cc9966,liquid,,,,,,Used in the production of acrylic acid and its esters.
+Adamantium,adamantium,Element,Ad,,#cccccc,liquid,Yes,Yes,No,,,A fictional virtually indestructible metal alloy from the Marvel universe.
+Aerogel,aerogel,Compound,,,#d7ebb7,gas,Yes,Yes,,,,A weird half air half gel material which is extremely flame resistant
+Aluminium Hydroxide,aluminium_hydroxide,Chemical,Al(OH)3,3,#a8e5eb,gas,Yes,Yes,No,,,Used as an antacid and in the manufacture of aluminum compounds.
+Ammonia,ammonia,Chemical,NH3,-1,#b2dfdb,gas,No,Yes,No,,Ammonium nitrate used in dynamite,Used in fertilizers and as a refrigerant gas. Environmental toxicity; can be explosive but kinda rarely
+Ammonium Chloride,ammonium_chloride,Chemical,NH4Cl,-2,#dcfae4,gas,,,,,,
+Antimony,antimony,Element,Sb,,#a095ad,liquid,,,,,,Rare earth metal which is useful at enhancing the hardness of alloys
+Aqua Regia,aqua_regia,Chemical,HNO3+HCl,-4,#ffcc00,liquid,No,No,No,Explosive,,A mixture of nitric acid and hydrochloric acid capable of dissolving gold.
+Benzene,benzene,Compound,C6H6,-1,#f28e1c,liquid,Yes,Yes,Yes,EXTREME,,An important industrial solvent and precursor in the production of various chemicals. Cat 1 carcinogen
+Bioluminescent Coon Juice,bioluminescent_coon_juice,Compound,Organic Compound,,#00ff55,liquid,Yes,Yes,No,,,
+Bromine,bromine,Element,Br2,,#ff3300,liquid,Yes,Yes,No,,,Used in flame retardants and some types of medication.
+Carbonadium,carbonadium,Element,Cbd,,#666666,liquid,Yes,Yes,No,,,A malleable and resilient fictional alloy used in various sci-fi contexts.
+Chlorine,chlorine,Element,Cl2,,#d4ff00,gas,No,Yes,No,,"Can easily become chlorine gas, HCl",Used as a disinfectant and in the production of PVC.
+Chlorobenzene,chlorobenzene,Chemical,C6H5Cl,,#57186e,liquid,,,,,,A common solvent used in the production of a large number of industrial compounds
+Chlorodifluoromethane,chlorodifluoromethane,Chemical,CHClF2,,#d4ffe8,,,,Yes,Explosive,,A hydrocarbon refridgerant and propellant
+Cobalt,cobalt,Element,Co,,#0e389c,liquid,,,,,,
+Cryptic Acid,cryptic_acid,Chemical,§kJKSD,-1,#DD33DD,liquid,No,No,No,,,"Hmm, what is this strange substrance"
+Cyanogen,cyanogen,Compound,C2N2,,#ccffff,gas,No,No,Yes,Asphyxiant,,A highly toxic gas used in chemical synthesis and fumigation.
+Dichloromethane,dichloromethane,Chemical,CH2Cl2,-1,#c6c6a7,gas,No,No,No,,,A solvent used in paint removers and degreasing agents.
+Dilithium,dilithium,Element,Li2,,#e60045,liquid,No,Yes,No,Freezing,,A fictional element used as a power source in the Star Trek universe.
+Dimethyl Sulfoxide,dimethyl_sulfoxide,Chemical,C2H6OS,-1,#99ccff,liquid,No,Yes,No,,,A solvent with the ability to penetrate biological membranes.
+Ethane,ethane,Chemical,C2H6,,#ebba34,gas,No,No,Yes,Explosive,,A component of natural gas used as a feedstock for ethylene production.
+Ethylene Glycol,ethylene_glycol,Compound,C2H6O2,,#99ccff,liquid,No,Yes,No,,,Used as antifreeze in cooling and heating systems.
+Fentanyl,fentanyl,Compound,C22H28N2O,,#19ffdd,liquid,Yes,Yes,No,,,THIS SHIT GETS YOU HYPE LETS GOOOOOO
+Fluoroantimonic Acid,fluoroantimonic_acid,Chemical,HSbF6,-4,#ffffdd,liquid,No,No,Yes,EXTREME,,"One of the strongest known acids, classified as a super acid. This will burn your soul out of your body."
+Fluorosilicic Acid,fluorosilicic_acid,Chemical,H2SiF6,-2,#99cc99,liquid,No,No,No,,,Used in water fluoridation and in the production of ceramics.
+Formaldehyde,formaldehyde,Chemical,CH2O,-2,#ccffcc,gas,No,No,Yes,EXTREME,,Used in the production of resins and as a preservative.
+Gelid Cryotheum,gelid_cryotheum,Compound,(CH2OH)2+H2O+Snow,,#549eff,liquid,No,No,Yes,Freezing,,An insane refridgerant with non-newtonian characteristics
+Ghastly Liquid,ghastly_liquid,Chemical,Organic Compound,,#f4e6ff,liquid,Yes,Yes,Yes,Asphyxiant,,"A hellish sludge which is comprised of the worst co-analytes of netherite, suspended in an aqueous solution"
+Graphene,graphene,Compound,C6,3,#191a19,liquid,Yes,Yes,,,,
+Helium,helium,Element,He,,#f7ecad,gas,No,No,No,,,Voice go squeeeeeeaaakyyyyy
+Hexafluoropropylene,hexafluoropropylene,Compound,C3F6,,#99ffff,gas,,,No,,polytetrafluoroethylene,Used in the production of fluoropolymers.
+Hexane,hexane,Chemical,C6H14,,#ffd700,liquid,No,No,No,,,Used as a solvent in the extraction of vegetable oils.
+High Entropy Alloy,high_entropy_alloy,Compound,,1,#b6b5ff,liquid,Yes,Yes,Yes,Explosive,,"This is an incredibly strong metal alloy. Despite being critically unstable on its own, controlled industrial processes and additives can be used to subdue its explosive tendancies"
+Hydrazine,hydrazine,Chemical,N2H4,,#ccffcc,liquid,No,Yes,No,,,Used as a rocket propellant and in fuel cells.
+Hydrochloric Acid,hydrochloric_acid,Chemical,HCl,-2,#ff6666,liquid,No,No,No,,,A strong acid used in many industrial processes including metal refining.
+Hydrogen Peroxide,hydrogen_peroxide,Chemical,H2O2,-2,#7e7ecf,liquid,No,No,Yes,EXTREME,,Bleach your hair or something
+Hydrogen,hydrogen,Chemical,H2,-1,#fff4e6,gas,No,No,Yes,Explosive,,The lightest and most abundant chemical element in the universe.
+Hydrogen Fluoride,hydrogen_fluoride,Chemical,HF,-3,#e2bdff,,,,,Hot,,A basic bitch acid which high acidity
+Hydrogen Sulfide,hydrogen_sulfide,Compound,H2S,-1,#ffff99,gas,No,Yes,Yes,Asphyxiant,,A toxic gas with a characteristic smell of rotten eggs.
+Isopropanol,isopropanol,Chemical,C3H8O,,#cc99ff,liquid,No,No,No,,,Commonly known as rubbing alcohol used as a disinfectant.
+Iumium,iumium,Element,???,,#ff903b,liquid,Yes,Yes,Yes,Radioactive,,A high pothetical element which was named after scientists ran out of all the other -ium names
+Methanol,methanol,Chemical,CH3OH,-1,#80d4ff,liquid,No,No,No,,,Used as a solvent antifreeze and fuel.
+Methyl Chloride,methyl_chloride,Chemical,CH3Cl,-1,#ffcc99,gas,No,No,Yes,,,Used as a refrigerant and in the production of silicone polymers.
+Methyl Ethyl Ketone,methyl_ethyl_ketone,Compound,C4H8O,-1,#e6ccff,liquid,No,Yes,No,,,A solvent used in the production of plastics and textiles.
+Neon,neon,Element,Ne,,#ff5ccd,gas,No,Yes,No,,,A noble gas used in neon signs and high-voltage indicators.
+Netherite,netherite,Chemical,,,#301e05,liquid,No,No,Yes,Hot,,
+Nitrogen,nitrogen,Element,N2,,#8a8dff,gas,No,No,No,,,Makes up 78% of the Earth's atmosphere and is used in the production of ammonia.
+Phosgene,phosgene,Chemical,COCl2,,#999966,gas,No,No,Yes,Asphyxiant,,A highly toxic gas used in the production of plastics and pesticides.
+Phosphoric Acid,phosphoric_acid,Chemical,H3PO4,,#ccff99,liquid,No,No,No,,,"Used in fertilizers, food flavoring, and rust removal."
+Piranha,piranha,Chemical,(H2SO4)(H2O2),,#f2f0d5,liquid,No,No,Yes,EXTREME,,Fully hectic acid; used similarly to aqua regia and HF
+Piss Water,piss_water,Compound,Urine,,#ebba34,liquid,No,Yes,No,,,A slang term for urine which is primarily water with dissolved waste products.
+Polytetrafluoroethylene,polytetrafluoroethylene,Chemical,C2F4,,#c6fff8,liquid,Yes,Yes,No,,,A polymer commonly used in non-stick coatings for cookware.
+Polyvinyl chloride,polyvinyl_chloride,Compound,(C2H3Cl)n,,#e8fffa,liquid,Yes,Yes,No,,,The world's third-most widely produced synthetic polymer of plastic.
+Propylene,propylene,Chemical,C3H6,,#ffcc99,gas,Yes,Yes,,,,A key raw material in the production of polypropylene plastics.
+Radon,radon,Element,Rn,,#f542cb,gas,No,No,Yes,Radioactive,,A radioactive noble gas used in some types of cancer treatment.
+Rocket Fuel,rocket_fuel,Chemical,,,#c9d400,gas,,,,,,Does what it says on the can
+Silicoaluminophosphate,silicoaluminophosphate,Chemical,SAPO-34,4,#83decf,,,,,,,A micro pore zeolite used in the production of advanced chemical catalysts
+Sodium,sodium,Element,Na,2,#ffaf54,gas,Yes,Yes,Yes,Explosive,,
+Sodium Hydroxide,sodium_hydroxide,Chemical,NaOH,3,#99ccff,liquid,No,Yes,Yes,,,A strong base used in soap making and chemical manufacturing.
+Sodium Hypochlorite,sodium_hypochlorite,Compound,NaClO,1,#99ff99,liquid,No,Yes,No,,,Used as a bleaching agent and disinfectant.
+Sodium Sulfate,sodium_sulfate,Compound,,1,#590033,liquid,,,,,,"Sodium sulfate is a white, crystalline powder, also known as Glauber's salt, and is the sodium salt of sulfuric acid. It's highly soluble in water and has various applications, including use as a laxative, a drying agent in laboratories, and in the production of detergents, glass, and textiles."
+Soldering Flux,soldering_flux,Chemical,C19H29CO2H,,#f7ecad,,,,,,,
+Stipnicium,stipnicium,Element,St,,#ff4245,liquid,Yes,Yes,No,,,STIP NIC is a long since forgotten meme that only Astr0 cares about anymore. He turned it into a metal to commemorate
+Styrene,styrene,Compound,C8H8,,#ff9999,liquid,Yes,Yes,No,,,Used in the production of polystyrene plastics and resins.
+Styrene Butadiene,styrene_butadiene,Compound,C12H14,,#2b2b29,liquid,Yes,Yes,No,,,"Styrene-butadiene rubber (SBR) is a widely used synthetic rubber produced by copolymerizing styrene and butadiene. It's known for its good abrasion resistance, aging stability, and various other properties that make it suitable for different applications."
+Sulfuric Acid,sulfuric_acid,Chemical,H2SO4,-4,#ffcc00,liquid,No,No,No,,,A highly corrosive acid used in industrial processes and battery acid.
+Tetrachloroethylene,tetrachloroethylene,Chemical,C2Cl4,,#999999,liquid,,,,,,Used as a solvent in dry cleaning and metal degreasing.
+Tetraethyl orthosilicate,tetraethyl_orthosilicate,Chemical,SiC8H20O4,,#ffffff,,,,,,,"A precursor for synthesizing various silica-based materials, including silicon dioxide, silicon oxycarbides, silanol, siloxane polymers, and organosilicon thin films"
+Tetrahydrofuran,tetrahydrofuran,Chemical,C4H8O,,#e6e6e6,liquid,No,No,No,,,A solvent used in the production of polymers.
+Trichloroethylene,trichloroethylene,Chemical,C2HCl3,,#cc9999,liquid,No,No,Yes,EXTREME,,Used as a solvent and in the manufacturing of hydrofluorocarbon refrigerants.
+Trichloromethane,trichloromethane,Compound,CHCl3,,#fDfeed,liquid,No,Yes,No,,,This be chloroform
+Unobtanium,unobtanium,Chemical,Ubt,,#ff66cc,liquid,No,No,Yes,Radioactive,cryptic_acid,A rare and highly valuable fictional material with exceptional properties.
+Catalysed Uranium,catalysed_uranium,Chemical,UO2,,#488257,liquid,,,,,,
+Xenon,xenon,Element,Xe,,#3a79ff,gas,Yes,Yes,No,,,A noble gas used in high-intensity lamps and ion propulsion systems in spacecraft.
+Xylene,xylene,Compound,C8H10,,#f8cfff,liquid,No,Yes,No,Freezing,,"Used as a solvent in the printing, rubber and leather industries."
+RP-1,rp_1,Chemical,Refined Kerosene,,#f0243f,liquid,,,,,,"RP-1 is a highly refined kerosene used as rocket fuel, particularly in liquid-fueled rocket engines. It's a kerolox fuel, meaning it's used with liquid oxygen."
+Antimony Pentafluoride,antimony_pentafluoride,Chemical,SbF5,,#f980ff,liquid,,,,,,
+Polymethyl Methacrylate,polymethyl_methacrylate,Chemical,C5H8O2,,#979fc7,liquid,,,,,,"Polymethyl methacrylate (PMMA), also known as acrylic or Plexiglas, is a synthetic resin derived from methyl methacrylate."
+Gaseous Hyrdocarbons,gaseous_hyrdocarbons,Chemical,Hm,,#666666,gas,,,,,,
+Acetylene,acetylene,Chemical,C2H2,,#ffffff,liquid,,,,,,
+Phosphorus,phosphorus,Element,P,,#7d2718,liquid,,,,,,
+Natural Gas,natural_gas,Chemical,Dino Farts,,#ffcc99,gas,,,,,,
+Silicon Tetrachloride,silicon_tetrachloride,Chemical,SiCl4,,#fc7303,liquid,,,,,,
+Energised Naqadah,energised_naqadah,Chemical,,,#c6fff8,liquid,,,,,,
+Monocrystaline Silicon,monocrystaline_silicon,Chemical,Si,,#2b2b29,liquid,,,Yes,Asphyxiant,,
+Refined Silicon,refined_silicon,Chemical,Si4H+,,#666666,liquid,,,,,,
+Treated Biodiesel,treated_biodiesel,Chemical,Mm Tasty,,#999966,liquid,,,,,,
+Potassium Dichromate,potassium_dichromate,Chemical,K2Cr2O7,,#d91455,liquid,,,Yes,Asphyxiant,,
+High Carbon Steel 52100,high_carbon_steel_52100,Compound,1% Carbon,2,#2b2b29,liquid,,,,,,
+Engineered Alloy,engineered_alloy,Compound,???,,#666666,liquid,,,,,,
+Good Beer,good_beer,Chemical,,,#ffbd4a,liquid,,,,,,
+Fosters Beer,fosters_beer,Chemical,,,#e3cda8,liquid,,,Yes,Asphyxiant,,Foster's Lager is an internationally distributed brand of Australian lager. It is owned by the Japanese brewing group Asahi Group Holdings. It's also dogshit.
+pH Stablised Beskar,ph_stablised_beskar,Chemical,,,#413c6e,liquid,,,,,,
+Modified Phosphinic Acid,modified_phosphinic_acid,Chemical,,,#37a9b8,liquid,,,,,,
+Phosphinic Acid,phosphinic_acid,Chemical,H3PO2,,#78ffe8,liquid,,,,,,
+Beskar Hydroxide,beskar_hydroxide,Chemical,??HO,,#493c6e,liquid,,,,,,
+Superheated Beskar Slurry,superheated_beskar_slurry,Chemical,,,#6e3c58,liquid,,,Yes,Hot,,
+Beskar,beskar,Chemical,,,#14151c,liquid,,,,,,

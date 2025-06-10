@@ -613,6 +613,14 @@ output.accept(ModItems.ENGINEERED_ALLOY_NUGGET.get());
 output.accept(ModItems.ENGINEERED_ALLOY_GEAR.get());
 output.accept(ModItems.ENGINEERED_ALLOY_WIRE.get());
 output.accept(ModBlocks.ENGINEERED_ALLOY_BLOCK.get());
+output.accept(ModItems.GOOD_BEER_DUST.get());
+output.accept(ModItems.FOSTERS_BEER_DUST.get());
+output.accept(ModItems.PH_STABLISED_BESKAR_DUST.get());
+output.accept(ModItems.MODIFIED_PHOSPHINIC_ACID_DUST.get());
+output.accept(ModItems.PHOSPHINIC_ACID_DUST.get());
+output.accept(ModItems.BESKAR_HYDROXIDE_DUST.get());
+output.accept(ModItems.SUPERHEATED_BESKAR_SLURRY_DUST.get());
+output.accept(ModItems.BESKAR_DUST.get());
                         //#end TAB_REGION
                     }).build());
 }

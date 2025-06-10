@@ -95,11 +95,11 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ACETONE.get().ge
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ACROLEIN.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used in the production of acrylic acid and its esters."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ADAMANTIUM.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A fictional virtually indestructible metal alloy from the Marvel universe."));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_AEROGEL.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_AEROGEL.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A weird half air half gel material which is extremely flame resistant"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ALUMINIUM_HYDROXIDE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used as an antacid and in the manufacture of aluminum compounds."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_AMMONIA.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used in fertilizers and as a refrigerant gas. Environmental toxicity; can be explosive but kinda rarely"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_AMMONIUM_CHLORIDE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ANTIMONY.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ANTIMONY.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Rare earth metal which is useful at enhancing the hardness of alloys"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_AQUA_REGIA.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
             Component.literal("A mixture of nitric acid and hydrochloric acid capable of dissolving gold."),
@@ -114,8 +114,12 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_BIOLUMINESCENT_C
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_BROMINE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used in flame retardants and some types of medication."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_CARBONADIUM.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A malleable and resilient fictional alloy used in various sci-fi contexts."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_CHLORINE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used as a disinfectant and in the production of PVC."));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_CHLOROBENZENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_CHLORODIFLUOROMETHANE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_CHLOROBENZENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A common solvent used in the production of a large number of industrial compounds"));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_CHLORODIFLUOROMETHANE.get().getSource(), 1000), 
+            ForgeTypes.FLUID_STACK, 
+            Component.literal("A hydrocarbon refridgerant and propellant"),
+            Component.literal("\nThis chemical is §c§nHazardous§r and may inflict EXPLOSION. §6Chemical protection§r is recommended.")
+            );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_COBALT.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_CRYPTIC_ACID.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Hmm, what is this strange substrance"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_CYANOGEN.get().getSource(), 1000), 
@@ -136,10 +140,10 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ETHANE.get().get
             Component.literal("\nThis chemical is §c§nHazardous§r and may inflict EXPLOSION. §6Chemical protection§r is recommended.")
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ETHYLENE_GLYCOL.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used as antifreeze in cooling and heating systems."));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_FENTANYL.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_FENTANYL.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("THIS SHIT GETS YOU HYPE LETS GOOOOOO"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_FLUOROANTIMONIC_ACID.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
-            Component.literal(""),
+            Component.literal("One of the strongest known acids, classified as a super acid. This will burn your soul out of your body."),
             Component.literal("\nThis chemical is §c§nHazardous§r and may inflict EXTREME. §6Chemical protection§r is recommended.")
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_FLUOROSILICIC_ACID.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used in water fluoridation and in the production of ceramics."));
@@ -150,28 +154,28 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_FORMALDEHYDE.get
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_GELID_CRYOTHEUM.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
-            Component.literal(""),
+            Component.literal("An insane refridgerant with non-newtonian characteristics"),
             Component.literal("\nThis chemical is §c§nHazardous§r and may inflict FREEZE. §6Chemical protection§r is recommended.")
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_GHASTLY_LIQUID.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
-            Component.literal(""),
+            Component.literal("A hellish sludge which is comprised of the worst co-analytes of netherite, suspended in an aqueous solution"),
             Component.literal("\nThis chemical is §c§nHazardous§r and may inflict SUFFOCATE. §6Chemical protection§r is recommended.")
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_GRAPHENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HELIUM.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HELIUM.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Voice go squeeeeeeaaakyyyyy"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HEXAFLUOROPROPYLENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used in the production of fluoropolymers."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HEXANE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used as a solvent in the extraction of vegetable oils."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HIGH_ENTROPY_ALLOY.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
-            Component.literal(""),
+            Component.literal("This is an incredibly strong metal alloy. Despite being critically unstable on its own, controlled industrial processes and additives can be used to subdue its explosive tendancies"),
             Component.literal("\nThis chemical is §c§nHazardous§r and may inflict EXPLOSION. §6Chemical protection§r is recommended.")
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HYDRAZINE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used as a rocket propellant and in fuel cells."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HYDROCHLORIC_ACID.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A strong acid used in many industrial processes including metal refining."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HYDROGEN_PEROXIDE.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
-            Component.literal(""),
+            Component.literal("Bleach your hair or something"),
             Component.literal("\nThis chemical is §c§nHazardous§r and may inflict EXTREME. §6Chemical protection§r is recommended.")
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HYDROGEN.get().getSource(), 1000), 
@@ -181,7 +185,7 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HYDROGEN.get().g
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HYDROGEN_FLUORIDE.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
-            Component.literal(""),
+            Component.literal("A basic bitch acid which high acidity"),
             Component.literal("\nThis chemical is §c§nHazardous§r and may inflict HEAT. §6Chemical protection§r is recommended.")
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HYDROGEN_SULFIDE.get().getSource(), 1000), 
@@ -192,7 +196,7 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HYDROGEN_SULFIDE
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ISOPROPANOL.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Commonly known as rubbing alcohol used as a disinfectant."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_IUMIUM.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
-            Component.literal(""),
+            Component.literal("A high pothetical element which was named after scientists ran out of all the other -ium names"),
             Component.literal("\nThis chemical is §c§nHazardous§r and may inflict RADIO. §6Chemical protection§r is recommended.")
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_METHANOL.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used as a solvent antifreeze and fuel."));
@@ -225,8 +229,8 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_RADON.get().getS
             Component.literal("A radioactive noble gas used in some types of cancer treatment."),
             Component.literal("\nThis chemical is §c§nHazardous§r and may inflict RADIO. §6Chemical protection§r is recommended.")
             );
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ROCKET_FUEL.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SILICOALUMINOPHOSPHATE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ROCKET_FUEL.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Does what it says on the can"));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SILICOALUMINOPHOSPHATE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A micro pore zeolite used in the production of advanced chemical catalysts"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SODIUM.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
             Component.literal(""),
@@ -234,14 +238,14 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SODIUM.get().get
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SODIUM_HYDROXIDE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A strong base used in soap making and chemical manufacturing."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SODIUM_HYPOCHLORITE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used as a bleaching agent and disinfectant."));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SODIUM_SULFATE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SODIUM_SULFATE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Sodium sulfate is a white, crystalline powder, also known as Glauber's salt, and is the sodium salt of sulfuric acid. It's highly soluble in water and has various applications, including use as a laxative, a drying agent in laboratories, and in the production of detergents, glass, and textiles."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SOLDERING_FLUX.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_STIPNICIUM.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_STIPNICIUM.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("STIP NIC is a long since forgotten meme that only Astr0 cares about anymore. He turned it into a metal to commemorate"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_STYRENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used in the production of polystyrene plastics and resins."));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_STYRENE_BUTADIENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_STYRENE_BUTADIENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Styrene-butadiene rubber (SBR) is a widely used synthetic rubber produced by copolymerizing styrene and butadiene. It's known for its good abrasion resistance, aging stability, and various other properties that make it suitable for different applications."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SULFURIC_ACID.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A highly corrosive acid used in industrial processes and battery acid."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_TETRACHLOROETHYLENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Used as a solvent in dry cleaning and metal degreasing."));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_TETRAETHYL_ORTHOSILICATE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_TETRAETHYL_ORTHOSILICATE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A precursor for synthesizing various silica-based materials, including silicon dioxide, silicon oxycarbides, silanol, siloxane polymers, and organosilicon thin films"));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_TETRAHYDROFURAN.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("A solvent used in the production of polymers."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_TRICHLOROETHYLENE.get().getSource(), 1000), 
             ForgeTypes.FLUID_STACK, 
@@ -261,9 +265,9 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_XYLENE.get().get
             Component.literal("Used as a solvent in the printing, rubber and leather industries."),
             Component.literal("\nThis chemical is §c§nHazardous§r and may inflict FREEZE. §6Chemical protection§r is recommended.")
             );
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_RP_1.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_RP_1.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("RP-1 is a highly refined kerosene used as rocket fuel, particularly in liquid-fueled rocket engines. It's a kerolox fuel, meaning it's used with liquid oxygen."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ANTIMONY_PENTAFLUORIDE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
-registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_POLYMETHYL_METHACRYLATE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_POLYMETHYL_METHACRYLATE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal("Polymethyl methacrylate (PMMA), also known as acrylic or Plexiglas, is a synthetic resin derived from methyl methacrylate."));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_GASEOUS_HYRDOCARBONS.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ACETYLENE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_PHOSPHORUS.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
@@ -284,6 +288,22 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_POTASSIUM_DICHRO
             );
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_HIGH_CARBON_STEEL_52100.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
 registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ENGINEERED_ALLOY.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_GOOD_BEER.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_FOSTERS_BEER.get().getSource(), 1000), 
+            ForgeTypes.FLUID_STACK, 
+            Component.literal("Foster's Lager is an internationally distributed brand of Australian lager. It is owned by the Japanese brewing group Asahi Group Holdings. It's also dogshit."),
+            Component.literal("\nThis chemical is §c§nHazardous§r and may inflict SUFFOCATE. §6Chemical protection§r is recommended.")
+            );
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_PH_STABLISED_BESKAR.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_MODIFIED_PHOSPHINIC_ACID.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_PHOSPHINIC_ACID.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_BESKAR_HYDROXIDE.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_SUPERHEATED_BESKAR_SLURRY.get().getSource(), 1000), 
+            ForgeTypes.FLUID_STACK, 
+            Component.literal(""),
+            Component.literal("\nThis chemical is §c§nHazardous§r and may inflict HEAT. §6Chemical protection§r is recommended.")
+            );
+registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_BESKAR.get().getSource(), 1000), ForgeTypes.FLUID_STACK, Component.literal(""));
         //#end INFO_REGION
     }
 
@@ -344,7 +364,7 @@ registration.addIngredientInfo(new FluidStack(ModFluids.FLOWING_ENGINEERED_ALLOY
         return (recipeSlotView, tooltip) -> {
             TagKey<Fluid> tag = fluid.getFluidTagKey();
 //            if(tag != null) {
-//                tooltip.add(Component.literal(String.format("Ã‚Â§7Accepts any %s", tag.location().toString())));
+//                tooltip.add(Component.literal(String.format("Ãƒâ€šÃ‚Â§7Accepts any %s", tag.location().toString())));
 //            }
         };
     }

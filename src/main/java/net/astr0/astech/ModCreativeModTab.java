@@ -49,6 +49,8 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.COOLANT_BLOCK.get());
                         output.accept(ModBlocks.GEM_POLISHING_STATION.get());
                         output.accept(ModItems.CABLE_LAYING_TOOL.get());
+                        output.accept(ModItems.WORLD_EATER.get());
+                        output.accept(ModItems.FULL_SHWAXE.get());
                         output.accept(ModItems.FLUID_CELL.get());
 //                        ItemStack testFluidCell = new ItemStack(ModItems.FLUID_CELL.get());
 //                        FluidCellItem.SetCellFluid(testFluidCell, ModFluids.SOURCE_BROMINE.get());

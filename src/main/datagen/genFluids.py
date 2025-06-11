@@ -264,6 +264,8 @@ datapack.set_base_dictionary({
     "tooltip.fluid_cell.contents": "Contains: %s (%d/%d mB)",
     "tooltip.fluid_cell.empty": "Empty",
     "item.astech.deez_nuts": "Deez Nuts",
+    "item.astech.world_eater": "World Eater",
+    "item.astech.full_shwaxe": "Full Shwaxe",
     "item.astech.deez_butts": "Deez Butts",
     "item.astech.zeolite_catalyst": "Zeolite Catalyst",
     "item.astech.monocrystalline_silicon": "Monocrystalline Silicon Boole",

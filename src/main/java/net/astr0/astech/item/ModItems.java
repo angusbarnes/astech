@@ -1,6 +1,7 @@
 package net.astr0.astech.item;
 
 import net.astr0.astech.AsTech;
+import net.astr0.astech.ModTiers;
 import net.astr0.astech.SoundRegistry;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.FlowingFluid;
@@ -19,7 +20,6 @@ public class ModItems {
                         new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), String.format("tooltip.%s.fluid", fluidName)));
     }
 
-
     // Call this function from the entry point to allow the items register to link itself to the eventBus
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
@@ -30,6 +30,8 @@ public class ModItems {
         return ITEMS.register(name, () -> new Item(new Item.Properties().stacksTo(stack_size)));
     }
 
+    public static final RegistryObject<Item> WORLD_EATER = ITEMS.register("world_eater", () -> new PickaxeItem(ModTiers.INFINITY_TIER, 100, -1, new Item.Properties().fireResistant().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> FULL_SHWAXE = ITEMS.register("full_shwaxe", () -> new AxeItem(ModTiers.INFINITY_TIER, 10000, 2, new Item.Properties().fireResistant().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> DEEZ_NUTS_ITEM = SimpleIngredientItem("deez_nuts", 16);
     public static final RegistryObject<Item> DEEZ_BUTTS_ITEM = SimpleIngredientItem("deez_butts", 32);
     public static final RegistryObject<Item> ZEOLITE_CATALYST = ITEMS.register("zeolite_catalyst", () -> new Item(new Item.Properties().durability(10)));

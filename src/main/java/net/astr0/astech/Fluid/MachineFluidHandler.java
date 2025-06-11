@@ -291,7 +291,7 @@ public class MachineFluidHandler implements IFluidHandler, IStateManaged {
     }
 
     public void readNetworkEncoding(FriendlyByteBuf buf) {
-        LogUtils.getLogger().info("FluidHandler is being decoded on the server");
+        LogUtils.getLogger().info("FluidHandler is being decoded on the client");
         for(FluidTank tank : tanks) {
             tank.setFluid(buf.readFluidStack());
         }

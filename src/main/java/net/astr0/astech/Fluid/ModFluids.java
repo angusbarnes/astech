@@ -247,6 +247,14 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SUPERHEATED_BESKAR_SLURRY.
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SUPERHEATED_BESKAR_SLURRY.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_BESKAR.get(), RenderType.translucent());
 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BESKAR.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SEA_WATER.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SEA_WATER.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ICE_SLURRY.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ICE_SLURRY.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PH_BALANCED_PURIFIED_WATER.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PH_BALANCED_PURIFIED_WATER.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PURIFIED_WATER.get(), RenderType.translucent());
+ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_PURIFIED_WATER.get(), RenderType.translucent());
         //#end RENDER_REGION
     }
 
@@ -438,7 +446,7 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BESKAR.get(), RenderType.tr
             .bucket(ModItems.registerBucketItem("chlorobenzene", SOURCE_CHLOROBENZENE));
     
 
-    public static final RegistryObject<FluidType> CHLORODIFLUOROMETHANE_FLUID_TYPE = registerType("chlorodifluoromethane", "", "#d4ffe8", HazardBehavior.BehaviorType.EXPLOSION);
+    public static final RegistryObject<FluidType> CHLORODIFLUOROMETHANE_FLUID_TYPE = registerType("chlorodifluoromethane", "liquid", "#d4ffe8", HazardBehavior.BehaviorType.EXPLOSION);
     public static final RegistryObject<FlowingFluid> SOURCE_CHLORODIFLUOROMETHANE = FLUIDS.register("chlorodifluoromethane",
             () -> new ForgeFlowingFluid.Source(ModFluids.CHLORODIFLUOROMETHANE_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> FLOWING_CHLORODIFLUOROMETHANE = FLUIDS.register("flowing_chlorodifluoromethane",
@@ -1371,6 +1379,50 @@ ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_BESKAR.get(), RenderType.tr
             BESKAR_FLUID_TYPE, SOURCE_BESKAR, FLOWING_BESKAR)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("beskar", SOURCE_BESKAR))
             .bucket(ModItems.registerBucketItem("beskar", SOURCE_BESKAR));
+    
+
+    public static final RegistryObject<FluidType> SEA_WATER_FLUID_TYPE = registerType("sea_water", "liquid", "#0018d1", HazardBehavior.BehaviorType.NONE);
+    public static final RegistryObject<FlowingFluid> SOURCE_SEA_WATER = FLUIDS.register("sea_water",
+            () -> new ForgeFlowingFluid.Source(ModFluids.SEA_WATER_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_SEA_WATER = FLUIDS.register("flowing_sea_water",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.SEA_WATER_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties SEA_WATER_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            SEA_WATER_FLUID_TYPE, SOURCE_SEA_WATER, FLOWING_SEA_WATER)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("sea_water", SOURCE_SEA_WATER))
+            .bucket(ModItems.registerBucketItem("sea_water", SOURCE_SEA_WATER));
+    
+
+    public static final RegistryObject<FluidType> ICE_SLURRY_FLUID_TYPE = registerType("ice_slurry", "liquid", "#1e99f7", HazardBehavior.BehaviorType.NONE);
+    public static final RegistryObject<FlowingFluid> SOURCE_ICE_SLURRY = FLUIDS.register("ice_slurry",
+            () -> new ForgeFlowingFluid.Source(ModFluids.ICE_SLURRY_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_ICE_SLURRY = FLUIDS.register("flowing_ice_slurry",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.ICE_SLURRY_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties ICE_SLURRY_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            ICE_SLURRY_FLUID_TYPE, SOURCE_ICE_SLURRY, FLOWING_ICE_SLURRY)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("ice_slurry", SOURCE_ICE_SLURRY))
+            .bucket(ModItems.registerBucketItem("ice_slurry", SOURCE_ICE_SLURRY));
+    
+
+    public static final RegistryObject<FluidType> PH_BALANCED_PURIFIED_WATER_FLUID_TYPE = registerType("ph_balanced_purified_water", "liquid", "#3061c2", HazardBehavior.BehaviorType.NONE);
+    public static final RegistryObject<FlowingFluid> SOURCE_PH_BALANCED_PURIFIED_WATER = FLUIDS.register("ph_balanced_purified_water",
+            () -> new ForgeFlowingFluid.Source(ModFluids.PH_BALANCED_PURIFIED_WATER_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_PH_BALANCED_PURIFIED_WATER = FLUIDS.register("flowing_ph_balanced_purified_water",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.PH_BALANCED_PURIFIED_WATER_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties PH_BALANCED_PURIFIED_WATER_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            PH_BALANCED_PURIFIED_WATER_FLUID_TYPE, SOURCE_PH_BALANCED_PURIFIED_WATER, FLOWING_PH_BALANCED_PURIFIED_WATER)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("ph_balanced_purified_water", SOURCE_PH_BALANCED_PURIFIED_WATER))
+            .bucket(ModItems.registerBucketItem("ph_balanced_purified_water", SOURCE_PH_BALANCED_PURIFIED_WATER));
+    
+
+    public static final RegistryObject<FluidType> PURIFIED_WATER_FLUID_TYPE = registerType("purified_water", "liquid", "#3c64b5", HazardBehavior.BehaviorType.NONE);
+    public static final RegistryObject<FlowingFluid> SOURCE_PURIFIED_WATER = FLUIDS.register("purified_water",
+            () -> new ForgeFlowingFluid.Source(ModFluids.PURIFIED_WATER_FLUID_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_PURIFIED_WATER = FLUIDS.register("flowing_purified_water",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.PURIFIED_WATER_FLUID_PROPERTIES));
+    public static final ForgeFlowingFluid.Properties PURIFIED_WATER_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            PURIFIED_WATER_FLUID_TYPE, SOURCE_PURIFIED_WATER, FLOWING_PURIFIED_WATER)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.registerFluidBlock("purified_water", SOURCE_PURIFIED_WATER))
+            .bucket(ModItems.registerBucketItem("purified_water", SOURCE_PURIFIED_WATER));
     
     //#end FLUID_REGION
 }

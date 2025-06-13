@@ -15,7 +15,7 @@ Bromine,bromine,Element,Br2,,#ff3300,liquid,Yes,Yes,No,,,Used in flame retardant
 Carbonadium,carbonadium,Element,Cbd,,#666666,liquid,Yes,Yes,No,,,A malleable and resilient fictional alloy used in various sci-fi contexts.
 Chlorine,chlorine,Element,Cl2,,#d4ff00,gas,No,Yes,No,,"Can easily become chlorine gas, HCl",Used as a disinfectant and in the production of PVC.
 Chlorobenzene,chlorobenzene,Chemical,C6H5Cl,,#57186e,liquid,,,,,,A common solvent used in the production of a large number of industrial compounds
-Chlorodifluoromethane,chlorodifluoromethane,Chemical,CHClF2,,#d4ffe8,,,,Yes,Explosive,,A hydrocarbon refridgerant and propellant
+Chlorodifluoromethane,chlorodifluoromethane,Chemical,CHClF2,,#d4ffe8,liquid,,,Yes,Explosive,,A hydrocarbon refridgerant and propellant
 Cobalt,cobalt,Element,Co,,#0e389c,liquid,,,,,,
 Cryptic Acid,cryptic_acid,Chemical,§kJKSD,-1,#DD33DD,liquid,No,No,No,,,"Hmm, what is this strange substrance"
 Cyanogen,cyanogen,Compound,C2N2,,#ccffff,gas,No,No,Yes,Asphyxiant,,A highly toxic gas used in chemical synthesis and fumigation.
@@ -92,11 +92,15 @@ Treated Biodiesel,treated_biodiesel,Chemical,Mm Tasty,,#999966,liquid,,,,,,
 Potassium Dichromate,potassium_dichromate,Chemical,K2Cr2O7,,#d91455,liquid,,,Yes,Asphyxiant,,
 High Carbon Steel 52100,high_carbon_steel_52100,Compound,1% Carbon,2,#2b2b29,liquid,,,,,,
 Engineered Alloy,engineered_alloy,Compound,???,,#666666,liquid,,,,,,
-Good Beer,good_beer,Chemical,,,#ffbd4a,liquid,,,,,,
-Fosters Beer,fosters_beer,Chemical,,,#e3cda8,liquid,,,Yes,Asphyxiant,,Foster's Lager is an internationally distributed brand of Australian lager. It is owned by the Japanese brewing group Asahi Group Holdings. It's also dogshit.
-pH Stablised Beskar,ph_stablised_beskar,Chemical,,,#413c6e,liquid,,,,,,
+Good Beer,good_beer,Chemical,Secret Recipe,,#ffbd4a,liquid,,,,,,
+Fosters Beer,fosters_beer,Chemical,Gross,,#e3cda8,liquid,,,Yes,Asphyxiant,,Foster's Lager is an internationally distributed brand of Australian lager. It is owned by the Japanese brewing group Asahi Group Holdings. It's also dogshit.
+pH Stablised Beskar,ph_stablised_beskar,Chemical,[H+]--X--??,,#413c6e,liquid,,,,,,
 Modified Phosphinic Acid,modified_phosphinic_acid,Chemical,,,#37a9b8,liquid,,,,,,
 Phosphinic Acid,phosphinic_acid,Chemical,H3PO2,,#78ffe8,liquid,,,,,,
 Beskar Hydroxide,beskar_hydroxide,Chemical,??HO,,#493c6e,liquid,,,,,,
 Superheated Beskar Slurry,superheated_beskar_slurry,Chemical,,,#6e3c58,liquid,,,Yes,Hot,,
-Beskar,beskar,Chemical,,,#14151c,liquid,,,,,,
+Beskar,beskar,Chemical,???,,#14151c,liquid,,,,,,
+Sea Water,sea_water,Chemical,Mmm Salty,,#0018d1,liquid,,,,,,
+Ice Slurry,ice_slurry,Chemical,H2O (φS=φL),,#1e99f7,liquid,,,,,,
+pH Balanced Purified Water,ph_balanced_purified_water,Chemical,[H+]=[H3O-] H2O,,#3061c2,liquid,,,,,,
+Purified Water,purified_water,Chemical,Distilled H2O,,#3c64b5,liquid,,,,,,

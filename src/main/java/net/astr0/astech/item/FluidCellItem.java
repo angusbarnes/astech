@@ -1,5 +1,6 @@
 package net.astr0.astech.item;
 
+import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.AsTechChemicalFluidType;
 import net.astr0.astech.ModTags;
 import net.minecraft.ChatFormatting;
@@ -241,7 +242,9 @@ public class FluidCellItem extends Item {
         // Try to interact with tile entities that have fluid capabilities
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity != null) {
-            return handleTileEntityFluidInteraction(blockEntity, stack, player, context.getClickedFace());
+            InteractionResult res = handleTileEntityFluidInteraction(blockEntity, stack, player, context.getClickedFace());
+            LogUtils.getLogger().info("We got the interaction result of: '{}' for the FluidCell", res.toString());
+            return res;
         }
 
         return InteractionResult.PASS;

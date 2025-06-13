@@ -1,8 +1,6 @@
 package net.astr0.astech.block.Assembler;
 
-import net.astr0.astech.CustomEnergyStorage;
-import net.astr0.astech.DirectionTranslator;
-import net.astr0.astech.FilteredItemStackHandler;
+import net.astr0.astech.*;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
@@ -13,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -36,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
+public class AssemblerBlockEntity extends AbstractMachineBlockEntity implements IConfigurable {
 
     // ItemStackHandler is a naive implementation of IItemHandler which is a Forge Capability
     private final FilteredItemStackHandler inputItemHandler;
@@ -382,4 +381,16 @@ public class AssemblerBlockEntity extends AbstractMachineBlockEntity {
         return inputItemHandler;
     }
 
+    @Override
+    public Component getTabletSummary() {
+        MutableComponent comp = MutableComponent.create(Component.empty().getContents());
+        comp.append(NbtPrettyPrinter.formatHeader("ASSEMBLER"));
+        comp.append("\n");
+        boolean has_recipe = hasRecipe();
+        comp.append(NbtPrettyPrinter.formatVar("Has Recipe", has_recipe));
+        comp.append("\n");
+        comp.append(NbtPrettyPrinter.formatVar("Recipe", has_recipe ? getRecipe().getOutputItem().getItem().toString() : "N/A"));
+
+        return comp;
+    }
 }

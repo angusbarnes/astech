@@ -41,6 +41,7 @@ public class ModCreativeModTab {
                         output.accept(ModItems.AS_AN_LLM_DISC.get());
                         output.accept(ModItems.RUN_NIC_RUN_DISC.get());
                         output.accept(ModBlocks.REGULATED_MACHINE_CASING.get());
+                        output.accept(ModBlocks.VACUUM_FREEZER_CONTROLLER.get());
                         output.accept(ModItems.STOLEN_IDENTITY_DISC.get());
                         output.accept(ModItems.FINAL_DISC.get());
                         output.accept(ModItems.DEEZ_NUTS_ITEM.get());
@@ -53,6 +54,7 @@ public class ModCreativeModTab {
                         output.accept(ModItems.WORLD_EATER.get());
                         output.accept(ModItems.FULL_SHWAXE.get());
                         output.accept(ModItems.TABLET.get());
+                        output.accept(ModItems.AIRHORN.get());
                         output.accept(ModItems.FLUID_CELL.get());
 //                        ItemStack testFluidCell = new ItemStack(ModItems.FLUID_CELL.get());
 //                        FluidCellItem.SetCellFluid(testFluidCell, ModFluids.SOURCE_BROMINE.get());

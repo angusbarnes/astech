@@ -354,6 +354,7 @@ datapack.set_base_dictionary({
     "item.astech.world_eater": "World Eater",
     "item.astech.full_shwaxe": "Full Shwaxe",
     "item.astech.tablet": "Tablet",
+    "item.astech.airhorn": "Airhorn",
     "item.astech.deez_butts": "Deez Butts",
     "item.astech.zeolite_catalyst": "Zeolite Catalyst",
     "item.astech.monocrystalline_silicon": "Monocrystalline Silicon Boole",
@@ -361,6 +362,7 @@ datapack.set_base_dictionary({
     "item.astech.god_forged_ingot": "God Forged Ingot",
     "creativetab.astech_tab": "AsTech Items",
     "block.astech.nic_block": "§cNic Block",
+    "block.astech.vacuum_freezer_controller": "Vaccum Freezer Controller",
     "block.astech.regulated_machine_casing": "Regulated Machine Casing",
     "block.astech.cleanroom_wall": "Cleanroom Wall",
     "block.astech.coolant_block": "Coolant Block",
@@ -861,6 +863,9 @@ datapack.add_fluid_tag('forge:photoresist', '#forge:tier_2_photoresist')
 datapack.add_fluid_tag('forge:tier_1_coolant', 'astech:methyl_chloride')
 datapack.add_fluid_tag('forge:tier_2_coolant', 'astech:gelid_cryotheum')
 
+
+datapack.add_block_item_model("vacuum_freezer_controller")
+
 datapack.add_block_item_model("fluid_input_hatch")
 datapack.add_simple_block_model("fluid_input_hatch")
 
@@ -900,6 +905,7 @@ datapack.add_item_tag('minecraft:music_discs', 'astech:stolen_identity_disc')
 datapack.add_item_tag('minecraft:music_discs', 'astech:bangarang_disc')
 datapack.add_item_tag('minecraft:music_discs', 'astech:mir_disc')
 
+datapack.add_simple_item_model('airhorn')
 datapack.add_simple_item_model('help_of_disc')
 datapack.add_simple_item_model('tablet')
 datapack.add_simple_item_model('bangarang_disc')

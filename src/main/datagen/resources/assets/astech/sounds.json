@@ -2,6 +2,24 @@
   "empty": {
     "sounds": []
   },
+  "beep": {
+    "sounds": [
+      {
+        "name": "astech:beep",
+        "stream": false,
+        "volume": 0.7
+      }
+    ]
+  },
+  "airhorn": {
+    "sounds": [
+      {
+        "name": "astech:airhorn",
+        "stream": false,
+        "volume": 1.3
+      }
+    ]
+  },
   "help_of": {
     "sounds": [
       {

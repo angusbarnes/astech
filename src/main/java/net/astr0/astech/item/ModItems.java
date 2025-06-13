@@ -31,6 +31,7 @@ public class ModItems {
     }
 
     public static final RegistryObject<Item> TABLET = ITEMS.register("tablet", () -> new TabletItem(new Item.Properties().durability(100)));
+    public static final RegistryObject<Item> AIRHORN = ITEMS.register("airhorn", () -> new AirhornItem(new Item.Properties().durability(10)));
     public static final RegistryObject<Item> WORLD_EATER = ITEMS.register("world_eater", () -> new PickaxeItem(ModTiers.INFINITY_TIER, 100, -1, new Item.Properties().fireResistant().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> FULL_SHWAXE = ITEMS.register("full_shwaxe", () -> new AxeItem(ModTiers.INFINITY_TIER, 10000, 2, new Item.Properties().fireResistant().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> DEEZ_NUTS_ITEM = SimpleIngredientItem("deez_nuts", 16);

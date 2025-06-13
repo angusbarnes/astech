@@ -2,8 +2,10 @@ package net.astr0.astech.item;
 
 import net.astr0.astech.IConfigurable;
 import net.astr0.astech.NbtPrettyPrinter;
+import net.astr0.astech.SoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -41,6 +43,8 @@ public class TabletItem extends Item {
             if (be == null) {
                 return InteractionResult.FAIL;
             }
+
+            level.playSound(null, pos, SoundRegistry.beep.get(), SoundSource.MASTER);
 
             if (be instanceof IConfigurable configurableBe) {
 

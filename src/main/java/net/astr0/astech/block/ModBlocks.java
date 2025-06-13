@@ -53,6 +53,8 @@ public class ModBlocks {
                 () -> new LiquidBlock(source, BlockBehaviour.Properties.copy(Blocks.WATER)));
     }
 
+    public static final RegistryObject<Block> REGULATED_MACHINE_CASING = registerBlock("regulated_machine_casing", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+
     public static final RegistryObject<Block> NIC_BLOCK = registerBlock("nic_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
 

@@ -40,6 +40,7 @@ public class ModCreativeModTab {
                         output.accept(ModItems.BANGARANG_DISC.get());
                         output.accept(ModItems.AS_AN_LLM_DISC.get());
                         output.accept(ModItems.RUN_NIC_RUN_DISC.get());
+                        output.accept(ModBlocks.REGULATED_MACHINE_CASING.get());
                         output.accept(ModItems.STOLEN_IDENTITY_DISC.get());
                         output.accept(ModItems.FINAL_DISC.get());
                         output.accept(ModItems.DEEZ_NUTS_ITEM.get());

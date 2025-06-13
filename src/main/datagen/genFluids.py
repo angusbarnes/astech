@@ -361,6 +361,7 @@ datapack.set_base_dictionary({
     "item.astech.god_forged_ingot": "God Forged Ingot",
     "creativetab.astech_tab": "AsTech Items",
     "block.astech.nic_block": "§cNic Block",
+    "block.astech.regulated_machine_casing": "Regulated Machine Casing",
     "block.astech.cleanroom_wall": "Cleanroom Wall",
     "block.astech.coolant_block": "Coolant Block",
     "block.astech.gem_polishing_station": "Gem Polishing Station",
@@ -863,6 +864,9 @@ datapack.add_fluid_tag('forge:tier_2_coolant', 'astech:gelid_cryotheum')
 datapack.add_block_item_model("fluid_input_hatch")
 datapack.add_simple_block_model("fluid_input_hatch")
 
+datapack.add_block_item_model("regulated_machine_casing")
+datapack.add_simple_block_model("regulated_machine_casing")
+
 datapack.add_block_item_model("energy_input_hatch")
 datapack.add_simple_block_model("energy_input_hatch")
 
@@ -870,6 +874,7 @@ datapack.add_block_item_model("fluid_output_hatch")
 datapack.add_simple_block_model("fluid_output_hatch")
 
 datapack.make_block_mineable("fluid_input_hatch")
+datapack.make_block_mineable("regulated_machine_casing")
 datapack.make_block_mineable("energy_input_hatch")
 datapack.make_block_mineable("fluid_output_hatch")
 datapack.make_block_mineable("assembler")

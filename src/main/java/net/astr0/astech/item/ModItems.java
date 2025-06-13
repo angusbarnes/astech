@@ -30,6 +30,7 @@ public class ModItems {
         return ITEMS.register(name, () -> new Item(new Item.Properties().stacksTo(stack_size)));
     }
 
+    public static final RegistryObject<Item> TABLET = ITEMS.register("tablet", () -> new TabletItem(new Item.Properties().durability(100)));
     public static final RegistryObject<Item> WORLD_EATER = ITEMS.register("world_eater", () -> new PickaxeItem(ModTiers.INFINITY_TIER, 100, -1, new Item.Properties().fireResistant().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> FULL_SHWAXE = ITEMS.register("full_shwaxe", () -> new AxeItem(ModTiers.INFINITY_TIER, 10000, 2, new Item.Properties().fireResistant().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> DEEZ_NUTS_ITEM = SimpleIngredientItem("deez_nuts", 16);
@@ -549,5 +550,9 @@ public static final RegistryObject<AsTechMaterialItem> PHOSPHINIC_ACID_DUST = IT
 public static final RegistryObject<AsTechMaterialItem> BESKAR_HYDROXIDE_DUST = ITEMS.register("beskar_hydroxide_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "beskar_hydroxide", HazardBehavior.BehaviorType.NONE));
 public static final RegistryObject<AsTechMaterialItem> SUPERHEATED_BESKAR_SLURRY_DUST = ITEMS.register("superheated_beskar_slurry_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "superheated_beskar_slurry", HazardBehavior.BehaviorType.HEAT));
 public static final RegistryObject<AsTechMaterialItem> BESKAR_DUST = ITEMS.register("beskar_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "beskar", HazardBehavior.BehaviorType.NONE));
+public static final RegistryObject<AsTechMaterialItem> SEA_WATER_DUST = ITEMS.register("sea_water_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "sea_water", HazardBehavior.BehaviorType.NONE));
+public static final RegistryObject<AsTechMaterialItem> ICE_SLURRY_DUST = ITEMS.register("ice_slurry_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ice_slurry", HazardBehavior.BehaviorType.NONE));
+public static final RegistryObject<AsTechMaterialItem> PH_BALANCED_PURIFIED_WATER_DUST = ITEMS.register("ph_balanced_purified_water_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "ph_balanced_purified_water", HazardBehavior.BehaviorType.NONE));
+public static final RegistryObject<AsTechMaterialItem> PURIFIED_WATER_DUST = ITEMS.register("purified_water_dust", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "purified_water", HazardBehavior.BehaviorType.NONE));
     //#end MATERIAL_REGION
 }

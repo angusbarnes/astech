@@ -167,6 +167,7 @@ dependencies {
     runtimeOnly(fg.deobf("blank:Mekanism-${minecraft_version}:10.4.6.20"))
     runtimeOnly(fg.deobf("blank:Cucumber-${minecraft_version}:7.0.8"))
     runtimeOnly(fg.deobf("blank:ExtendedCrafting-${minecraft_version}:6.0.7"))
+    runtimeOnly(fg.deobf("blank:CTM-1.20.1:1.1.10"))
     //runtimeOnly(fg.deobf("blank:kubejs-forge-2001.6.4:build.138"))
 
     // Not sure what the fuck this means

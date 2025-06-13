@@ -51,6 +51,7 @@ public class ModCreativeModTab {
                         output.accept(ModItems.CABLE_LAYING_TOOL.get());
                         output.accept(ModItems.WORLD_EATER.get());
                         output.accept(ModItems.FULL_SHWAXE.get());
+                        output.accept(ModItems.TABLET.get());
                         output.accept(ModItems.FLUID_CELL.get());
 //                        ItemStack testFluidCell = new ItemStack(ModItems.FLUID_CELL.get());
 //                        FluidCellItem.SetCellFluid(testFluidCell, ModFluids.SOURCE_BROMINE.get());
@@ -623,6 +624,10 @@ output.accept(ModItems.PHOSPHINIC_ACID_DUST.get());
 output.accept(ModItems.BESKAR_HYDROXIDE_DUST.get());
 output.accept(ModItems.SUPERHEATED_BESKAR_SLURRY_DUST.get());
 output.accept(ModItems.BESKAR_DUST.get());
+output.accept(ModItems.SEA_WATER_DUST.get());
+output.accept(ModItems.ICE_SLURRY_DUST.get());
+output.accept(ModItems.PH_BALANCED_PURIFIED_WATER_DUST.get());
+output.accept(ModItems.PURIFIED_WATER_DUST.get());
                         //#end TAB_REGION
                     }).build());
 }

@@ -11,6 +11,93 @@ import os
 def JSON(obj):
     return json.dumps(obj, ensure_ascii=False)
 
+def BEE_DEFINITION(primary_colour, secondary_colour, bee_text, flower_block_tag, bee_size, is_hazard):
+    return JSON(
+        {
+            "/*primaryColor_comment*/": "Base color of the bee used to color the bee, comb and spawn egg.",
+            "primaryColor": primary_colour,
+            "secondaryColor": secondary_colour,
+            "/*particleColor_comment*/": "Color of the pollen located on the texture when it has nectar and also the particles dripping from the bee",
+            "particleColor": primary_colour,
+            "description": "This bee is added by AsTech. " + bee_text,
+            "createComb": True,
+            "attackResponse": "fire",
+            "flowerTag": flower_block_tag,
+            "size:": bee_size,
+            "teleporting": False,
+            "redstoned": False,
+            "fireproof": True,
+            "withered": is_hazard,
+            "blinding": is_hazard,
+            "attributes": {
+                "temper": 1 if is_hazard else 0,
+                "endurance": 1,
+                "behavior": 1,
+                "productivity": 1,
+                "weather_tolerance": 1
+            }
+        }
+    )
+
+def BEE_PRODUCTION(bee_type):
+    return JSON(
+        {
+            "type": "productivebees:advanced_beehive",
+            "ingredient": f"productivebees:{bee_type}",
+            "results": [
+                {
+                    "item": {
+                        "type": "forge:nbt",
+                        "item": "productivebees:configurable_honeycomb",
+                        "nbt": {
+                            "EntityTag": {
+                                "type": f"productivebees:{bee_type}"
+                            }
+                        }
+                    }
+                }
+            ],
+            "conditions": [
+                {
+                    "type": "productivebees:bee_exists",
+                    "bee": f"productivebees:{bee_type}"
+                }
+            ]
+        }
+    )
+
+def BEE_CENTRIFUGE(bee_type, output, min_count, max_count):
+    return JSON(
+        {
+            "type": "productivebees:centrifuge",
+            "ingredient": {
+            "type": "forge:nbt",
+            "item": "productivebees:configurable_honeycomb",
+            "nbt": {
+                "EntityTag": {
+                "type": f"productivebees:{bee_type}"
+                }
+            }
+            },
+            "outputs": [
+            {
+                "item": {
+                "item": output
+                },
+                "min": min_count,
+                "max": max_count,
+                "chance": 60
+            },
+            {
+                "fluid": {
+                "fluid": "productivebees:honey"
+                },
+                "amount": 50
+            }
+            ]
+        }
+    )
+
 def UNCOMPACTING_RECIPE(from_item, to_item):
     return JSON(
         {
@@ -266,6 +353,7 @@ datapack.set_base_dictionary({
     "item.astech.deez_nuts": "Deez Nuts",
     "item.astech.world_eater": "World Eater",
     "item.astech.full_shwaxe": "Full Shwaxe",
+    "item.astech.tablet": "Tablet",
     "item.astech.deez_butts": "Deez Butts",
     "item.astech.zeolite_catalyst": "Zeolite Catalyst",
     "item.astech.monocrystalline_silicon": "Monocrystalline Silicon Boole",
@@ -808,6 +896,7 @@ datapack.add_item_tag('minecraft:music_discs', 'astech:bangarang_disc')
 datapack.add_item_tag('minecraft:music_discs', 'astech:mir_disc')
 
 datapack.add_simple_item_model('help_of_disc')
+datapack.add_simple_item_model('tablet')
 datapack.add_simple_item_model('bangarang_disc')
 datapack.add_simple_item_model('as_an_llm_disc')
 datapack.add_simple_item_model('run_nic_run_disc')

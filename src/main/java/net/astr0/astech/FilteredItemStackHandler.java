@@ -169,7 +169,7 @@ public class FilteredItemStackHandler extends ItemStackHandler implements IState
 
     @Override
     public void writeNetworkEncoding(FriendlyByteBuf buf) {
-        writeClientUpdate(buf);
+        _networkDirty = false; writeClientUpdate(buf);
     }
 
     // ItemHandler is a special case where the server data that needs to be

@@ -54,7 +54,7 @@ public class ModBlocks {
     }
 
     public static final RegistryObject<Block> REGULATED_MACHINE_CASING = registerBlock("regulated_machine_casing", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
-    public static final RegistryObject<Block> VACUUM_FREEZER_CONTROLLER = registerBlock("vacuum_freezer_controller", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> VACUUM_FREEZER_CONTROLLER = registerBlock("vacuum_freezer_controller", () -> new VacuumFreezerControllerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
     public static final RegistryObject<Block> NIC_BLOCK = registerBlock("nic_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));

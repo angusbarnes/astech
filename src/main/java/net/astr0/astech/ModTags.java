@@ -16,6 +16,8 @@ public class ModTags {
     }
 
     public static TagKey<Block> BLOCK_CABLE = BlockTags.create(RL("cable_block"));
+    public static TagKey<Block> MACHINE_CASING = BlockTags.create(RL("casing"));
+
     public static TagKey<Item> CHEMICAL_PROTECTION = ItemTags.create(RL("chemical_protection"));
 
 

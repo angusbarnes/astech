@@ -8,6 +8,6 @@ import org.jetbrains.annotations.Nullable;
 
 @FunctionalInterface
 public interface MultiblockMatcher {
-    boolean matches(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity be);
+    boolean matches(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity be, MultiblockValidationContext context);
 }
 

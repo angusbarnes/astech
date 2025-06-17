@@ -63,6 +63,12 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(EUVMachineBlockEntity::new,
                             ModBlocks.EUV_MACHINE.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<VacuumFreezerController>> VACUUM_FREEZER =
+            BLOCK_ENTITIES.register("vacuum_freezer_controller", () ->
+                    BlockEntityType.Builder.of(VacuumFreezerController::new,
+                            ModBlocks.VACUUM_FREEZER_CONTROLLER.get()).build(null));
+
+
     public static final RegistryObject<BlockEntityType<CoolantBlockEntity>> COOLANT_BLOCK_BE =
             BLOCK_ENTITIES.register("coolant_block", () ->
                     BlockEntityType.Builder.of(CoolantBlockEntity::new,

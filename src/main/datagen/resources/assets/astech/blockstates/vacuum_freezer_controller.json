@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "astech:block/vacuum_freezer_controller"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "parent": "block/cube",  
+  "textures": {
+    "side": "astech:block/regulated_machine_casing",
+    "front_base": "astech:block/regulated_machine_casing",
+    "front_overlay": "astech:block/vacuum_freezer_controller",
+    "top": "astech:block/regulated_machine_casing",
+    "bottom": "astech:block/regulated_machine_casing"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": { "texture": "#side" },
+        "south": { "texture": "#side" },
+        "west":  { "texture": "#side" },
+        "east":  { "texture": "#side" },
+        "up":    { "texture": "#top" },
+        "down":  { "texture": "#bottom" }
+      }
+    },
+    {
+      "from": [0, 0, 16.01],
+      "to": [16, 16, 16.02],
+      "faces": {
+        "south": { "texture": "#front_overlay"}
+      }
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package net.astr0.astech.gui;
 
+import net.astr0.astech.AsTech;
 import net.astr0.astech.BlockUtils;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.SidedConfig;
@@ -9,6 +10,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,8 +23,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class MachineCapConfiguratorWidget extends AbstractWidget {
-
+    private static final ResourceLocation TEXTURE =
+            new ResourceLocation(AsTech.MODID, "textures/gui/widget_bg.png");
     public final UIButton MODE_SWITCH_BUTTON;
+    public final UIButton PUSH_PULL_BUTTON;
     public final AbstractMachineBlockEntity machine;
 
     public final List<SlotSettingToggle> buttons;
@@ -132,6 +136,10 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
             }
         });
 
+        PUSH_PULL_BUTTON = new UIButton(Icons.DENY, new TintColor(255, 255, 255), pX + 19, pY - 19, "Auto Push: §cNo", (button) -> {
+            button.SetIconToDraw(Icons.ACCEPT);
+        });
+
         if (itemConfig != null) {
             slotSettings.put(ITEM_MODE, itemConfig.getSupportedCaps());
         } else {
@@ -204,7 +212,10 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
 
         if (!SHOULD_RENDER) return;
 
+        pGuiGraphics.blit(TEXTURE, this.getX()-24, this.getY()-24, 0, 0, 64, 64);
+
         MODE_SWITCH_BUTTON.Render(pGuiGraphics, pMouseX, pMouseY);
+        PUSH_PULL_BUTTON.Render(pGuiGraphics, pMouseX, pMouseY);
 
         for (UIButton button : buttons) {
             button.Render(pGuiGraphics, pMouseX, pMouseY);
@@ -239,6 +250,11 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
 
             if(MODE_SWITCH_BUTTON.isMouseWithinBounds((int)pMouseX, (int)pMouseY)) {
                 MODE_SWITCH_BUTTON.clicked();
+                return true;
+            }
+
+            if(PUSH_PULL_BUTTON.isMouseWithinBounds((int)pMouseX, (int)pMouseY)) {
+                PUSH_PULL_BUTTON.clicked();
                 return true;
             }
         }

@@ -22,6 +22,8 @@ public class Icons {
     public static final Icon BLANK = new Icon(0, 60, 17, 17);
     public static final Icon FLUID = new Icon(0, 80, 17, 17);
     public static final Icon ITEM = new Icon(0, 100, 17, 17);
+    public static final Icon ACCEPT = new Icon(0, 120, 17, 17);
+    public static final Icon DENY = new Icon(0, 140, 17, 17);
 
     protected static final ResourceLocation WIDGET_TEXTURE = new ResourceLocation(AsTech.MODID, "textures/gui/widgets.png");
 

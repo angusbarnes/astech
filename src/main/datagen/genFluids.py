@@ -353,6 +353,7 @@ datapack.set_base_dictionary({
     "item.astech.deez_nuts": "Deez Nuts",
     "item.astech.world_eater": "World Eater",
     "item.astech.twig_bundle": "Twig Bundle",
+    "item.astech.fire_starter": "Fire Starter",
     "item.astech.full_shwaxe": "Full Shwaxe",
     "item.astech.tablet": "Tablet",
     "item.astech.airhorn": "Airhorn",
@@ -363,6 +364,8 @@ datapack.set_base_dictionary({
     "item.astech.god_forged_ingot": "God Forged Ingot",
     "creativetab.astech_tab": "AsTech Items",
     "block.astech.nic_block": "§cNic Block",
+    "block.astech.log_pile": "Stick Stack",
+    "block.astech.knapping_stone": "Knapping Stone",
     "block.astech.vacuum_freezer_controller": "Vaccum Freezer Controller",
     "block.astech.regulated_machine_casing": "Regulated Machine Casing",
     "block.astech.cleanroom_wall": "Cleanroom Wall",
@@ -888,6 +891,9 @@ datapack.add_simple_block_model("energy_input_hatch")
 datapack.add_block_item_model("fluid_output_hatch")
 datapack.add_simple_block_model("fluid_output_hatch")
 
+datapack.add_block_item_model("knapping_stone")
+datapack.make_block_mineable("knapping_stone")
+
 datapack.make_block_mineable("fluid_input_hatch")
 datapack.make_block_mineable("regulated_machine_casing")
 datapack.make_block_mineable("energy_input_hatch")
@@ -916,6 +922,7 @@ datapack.add_item_tag('minecraft:music_discs', 'astech:bangarang_disc')
 datapack.add_item_tag('minecraft:music_discs', 'astech:mir_disc')
 
 datapack.add_simple_item_model('airhorn')
+datapack.add_simple_item_model('fire_starter')
 datapack.add_simple_item_model('twig_bundle')
 datapack.add_simple_item_model('help_of_disc')
 datapack.add_simple_item_model('tablet')

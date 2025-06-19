@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "astech:block/knapping_stone"
+    },
+    "facing=south": {
+      "model": "astech:block/knapping_stone",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "astech:block/knapping_stone",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "astech:block/knapping_stone",
+      "y": -90
+    }
+  }
+}

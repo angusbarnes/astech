@@ -52,9 +52,11 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.GEM_POLISHING_STATION.get());
                         output.accept(ModItems.CABLE_LAYING_TOOL.get());
                         output.accept(ModItems.WORLD_EATER.get());
+                        output.accept(ModBlocks.KNAPPING_STONE.get());
                         output.accept(ModItems.FULL_SHWAXE.get());
                         output.accept(ModItems.TABLET.get());
                         output.accept(ModItems.TWIG_BUNDLE.get());
+                        output.accept(ModItems.FIRE_STARTER.get());
                         output.accept(ModItems.AIRHORN.get());
                         output.accept(ModItems.FLUID_CELL.get());
 //                        ItemStack testFluidCell = new ItemStack(ModItems.FLUID_CELL.get());

@@ -62,6 +62,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> LOG_PILE = registerBlock("log_pile",
             () -> new LogPile(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
 
+    public static final RegistryObject<Block> KNAPPING_STONE = registerBlock("knapping_stone",
+            () -> new LogPile(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
+
     public static final RegistryObject<Block> CLEANROOM_BLOCK = registerBlock("cleanroom_wall",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).strength(1, 100)));
 

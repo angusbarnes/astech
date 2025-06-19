@@ -31,6 +31,7 @@ public class ModItems {
     }
 
     public static final RegistryObject<Item> TABLET = ITEMS.register("tablet", () -> new TabletItem(new Item.Properties().durability(100)));
+    public static final RegistryObject<Item> TWIG_BUNDLE = ITEMS.register("twig_bundle", () -> new TwigBundle(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> AIRHORN = ITEMS.register("airhorn", () -> new AirhornItem(new Item.Properties().durability(10)));
     public static final RegistryObject<Item> WORLD_EATER = ITEMS.register("world_eater", () -> new PickaxeItem(ModTiers.INFINITY_TIER, 100, -1, new Item.Properties().fireResistant().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> FULL_SHWAXE = ITEMS.register("full_shwaxe", () -> new AxeItem(ModTiers.INFINITY_TIER, 10000, 2, new Item.Properties().fireResistant().rarity(Rarity.EPIC)));
@@ -136,6 +137,15 @@ public static final RegistryObject<Item> TIER_3_ROCKET_NOSE_CONE = SimpleIngredi
 public static final RegistryObject<Item> TIER_4_ROCKET_FIN = SimpleIngredientItem("tier_4_rocket_fin", 64);
 public static final RegistryObject<Item> TIER_4_ROCKET_FUSELAGE = SimpleIngredientItem("tier_4_rocket_fuselage", 64);
 public static final RegistryObject<Item> TIER_4_ROCKET_NOSE_CONE = SimpleIngredientItem("tier_4_rocket_nose_cone", 64);
+public static final RegistryObject<Item> TIER_5_ROCKET_FIN = SimpleIngredientItem("tier_5_rocket_fin", 64);
+public static final RegistryObject<Item> TIER_5_ROCKET_FUSELAGE = SimpleIngredientItem("tier_5_rocket_fuselage", 64);
+public static final RegistryObject<Item> TIER_5_ROCKET_NOSE_CONE = SimpleIngredientItem("tier_5_rocket_nose_cone", 64);
+public static final RegistryObject<Item> TIER_6_ROCKET_FIN = SimpleIngredientItem("tier_6_rocket_fin", 64);
+public static final RegistryObject<Item> TIER_6_ROCKET_FUSELAGE = SimpleIngredientItem("tier_6_rocket_fuselage", 64);
+public static final RegistryObject<Item> TIER_6_ROCKET_NOSE_CONE = SimpleIngredientItem("tier_6_rocket_nose_cone", 64);
+public static final RegistryObject<Item> TIER_7_ROCKET_FIN = SimpleIngredientItem("tier_7_rocket_fin", 64);
+public static final RegistryObject<Item> TIER_7_ROCKET_FUSELAGE = SimpleIngredientItem("tier_7_rocket_fuselage", 64);
+public static final RegistryObject<Item> TIER_7_ROCKET_NOSE_CONE = SimpleIngredientItem("tier_7_rocket_nose_cone", 64);
 public static final RegistryObject<Item> TRANSISTOR = SimpleIngredientItem("transistor", 64);
 public static final RegistryObject<Item> ULTRADENSE_METAL_BALL = SimpleIngredientItem("ultradense_metal_ball", 64);
 public static final RegistryObject<Item> UNREFINED_SUBSTRATE = SimpleIngredientItem("unrefined_substrate", 64);

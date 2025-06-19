@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "facing=east,log_count=1": {
+      "model": "astech:block/campfire_one_logs",
+      "y": 270
+    },
+    "facing=north,log_count=1": {
+      "model": "astech:block/campfire_one_logs",
+      "y": 180
+    },
+    "facing=south,log_count=1": {
+      "model": "astech:block/campfire_one_logs"
+    },
+    "facing=west,log_count=1": {
+      "model": "astech:block/campfire_one_logs",
+      "y": 90
+    },
+    "facing=east,log_count=2": {
+      "model": "astech:block/campfire_two_logs",
+      "y": 270
+    },
+    "facing=north,log_count=2": {
+      "model": "astech:block/campfire_two_logs",
+      "y": 180
+    },
+    "facing=south,log_count=2": {
+      "model": "astech:block/campfire_two_logs"
+    },
+    "facing=west,log_count=2": {
+      "model": "astech:block/campfire_two_logs",
+      "y": 90
+    },
+    "facing=east,log_count=3": {
+      "model": "astech:block/campfire_three_logs",
+      "y": 270
+    },
+    "facing=north,log_count=3": {
+      "model": "astech:block/campfire_three_logs",
+      "y": 180
+    },
+    "facing=south,log_count=3": {
+      "model": "astech:block/campfire_three_logs"
+    },
+    "facing=west,log_count=3": {
+      "model": "astech:block/campfire_three_logs",
+      "y": 90
+    }
+  }
+}

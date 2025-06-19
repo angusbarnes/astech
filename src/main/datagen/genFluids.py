@@ -352,6 +352,7 @@ datapack.set_base_dictionary({
     "tooltip.fluid_cell.empty": "Empty",
     "item.astech.deez_nuts": "Deez Nuts",
     "item.astech.world_eater": "World Eater",
+    "item.astech.twig_bundle": "Twig Bundle",
     "item.astech.full_shwaxe": "Full Shwaxe",
     "item.astech.tablet": "Tablet",
     "item.astech.airhorn": "Airhorn",
@@ -793,13 +794,22 @@ static_items = [
     'tier_2_rocket_fin',
     'tier_3_rocket_fin',
     'tier_4_rocket_fin',
+    'tier_5_rocket_fin',
+    'tier_6_rocket_fin',
+    'tier_7_rocket_fin',
     'tier_2_rocket_nose_cone',
     'tier_3_rocket_nose_cone',
     'tier_4_rocket_nose_cone',
+    'tier_5_rocket_nose_cone',
+    'tier_6_rocket_nose_cone',
+    'tier_7_rocket_nose_cone',
     'rocket_fuselage',
     'tier_2_rocket_fuselage',
     'tier_3_rocket_fuselage',
     'tier_4_rocket_fuselage',
+    'tier_5_rocket_fuselage',
+    'tier_6_rocket_fuselage',
+    'tier_7_rocket_fuselage',
 ]
 
 
@@ -906,6 +916,7 @@ datapack.add_item_tag('minecraft:music_discs', 'astech:bangarang_disc')
 datapack.add_item_tag('minecraft:music_discs', 'astech:mir_disc')
 
 datapack.add_simple_item_model('airhorn')
+datapack.add_simple_item_model('twig_bundle')
 datapack.add_simple_item_model('help_of_disc')
 datapack.add_simple_item_model('tablet')
 datapack.add_simple_item_model('bangarang_disc')
@@ -1003,6 +1014,8 @@ for chemdef in chemicals:
     datapack.add_block_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
     datapack.add_simple_block_loot(f"{fluid_name}_block")
     datapack.add_block_tag(f"minecraft:mineable/pickaxe", f"astech:{fluid_name}_block")
+
+    datapack.add_block_tag("minecraft:mineable/axe", "astech:log_pile")
 
     datapack.add_block_tag("astech:cable_block", "minecraft:deepslate")
     datapack.add_block_tag("astech:cable_block", "mekanism:basic_universal_cable")

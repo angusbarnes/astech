@@ -88,7 +88,7 @@ public class BlockEntityStateManager {
         if (_blockEntity.getLevel().isClientSide()) {
             throw new IllegalStateException("This should only run on the server");
         }
-        LogUtils.getLogger().info("Taking Network Synchronisation");
+        //LogUtils.getLogger().info("Taking Network Synchronisation");
 
         // Create temporary storage for state updates
         List<ServerToClientStateSyncPacket.StateUpdate> dirtyUpdates = new ArrayList<>();
@@ -97,7 +97,7 @@ public class BlockEntityStateManager {
             IStateManaged state = managedStates[i];
             if (state.isNetworkDirty()) {
 
-                LogUtils.getLogger().info("{} was marked dirty. Synching over the network", state.getStateName());
+                //LogUtils.getLogger().info("{} was marked dirty. Synching over the network", state.getStateName());
                 FriendlyByteBuf stateBuf = new FriendlyByteBuf(Unpooled.buffer());
                 state.writeNetworkEncoding(stateBuf);
                 dirtyUpdates.add(new ServerToClientStateSyncPacket.StateUpdate(i, stateBuf));

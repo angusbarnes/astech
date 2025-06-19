@@ -59,6 +59,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> NIC_BLOCK = registerBlock("nic_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
 
+    public static final RegistryObject<Block> LOG_PILE = registerBlock("log_pile",
+            () -> new LogPile(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+
     public static final RegistryObject<Block> CLEANROOM_BLOCK = registerBlock("cleanroom_wall",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).strength(1, 100)));
 

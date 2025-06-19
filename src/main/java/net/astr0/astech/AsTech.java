@@ -23,21 +23,16 @@ import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.recipe.ModRecipes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -47,7 +42,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 @Mod(AsTech.MODID)
@@ -59,20 +53,6 @@ public class AsTech
     private static final Logger LOGGER = LogUtils.getLogger();
 
 
-    public static float modifyBreakSpeed(Player player, BlockState state, @Nullable BlockPos pos, float speed)
-    {
-        // We only care about preventing tree chopping
-        if (!state.is(BlockTags.LOGS)) return speed;
-
-        ItemStack tool = player.getMainHandItem();
-
-        // This might be a bit of a hack but we will generally assume that all tools with durability are fine
-        if (tool.isDamageableItem()) {
-            return speed;
-        }
-
-        return 0;
-    }
 
     public AsTech()
     {
@@ -102,8 +82,9 @@ public class AsTech
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(AsTech::addDangerToolTips);
-        forgeEventBus.addListener(EventPriority.LOW, (PlayerEvent.BreakSpeed event) -> event.setNewSpeed(modifyBreakSpeed(event.getEntity(), event.getState(), event.getPosition().orElse(null), event.getNewSpeed())));
-
+        forgeEventBus.addListener(EventPriority.LOW, EventHandlers::PreventTreePunching);
+        forgeEventBus.addListener(EventPriority.LOW, EventHandlers::DoCampfireConversion);
+        forgeEventBus.addListener(EventPriority.LOW, EventHandlers::BlockPlaceListener);
 
     }
 

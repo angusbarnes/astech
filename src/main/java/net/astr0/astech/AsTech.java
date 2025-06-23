@@ -25,6 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -33,6 +34,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -82,6 +84,13 @@ public class AsTech
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(AsTech::addDangerToolTips);
+        forgeEventBus.addListener(EventPriority.LOW, (PlayerInteractEvent.RightClickBlock event) -> {
+            InteractionResult result = EventHandlers.HandleBrickPlacement(event);
+            if (result != null) {
+                event.setCanceled(true);
+                event.setCancellationResult(result);
+            }
+        });
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::PreventTreePunching);
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::DoCampfireConversion);
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::BlockPlaceListener);

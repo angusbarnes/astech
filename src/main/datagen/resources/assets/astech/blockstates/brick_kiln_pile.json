@@ -1,0 +1,724 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 1
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_one",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 1
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_one",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 1
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_one",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 1
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_one",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 2
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_two",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 2
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_two",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 2
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_two",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 2
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_two",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 3
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_three",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 3
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_three",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 3
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_three",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 3
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_three",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 4
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_four",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 4
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_four",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 4
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_four",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 4
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_four",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 5
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_five",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 5
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_five",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 5
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_five",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 5
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_five",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 6
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_six",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 6
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_six",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 6
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_six",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 6
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_six",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 7
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_seven",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 7
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_seven",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 7
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_seven",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 7
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_seven",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 8
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eight",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 8
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eight",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 8
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eight",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 8
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eight",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 9
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_nine",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 9
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_nine",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 9
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_nine",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 9
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_nine",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 10
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_ten",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 10
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_ten",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 10
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_ten",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 10
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_ten",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 11
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eleven",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 11
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eleven",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 11
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eleven",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 11
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eleven",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 12
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_twelve",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 12
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_twelve",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 12
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_twelve",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 12
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_twelve",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 13
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_thirteen",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 13
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_thirteen",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 13
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_thirteen",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 13
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_thirteen",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 14
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_fourteen",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 14
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_fourteen",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 14
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_fourteen",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 14
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_fourteen",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 15
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_fifteen",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 15
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_fifteen",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 15
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_fifteen",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 15
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_fifteen",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 16
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_sixteen",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 16
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_sixteen",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 16
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_sixteen",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 16
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_sixteen",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 17
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_seventeen",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 17
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_seventeen",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 17
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_seventeen",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 17
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_seventeen",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "brick_count": 18
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eighteen",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "brick_count": 18
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eighteen",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "brick_count": 18
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eighteen",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "brick_count": 18
+      },
+      "apply": {
+        "model": "astech:block/kiln/brick_kiln_eighteen",
+        "y": 90
+      }
+    }
+  ]
+}

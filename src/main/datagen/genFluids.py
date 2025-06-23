@@ -364,6 +364,7 @@ datapack.set_base_dictionary({
     "item.astech.god_forged_ingot": "God Forged Ingot",
     "creativetab.astech_tab": "AsTech Items",
     "block.astech.nic_block": "§cNic Block",
+    "block.astech.brick_kiln_pile": "Brick Pile",
     "block.astech.log_pile": "Stick Stack",
     "block.astech.knapping_stone": "Knapping Stone",
     "block.astech.vacuum_freezer_controller": "Vaccum Freezer Controller",

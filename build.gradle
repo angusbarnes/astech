@@ -85,6 +85,8 @@ minecraft {
         client {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', mod_id
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
 
         server {
@@ -133,6 +135,22 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+
+
+    maven {
+        name = "Illusive Soulworks maven"
+        url = "https://maven.theillusivec4.top/"
+    }
+
+
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+
 }
 
 dependencies {
@@ -172,6 +190,13 @@ dependencies {
 
     // Not sure what the fuck this means
     implementation fg.deobf("curse.maven:${mekanism}")
+
+    implementation fg.deobf("maven.modrinth:fusion-connected-textures:1.1.1-forge-mc1.20.1")
+
+    // Compile against only the API artifact
+    compileOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${"5.7.0+1.20.1"}:api"))
+    // Use the full Curios API jar at runtime
+    runtimeOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${"5.7.0+1.20.1"}"))
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

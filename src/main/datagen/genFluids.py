@@ -356,6 +356,7 @@ datapack.set_base_dictionary({
     "item.astech.fire_starter": "Fire Starter",
     "item.astech.full_shwaxe": "Full Shwaxe",
     "item.astech.tablet": "Tablet",
+    "item.astech.broad_sword": "Diamond Broad Sword",
     "item.astech.airhorn": "Airhorn",
     "item.astech.deez_butts": "Deez Butts",
     "item.astech.zeolite_catalyst": "Zeolite Catalyst",
@@ -929,6 +930,7 @@ datapack.add_item_tag('minecraft:music_discs', 'astech:bangarang_disc')
 datapack.add_item_tag('minecraft:music_discs', 'astech:mir_disc')
 
 datapack.add_simple_item_model('airhorn')
+
 datapack.add_simple_item_model('fire_starter')
 datapack.add_simple_item_model('twig_bundle')
 datapack.add_simple_item_model('help_of_disc')

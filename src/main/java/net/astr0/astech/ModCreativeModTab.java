@@ -55,6 +55,7 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.KNAPPING_STONE.get());
                         output.accept(ModBlocks.BRICK_KILN.get());
                         output.accept(ModItems.FULL_SHWAXE.get());
+                        output.accept(ModItems.BROAD_SWORD.get());
                         output.accept(ModItems.TABLET.get());
                         output.accept(ModItems.TWIG_BUNDLE.get());
                         output.accept(ModItems.FIRE_STARTER.get());

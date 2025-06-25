@@ -2,19 +2,19 @@
   "variants": {
     "facing=north": {
       "model": "astech:block/brick_kiln",
-      "y" : 180
+      "y" : 0
     },
     "facing=south": {
       "model": "astech:block/brick_kiln",
-      "y": 0
+      "y": 180
     },
     "facing=east": {
       "model": "astech:block/brick_kiln",
-      "y": 270
+      "y": 90
     },
     "facing=west": {
       "model": "astech:block/brick_kiln",
-      "y": 90
+      "y": 270
     }
   }
 }

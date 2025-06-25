@@ -8,6 +8,7 @@ facing_y = {
 }
 
 multipart = []
+kiln_drops = []
 part_files = [
 
 "brick_kiln_one",
@@ -30,6 +31,7 @@ part_files = [
 "brick_kiln_eighteen",
 ]
 
+
 for i in range(1, 19):  # 1 to 18
     for facing, y in facing_y.items():
         entry = {
@@ -44,9 +46,31 @@ for i in range(1, 19):  # 1 to 18
         }
         multipart.append(entry)
 
+    kiln_drops.append({
+          "type": "minecraft:item",
+          "name": "minecraft:brick",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": i
+            }
+          ],
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "astech:brick_kiln_pile",
+              "properties": {
+                "brick_count": i
+              }
+            }
+          ]
+        })
+
 blockstate = {
     "multipart": multipart
 }
 
 with open("brick_kiln_pile.json", "w") as f:
     json.dump(blockstate, f, indent=2)
+
+print(json.dumps(kiln_drops))

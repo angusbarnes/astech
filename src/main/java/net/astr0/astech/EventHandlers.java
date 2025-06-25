@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import static net.astr0.astech.block.BlockEntityProperties.BRICK_COUNT;
+import static net.astr0.astech.block.BlockEntityProperties.FACING;
 
 public class EventHandlers {
 
@@ -122,6 +123,7 @@ public class EventHandlers {
 
         if (block.is(ModBlocks.BRICK_KILN_PILE.get()) && itemUsed.is(Items.BRICK)) {
             int brick_count = block.getValue(BRICK_COUNT);
+            Direction facing = block.getValue(FACING);
 
             if (brick_count < 18) {
                 BlockState brick_kiln_pile = block.setValue(BRICK_COUNT, brick_count + 1);
@@ -130,6 +132,14 @@ public class EventHandlers {
 
                 playSoundForBlock(brick_kiln_pile, level, pos, player);
                 return InteractionResult.SUCCESS;
+            } else {
+                BlockState brick_kiln = ModBlocks.BRICK_KILN.get().defaultBlockState();
+                brick_kiln = brick_kiln.setValue(FACING, facing);
+
+                itemUsed.shrink(1);
+                level.setBlock(pos, brick_kiln, Block.UPDATE_ALL); // clear flag
+
+                playSoundForBlock(brick_kiln, level, pos, player);
             }
 
         } else if (event.getFace() == Direction.UP && level.getBlockState(pos.above()).is(Blocks.AIR) && itemUsed.is(Items.BRICK)) {

@@ -365,6 +365,7 @@ datapack.set_base_dictionary({
     "creativetab.astech_tab": "AsTech Items",
     "block.astech.nic_block": "§cNic Block",
     "block.astech.brick_kiln_pile": "Brick Pile",
+    "block.astech.brick_kiln": "Brick Kiln",
     "block.astech.log_pile": "Stick Stack",
     "block.astech.knapping_stone": "Knapping Stone",
     "block.astech.vacuum_freezer_controller": "Vaccum Freezer Controller",
@@ -908,6 +909,11 @@ datapack.make_block_mineable("euv_machine")
 datapack.make_block_mineable("coolant_block")
 datapack.make_block_mineable("cleanroom_wall")
 datapack.make_block_mineable("nic_block")
+datapack.make_block_mineable("brick_kiln")
+
+datapack.add_block_item_model("brick_kiln")
+
+datapack.add_block_tag(f"minecraft:mineable/pickaxe", f"astech:brick_kiln_pile")
 
 
 datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_helmet')

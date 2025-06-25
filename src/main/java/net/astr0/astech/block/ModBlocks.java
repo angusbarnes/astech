@@ -65,6 +65,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> BRICK_KILN_PILE = registerBlock("brick_kiln_pile",
             () -> new BrickKilnPileBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS).noOcclusion()));
 
+    public static final RegistryObject<Block> BRICK_KILN = registerBlock("brick_kiln",
+            () -> new BrickKilnBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS).noOcclusion()));
+
     public static final RegistryObject<Block> KNAPPING_STONE = registerBlock("knapping_stone",
             () -> new LogPile(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
 

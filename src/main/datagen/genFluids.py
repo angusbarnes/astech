@@ -355,6 +355,7 @@ datapack.set_base_dictionary({
     "item.astech.twig_bundle": "Twig Bundle",
     "item.astech.fire_starter": "Fire Starter",
     "item.astech.full_shwaxe": "Full Shwaxe",
+    "item.astech.galentine_energy_sword": "Galentine Energy Blade",
     "item.astech.tablet": "Tablet",
     "item.astech.broad_sword": "Diamond Broad Sword",
     "item.astech.airhorn": "Airhorn",

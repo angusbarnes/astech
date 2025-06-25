@@ -52,6 +52,7 @@ public class ModCreativeModTab {
                         output.accept(ModBlocks.GEM_POLISHING_STATION.get());
                         output.accept(ModItems.CABLE_LAYING_TOOL.get());
                         output.accept(ModItems.WORLD_EATER.get());
+                        output.accept(ModItems.ENERGY_SWORD.get());
                         output.accept(ModBlocks.KNAPPING_STONE.get());
                         output.accept(ModBlocks.BRICK_KILN.get());
                         output.accept(ModItems.FULL_SHWAXE.get());

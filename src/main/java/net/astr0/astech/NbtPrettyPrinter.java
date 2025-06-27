@@ -21,7 +21,8 @@ public class NbtPrettyPrinter {
 
     public static final Style HEADER_STYLE = Style.EMPTY.withColor(ChatFormatting.LIGHT_PURPLE).withUnderlined(true);
     public static final Style HEADER_BAR_STYLE = Style.EMPTY.withColor(ChatFormatting.BLUE);
-
+    public static final Style GRAY_ITALICS_STYLE = Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(true);
+    public static final Style YELLOW_STYLE = Style.EMPTY.withColor(ChatFormatting.YELLOW);
     // ─── Color Styles ─────────────────────────────────────────
     private static final Style NAME_STYLE = Style.EMPTY.withColor(ChatFormatting.GOLD);
     private static final Style TRUE_STYLE = Style.EMPTY.withColor(ChatFormatting.GREEN);

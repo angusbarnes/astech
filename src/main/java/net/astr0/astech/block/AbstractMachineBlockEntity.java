@@ -1,6 +1,5 @@
 package net.astr0.astech.block;
 
-import com.mojang.logging.LogUtils;
 import net.astr0.astech.BlockEntityStateManager;
 import net.astr0.astech.SoundRegistry;
 import net.astr0.astech.network.IHasStateManager;
@@ -65,7 +64,7 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
             return;
 
         if(IsNetworkUpdateDue()) {
-            LogUtils.getLogger().info("Running network update");
+            //LogUtils.getLogger().info("Running network update");
             StateManager.PerformNetworkServerSynchronisation();
             ResetNetworkTick();
         }

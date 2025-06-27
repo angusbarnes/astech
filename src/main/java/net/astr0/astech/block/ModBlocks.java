@@ -48,13 +48,23 @@ public class ModBlocks {
         return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
+    private static <T extends Block> RegistryObject<T> registerControllerBlock(String name, Supplier<T> block) {
+        RegistryObject<T> toReturn = BLOCKS.register(name, block);
+        registerControllerBlockItem(name, toReturn);
+        return toReturn;
+    }
+
+    private static <T extends Block> RegistryObject<Item> registerControllerBlockItem(String name, RegistryObject<T> block) {
+        return ModItems.ITEMS.register(name, () -> new BlockItemWithInfo(block.get(), new Item.Properties()));
+    }
+
     public static RegistryObject<LiquidBlock> registerFluidBlock(String fluidName, RegistryObject<FlowingFluid> source) {
         return BLOCKS.register(String.format("%s_fluid_block", fluidName),
                 () -> new LiquidBlock(source, BlockBehaviour.Properties.copy(Blocks.WATER)));
     }
 
     public static final RegistryObject<Block> REGULATED_MACHINE_CASING = registerBlock("regulated_machine_casing", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
-    public static final RegistryObject<Block> VACUUM_FREEZER_CONTROLLER = registerBlock("vacuum_freezer_controller", () -> new VacuumFreezerControllerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> VACUUM_FREEZER_CONTROLLER = registerControllerBlock("vacuum_freezer_controller", () -> new VacuumFreezerControllerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
     public static final RegistryObject<Block> NIC_BLOCK = registerBlock("nic_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));

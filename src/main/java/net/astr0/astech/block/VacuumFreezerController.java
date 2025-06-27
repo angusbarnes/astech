@@ -55,9 +55,9 @@ public class VacuumFreezerController extends AbstractMultiblockControllerBlockEn
         comp.append("\n");
         comp.append(NbtPrettyPrinter.formatVar("Has Formed", validateMultiblock()));
         comp.append("\n");
-        comp.append(NbtPrettyPrinter.formatVar("Inputs: ", validatedContext.getInputHatchPositions().size()));
+        comp.append(NbtPrettyPrinter.formatVar("Inputs: ", validationContext.getInputHatchPositions().size()));
         comp.append("\n");
-        comp.append(NbtPrettyPrinter.formatVar("Ouputs: ", validatedContext.getOutputHatchPositions().size()));
+        comp.append(NbtPrettyPrinter.formatVar("Ouputs: ", validationContext.getOutputHatchPositions().size()));
         return comp;
     }
 

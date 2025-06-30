@@ -146,7 +146,7 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
             slotSettings.put(ITEM_MODE, new SidedConfig.Capability[0]);
         }
 
-        if (itemConfig != null) {
+        if (fluidConfig != null) {
             slotSettings.put(FLUID_MODE, fluidConfig.getSupportedCaps());
         } else {
             slotSettings.put(FLUID_MODE, new SidedConfig.Capability[0]);

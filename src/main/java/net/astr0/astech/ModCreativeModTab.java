@@ -62,6 +62,8 @@ public class ModCreativeModTab {
                         output.accept(ModItems.FIRE_STARTER.get());
                         output.accept(ModItems.AIRHORN.get());
                         output.accept(ModItems.FLUID_CELL.get());
+                        output.accept(ModItems.PRESSURISED_FLUID_CELL.get());
+                        output.accept(ModItems.LARGE_FLUID_CELL.get());
 //                        ItemStack testFluidCell = new ItemStack(ModItems.FLUID_CELL.get());
 //                        FluidCellItem.SetCellFluid(testFluidCell, ModFluids.SOURCE_BROMINE.get());
 //                        output.accept(testFluidCell);

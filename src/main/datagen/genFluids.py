@@ -348,6 +348,8 @@ datapack = Context('../resources/', 'astech')
 
 datapack.set_base_dictionary({
     "item.astech.fluid_cell" : "Fluid Cell",
+    "item.astech.large_fluid_cell" : "Large Fluid Cell",
+    "item.astech.pressurised_fluid_cell" : "Pressurised Fluid Cell",
     "tooltip.fluid_cell.contents": "Contains: %s (%d/%d mB)",
     "tooltip.fluid_cell.empty": "Empty",
     "item.astech.deez_nuts": "Deez Nuts",

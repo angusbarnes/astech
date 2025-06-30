@@ -122,6 +122,8 @@ import shutil
 import logging
 
 def copy_and_overwrite(src, dst):
+    overwritten = 0
+    copied = 0
     for root, dirs, files in os.walk(src):
         rel_path = os.path.relpath(root, src)
         dst_dir = os.path.join(dst, rel_path)
@@ -136,12 +138,13 @@ def copy_and_overwrite(src, dst):
             if os.path.exists(dst_file):
                 # If file exists, overwrite and log
                 shutil.copy2(src_file, dst_file)
-                print(f"Overwritten: {dst_file}")
+                overwritten += 1
             else:
                 # If file doesn't exist, just copy
                 shutil.copy2(src_file, dst_file)
+                copied += 1
 
-    print(f"\nCopy operation completed.")
+    print(f"\nCopy operation completed. Overwrote {overwritten} files and copied {copied}.")
 
 
 def copy_and_substitute(template_dir, dest_dir, substitutions):

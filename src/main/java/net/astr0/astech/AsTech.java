@@ -18,6 +18,7 @@ import net.astr0.astech.compat.mek.AsTechSlurries;
 import net.astr0.astech.gui.ModMenuTypes;
 import net.astr0.astech.item.AsTechBucketItem;
 import net.astr0.astech.item.CableToolScreen;
+import net.astr0.astech.item.FluidCellItem;
 import net.astr0.astech.item.ModItems;
 import net.astr0.astech.network.AsTechNetworkHandler;
 import net.astr0.astech.recipe.ModRecipes;
@@ -115,7 +116,7 @@ public class AsTech
         ItemStack stack = event.getItemStack();
         Item item = stack.getItem();
 
-        if(item instanceof AsTechBucketItem) {
+        if(item instanceof AsTechBucketItem || item instanceof FluidCellItem) {
             if(stack.getTag() != null && stack.getTag().contains("danger_ttl")) {
                 MutableComponent timer = MutableComponent.create(ComponentContents.EMPTY);
                 timer.append(String.format("§c%d...", stack.getTag().getInt("danger_ttl")));

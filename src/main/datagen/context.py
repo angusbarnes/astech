@@ -246,6 +246,7 @@ class Context:
 
     def write_to_disk(self):
 
+        lines_written = 0
         for key in self.REGION_TEXT.keys():
             filename, region = key
             lines_to_write = self.REGION_TEXT[key]
@@ -253,28 +254,36 @@ class Context:
             if not os.path.exists(filename):
                 raise Exception(f"File {filename} does not exist to insert for region {region}")
             
+            lines_written += len(lines_to_write)
             Context._insert_text_in_region(filename, region, '\n'.join(lines_to_write))
 
-        print("Wrote Region Text to disk")
+        print(f"Wrote {lines_written} lines to source code regions on disk")
 
+        models_written = 0
         for model_location, model_info in self.MODEL_DEFS.items():
             with open(f'../resources/assets/astech/models/{model_location}.json', 'w') as model_file:
                 model_file.write(model_info)
+            models_written += 1
             
-        print("Wrote Item Models to disk")
+        print(f"Wrote {models_written} models to disk")
 
+        tables_written = 0
         for table_location, table_info in self.LOOT_TABLES.items():
             with open(f'../resources/data/astech/loot_tables/{table_location}.json', 'w') as table_file:
                 table_file.write(table_info)
+            tables_written += 1
 
-        print("Wrote Loot Tables to disk")
+        print(f"Wrote {tables_written} loot tables to disk")
 
+        states_written = 0
         for state_location, state_info in self.BLOCK_STATES.items():
             with open(f'../resources/assets/astech/blockstates/{state_location}.json', 'w') as state_file:
                 state_file.write(state_info)
+            states_written += 1
             
-        print("Wrote Block States to disk")
+        print(f"Wrote {states_written} block states to disk")
 
+        recipes_written = 0
         for recipe_id, recipe in self.RECIPES.items():
             directory = os.path.dirname(f'../resources/data/astech/recipes/{recipe_id}.json')
     
@@ -282,15 +291,17 @@ class Context:
             os.makedirs(directory, exist_ok=True)
             with open(f'../resources/data/astech/recipes/{recipe_id}.json', 'w') as recipe_file:
                 recipe_file.write(recipe)
+            
+            recipes_written += 1
                 
-        print("Recipes have been written")
+        print(f"Wrote {recipes_written} recipes to disk")
 
 
 
         with open(f'../resources/assets/astech/lang/en_us.json', 'w', encoding='utf-8') as lang_file:
             json.dump(self.LANG_KEYS, lang_file, ensure_ascii=False, indent=4)
                 
-        print("Recipes have been written")
+        print("Language File has been written")
 
         # Write specific tags
         for namespace, tags in self.TAGS.items():

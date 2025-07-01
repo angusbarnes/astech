@@ -155,8 +155,7 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
                 if (filled > 0) {
                     tank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
                     player.containerMenu.setCarried(handler.getContainer());
-                    //player.containerMenu.synchronizeCarriedToRemote();
-                    player.containerMenu.broadcastChanges();
+                    player.containerMenu.synchronizeCarriedToRemote();
                 }
             });
         }

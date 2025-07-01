@@ -145,7 +145,7 @@ public class ChemicalMixerRecipe extends AsTechRecipeBase {
     }
 
     public static class Serializer implements RecipeSerializer<ChemicalMixerRecipe> {
-        protected static Serializer INSTANCE = new Serializer();
+        protected static final Serializer INSTANCE = new Serializer();
 
         public static Serializer getInstance() {
             return INSTANCE;

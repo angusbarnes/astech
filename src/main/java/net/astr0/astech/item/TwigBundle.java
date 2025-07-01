@@ -55,7 +55,6 @@ public class TwigBundle extends Item {
 
                 playSoundForBlock(blockState, level, blockPos, player);
 
-                return InteractionResult.SUCCESS;
             }else {
                 twigBundle.shrink(1);
                 BlockState campfire = Blocks.CAMPFIRE.defaultBlockState();
@@ -63,8 +62,8 @@ public class TwigBundle extends Item {
                 pContext.getLevel().setBlock(pContext.getClickedPos(), campfire, Block.UPDATE_ALL);
                 playSoundForBlock(campfire, level, blockPos, player);
 
-                return InteractionResult.SUCCESS;
             }
+            return InteractionResult.SUCCESS;
 
         }
 

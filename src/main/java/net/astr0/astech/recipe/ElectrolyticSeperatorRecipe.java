@@ -77,7 +77,7 @@ public class ElectrolyticSeperatorRecipe extends AsTechRecipeBase {
     }
 
     public static class Serializer implements RecipeSerializer<ElectrolyticSeperatorRecipe> {
-        protected static Serializer INSTANCE = new Serializer();
+        protected static final Serializer INSTANCE = new Serializer();
 
         public static Serializer getInstance() {
             return INSTANCE;

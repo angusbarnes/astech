@@ -5,7 +5,6 @@ import com.mojang.logging.LogUtils;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -38,7 +37,7 @@ public class FilteredItemSlot extends AbstractGuiSlot {
     public void handleFilterDrop(GhostIngredientHandler.DraggedIngredient ingredient) {
         if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Item item) {
             // Here we would set the filter and update the server
-            LogUtils.getLogger().info("We reached the item slot with item{}", item.stack().getItem().toString());
+            LogUtils.getLogger().info("We reached the item slot with item{}", item.stack().getItem());
             handler.setFilterOnClient(slotIndex, item.stack());
         }
     }
@@ -51,11 +50,6 @@ public class FilteredItemSlot extends AbstractGuiSlot {
             guiGraphics.renderItem(handler.getFilterForSlot(slotIndex), this.x, this.y);
             RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
         }
-    }
-
-    @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-
     }
 
 
@@ -73,8 +67,4 @@ public class FilteredItemSlot extends AbstractGuiSlot {
         return true;
     }
 
-    @Override
-    public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-
-    }
 }

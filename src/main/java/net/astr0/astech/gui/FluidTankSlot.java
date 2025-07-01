@@ -1,6 +1,5 @@
 package net.astr0.astech.gui;
 
-import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.GraphicsUtils;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
@@ -12,16 +11,10 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.joml.Vector4f;
 
@@ -91,8 +84,6 @@ public class FluidTankSlot extends AbstractGuiSlot {
         tips.add(Component.literal("§7%s/%s mB".formatted(fluidTank.getFluidAmount(), fluidTank.getCapacity())));
         guiGraphics.renderComponentTooltip(this.font, tips, mouseX, mouseY);
     }
-
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY) {}
 
     public boolean handleClick(BlockEntity be, double mouseX, double mouseY, int mouseButton, boolean isShifting) {
         if (isHovering(this.x, this.y, 10, 58, mouseX, mouseY)) {

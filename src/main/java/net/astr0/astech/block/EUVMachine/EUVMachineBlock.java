@@ -101,7 +101,7 @@ public class EUVMachineBlock extends HorizontalDirectionalBlock implements Entit
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         if (pState.getValue(ModBlocks.BLOCKSTATE_ACTIVE)) {
             double d0 = (double)pPos.getX() + 0.5D;
-            double d1 = (double)pPos.getY();
+            double d1 = pPos.getY();
             double d2 = (double)pPos.getZ() + 0.5D;
 //            if (pRandom.nextDouble() < 0.05D) {
 //                pLevel.playLocalSound(d0, d1, d2, SoundRegistry.laser_machine.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);

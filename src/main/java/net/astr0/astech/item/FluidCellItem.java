@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.AsTechChemicalFluidType;
 import net.astr0.astech.ModTags;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -28,21 +27,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -79,7 +72,7 @@ public class FluidCellItem extends Item {
             if(livingEntity.tickCount % 20 == 0) {
                 for(ItemStack armorPiece : livingEntity.getArmorSlots()) {
                     if (!armorPiece.is(ModTags.CHEMICAL_PROTECTION)) {
-                        hazardousFluid.getHazardBehavior().apply(stack, (LivingEntity) entity, level);
+                        hazardousFluid.getHazardBehavior().apply(stack, livingEntity, level);
                         return;
                     }
                 }
@@ -108,7 +101,7 @@ public class FluidCellItem extends Item {
         private final LazyOptional<IFluidHandlerItem> holder = LazyOptional.of(() -> this);
         private final ItemStack container;
         private final FluidTank tank;
-        private int CAPACITY;
+        private final int CAPACITY;
 
         public FluidHandlerItemCapability(ItemStack stack, int capacity) {
             this.container = stack;

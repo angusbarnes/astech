@@ -37,7 +37,7 @@ public class AsTechMaterialItem extends Item {
 //                    LogUtils.getLogger().info("Checked {} against {} and found that it failed. Had {}",
 //                        armorPiece.getDisplayName().getString(), myItemTag.toString(), armorPiece.getTags().toList().toString()
 //                    );
-                    hazardBehavior.apply(stack, (LivingEntity) entity, level);
+                    hazardBehavior.apply(stack, livingEntity, level);
                     return;
                 }
             }

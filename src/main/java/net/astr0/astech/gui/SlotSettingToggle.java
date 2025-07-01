@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class SlotSettingToggle extends UIButton{
 
-    MachineCapConfiguratorWidget.SlotSetting settings;
+    final MachineCapConfiguratorWidget.SlotSetting settings;
     private final ItemStack item;
     public SlotSettingToggle(MachineCapConfiguratorWidget.SlotSetting settings, OnPress onPress) {
         super(Icons.BLANK, settings.COLOR, settings.x, settings.y, settings.GetFormattedTooltip(), onPress);

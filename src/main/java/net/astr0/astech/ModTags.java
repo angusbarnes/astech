@@ -15,10 +15,10 @@ public class ModTags {
         return new ResourceLocation("astech", path);
     }
 
-    public static TagKey<Block> BLOCK_CABLE = BlockTags.create(RL("cable_block"));
+    public static final TagKey<Block> BLOCK_CABLE = BlockTags.create(RL("cable_block"));
     public static TagKey<Block> MACHINE_CASING = BlockTags.create(RL("casing"));
 
-    public static TagKey<Item> CHEMICAL_PROTECTION = ItemTags.create(RL("chemical_protection"));
+    public static final TagKey<Item> CHEMICAL_PROTECTION = ItemTags.create(RL("chemical_protection"));
 
 
     public static final TagKey<Fluid> TIER_1_COOLANT = FluidTags.create(new ResourceLocation("forge", "tier_1_coolant"));

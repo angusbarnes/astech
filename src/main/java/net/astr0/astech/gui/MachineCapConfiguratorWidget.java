@@ -41,12 +41,12 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
     public static class SlotSetting {
         public String TYPE_STRING = "§7NONE";
         protected String SLOT_NAME;
-        public TintColor COLOR = new TintColor(255, 255, 255);
+        public final TintColor COLOR = new TintColor(255, 255, 255);
         public final int x;
         public final int y;
-        ItemStack itemToRender;
+        final ItemStack itemToRender;
 
-        public Direction dir;
+        public final Direction dir;
 
         public String GetFormattedTooltip() {
             return SLOT_NAME + TYPE_STRING;

@@ -3,7 +3,6 @@ package net.astr0.astech.block.ChemicalMixer;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.astr0.astech.AsTech;
-import net.astr0.astech.BlockEntityStateManager;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.GraphicsUtils;
 import net.astr0.astech.gui.*;
@@ -13,7 +12,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;

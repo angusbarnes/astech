@@ -1,6 +1,5 @@
 package net.astr0.astech.gui;
 
-import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

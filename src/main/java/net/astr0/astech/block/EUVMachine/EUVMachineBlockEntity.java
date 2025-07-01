@@ -65,7 +65,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
     private int progress = 0;
     private int maxProgress = 80;
     private int currentTemperature = 0;
-    private int _baseTemp = 0;
+    private final int _baseTemp = 0;
 
     public EUVMachineBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.EUV_MACHINE_BE.get(), pPos, pBlockState, 4);

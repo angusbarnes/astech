@@ -125,7 +125,7 @@ public class ModBlocks {
             () -> new EnergyInputHatchBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
 
-    public static BlockBehaviour.Properties MACHINE_DEFAULT_PROPS = BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
+    public static final BlockBehaviour.Properties MACHINE_DEFAULT_PROPS = BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
             .noOcclusion()
             .sound(SoundType.METAL)
             .strength(2, 12)

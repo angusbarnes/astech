@@ -4,12 +4,11 @@ import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class FilteredFluidTankSlot extends FluidTankSlot {
 
-    private MachineFluidHandler handler;
+    private final MachineFluidHandler handler;
     
 
     public FilteredFluidTankSlot(BlockEntity be, MachineFluidHandler tankHandler, int slot_index, int x, int y) {
@@ -37,11 +36,7 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
 
     @Override
     public boolean canAcceptGhostIngredient(GhostIngredientHandler.DraggedIngredient ingredient) {
-        if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid && !handler.isSlotLocked(this.SLOT_INDEX)) {
-            return true;
-        }
-
-        return false;
+        return ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid && !handler.isSlotLocked(this.SLOT_INDEX);
     }
 
     @Override

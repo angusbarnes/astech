@@ -38,7 +38,7 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
         StateManager = new BlockEntityStateManager(this, managedStates);
     }
 
-    protected BlockEntityStateManager StateManager;
+    protected final BlockEntityStateManager StateManager;
 
     public BlockEntityStateManager getStateManager() {
         return StateManager;

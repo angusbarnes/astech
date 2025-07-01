@@ -137,7 +137,7 @@ public class AssemblerRecipe extends AsTechRecipeBase {
     }
 
     public static class Serializer implements RecipeSerializer<AssemblerRecipe> {
-        protected static Serializer INSTANCE = new Serializer();
+        protected static final Serializer INSTANCE = new Serializer();
 
         public static Serializer getInstance() {
             return INSTANCE;

@@ -65,7 +65,7 @@ public class AsTechBucketItem extends BucketItem {
 //                    LogUtils.getLogger().info("Checked {} against {} and found that it failed. Had {}",
 //                        armorPiece.getDisplayName().getString(), myItemTag.toString(), armorPiece.getTags().toList().toString()
 //                    );
-                    _typeSupplier.get().apply(stack, (LivingEntity) entity, level);
+                    _typeSupplier.get().apply(stack, livingEntity, level);
                     return;
                 }
             }

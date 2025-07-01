@@ -135,7 +135,7 @@ public class CableLayingToolItem extends Item {
         for (BlockPos pos : path) {
             if (!level.getBlockState(pos).isAir()) continue;
 
-            ItemStack toPlace = findFirstPlaceableBlock(inventory, level, pos, stack -> stack.getItem() == filter_item);;
+            ItemStack toPlace = findFirstPlaceableBlock(inventory, level, pos, stack -> stack.getItem() == filter_item);
             if (!toPlace.isEmpty()) {
                 Block block = Block.byItem(toPlace.getItem());
                 level.setBlock(pos, block.defaultBlockState(), 3);

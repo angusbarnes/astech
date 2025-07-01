@@ -1,7 +1,10 @@
 package net.astr0.astech.block;
 
 import net.astr0.astech.BlockEntityStateManager;
+import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.SoundRegistry;
+import net.astr0.astech.network.ClientActionPacket;
+import net.astr0.astech.network.DrainFluidPacket;
 import net.astr0.astech.network.IHasStateManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -9,18 +12,23 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractMachineBlockEntity extends BlockEntity implements MenuProvider, ITickableBlockEntity, IHasStateManager {
@@ -124,6 +132,33 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
     protected void TriggerBlockUpdate() {
         if(level!= null && !level.isClientSide()) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        }
+    }
+
+    public void handleClientAction(ClientActionPacket packet, ServerPlayer player) {
+
+        if (level.isClientSide()) {
+            throw new IllegalStateException("A client action was sent to another client. This is invalid.");
+        }
+
+        if (packet instanceof DrainFluidPacket drainPacket) {
+            ItemStack carried = player.containerMenu.getCarried();
+            if (carried.getCount() != 1) return;
+
+            ItemStack copy = carried.copy();
+            copy.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler -> {
+
+                MachineFluidHandler tankHandler = (MachineFluidHandler) StateManager.getManagedState(drainPacket.tankName);
+                FluidTank tank = tankHandler.getTank(drainPacket.index);
+
+                int filled = handler.fill(tank.getFluid(), IFluidHandler.FluidAction.EXECUTE);
+                if (filled > 0) {
+                    tank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
+                    player.containerMenu.setCarried(handler.getContainer());
+                    //player.containerMenu.synchronizeCarriedToRemote();
+                    player.containerMenu.broadcastChanges();
+                }
+            });
         }
     }
 

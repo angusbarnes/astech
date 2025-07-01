@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 

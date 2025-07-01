@@ -19,6 +19,7 @@ public class AsTechNetworkHandler {
         INSTANCE.registerMessage(0, FlexiPacket.class, FlexiPacket::encode, FlexiPacket::new, FlexiPacket::handle);
         INSTANCE.registerMessage(1, ServerToClientStateSyncPacket.class, ServerToClientStateSyncPacket::encode, ServerToClientStateSyncPacket::new, ServerToClientStateSyncPacket::handle);
         INSTANCE.registerMessage(2, ClientToServerStateUpdatePacket.class, ClientToServerStateUpdatePacket::encode, ClientToServerStateUpdatePacket::new, ClientToServerStateUpdatePacket::handle);
+        INSTANCE.registerMessage(3, DrainFluidPacket.class, DrainFluidPacket::encode, DrainFluidPacket::new, DrainFluidPacket::handle);
     }
 
 }

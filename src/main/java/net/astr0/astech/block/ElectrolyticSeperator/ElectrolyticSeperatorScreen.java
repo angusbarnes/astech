@@ -31,10 +31,10 @@ public class ElectrolyticSeperatorScreen extends AsTechGuiScreen<ElectrolyticSep
     protected void init() {
         super.init();
 
-        addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 44, this.topPos + 16));
+        addElement(new FilteredFluidTankSlot(this.menu.blockEntity, this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 44, this.topPos + 16));
 
-        addElement(new FluidTankSlot(this.menu.blockEntity.getOutputTank1(), this.leftPos + 110, this.topPos + 16));
-        addElement(new FluidTankSlot(this.menu.blockEntity.getOutputTank2(), this.leftPos + 129, this.topPos + 16));
+        addElement(new FluidTankSlot(this.menu.blockEntity, this.menu.blockEntity.getOutputFluidHandler(),0, this.leftPos + 110, this.topPos + 16));
+        addElement(new FluidTankSlot(this.menu.blockEntity, this.menu.blockEntity.getOutputFluidHandler(), 1, this.leftPos + 129, this.topPos + 16));
 
         MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity, null, menu.blockEntity.sidedFluidConfig);
         config.MODE_SWITCH_BUTTON.clicked(); // This is a phat hack

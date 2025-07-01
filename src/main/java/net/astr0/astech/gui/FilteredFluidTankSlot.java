@@ -4,23 +4,23 @@ import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class FilteredFluidTankSlot extends FluidTankSlot {
 
     private MachineFluidHandler handler;
-    private final int tankIndex;
+    
 
-    public FilteredFluidTankSlot(MachineFluidHandler filteredHandler, int index, int x, int y) {
-        super(filteredHandler.getTank(index), x, y);
-        tankIndex = index;
-        handler = filteredHandler;
+    public FilteredFluidTankSlot(BlockEntity be, MachineFluidHandler tankHandler, int slot_index, int x, int y) {
+        super(be, tankHandler, slot_index, x, y);
+        handler = tankHandler;
     }
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY) {
 
-        if (handler.checkSlot(this.tankIndex)){
+        if (handler.isSlotLocked(this.SLOT_INDEX)){
             guiGraphics.blit(WIDGET_TEXTURE, this.x-1, this.y - 1, 61, 198, 12, 58);
         }
 
@@ -30,14 +30,14 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
     @Override
     public void handleFilterDrop(GhostIngredientHandler.DraggedIngredient ingredient) {
         if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid fluid) {
-            handler.setFluidFilterOnClient(tankIndex, fluid.stack());// Here we would set the filter and update the server
+            handler.setFluidFilterOnClient(SLOT_INDEX, fluid.stack());// Here we would set the filter and update the server
             LogUtils.getLogger().info("We reached the item slot with fluid {}", fluid.stack().getFluid().toString());
         }
     }
 
     @Override
     public boolean canAcceptGhostIngredient(GhostIngredientHandler.DraggedIngredient ingredient) {
-        if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid && !handler.checkSlot(this.tankIndex)) {
+        if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid && !handler.isSlotLocked(this.SLOT_INDEX)) {
             return true;
         }
 
@@ -49,13 +49,10 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
         // We will not handle any click events that occur outside our bounds
         if(!isHovering(this.x, this.y, 10, 58, mouseX, mouseY)) return false;
 
-        //TODO: Re-implement fluid clearing
-        int message_code = isShifting ? 38 : 37;
-
-        if (handler.checkSlot(this.tankIndex)) {
-            handler.clearFluidFilterOnClient(tankIndex);
+        if (handler.isSlotLocked(this.SLOT_INDEX)) {
+            handler.clearFluidFilterOnClient(SLOT_INDEX);
         } else {
-            handler.setFluidFilterOnClient(tankIndex, handler.getFluidInTank(tankIndex));
+            handler.setFluidFilterOnClient(SLOT_INDEX, handler.getFluidInTank(SLOT_INDEX));
         }
 
         return true;

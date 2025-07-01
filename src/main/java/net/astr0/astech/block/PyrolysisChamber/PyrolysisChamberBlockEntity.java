@@ -309,5 +309,8 @@ public class PyrolysisChamberBlockEntity extends AbstractMachineBlockEntity {
     public MachineFluidHandler getInputFluidHandler() {
         return inputFluidTank;
     }
+    public MachineFluidHandler getOutputFluidHandler() {
+        return outputFluidTank;
+    }
 
 }

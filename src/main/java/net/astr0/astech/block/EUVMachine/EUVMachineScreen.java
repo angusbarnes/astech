@@ -32,7 +32,7 @@ public class EUVMachineScreen extends AsTechGuiScreen<EUVMachineMenu> {
     protected void init() {
         super.init();
 
-        addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 33, this.topPos + 16));
+        addElement(new FilteredFluidTankSlot(this.menu.blockEntity,this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 33, this.topPos + 16));
 
         FilteredItemStackHandler handler = this.menu.blockEntity.getInputStackHandler();
         addElement(new FilteredItemSlot(handler, 0,this.leftPos + 54, this.topPos + 34));

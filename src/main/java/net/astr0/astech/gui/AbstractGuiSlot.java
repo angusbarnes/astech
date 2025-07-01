@@ -3,11 +3,13 @@ package net.astr0.astech.gui;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.Rect2i;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public abstract class AbstractGuiSlot extends AsTechGuiElement {
 
     private final Rect2i _rect;
+
 
     public AbstractGuiSlot(int x, int y, int width, int height) {
         super(x, y);

@@ -1,5 +1,7 @@
 package net.astr0.astech.block.ElectrolyticSeperator;
 
+import mekanism.common.content.blocktype.Machine;
+import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.gui.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;

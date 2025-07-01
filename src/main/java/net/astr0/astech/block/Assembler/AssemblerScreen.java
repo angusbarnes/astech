@@ -32,7 +32,7 @@ public class AssemblerScreen extends AsTechGuiScreen<AssemblerMenu> {
     protected void init() {
         super.init();
 
-        addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 15, this.topPos + 16));
+        addElement(new FilteredFluidTankSlot(this.menu.blockEntity, this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 15, this.topPos + 16));
 
         FilteredItemStackHandler inputItemHandler = this.menu.blockEntity.getInputStackHandler();
         addElement(new FilteredItemSlot(inputItemHandler, 0,this.leftPos + 36, this.topPos + 26));

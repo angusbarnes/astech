@@ -392,4 +392,6 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
         return inputItemHandler;
     }
 
+    public MachineFluidHandler getOutputFluidHandler() {return outputFluidTank;}
+
 }

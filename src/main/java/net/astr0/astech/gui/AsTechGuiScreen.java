@@ -1,5 +1,6 @@
 package net.astr0.astech.gui;
 
+import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AsTechGuiScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
+
     public AsTechGuiScreen(T pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }

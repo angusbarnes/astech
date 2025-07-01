@@ -283,15 +283,6 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
         return null;
     }
 
-    private boolean canInsertItemIntoOutputSlot(Item item) {
-        return false;
-    }
-
-
-    private boolean canInsertAmountIntoOutputSlot(int count) {
-        return false;
-    }
-
     private boolean hasProgressFinished() {
         return progress >= maxProgress;
     }
@@ -305,6 +296,8 @@ public class ChemicalReactorBlockEntity extends AbstractMachineBlockEntity {
 
         if(progress < 0) progress = 0;
     }
+
+    public MachineFluidHandler getOutputFluidHandler() {return outputFluidTank;}
 
     public MachineFluidHandler getInputFluidHandler() {
         return inputFluidTank;

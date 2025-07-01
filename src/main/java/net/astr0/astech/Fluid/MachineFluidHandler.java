@@ -236,7 +236,7 @@ public class MachineFluidHandler implements IFluidHandler, IStateManaged {
     }
 
 
-    public boolean checkSlot(int i) {
+    public boolean isSlotLocked(int i) {
         return filters.get(i).isLocked();
     }
 

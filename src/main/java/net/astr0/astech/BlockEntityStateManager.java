@@ -9,37 +9,39 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.PacketDistributor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class BlockEntityStateManager {
 
     private final BlockEntity _blockEntity;
     private final BlockPos pos;
 
-    private final IStateManaged[] managedStates;
-    private int stateIndex = 0;
+    private final List<IStateManaged> stateList;
+    private final Map<String, IStateManaged> stateMap = new HashMap<>();
 
-    public BlockEntityStateManager(BlockEntity blockEntity, int state_count) {
+    public BlockEntityStateManager(BlockEntity blockEntity, int stateCountHint) {
         _blockEntity = blockEntity;
         pos = blockEntity.getBlockPos();
-
-        managedStates = new IStateManaged[state_count];
+        stateList = new ArrayList<>(stateCountHint);
     }
 
+    public BlockEntityStateManager(BlockEntity blockEntity) {
+        this(blockEntity, 5);
+    }
 
     public int getManagedStateCount() {
-        return stateIndex;
+        return stateList.size();
     }
 
-    // Warning that this uses state names which may be non-unique which may lead to undefined behaviour
-    // You should only use this method if you feeling hella lazy
+    public IStateManaged getManagedState(String name) {
+        return stateMap.get(name);
+    }
+
     public void sendClientUpdateByName(String name) {
-        for (int i = 0; i < stateIndex; i++) {
-            if (Objects.equals(managedStates[i].getStateName(), name)) {
-                sendClientUpdate(i);
-            }
+        IStateManaged state = stateMap.get(name);
+        if (state != null) {
+            int index = stateList.indexOf(state);
+            if (index >= 0) sendClientUpdate(index);
         }
     }
 
@@ -52,8 +54,7 @@ public class BlockEntityStateManager {
         buf.writeBlockPos(_blockEntity.getBlockPos());
         buf.writeVarInt(index);
 
-        managedStates[index].writeClientUpdate(buf);
-
+        stateList.get(index).writeClientUpdate(buf);
         AsTechNetworkHandler.INSTANCE.sendToServer(new ClientToServerStateUpdatePacket(buf));
     }
 
@@ -62,42 +63,29 @@ public class BlockEntityStateManager {
             throw new IllegalStateException("Received a client packet on client? That's not right.");
         }
 
-        if (index < 0 || index >= stateIndex) {
+        if (index < 0 || index >= stateList.size()) {
             LogUtils.getLogger().warn("Received invalid index {} for block entity at {}", index, pos);
             return;
         }
 
-        managedStates[index].applyClientUpdate(buf);
-        _blockEntity.setChanged(); // mark for saving
+        stateList.get(index).applyClientUpdate(buf);
+        _blockEntity.setChanged();
     }
 
     public void UpdateStateOnClient(int index, FriendlyByteBuf stateData) {
-        managedStates[index].readNetworkEncoding(stateData);
+        stateList.get(index).readNetworkEncoding(stateData);
     }
 
-    // For network synchronisation, loop through all managed states and check if they
-    // need synching. If they do, write the state along with the index to a friendlyByteBuf
-    // This will mean only one single update packet needs to get sent, regardless of how many things
-    // changed. This should only be used for server --> client synching
-    // When changes are made on the client, they should be updated locally, then a specfic update
-    // packet should be sent to the StateManager which will change server state accordingly.
-    // This update will be automatically synchronised to all clients on the next network update event.
-    // This means we can fuck with state however we want on the client but it will always be forced back
-    // to the server side source of truth when a network update is triggered
     public void PerformNetworkServerSynchronisation() {
         if (_blockEntity.getLevel().isClientSide()) {
             throw new IllegalStateException("This should only run on the server");
         }
-        //LogUtils.getLogger().info("Taking Network Synchronisation");
 
-        // Create temporary storage for state updates
         List<ServerToClientStateSyncPacket.StateUpdate> dirtyUpdates = new ArrayList<>();
 
-        for (int i = 0; i < stateIndex; i++) {
-            IStateManaged state = managedStates[i];
+        for (int i = 0; i < stateList.size(); i++) {
+            IStateManaged state = stateList.get(i);
             if (state.isNetworkDirty()) {
-
-                //LogUtils.getLogger().info("{} was marked dirty. Synching over the network", state.getStateName());
                 FriendlyByteBuf stateBuf = new FriendlyByteBuf(Unpooled.buffer());
                 state.writeNetworkEncoding(stateBuf);
                 dirtyUpdates.add(new ServerToClientStateSyncPacket.StateUpdate(i, stateBuf));
@@ -114,36 +102,39 @@ public class BlockEntityStateManager {
     }
 
     public void NetworkClientUpdateFromServer(ConfigUpdatePacket packet) {
-        if(!(_blockEntity.getLevel().isClientSide())) {
+        if (!_blockEntity.getLevel().isClientSide()) {
             throw new IllegalStateException("This shit should never be running on the server side. Please check your code");
         }
     }
 
-
     public CompoundTag saveToNBT() {
         CompoundTag tag = new CompoundTag();
-        for (int i = 0; i < stateIndex; i++) {
-            tag.put(managedStates[i].getStateName(), managedStates[i].writeToTag());
+        for (IStateManaged state : stateList) {
+            tag.put(state.getStateName(), state.writeToTag());
         }
-
         return tag;
     }
 
     public void loadFromNBT(CompoundTag tag) {
-        for (int i = 0; i < stateIndex; i++) {
-            if (tag.contains(managedStates[i].getStateName())) {
-                managedStates[i].loadFromTag(tag.getCompound(managedStates[i].getStateName()));
+        for (IStateManaged state : stateList) {
+            String name = state.getStateName();
+            if (tag.contains(name)) {
+                state.loadFromTag(tag.getCompound(name));
             } else {
-                LogUtils.getLogger().warn("Unable to load NBT data for block entity {} tag={}", _blockEntity.getBlockPos().toShortString(), managedStates[i].getStateName());
+                LogUtils.getLogger().warn("Unable to load NBT data for block entity {} tag={}", _blockEntity.getBlockPos().toShortString(), name);
             }
         }
     }
 
-    // Intended to be used like MyItemHandler handler = SM.addManagedState(new FilteredItemHandler());
     public <T extends IStateManaged> T addManagedState(T state) {
-        managedStates[stateIndex] = state;
-        stateIndex++;
+        String name = state.getStateName();
+        if (stateMap.containsKey(name)) {
+            throw new IllegalArgumentException("Duplicate state name '" + name + "' not allowed in " + _blockEntity.getBlockPos());
+        }
+
+        stateList.add(state);
+        stateMap.put(name, state);
         return state;
     }
-
 }
+

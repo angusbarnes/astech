@@ -3,6 +3,7 @@ package net.astr0.astech.block.ChemicalMixer;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.astr0.astech.AsTech;
+import net.astr0.astech.BlockEntityStateManager;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.GraphicsUtils;
 import net.astr0.astech.gui.*;
@@ -12,6 +13,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -21,9 +23,12 @@ import java.util.List;
 public class ChemicalMixerScreen extends AsTechGuiScreen<ChemicalMixerMenu> {
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(AsTech.MODID, "textures/gui/chemical_mixer.png");
+    
+    private final ChemicalMixerBlockEntity blockEntityReference;
 
     public ChemicalMixerScreen(ChemicalMixerMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
+        blockEntityReference = pMenu.blockEntity;
     }
 
     private boolean isLocked = true;
@@ -32,16 +37,16 @@ public class ChemicalMixerScreen extends AsTechGuiScreen<ChemicalMixerMenu> {
     protected void init() {
         super.init();
 
-        addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 0, this.leftPos + 34, this.topPos + 18));
-        addElement(new FilteredFluidTankSlot(this.menu.blockEntity.getInputFluidHandler(), 1, this.leftPos + 48, this.topPos + 18));
-        addElement(new FluidTankSlot(this.menu.blockEntity.getFluidOutputTank(), this.leftPos + 133, this.topPos + 18));
+        addElement(new FilteredFluidTankSlot(blockEntityReference, blockEntityReference.getInputFluidHandler(), 0, this.leftPos + 34, this.topPos + 18));
+        addElement(new FilteredFluidTankSlot(blockEntityReference, blockEntityReference.getInputFluidHandler(), 1, this.leftPos + 48, this.topPos + 18));
+        addElement(new FluidTankSlot(blockEntityReference, blockEntityReference.getOutputFluidHandler(), 0, this.leftPos + 133, this.topPos + 18));
 
-        FilteredItemStackHandler inputItemHandler = this.menu.blockEntity.getInputStackHandler();
+        FilteredItemStackHandler inputItemHandler = blockEntityReference.getInputStackHandler();
         addElement(new FilteredItemSlot(inputItemHandler, 0,this.leftPos + 62, this.topPos + 18));
         addElement(new FilteredItemSlot(inputItemHandler, 1,this.leftPos + 62, this.topPos + 38));
         addElement(new FilteredItemSlot(inputItemHandler, 2,this.leftPos + 62, this.topPos + 58));
 
-        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, this.menu.blockEntity, menu.blockEntity.sidedItemConfig, menu.blockEntity.sidedFluidConfig);
+        MachineCapConfiguratorWidget config = new MachineCapConfiguratorWidget(this.leftPos - 40, this.topPos + 30, blockEntityReference, menu.blockEntity.sidedItemConfig, menu.blockEntity.sidedFluidConfig);
 
         IconButton SETTINGS_BUTTON = new IconButton(this.leftPos + 11, this.topPos + 30, Icons.SETTINGS, (button) -> {
             config.ToggleRender();
@@ -81,7 +86,7 @@ public class ChemicalMixerScreen extends AsTechGuiScreen<ChemicalMixerMenu> {
 
         if (!isLocked) {
             for(AsTechGuiElement element : guiElements) {
-                if(element.handleClick(this.menu.blockEntity, pMouseX, pMouseY, pButton, isShiftHeld)) {
+                if(element.handleClick(blockEntityReference, pMouseX, pMouseY, pButton, isShiftHeld)) {
                     return true;
                 }
             }

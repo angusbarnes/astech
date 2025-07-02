@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -93,6 +94,30 @@ public class FluidCellItem extends Item {
                     .withStyle(ChatFormatting.GRAY));
         }
         super.appendHoverText(stack, level, tooltip, flag);
+    }
+
+    public int getCapacity() {
+        return CAPACITY;
+    }
+
+    public static int getCapacityFromStack(ItemStack stack) {
+        if (stack.getItem() instanceof FluidCellItem cell) {
+            return cell.getCapacity();
+        }
+
+        return 1;
+    }
+
+    public boolean isBarVisible(ItemStack pStack) {
+        return FluidCellItem.getFluid(pStack).getAmount() > 0 && FluidCellItem.getFluid(pStack).getAmount() < FluidCellItem.getCapacityFromStack(pStack);
+    }
+
+    public int getBarWidth(ItemStack pStack) {
+        return Math.round((float)FluidCellItem.getFluid(pStack).getAmount() / (float)FluidCellItem.getCapacityFromStack(pStack) * 13.0F );
+    }
+
+    public int getBarColor(ItemStack pStack) {
+        return Mth.hsvToRgb(2.04f, 1.0F, 1.0F);
     }
 
     // Custom fluid handler stored in NBT

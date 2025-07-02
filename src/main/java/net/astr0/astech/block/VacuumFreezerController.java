@@ -2,6 +2,7 @@ package net.astr0.astech.block;
 
 import net.astr0.astech.IConfigurable;
 import net.astr0.astech.NbtPrettyPrinter;
+import net.astr0.astech.TabletSummary;
 import net.astr0.astech.block.multiblock.MultiblockMatcher;
 import net.astr0.astech.block.multiblock.MultiblockMatchers;
 import net.minecraft.core.BlockPos;
@@ -50,15 +51,14 @@ public class VacuumFreezerController extends AbstractMultiblockControllerBlockEn
 
     @Override
     public Component getTabletSummary() {
-        MutableComponent comp = MutableComponent.create(Component.empty().getContents());
-        comp.append(NbtPrettyPrinter.formatHeader("Vacuum Freezer"));
-        comp.append("\n");
-        comp.append(NbtPrettyPrinter.formatVar("Has Formed", validateMultiblock()));
-        comp.append("\n");
-        comp.append(NbtPrettyPrinter.formatVar("Inputs: ", validationContext.getInputHatchPositions().size()));
-        comp.append("\n");
-        comp.append(NbtPrettyPrinter.formatVar("Ouputs: ", validationContext.getOutputHatchPositions().size()));
-        return comp;
+
+        TabletSummary summary = new TabletSummary("Vacuum Freezer");
+        summary.addField("Has Formed: ", validateMultiblock());
+        summary.addField("Inputs: ", validationContext.getInputHatchPositions().size());
+        summary.addField("Outputs: ", validationContext.getOutputHatchPositions().size());
+        summary.addField("Has Formed", validateMultiblock());
+        summary.addField("Has Formed", validateMultiblock());
+        return summary.getAsComponent();
     }
 
     @Override

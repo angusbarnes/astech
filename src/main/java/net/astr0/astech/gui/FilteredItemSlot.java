@@ -62,6 +62,9 @@ public class FilteredItemSlot extends AbstractGuiSlot {
     @Override
     public boolean handleClick(ItemStack carried, int mouseButton, boolean isScreenLocked) {
 
+        if (isScreenLocked) return false;
+
+
         if (handler.checkSlot(slotIndex)) {
             handler.clearFilterOnClient(slotIndex);
         } else {

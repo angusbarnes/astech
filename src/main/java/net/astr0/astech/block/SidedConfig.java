@@ -16,6 +16,7 @@ public class SidedConfig implements IStateManaged {
 
     private final IHasStateManager stateManager;
     private Capability[] supportedCapabilities = new Capability[0];
+    private boolean autoPush = false;
 
     @Override
     public String getStateName() {
@@ -29,7 +30,12 @@ public class SidedConfig implements IStateManaged {
                 .mapToInt(dir -> get(dir).ordinal())
                 .toArray();
         tag.putIntArray("capMap", capOrdinals);
+        tag.putBoolean("autopush", autoPush);
         return tag;
+    }
+
+    public boolean getPushSetting() {
+        return autoPush;
     }
 
     @Override
@@ -40,6 +46,10 @@ public class SidedConfig implements IStateManaged {
             for (int i = 0; i < Math.min(data.length, directions.length); i++) {
                 caps.put(directions[i], Capability.fromOrdinal(data[i]));
             }
+        }
+
+        if (tag.contains("autopush")) {
+            autoPush = tag.getBoolean("autopush");
         }
     }
 
@@ -56,13 +66,17 @@ public class SidedConfig implements IStateManaged {
         for (Direction dir : Direction.values()) {
             buf.writeEnum(get(dir));
         }
+
+        buf.writeBoolean(autoPush);
     }
 
     @Override
     public void readNetworkEncoding(FriendlyByteBuf buf) {
         for (Direction dir : Direction.values()) {
-            setNoUpdate(dir, buf.readEnum(Capability.class));
+            set(dir, buf.readEnum(Capability.class));
         }
+
+        autoPush = buf.readBoolean();
     }
 
     @Override
@@ -109,16 +123,17 @@ public class SidedConfig implements IStateManaged {
         caps.put(dir, cap);
     }
 
-    public void setNoUpdate(Direction dir, Capability cap) {
-        caps.put(dir, cap);
-    }
-
     public Capability get(Direction dir) {
         return caps.getOrDefault(dir, Capability.NONE);
     }
 
     public void SetCapOnClient(Direction dir, Capability cap) {
         caps.put(dir, cap);
+        stateManager.getStateManager().sendClientUpdateByName(getStateName());
+    }
+
+    public void SetAutoPushOnClient(boolean shouldPush) {
+        autoPush = shouldPush;
         stateManager.getStateManager().sendClientUpdateByName(getStateName());
     }
 

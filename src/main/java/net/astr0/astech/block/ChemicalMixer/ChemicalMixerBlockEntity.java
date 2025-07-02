@@ -123,15 +123,15 @@ public class ChemicalMixerBlockEntity extends AbstractMachineBlockEntity {
                 SidedConfig.Capability.ITEM_OUTPUT
         );
 
-        sidedItemConfig.setNoUpdate(Direction.UP, SidedConfig.Capability.ITEM_INPUT);
-        sidedItemConfig.setNoUpdate(Direction.EAST, SidedConfig.Capability.ITEM_INPUT);
-        sidedItemConfig.setNoUpdate(Direction.DOWN, SidedConfig.Capability.ITEM_OUTPUT);
-        sidedItemConfig.setNoUpdate(Direction.WEST, SidedConfig.Capability.ITEM_OUTPUT);
+        sidedItemConfig.set(Direction.UP, SidedConfig.Capability.ITEM_INPUT);
+        sidedItemConfig.set(Direction.EAST, SidedConfig.Capability.ITEM_INPUT);
+        sidedItemConfig.set(Direction.DOWN, SidedConfig.Capability.ITEM_OUTPUT);
+        sidedItemConfig.set(Direction.WEST, SidedConfig.Capability.ITEM_OUTPUT);
 
-        sidedFluidConfig.setNoUpdate(Direction.UP, SidedConfig.Capability.FLUID_INPUT);
-        sidedFluidConfig.setNoUpdate(Direction.EAST, SidedConfig.Capability.FLUID_INPUT);
-        sidedFluidConfig.setNoUpdate(Direction.DOWN, SidedConfig.Capability.FLUID_OUTPUT);
-        sidedFluidConfig.setNoUpdate(Direction.WEST, SidedConfig.Capability.FLUID_OUTPUT);
+        sidedFluidConfig.set(Direction.UP, SidedConfig.Capability.FLUID_INPUT);
+        sidedFluidConfig.set(Direction.EAST, SidedConfig.Capability.FLUID_INPUT);
+        sidedFluidConfig.set(Direction.DOWN, SidedConfig.Capability.FLUID_OUTPUT);
+        sidedFluidConfig.set(Direction.WEST, SidedConfig.Capability.FLUID_OUTPUT);
     }
 
     @Override

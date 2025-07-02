@@ -43,6 +43,8 @@ public class BlockEntityStateManager {
             int index = stateList.indexOf(state);
             if (index >= 0) sendClientUpdate(index);
         }
+
+        LogUtils.getLogger().info("Client update was sent for: {}", name);
     }
 
     public void sendClientUpdate(int index) {

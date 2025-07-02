@@ -1,5 +1,6 @@
 package net.astr0.astech.gui;
 
+import com.mojang.logging.LogUtils;
 import net.astr0.astech.AsTech;
 import net.astr0.astech.BlockUtils;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
@@ -118,6 +119,16 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
             }));
         }
 
+        PUSH_PULL_BUTTON = new UIButton(Icons.DENY, new TintColor(255, 255, 255), pX + 19, pY - 19, "Auto Push: §cNo", (button) -> {
+            if (incrementAutoPush(this::GetMode)) {
+                button.SetIconToDraw(Icons.ACCEPT);
+                button.SetTooltip("Auto Push: §3Yes");
+            } else {
+                button.SetIconToDraw(Icons.DENY);
+                button.SetTooltip("Auto Push: §cNo");
+            }
+        });
+
         MODE_SWITCH_BUTTON = new UIButton(Icons.ITEM, new TintColor(255, 255, 255, 255), pX - 19, pY - 19, "Mode: §eItems", (button) -> {
             if (mode == ITEM_MODE) {
                 if (_fluidConfig == null) return;
@@ -134,11 +145,24 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
             for (SlotSettingToggle slotToggle : buttons) {
                 slotToggle.SetFormatting(getSlotFormat(this::GetMode, slotToggle.getDirection()));
             }
+
+            boolean mode = false;
+            if(GetMode() == ITEM_MODE) {
+                mode = _itemConfig.getPushSetting();
+            } else {
+                mode = _fluidConfig.getPushSetting();
+            }
+
+            if (mode) {
+                PUSH_PULL_BUTTON.SetIconToDraw(Icons.ACCEPT);
+                PUSH_PULL_BUTTON.SetTooltip("Auto Push: §3Yes");
+            } else {
+                PUSH_PULL_BUTTON.SetIconToDraw(Icons.DENY);
+                PUSH_PULL_BUTTON.SetTooltip("Auto Push: §cNo");
+            }
         });
 
-        PUSH_PULL_BUTTON = new UIButton(Icons.DENY, new TintColor(255, 255, 255), pX + 19, pY - 19, "Auto Push: §cNo", (button) -> {
-            button.SetIconToDraw(Icons.ACCEPT);
-        });
+
 
         if (itemConfig != null) {
             slotSettings.put(ITEM_MODE, itemConfig.getSupportedCaps());
@@ -186,6 +210,24 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
             }
 
             _fluidConfig.SetCapOnClient(dir, slotSettings.get(_mode.get())[(index + 1) % slotSettings.get(_mode.get()).length]);
+        }
+
+    }
+
+    private boolean incrementAutoPush(Supplier<Integer> _mode) {
+
+        if (_mode.get() == ITEM_MODE) {
+            boolean shouldPush = _itemConfig.getPushSetting();
+
+            _itemConfig.SetAutoPushOnClient(!shouldPush);
+            LogUtils.getLogger().info("Mode is ITEM, oldShouldPush={}, newShouldPush={}", !shouldPush, shouldPush);
+            return !shouldPush;
+        } else {
+            boolean shouldPush = _fluidConfig.getPushSetting();
+
+            _fluidConfig.SetAutoPushOnClient(!shouldPush);
+            LogUtils.getLogger().info("Mode is FLUID, oldShouldPush={}, newShouldPush={}", !shouldPush, shouldPush);
+            return !shouldPush;
         }
 
     }

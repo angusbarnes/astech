@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
 
 public class FilteredFluidTankSlot extends FluidTankSlot {
 
@@ -41,7 +42,7 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
 
     @Override
     public boolean canAcceptGhostIngredient(GhostIngredientHandler.DraggedIngredient ingredient) {
-        return ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid && !handler.isSlotLocked(this.SLOT_INDEX);
+        return ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid && !handler.isSlotLocked(this.SLOT_INDEX) && handler.getFluidInTank(SLOT_INDEX) == FluidStack.EMPTY;
     }
 
     @Override

@@ -26,7 +26,6 @@ public class AdvancedAssemblerScreen extends AsTechGuiScreen<AdvancedAssemblerMe
         super(pMenu, pPlayerInventory, pTitle);
     }
 
-    private boolean isLocked = true;
 
     @Override
     protected void init() {
@@ -49,7 +48,7 @@ public class AdvancedAssemblerScreen extends AsTechGuiScreen<AdvancedAssemblerMe
 
         IconButton LOCK_BUTTON = new IconButton(this.leftPos + 79, this.topPos + 69, Icons.UNLOCKED, (button) -> {
             button.setIcon(button.getIcon() == Icons.UNLOCKED ? Icons.LOCKED : Icons.UNLOCKED);
-            isLocked = !isLocked;
+            IS_LOCKED = !IS_LOCKED;
         });
 
         this.addRenderableWidget(LOCK_BUTTON);
@@ -72,22 +71,6 @@ public class AdvancedAssemblerScreen extends AsTechGuiScreen<AdvancedAssemblerMe
         }
 
         renderEnergyBar(guiGraphics, 155);
-    }
-
-    @Override
-    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-        boolean isShiftHeld = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ||
-                InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT);
-
-        if (!isLocked) {
-            for(AsTechGuiElement element : guiElements) {
-                if(element.handleClick(this.menu.blockEntity, pMouseX, pMouseY, pButton, isShiftHeld)) {
-                    return true;
-                }
-            }
-        }
-
-        return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 
     private int getEnergyY(int energyHeight) {

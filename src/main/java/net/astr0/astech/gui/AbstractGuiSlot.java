@@ -3,6 +3,7 @@ package net.astr0.astech.gui;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.Rect2i;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public abstract class AbstractGuiSlot extends AsTechGuiElement {
@@ -34,7 +35,7 @@ public abstract class AbstractGuiSlot extends AsTechGuiElement {
     }
 
     @Override
-    public boolean handleClick(BlockEntity be, double mouseX, double mouseY, int mouseButton, boolean isShifting) {
+    public boolean handleClick(ItemStack carried, int mouseButton, boolean isScreenLocked) {
         return false;
     }
 

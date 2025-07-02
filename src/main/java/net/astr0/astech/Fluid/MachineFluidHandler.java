@@ -227,6 +227,10 @@ public class MachineFluidHandler implements IFluidHandler, IStateManaged {
         }
     }
 
+    public void SetNetworkDirty() {
+        networkIsDirty = true;
+    }
+
     public boolean canFluidFit(int index, FluidStack fluid) {
         FluidStack stack = tanks[index].getFluid();
 

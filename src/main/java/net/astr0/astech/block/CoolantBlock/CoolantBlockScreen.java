@@ -66,22 +66,6 @@ public class CoolantBlockScreen extends AbstractContainerScreen<CoolantBlockMenu
 
     }
 
-    @Override
-    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-        boolean isShiftHeld = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ||
-                InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT);
-
-        if (!isLocked) {
-            for(AsTechGuiElement element : guiElements) {
-                if(element.handleClick(this.menu.blockEntity, pMouseX, pMouseY, pButton, isShiftHeld)) {
-                    return true;
-                }
-            }
-        }
-
-        return super.mouseClicked(pMouseX, pMouseY, pButton);
-    }
-
     private int getEnergyY(int energyHeight) {
         return this.topPos + 9 + (69-energyHeight);
     }

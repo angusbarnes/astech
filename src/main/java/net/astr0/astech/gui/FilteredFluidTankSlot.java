@@ -3,8 +3,13 @@ package net.astr0.astech.gui;
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
+import net.astr0.astech.network.AsTechNetworkHandler;
+import net.astr0.astech.network.UIFluidActionPacket;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 public class FilteredFluidTankSlot extends FluidTankSlot {
 
@@ -12,7 +17,7 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
     
 
     public FilteredFluidTankSlot(BlockEntity be, MachineFluidHandler tankHandler, int slot_index, int x, int y) {
-        super(be, tankHandler, slot_index, x, y);
+        super(be, tankHandler, slot_index, x, y, true);
         handler = tankHandler;
     }
 
@@ -40,16 +45,29 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
     }
 
     @Override
-    public boolean handleClick(BlockEntity be, double mouseX, double mouseY, int mouseButton, boolean isShifting) {
-        // We will not handle any click events that occur outside our bounds
-        if(!isHovering(this.x, this.y, 10, 58, mouseX, mouseY)) return false;
+    public boolean handleClick(ItemStack carried, int mouseButton, boolean isScreenLocked){
 
-        if (handler.isSlotLocked(this.SLOT_INDEX)) {
-            handler.clearFluidFilterOnClient(SLOT_INDEX);
-        } else {
-            handler.setFluidFilterOnClient(SLOT_INDEX, handler.getFluidInTank(SLOT_INDEX));
+        // Item filling/draining takes precedence
+        if(super.handleClick(carried, mouseButton, isScreenLocked)) {
+            return true;
         }
 
-        return true;
+        if (Screen.hasShiftDown()) {
+            AsTechNetworkHandler.INSTANCE.sendToServer(new UIFluidActionPacket(BLOCK_ENTITY.getBlockPos(), STATE_NAME, SLOT_INDEX, UIFluidActionPacket.FluidAction.DUMP_SLOT));
+            return true;
+        }
+
+        // We can only set filters if the UI is unlocked
+        if (!isScreenLocked) {
+            if (handler.isSlotLocked(this.SLOT_INDEX)) {
+                handler.clearFluidFilterOnClient(SLOT_INDEX);
+            } else {
+                handler.setFluidFilterOnClient(SLOT_INDEX, handler.getFluidInTank(SLOT_INDEX));
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -1,10 +1,12 @@
 package net.astr0.astech.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.logging.LogUtils;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.GraphicsUtils;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
 import net.astr0.astech.network.AsTechNetworkHandler;
-import net.astr0.astech.network.DrainFluidPacket;
+import net.astr0.astech.network.UIFluidActionPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -12,8 +14,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.joml.Vector4f;
@@ -28,7 +32,7 @@ public class FluidTankSlot extends AbstractGuiSlot {
     protected final BlockEntity BLOCK_ENTITY;
     protected final int SLOT_INDEX;
     protected final String STATE_NAME;
-
+    private boolean fillingAllowed = false;
 
 
     public FluidTankSlot(BlockEntity be, MachineFluidHandler tankHandler, int slot_index, int x, int y) {
@@ -39,6 +43,17 @@ public class FluidTankSlot extends AbstractGuiSlot {
         SLOT_INDEX = slot_index;
         STATE_NAME = tankHandler.getStateName();
         this.fluidTank = tankHandler.getTank(slot_index);
+    }
+
+    public FluidTankSlot(BlockEntity be, MachineFluidHandler tankHandler, int slot_index, int x, int y, boolean fillingAllowed) {
+
+        super(x, y, 10, TANK_HEIGHT);
+
+        BLOCK_ENTITY = be;
+        SLOT_INDEX = slot_index;
+        STATE_NAME = tankHandler.getStateName();
+        this.fluidTank = tankHandler.getTank(slot_index);
+        this.fillingAllowed = fillingAllowed;
     }
 
     @Override
@@ -85,12 +100,27 @@ public class FluidTankSlot extends AbstractGuiSlot {
         guiGraphics.renderComponentTooltip(this.font, tips, mouseX, mouseY);
     }
 
-    public boolean handleClick(BlockEntity be, double mouseX, double mouseY, int mouseButton, boolean isShifting) {
-        if (isHovering(this.x, this.y, 10, 58, mouseX, mouseY)) {
-            AsTechNetworkHandler.INSTANCE.sendToServer(new DrainFluidPacket(BLOCK_ENTITY.getBlockPos(), STATE_NAME, SLOT_INDEX));
+    @Override
+    public boolean isMouseInBounds(double mouseX, double mouseY) {
+        return isHovering(this.x, this.y, 10, 58, mouseX, mouseY);
+    }
+
+    public boolean handleClick(ItemStack carried, int mouseButton, boolean isScreenLocked) {
+
+        // We should only bother sending a drain packet if the held item can actually handle it
+        if (carried.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
+
+
+            LogUtils.getLogger().info("Mouse clicked: {}. Filling allowed={}", mouseButton, fillingAllowed);
+
+            if (fillingAllowed && mouseButton == InputConstants.MOUSE_BUTTON_LEFT) {
+                AsTechNetworkHandler.INSTANCE.sendToServer(new UIFluidActionPacket(BLOCK_ENTITY.getBlockPos(), STATE_NAME, SLOT_INDEX, UIFluidActionPacket.FluidAction.DRAIN_ITEM));
+                return true;
+            }
+
+            AsTechNetworkHandler.INSTANCE.sendToServer(new UIFluidActionPacket(BLOCK_ENTITY.getBlockPos(), STATE_NAME, SLOT_INDEX, UIFluidActionPacket.FluidAction.FILL_ITEM));
             return true;
         }
-
         return false;
     }
 

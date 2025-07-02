@@ -25,8 +25,6 @@ public class ChemicalReactorScreen extends AsTechGuiScreen<ChemicalReactorMenu> 
         super(pMenu, pPlayerInventory, pTitle);
     }
 
-    private boolean isLocked = true;
-
     @Override
     protected void init() {
         super.init();
@@ -46,7 +44,7 @@ public class ChemicalReactorScreen extends AsTechGuiScreen<ChemicalReactorMenu> 
 
         IconButton LOCK_BUTTON = new IconButton(this.leftPos + 5, this.topPos + 43, Icons.UNLOCKED, (button) -> {
             button.setIcon(button.getIcon() == Icons.UNLOCKED ? Icons.LOCKED : Icons.UNLOCKED);
-            isLocked = !isLocked;
+            IS_LOCKED = !IS_LOCKED;
         });
 
         this.addRenderableWidget(LOCK_BUTTON);
@@ -71,20 +69,6 @@ public class ChemicalReactorScreen extends AsTechGuiScreen<ChemicalReactorMenu> 
         renderEnergyBar(guiGraphics, 155);
     }
 
-    @Override
-    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-        boolean isShiftHeld = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ||
-                InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT);
-
-
-        for(AsTechGuiElement element : guiElements) {
-            if(element.handleClick(this.menu.blockEntity, pMouseX, pMouseY, pButton, isShiftHeld)) {
-                return true;
-            }
-        }
-
-        return super.mouseClicked(pMouseX, pMouseY, pButton);
-    }
 
     private int getEnergyY(int energyHeight) {
         return this.topPos + 9 + (69-energyHeight);

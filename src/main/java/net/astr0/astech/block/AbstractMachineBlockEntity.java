@@ -4,7 +4,8 @@ import net.astr0.astech.BlockEntityStateManager;
 import net.astr0.astech.Fluid.MachineFluidHandler;
 import net.astr0.astech.SoundRegistry;
 import net.astr0.astech.network.ClientActionPacket;
-import net.astr0.astech.network.DrainFluidPacket;
+import net.astr0.astech.network.IClientActionHandler;
+import net.astr0.astech.network.UIFluidActionPacket;
 import net.astr0.astech.network.IHasStateManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -27,11 +28,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractMachineBlockEntity extends BlockEntity implements MenuProvider, ITickableBlockEntity, IHasStateManager {
+public abstract class AbstractMachineBlockEntity extends BlockEntity implements MenuProvider, ITickableBlockEntity, IHasStateManager, IClientActionHandler {
     public AbstractMachineBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int managedStates) {
         super(pType, pPos, pBlockState);
 
@@ -141,23 +143,54 @@ public abstract class AbstractMachineBlockEntity extends BlockEntity implements 
             throw new IllegalStateException("A client action was sent to another client. This is invalid.");
         }
 
-        if (packet instanceof DrainFluidPacket drainPacket) {
-            ItemStack carried = player.containerMenu.getCarried();
-            if (carried.getCount() != 1) return;
+        if (packet instanceof UIFluidActionPacket drainPacket) {
 
-            ItemStack copy = carried.copy();
-            copy.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler -> {
+            if (drainPacket.action == UIFluidActionPacket.FluidAction.DRAIN_ITEM) {
+                ItemStack carried = player.containerMenu.getCarried();
+                if (carried.getCount() != 1) return;
 
+                ItemStack copy = carried.copy();
+                copy.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler -> {
+
+                    MachineFluidHandler tankHandler = (MachineFluidHandler) StateManager.getManagedState(drainPacket.tankName);
+                    FluidTank tank = tankHandler.getTank(drainPacket.index);
+
+
+                    int filled = tank.fill(handler.getFluidInTank(0), IFluidHandler.FluidAction.SIMULATE);
+
+                    if (filled > 0) {
+                        tank.fill(handler.getFluidInTank(0), IFluidHandler.FluidAction.EXECUTE);
+                        handler.drain(filled, IFluidHandler.FluidAction.EXECUTE);
+
+                        player.containerMenu.setCarried(handler.getContainer());
+                        player.containerMenu.synchronizeCarriedToRemote();
+                    }
+                });
+            } else if (drainPacket.action == UIFluidActionPacket.FluidAction.FILL_ITEM) {
+                ItemStack carried = player.containerMenu.getCarried();
+                if (carried.getCount() != 1) return;
+
+                ItemStack copy = carried.copy();
+                copy.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler -> {
+
+                    MachineFluidHandler tankHandler = (MachineFluidHandler) StateManager.getManagedState(drainPacket.tankName);
+                    FluidTank tank = tankHandler.getTank(drainPacket.index);
+
+                    int filled = handler.fill(tank.getFluid(), IFluidHandler.FluidAction.EXECUTE);
+                    if (filled > 0) {
+                        tank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
+                        player.containerMenu.setCarried(handler.getContainer());
+                        player.containerMenu.synchronizeCarriedToRemote();
+                    }
+                });
+            } else if (drainPacket.action == UIFluidActionPacket.FluidAction.DUMP_SLOT) {
                 MachineFluidHandler tankHandler = (MachineFluidHandler) StateManager.getManagedState(drainPacket.tankName);
                 FluidTank tank = tankHandler.getTank(drainPacket.index);
 
-                int filled = handler.fill(tank.getFluid(), IFluidHandler.FluidAction.EXECUTE);
-                if (filled > 0) {
-                    tank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-                    player.containerMenu.setCarried(handler.getContainer());
-                    player.containerMenu.synchronizeCarriedToRemote();
-                }
-            });
+                tank.setFluid(FluidStack.EMPTY);
+                tankHandler.SetNetworkDirty();
+            }
+
         }
     }
 

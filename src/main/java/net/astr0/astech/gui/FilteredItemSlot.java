@@ -1,10 +1,14 @@
 package net.astr0.astech.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.compat.JEI.GhostIngredientHandler;
+import net.astr0.astech.network.AsTechNetworkHandler;
+import net.astr0.astech.network.UIFluidActionPacket;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -14,11 +18,13 @@ public class FilteredItemSlot extends AbstractGuiSlot {
     private final FilteredItemStackHandler handler;
 
 
+
     public FilteredItemSlot(FilteredItemStackHandler handler, int itemSlotIndex, int x, int y) {
         super(x, y, 16, 16);
         this.handler = handler;
         slotIndex = itemSlotIndex;
     }
+
 
     @Override
     public boolean canAcceptGhostIngredient(GhostIngredientHandler.DraggedIngredient ingredient) {
@@ -54,8 +60,7 @@ public class FilteredItemSlot extends AbstractGuiSlot {
 
 
     @Override
-    public boolean handleClick(BlockEntity be, double mouseX, double mouseY, int mouseButton, boolean isShifting) {
-        if(!isHovering(this.x, this.y, 16, 16, mouseX, mouseY)) return false;
+    public boolean handleClick(ItemStack carried, int mouseButton, boolean isScreenLocked) {
 
         if (handler.checkSlot(slotIndex)) {
             handler.clearFilterOnClient(slotIndex);
@@ -65,6 +70,11 @@ public class FilteredItemSlot extends AbstractGuiSlot {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean isMouseInBounds(double mouseX, double mouseY) {
+        return isHovering(this.x, this.y, 16, 16, mouseX, mouseY);
     }
 
 }

@@ -1,10 +1,14 @@
 package net.astr0.astech.block.FluidInputHatch;
 
 import net.astr0.astech.Fluid.MachineFluidHandler;
+import net.astr0.astech.IConfigurable;
+import net.astr0.astech.TabletSummary;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -14,7 +18,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class FluidInputHatchBlockEntity extends AbstractMachineBlockEntity {
+public class FluidInputHatchBlockEntity extends AbstractMachineBlockEntity implements IConfigurable {
 
 
     private final MachineFluidHandler fluidHandler;
@@ -53,4 +57,26 @@ public class FluidInputHatchBlockEntity extends AbstractMachineBlockEntity {
         return super.getCapability(cap, side);
     }
 
+    @Override
+    protected void saveAdditional(CompoundTag pTag) {
+        pTag.put("sm_data",getStateManager().saveToNBT());
+
+        super.saveAdditional(pTag);
+    }
+
+    @Override
+    public void load(CompoundTag pTag) {
+        getStateManager().loadFromNBT(pTag.getCompound("sm_data"));
+
+        super.load(pTag);
+    }
+
+    @Override
+    public Component getTabletSummary() {
+
+        TabletSummary summary = new TabletSummary("Fluid Input Hatch");
+        summary.addField("Contained Fluid: ", fluidHandler.getFluidInTank(0).getFluid().getFluidType());
+        summary.addField("Fluid Amount: ", fluidHandler.getFluidInTank(0).getAmount());
+        return summary.getAsComponent();
+    }
 }

@@ -1,10 +1,14 @@
 package net.astr0.astech.block.EnergyInputHatch;
 
 import net.astr0.astech.CustomEnergyStorage;
+import net.astr0.astech.IConfigurable;
+import net.astr0.astech.TabletSummary;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -15,7 +19,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class EnergyInputHatchBlockEntity extends AbstractMachineBlockEntity {
+public class EnergyInputHatchBlockEntity extends AbstractMachineBlockEntity implements IConfigurable {
 
 
     private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(1000000, 100000);
@@ -73,5 +77,29 @@ public class EnergyInputHatchBlockEntity extends AbstractMachineBlockEntity {
         }
 
         return super.getCapability(cap, side);
+    }
+
+
+    @Override
+    protected void saveAdditional(CompoundTag pTag) {
+        pTag.putInt("energy",energyStorage.getEnergyStored());
+
+        super.saveAdditional(pTag);
+    }
+
+    @Override
+    public void load(CompoundTag pTag) {
+        energyStorage.setEnergy(pTag.getInt("energy"));
+
+        super.load(pTag);
+    }
+
+    @Override
+    public Component getTabletSummary() {
+
+        TabletSummary summary = new TabletSummary("Fluid Input Hatch");
+        summary.addField("Current Charge (FE): ", energyStorage.getEnergyStored());
+        summary.addField("Max Charge (kFE): ", energyStorage.getMaxEnergyStored()/1000);
+        return summary.getAsComponent();
     }
 }

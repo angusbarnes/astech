@@ -17,14 +17,14 @@ package net.astr0.astech.recipe;
  *     along with pnc-repressurized.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
-@Mod.EventBusSubscriber(modid = AsTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Astrocraft.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RecipeRegistrationEventListener {
     @SubscribeEvent
     public static void onRegister(RegisterEvent event) {

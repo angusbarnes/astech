@@ -9,7 +9,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.recipe.ChemicalMixerRecipe;
 import net.minecraft.network.chat.Component;
@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class ChemicalMixerCategory implements IRecipeCategory<ChemicalMixerRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(AsTech.MODID, "chemical_mixer");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(AsTech.MODID,
+    public static final ResourceLocation UID = new ResourceLocation(Astrocraft.MODID, "chemical_mixer");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Astrocraft.MODID,
             "textures/gui/jei/chemical_mixer.png");
 
     public static final RecipeType<ChemicalMixerRecipe> CHEMICAL_MIXER_TYPE =

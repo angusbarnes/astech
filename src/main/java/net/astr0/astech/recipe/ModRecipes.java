@@ -1,6 +1,6 @@
 package net.astr0.astech.recipe;
 
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -12,9 +12,9 @@ import java.util.function.Function;
 
 public class ModRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
-            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, AsTech.MODID);
+            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Astrocraft.MODID);
 
-    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, AsTech.MODID);
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Astrocraft.MODID);
 
     public static final RegistryObject<AsTechRecipeType<ChemicalMixerRecipe>> CHEMICAL_MIXER_RECIPE_TYPE = registerType(ModRecipes.CHEMICAL_MIXER, AsTechRecipeType::new);
     public static final RegistryObject<RecipeSerializer<ChemicalMixerRecipe>> CHEMICAL_MIXER_SERIALIZER =

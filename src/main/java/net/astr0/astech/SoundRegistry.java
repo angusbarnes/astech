@@ -9,7 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class SoundRegistry {
 
-    public static final DeferredRegister<SoundEvent> SOUND_REG = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, AsTech.MODID);
+    public static final DeferredRegister<SoundEvent> SOUND_REG = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Astrocraft.MODID);
 
     public static final RegistryObject<SoundEvent> help_of = SOUND_REG.register("help_of", () -> makeSound("help_of"));
     public static final RegistryObject<SoundEvent> as_an_llm = SOUND_REG.register("as_an_llm", () -> makeSound("as_an_llm"));
@@ -31,6 +31,6 @@ public class SoundRegistry {
 
 
     static SoundEvent makeSound(String name) {
-        return SoundEvent.createVariableRangeEvent(new ResourceLocation(AsTech.MODID, name));
+        return SoundEvent.createVariableRangeEvent(new ResourceLocation(Astrocraft.MODID, name));
     }
 }

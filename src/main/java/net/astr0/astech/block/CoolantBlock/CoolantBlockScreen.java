@@ -1,21 +1,18 @@
 package net.astr0.astech.block.CoolantBlock;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.GraphicsUtils;
 import net.astr0.astech.gui.AsTechGuiElement;
 import net.astr0.astech.gui.FilteredFluidTankSlot;
 import net.astr0.astech.gui.IconButton;
 import net.astr0.astech.gui.Icons;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,7 @@ import java.util.List;
 // This only gets registered on the client side
 public class CoolantBlockScreen extends AbstractContainerScreen<CoolantBlockMenu> {
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(AsTech.MODID, "textures/gui/coolant_block_gui.png");
+            new ResourceLocation(Astrocraft.MODID, "textures/gui/coolant_block_gui.png");
 
     public CoolantBlockScreen(CoolantBlockMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);

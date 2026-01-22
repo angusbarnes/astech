@@ -1,6 +1,6 @@
 package net.astr0.astech.Fluid;
 
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.gui.TintColor;
 import net.astr0.astech.item.HazardBehavior;
@@ -20,10 +20,10 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModFluids {
 
     public static final DeferredRegister<Fluid> FLUIDS =
-            DeferredRegister.create(ForgeRegistries.FLUIDS, AsTech.MODID);
+            DeferredRegister.create(ForgeRegistries.FLUIDS, Astrocraft.MODID);
 
     public static final DeferredRegister<FluidType> FLUID_TYPES =
-            DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, AsTech.MODID);
+            DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, Astrocraft.MODID);
 
     public static RegistryObject<FluidType> registerType(String name, String type, String colorCode, HazardBehavior.BehaviorType hazardType) {
         if (type.equals("gas")) {

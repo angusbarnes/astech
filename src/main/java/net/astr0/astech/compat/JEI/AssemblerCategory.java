@@ -11,7 +11,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.recipe.AssemblerRecipe;
 import net.astr0.astech.recipe.FluidIngredient;
@@ -26,8 +26,8 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.Arrays;
 
 public class AssemblerCategory implements IRecipeCategory<AssemblerRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(AsTech.MODID, "assembler");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(AsTech.MODID,
+    public static final ResourceLocation UID = new ResourceLocation(Astrocraft.MODID, "assembler");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Astrocraft.MODID,
             "textures/gui/jei/assembler.png");
 
     public static final RecipeType<AssemblerRecipe> ASSEMBLER_TYPE =

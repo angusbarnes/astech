@@ -1,7 +1,7 @@
 package net.astr0.astech.block.GemPolisher;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class GemPolishingStationScreen extends AbstractContainerScreen<GemPolishingStationMenu> {
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(AsTech.MODID, "textures/gui/gem_polishing_station_gui.png");
+            new ResourceLocation(Astrocraft.MODID, "textures/gui/gem_polishing_station_gui.png");
 
     public GemPolishingStationScreen(GemPolishingStationMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);

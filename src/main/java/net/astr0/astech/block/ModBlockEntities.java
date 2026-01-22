@@ -1,6 +1,6 @@
 package net.astr0.astech.block;
 
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerBlockEntity;
 import net.astr0.astech.block.Assembler.AssemblerBlockEntity;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlockEntity;
@@ -21,7 +21,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, AsTech.MODID);
+            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Astrocraft.MODID);
 
     public static final RegistryObject<BlockEntityType<GemPolishingStationBlockEntity>> GEM_POLISHING_BE =
             BLOCK_ENTITIES.register("gem_polishing_be", () ->

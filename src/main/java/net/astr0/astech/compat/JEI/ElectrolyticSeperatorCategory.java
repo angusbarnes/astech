@@ -11,7 +11,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.recipe.ElectrolyticSeperatorRecipe;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,8 +23,8 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.Arrays;
 
 public class ElectrolyticSeperatorCategory implements IRecipeCategory<ElectrolyticSeperatorRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(AsTech.MODID, "seperator");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(AsTech.MODID,
+    public static final ResourceLocation UID = new ResourceLocation(Astrocraft.MODID, "seperator");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Astrocraft.MODID,
             "textures/gui/jei/electrolytic_seperator.png");
 
     public static final RecipeType<ElectrolyticSeperatorRecipe> SEPERATOR_TYPE =

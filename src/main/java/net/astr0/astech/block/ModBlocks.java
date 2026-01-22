@@ -1,6 +1,6 @@
 package net.astr0.astech.block;
 
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerBlock;
 import net.astr0.astech.block.Assembler.AssemblerBlock;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerBlock;
@@ -33,7 +33,7 @@ import java.util.function.Supplier;
 public class ModBlocks {
     public static final BooleanProperty BLOCKSTATE_ACTIVE = BooleanProperty.create("active");
     // This is the global instance of the block registry
-    private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, AsTech.MODID);
+    private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Astrocraft.MODID);
     // Call this function from the entry point to allow the blocks register to link itself to the eventBus
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);

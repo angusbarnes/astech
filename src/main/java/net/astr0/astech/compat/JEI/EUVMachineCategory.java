@@ -11,7 +11,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.ModTags;
 import net.astr0.astech.block.ModBlocks;
 import net.astr0.astech.recipe.EUVMachineRecipe;
@@ -23,8 +23,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class EUVMachineCategory implements IRecipeCategory<EUVMachineRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(AsTech.MODID, "euv");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(AsTech.MODID,
+    public static final ResourceLocation UID = new ResourceLocation(Astrocraft.MODID, "euv");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Astrocraft.MODID,
             "textures/gui/jei/lithography_machine.png");
 
     public static final RecipeType<EUVMachineRecipe> EUV_MACHINE_TYPE =

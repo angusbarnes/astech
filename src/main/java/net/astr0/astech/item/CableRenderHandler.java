@@ -2,7 +2,7 @@ package net.astr0.astech.item;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
@@ -27,7 +27,7 @@ import org.joml.Matrix4f;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = AsTech.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Astrocraft.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CableRenderHandler {
     @SubscribeEvent
     public static void onRenderWorldLast(RenderLevelStageEvent event) {

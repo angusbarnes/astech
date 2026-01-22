@@ -1,7 +1,6 @@
 package net.astr0.astech.gui.radial;
 
 import com.google.common.collect.Lists;
-import net.astr0.astech.gui.ClientEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

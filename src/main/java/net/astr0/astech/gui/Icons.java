@@ -1,6 +1,6 @@
 package net.astr0.astech.gui;
 
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,7 +25,7 @@ public class Icons {
     public static final Icon ACCEPT = new Icon(0, 120, 17, 17);
     public static final Icon DENY = new Icon(0, 140, 17, 17);
 
-    protected static final ResourceLocation WIDGET_TEXTURE = new ResourceLocation(AsTech.MODID, "textures/gui/widgets.png");
+    protected static final ResourceLocation WIDGET_TEXTURE = new ResourceLocation(Astrocraft.MODID, "textures/gui/widgets.png");
 
     public static void DrawIcon(GuiGraphics guiGraphics, Icon icon, int x, int y) {
         guiGraphics.blit(WIDGET_TEXTURE, x, y, icon.left, icon.top, icon.width, icon.height);

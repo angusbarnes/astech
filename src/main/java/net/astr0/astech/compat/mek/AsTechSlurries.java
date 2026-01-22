@@ -2,12 +2,12 @@ package net.astr0.astech.compat.mek;
 
 import mekanism.api.chemical.slurry.Slurry;
 import mekanism.common.registration.impl.SlurryRegistryObject;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.minecraft.resources.ResourceLocation;
 
 public class AsTechSlurries {
 
-    public static final SlurryRegistry SLURRIES = new SlurryRegistry(AsTech.MODID);
+    public static final SlurryRegistry SLURRIES = new SlurryRegistry(Astrocraft.MODID);
 
     //#anchor SLURRY_REGION
 public static SlurryRegistryObject<Slurry, Slurry> ADAMANTIUM_SLURRY = SLURRIES.register("adamantium", "#cccccc", new ResourceLocation("forge","tags/items/ores/adamantium"));

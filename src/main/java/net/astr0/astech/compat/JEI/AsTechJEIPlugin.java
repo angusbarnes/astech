@@ -6,7 +6,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.ingredient.IRecipeSlotTooltipCallback;
 import mezz.jei.api.registration.*;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.Fluid.ModFluids;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerScreen;
 import net.astr0.astech.block.Assembler.AssemblerMenu;
@@ -36,7 +36,7 @@ import java.util.List;
 public class AsTechJEIPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(AsTech.MODID, "jei_plugin");
+        return new ResourceLocation(Astrocraft.MODID, "jei_plugin");
     }
 
     @Override

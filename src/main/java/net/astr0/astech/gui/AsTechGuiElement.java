@@ -1,12 +1,11 @@
 package net.astr0.astech.gui;
 
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
 
 public abstract class AsTechGuiElement {
@@ -16,7 +15,7 @@ public abstract class AsTechGuiElement {
     protected final Font font;
 
     protected static final ResourceLocation WIDGET_TEXTURE =
-            new ResourceLocation(AsTech.MODID, "textures/gui/widgets.png");
+            new ResourceLocation(Astrocraft.MODID, "textures/gui/widgets.png");
 
     public AsTechGuiElement(int x, int y) {
         this.x = x;

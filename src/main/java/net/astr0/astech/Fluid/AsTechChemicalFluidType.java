@@ -2,7 +2,7 @@ package net.astr0.astech.Fluid;
 
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.Fluid.helpers.AsTechFluidType;
 import net.astr0.astech.gui.TintColor;
 import net.astr0.astech.item.HazardBehavior;
@@ -31,12 +31,12 @@ public class AsTechChemicalFluidType extends FluidType {
 
     public static final ResourceLocation WATER_STILL_RL = new ResourceLocation("block/water_still");
     public static final ResourceLocation WATER_FLOWING_RL = new ResourceLocation("block/water_flow");
-    public static final ResourceLocation THICC_STILL_RL = new ResourceLocation(AsTech.MODID, "block/fluid/thick_still");
-    public static final ResourceLocation THICC_FLOWING_RL = new ResourceLocation(AsTech.MODID, "block/fluid/thick_flow");
-    public static final ResourceLocation MEDIUM_STILL_RL = new ResourceLocation(AsTech.MODID, "block/fluid/medium_still");
-    public static final ResourceLocation MEDIUM_FLOWING_RL = new ResourceLocation(AsTech.MODID, "block/fluid/medium_flow");
-    public static final ResourceLocation THIN_STILL_RL = new ResourceLocation(AsTech.MODID, "block/fluid/thin_still");
-    public static final ResourceLocation THIN_FLOWING_RL = new ResourceLocation(AsTech.MODID, "block/fluid/thin_flow");
+    public static final ResourceLocation THICC_STILL_RL = new ResourceLocation(Astrocraft.MODID, "block/fluid/thick_still");
+    public static final ResourceLocation THICC_FLOWING_RL = new ResourceLocation(Astrocraft.MODID, "block/fluid/thick_flow");
+    public static final ResourceLocation MEDIUM_STILL_RL = new ResourceLocation(Astrocraft.MODID, "block/fluid/medium_still");
+    public static final ResourceLocation MEDIUM_FLOWING_RL = new ResourceLocation(Astrocraft.MODID, "block/fluid/medium_flow");
+    public static final ResourceLocation THIN_STILL_RL = new ResourceLocation(Astrocraft.MODID, "block/fluid/thin_still");
+    public static final ResourceLocation THIN_FLOWING_RL = new ResourceLocation(Astrocraft.MODID, "block/fluid/thin_flow");
 
 
     private final ResourceLocation stillTexture;

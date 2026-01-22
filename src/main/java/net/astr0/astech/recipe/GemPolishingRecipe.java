@@ -2,7 +2,7 @@ package net.astr0.astech.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -76,7 +76,7 @@ public class GemPolishingRecipe implements Recipe<SimpleContainer> {
 
     public static class Serializer implements RecipeSerializer<GemPolishingRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(AsTech.MODID, "gem_polishing");
+        public static final ResourceLocation ID = new ResourceLocation(Astrocraft.MODID, "gem_polishing");
 
         @Override
         public GemPolishingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {

@@ -1,6 +1,6 @@
 package net.astr0.astech.item;
 
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.ModTiers;
 import net.astr0.astech.SoundRegistry;
 import net.minecraft.world.item.*;
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModItems {
 
     // This is the global instance of the items registry
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, AsTech.MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Astrocraft.MODID);
     public static RegistryObject<Item> registerBucketItem(String fluidName, RegistryObject<FlowingFluid> source) {
         return ITEMS.register(String.format("%s_bucket", fluidName),
                 () -> new AsTechBucketItem(source,

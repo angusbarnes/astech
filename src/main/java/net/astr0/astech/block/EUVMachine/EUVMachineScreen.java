@@ -1,18 +1,15 @@
 package net.astr0.astech.block.EUVMachine;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.FilteredItemStackHandler;
 import net.astr0.astech.GraphicsUtils;
 import net.astr0.astech.gui.*;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +17,7 @@ import java.util.List;
 // This only gets registered on the client side
 public class EUVMachineScreen extends AsTechGuiScreen<EUVMachineMenu> {
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(AsTech.MODID, "textures/gui/lithography_machine.png");
+            new ResourceLocation(Astrocraft.MODID, "textures/gui/lithography_machine.png");
 
     public EUVMachineScreen(EUVMachineMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);

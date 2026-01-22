@@ -47,17 +47,17 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
-@Mod(AsTech.MODID)
-public class AsTech
+@Mod(Astrocraft.MODID)
+public class Astrocraft
 {
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "astech";
+    public static final String MODID = "astrocraft";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
 
 
-    public AsTech()
+    public Astrocraft()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -84,7 +84,7 @@ public class AsTech
         MinecraftForge.EVENT_BUS.register(this);
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
-        forgeEventBus.addListener(AsTech::addDangerToolTips);
+        forgeEventBus.addListener(Astrocraft::addDangerToolTips);
         forgeEventBus.addListener(EventPriority.LOW, (PlayerInteractEvent.RightClickBlock event) -> {
             InteractionResult result = EventHandlers.HandleBrickPlacement(event);
             if (result != null) {

@@ -1,7 +1,7 @@
 package net.astr0.astech.item;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class CableToolScreen extends AbstractContainerScreen<CableToolMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(AsTech.MODID, "textures/gui/cable_laying_tool_gui.png");
+            new ResourceLocation(Astrocraft.MODID, "textures/gui/cable_laying_tool_gui.png");
 
     public CableToolScreen(CableToolMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);

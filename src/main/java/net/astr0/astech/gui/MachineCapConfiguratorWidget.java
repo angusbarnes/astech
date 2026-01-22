@@ -1,7 +1,7 @@
 package net.astr0.astech.gui;
 
 import com.mojang.logging.LogUtils;
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.BlockUtils;
 import net.astr0.astech.block.AbstractMachineBlockEntity;
 import net.astr0.astech.block.SidedConfig;
@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 
 public class MachineCapConfiguratorWidget extends AbstractWidget {
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(AsTech.MODID, "textures/gui/widget_bg.png");
+            new ResourceLocation(Astrocraft.MODID, "textures/gui/widget_bg.png");
     public final UIButton MODE_SWITCH_BUTTON;
     public final UIButton PUSH_PULL_BUTTON;
     public final AbstractMachineBlockEntity machine;

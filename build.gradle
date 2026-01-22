@@ -208,7 +208,7 @@ dependencies {
     runtimeOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${"5.7.0+1.20.1"}"))
 
     // Forge (see below block as well if you use Forge Gradle)
-    implementation fg.deobf("com.gregtechceu.gtceu:gtceu-${"1.20.1"}:${"7.1.4"}")
+    runtimeOnly(fg.deobf("com.gregtechceu.gtceu:gtceu-${"1.20.1"}:${"7.1.4"}"))
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

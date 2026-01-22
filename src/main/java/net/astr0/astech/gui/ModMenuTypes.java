@@ -1,6 +1,6 @@
 package net.astr0.astech.gui;
 
-import net.astr0.astech.AsTech;
+import net.astr0.astech.Astrocraft;
 import net.astr0.astech.block.AdvancedAssembler.AdvancedAssemblerMenu;
 import net.astr0.astech.block.Assembler.AssemblerMenu;
 import net.astr0.astech.block.ChemicalMixer.ChemicalMixerMenu;
@@ -22,7 +22,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
-            DeferredRegister.create(ForgeRegistries.MENU_TYPES, AsTech.MODID);
+            DeferredRegister.create(ForgeRegistries.MENU_TYPES, Astrocraft.MODID);
 
     public static final RegistryObject<MenuType<GemPolishingStationMenu>> GEM_POLISHING_MENU =
             registerMenuType("gem_polishing_menu", GemPolishingStationMenu::new);

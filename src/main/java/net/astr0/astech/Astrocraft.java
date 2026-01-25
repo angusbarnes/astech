@@ -95,6 +95,7 @@ public class Astrocraft
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::PreventTreePunching);
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::DoCampfireConversion);
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::BlockPlaceListener);
+        forgeEventBus.addListener(EventPriority.HIGH, EventHandlers::restrictBlockEntityAccess);
 
     }
 

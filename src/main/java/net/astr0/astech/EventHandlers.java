@@ -1,6 +1,7 @@
 package net.astr0.astech;
 
 import net.astr0.astech.block.ModBlocks;
+import net.astr0.astech.item.KeyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -24,10 +25,13 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import org.jetbrains.annotations.Nullable;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static net.astr0.astech.block.BlockEntityProperties.BRICK_COUNT;
 import static net.astr0.astech.block.BlockEntityProperties.FACING;
@@ -50,6 +54,41 @@ public class EventHandlers {
         }
     }
 
+    public static InteractionResult restrictBlockEntityAccess(PlayerInteractEvent.RightClickBlock event) {
+        if (event.isCanceled() || event.getPhase() != EventPriority.HIGH) return InteractionResult.PASS;
+
+        Level level = event.getLevel();
+        BlockPos pos = event.getPos();
+        BlockState block = level.getBlockState(pos);
+
+
+        if (block.is(ModTags.LOCKED_BLOCK)) {
+
+            InteractionHand hand = event.getHand();
+            ItemStack itemUsed = event.getItemStack();
+            Player player = event.getEntity();
+            AtomicReference<KeyItem> equippedKey = new AtomicReference<>();
+            ICuriosItemHandler curiosInventory = CuriosApi.getCuriosInventory(player).resolve().get();
+            curiosInventory.getStacksHandler("key").ifPresent(slotInventory -> {
+                if(slotInventory.getStacks().getStackInSlot(0).getItem() instanceof KeyItem key) {
+                    equippedKey.set(key);
+                }
+            });
+
+            if (equippedKey.get().Unlocks(block)) {
+                return InteractionResult.SUCCESS; //TODO: May need to be sideSuccess?
+            }
+
+            return  InteractionResult.CONSUME; //TODO: Ensure that this does what we think it does
+        }
+
+        // if block is be and has tag, then check for specific tag
+        //     then check curios slot
+        //     if curio present: return a success
+        //     if not, cancel the event
+        return InteractionResult.PASS;
+    }
+
     public static float modifyBreakSpeed(Player player, BlockState state, @Nullable BlockPos pos, float speed) {
         // We only care about preventing tree chopping
         if (!state.is(BlockTags.LOGS)) return speed;
@@ -57,6 +96,7 @@ public class EventHandlers {
         ItemStack tool = player.getMainHandItem();
 
         // This might be a bit of a hack but we will generally assume that all tools with durability are fine
+        //TODO: Fix this potential bug which will allow wood access to early, perhaps pivot to curios based thing
         if (tool.isDamageableItem()) {
             return speed;
         }

@@ -347,6 +347,7 @@ headers, chemicals = get_chemical_defs("chems.csv")
 datapack = Context('../resources/', 'astech')
 
 datapack.set_base_dictionary({
+    "curios.identifier.key": "Key Slot",
     "item.astech.fluid_cell" : "Fluid Cell",
     "item.astech.large_fluid_cell" : "Large Fluid Cell",
     "item.astech.pressurised_fluid_cell" : "Pressurised Fluid Cell",

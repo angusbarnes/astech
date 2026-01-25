@@ -17,6 +17,12 @@ public class ModTags {
 
     public static final TagKey<Block> BLOCK_CABLE = BlockTags.create(RL("cable_block"));
     public static TagKey<Block> MACHINE_CASING = BlockTags.create(RL("casing"));
+    public static TagKey<Block> LOCKED_BLOCK = BlockTags.create(RL("locked_block"));
+    public static TagKey<Block> LOCKED_BLOCK_OVERWORLD = BlockTags.create(RL("locked_block/overworld"));
+    public static TagKey<Block> LOCKED_BLOCK_NETHER = BlockTags.create(RL("locked_block/nether"));
+    public static TagKey<Block> LOCKED_BLOCK_END = BlockTags.create(RL("locked_block/end"));
+    public static TagKey<Block> LOCKED_BLOCK_TRANSCENDENT= BlockTags.create(RL("locked_block/transcendent"));
+
 
     public static final TagKey<Item> CHEMICAL_PROTECTION = ItemTags.create(RL("chemical_protection"));
 

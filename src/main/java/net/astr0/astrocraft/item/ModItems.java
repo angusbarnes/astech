@@ -43,7 +43,7 @@ public class ModItems {
     public static final RegistryObject<Item> TWIG_BUNDLE = ITEMS.register("twig_bundle", () -> new TwigBundle(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> FIRE_STARTER = ITEMS.register("fire_starter", FireStarterItem::new);
     public static final RegistryObject<Item> BROAD_SWORD = ITEMS.register("broad_sword", () -> new SwordItem(Tiers.DIAMOND, 6, -3, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<Item> ENERGY_SWORD = ITEMS.register("galentine_energy_sword", () -> new SwordItem(Tiers.DIAMOND, 6, -3, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> ENERGY_SWORD = ITEMS.register("galentine_energy_sword", () -> new EnergySword(Tiers.NETHERITE, 8, -2.5f, new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> AIRHORN = ITEMS.register("airhorn", () -> new AirhornItem(new Item.Properties().durability(10)));
     public static final RegistryObject<Item> WORLD_EATER = ITEMS.register("world_eater", () -> new PickaxeItem(ModTiers.INFINITY_TIER, 100, -1, new Item.Properties().fireResistant().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> FULL_SHWAXE = ITEMS.register("full_shwaxe", () -> new AxeItem(ModTiers.INFINITY_TIER, 10000, 2, new Item.Properties().fireResistant().rarity(Rarity.EPIC)));

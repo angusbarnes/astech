@@ -32,11 +32,11 @@ public class ModItems {
         return ITEMS.register(name, () -> new Item(new Item.Properties().stacksTo(stack_size)));
     }
 
-    public static final RegistryObject<Item> TREE_KEY = ITEMS.register("tree_key", () -> new KeyItem(ModTags.LOCKED_BLOCK_TREE, "Trees", ChatFormatting.DARK_GREEN, new String[]{}) {});
-    public static final RegistryObject<Item> OVERWORLD_KEY = ITEMS.register("overworld_key", () -> new KeyItem(ModTags.LOCKED_BLOCK_OVERWORLD, "The Overworld", ChatFormatting.GREEN, new String[]{}) {});
-    public static final RegistryObject<Item> NETHER_KEY = ITEMS.register("nether_key", () -> new DimensionKeyItem(ModTags.LOCKED_BLOCK_NETHER, "The Nether", ChatFormatting.RED, new String[]{}) {});
-    public static final RegistryObject<Item> END_KEY = ITEMS.register("end_key", () -> new DimensionKeyItem(ModTags.LOCKED_BLOCK_END, "The End", ChatFormatting.LIGHT_PURPLE, new String[]{}) {});
-    public static final RegistryObject<Item> TRANSCENDENT_KEY = ITEMS.register("transcendent_key", () -> new DimensionKeyItem(ModTags.LOCKED_BLOCK_TRANSCENDENT, "The Universe", ChatFormatting.GOLD, new String[]{}) {});
+    public static final RegistryObject<Item> TREE_KEY = ITEMS.register("tree_key", () -> new KeyItem(ModTags.LOCKED_BLOCK_TREE, "Trees", ChatFormatting.DARK_GREEN, new String[]{"overworld"}) {});
+    public static final RegistryObject<Item> OVERWORLD_KEY = ITEMS.register("overworld_key", () -> new KeyItem(ModTags.LOCKED_BLOCK_OVERWORLD, "The Overworld", ChatFormatting.GREEN, new String[]{"overworld"}) {});
+    public static final RegistryObject<Item> NETHER_KEY = ITEMS.register("nether_key", () -> new DimensionKeyItem(ModTags.LOCKED_BLOCK_NETHER, "The Nether", ChatFormatting.RED, new String[]{"overworld", "the_nether"}) {});
+    public static final RegistryObject<Item> END_KEY = ITEMS.register("end_key", () -> new DimensionKeyItem(ModTags.LOCKED_BLOCK_END, "The End", ChatFormatting.LIGHT_PURPLE, new String[]{"overworld", "the_nether", "the_end"}) {});
+    public static final RegistryObject<Item> TRANSCENDENT_KEY = ITEMS.register("transcendent_key", () -> new UniverseKey(ModTags.LOCKED_BLOCK_TRANSCENDENT, "The Universe", ChatFormatting.GOLD, new String[]{"ANYTHING & EVERYTHING"}) {});
 
 
     public static final RegistryObject<Item> TABLET = ITEMS.register("tablet", () -> new TabletItem(new Item.Properties().durability(100)));

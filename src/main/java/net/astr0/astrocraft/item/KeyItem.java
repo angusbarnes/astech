@@ -13,7 +13,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -24,23 +23,23 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class KeyItem extends Item implements ICurioItem {
-    public KeyItem(Properties pProperties) {
-        super(pProperties.stacksTo(8));
-    }
 
     protected TagKey<Block> BLOCK_UNLOCK_TAG;
     protected String unlockedDimension;
     protected ChatFormatting dimensionColor;
+    protected final String[] allowedDimensions;
 
     public KeyItem(TagKey<Block> keyTag, String dimension, ChatFormatting color, String[] allowedDims) {
-        this(new Properties());
+        super(new Properties().stacksTo(8));
         BLOCK_UNLOCK_TAG = keyTag;
         unlockedDimension = dimension;
         dimensionColor = color;
+        allowedDimensions = allowedDims;
     }
 
     @Override
@@ -50,7 +49,8 @@ public abstract class KeyItem extends Item implements ICurioItem {
 
     protected boolean isValidDimension(ResourceKey<DimensionType> dimension) {
         LogUtils.getLogger().debug("Dimension Type: {}", dimension.location().getPath());
-        return true;
+
+        return Arrays.stream(allowedDimensions).anyMatch(dim -> dim.equals(dimension.location().getPath()));
     }
 
     public boolean Unlocks(BlockState block, ResourceKey<DimensionType> dimensionType) {
@@ -91,6 +91,7 @@ public abstract class KeyItem extends Item implements ICurioItem {
         if(Screen.hasShiftDown()) {
             pTooltip.add(Component.literal("Use this key to unlock the mysteries of: ").withStyle(ChatFormatting.YELLOW).append(Component.literal(unlockedDimension).withStyle(dimensionColor)));
             pTooltip.add(Component.literal("Place in curios slot or right click in main hand to equip").withStyle(NbtPrettyPrinter.GRAY_ITALICS_STYLE));
+            pTooltip.add(Component.literal("Allowed dimensions: " + Arrays.toString(allowedDimensions)));
         } else {
             pTooltip.add(Component.literal("Use this key to unlock the mysteries of: ").withStyle(ChatFormatting.YELLOW).append(Component.literal(unlockedDimension).withStyle(dimensionColor)));
             pTooltip.add(Component.literal("--> Hold shift for details").withStyle(NbtPrettyPrinter.GRAY_ITALICS_STYLE));

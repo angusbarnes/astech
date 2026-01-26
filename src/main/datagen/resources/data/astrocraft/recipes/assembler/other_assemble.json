@@ -1,0 +1,14 @@
+{
+    "type": "astrocraft:assembler",
+    "inputs": [
+      {
+        "item": "minecraft:stick"
+      },
+      { "item": "minecraft:coal" }
+    ],
+    "item_output": {
+      "item": "minecraft:dirt"
+    },
+    "time": 20,
+    "advanced": false
+  }

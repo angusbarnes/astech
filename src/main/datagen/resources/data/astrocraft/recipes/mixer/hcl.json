@@ -1,0 +1,20 @@
+{
+    "type": "astrocraft:chemical_mixer",
+    "inputs" : [
+      {
+        "type": "astrocraft:stacked_item",
+        "tag": "forge:dusts/sulfur",
+        "count": 15
+      }
+    ],
+    "fluid_input1": {
+      "type": "astrocraft:fluid",
+      "amount": 1000,
+      "tag": "minecraft:water"
+    },
+    "fluid_output": {
+      "amount": 100,
+      "fluid": "astrocraft:sulfuric_acid"
+    },
+    "time": 200
+}

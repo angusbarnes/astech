@@ -1,0 +1,20 @@
+{
+    "type": "astrocraft:chemical_mixer",
+    "inputs" : [
+      {
+        "type": "astrocraft:stacked_item",
+        "tag": "forge:dusts/aluminium",
+        "count": 6
+      }
+    ],
+    "fluid_input1": {
+      "type": "astrocraft:fluid",
+      "amount": 200,
+      "tag": "forge:sodium_hydroxide"
+    },
+    "fluid_output": {
+      "amount": 200,
+      "fluid": "astrocraft:aluminium_hydroxide"
+    },
+    "time": 200
+}

@@ -1,0 +1,13 @@
+{
+    "type": "astrocraft:electrolytic_seperator",
+    "fluid_input": {
+      "type": "astrocraft:fluid",
+      "amount": 600,
+      "tag": "forge:isopropanol"
+    },
+    "fluid_output_1": {
+      "amount": 500,
+      "fluid": "astrocraft:acetone"
+    },
+    "time": 350
+}

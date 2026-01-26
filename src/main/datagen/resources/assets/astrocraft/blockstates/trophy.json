@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "astrocraft:block/trophy" },
+    "facing=east": { "model": "astrocraft:block/trophy", "y": 90 },
+    "facing=south": { "model": "astrocraft:block/trophy", "y": 180 },
+    "facing=west": { "model": "astrocraft:block/trophy", "y": 270 }
+  }
+}

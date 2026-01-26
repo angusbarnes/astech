@@ -1,0 +1,13 @@
+{
+    "type": "astrocraft:pyrolysis_chamber",
+    "fluid_input": {
+      "type": "astrocraft:fluid",
+      "amount": 100,
+      "tag": "forge:chlorodifluoromethane"
+    },
+    "fluid_output_1": {
+      "amount": 80,
+      "fluid": "astrocraft:polytetrafluoroethylene"
+    },
+    "time": 60
+  }

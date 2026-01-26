@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/orientable_with_bottom",
+    "textures": {
+      "front": "astrocraft:block/advanced_assembler/overlay_front_active",
+      "side": "astrocraft:block/opv_side",
+      "top": "astrocraft:block/advanced_assembler/overlay_top_active",
+      "bottom": "astrocraft:block/opv_bottom"
+    }
+}

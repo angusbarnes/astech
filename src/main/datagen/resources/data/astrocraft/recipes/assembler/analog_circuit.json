@@ -1,0 +1,19 @@
+{
+  "type": "astrocraft:assembler",
+  "inputs": [
+    { "item": "astrocraft:analog_circuit_board" },
+    { "item": "astrocraft:op_amp" },
+    { "item": "astrocraft:capacitor" },
+    { "item": "astrocraft:inductor" },
+    { "item": "astrocraft:diode" }
+  ],
+  "fluid_input": {
+    "type": "astrocraft:fluid",
+    "amount": 50,
+    "tag": "forge:flux_resin"
+  },
+  "item_output": {
+    "item": "astrocraft:analog_circuit"
+  },
+  "time": 300
+}

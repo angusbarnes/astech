@@ -1,0 +1,20 @@
+{
+    "type": "astrocraft:chemical_mixer",
+    "inputs" : [
+      {
+        "type": "astrocraft:stacked_item",
+        "tag": "forge:dusts/fluorite",
+        "count": 3
+      }
+    ],
+    "fluid_input1": {
+      "type": "astrocraft:fluid",
+      "amount": 100,
+      "tag": "forge:sulfuric_acid"
+    },
+    "fluid_output": {
+      "amount": 110,
+      "fluid": "astrocraft:hydrogen_fluoride"
+    },
+    "time": 200
+}

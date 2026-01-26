@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/orientable_with_bottom",
+    "textures": {
+      "front": "astrocraft:block/pyrolysis_chamber/overlay_front",
+      "side": "astrocraft:block/pyrolysis_chamber/overlay_side",
+      "top": "astrocraft:block/pyrolysis_chamber/overlay_top",
+      "bottom": "astrocraft:block/opv_bottom"
+    }
+}

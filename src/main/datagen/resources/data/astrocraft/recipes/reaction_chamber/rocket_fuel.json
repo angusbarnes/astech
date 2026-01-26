@@ -1,0 +1,18 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 700,
+      "tag": "forge:hydrazine"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 300,
+      "tag": "forge:nitrogen"
+    },
+    "fluid_output_1": {
+      "amount": 1000,
+      "fluid": "astrocraft:rocket_fuel"
+    },
+    "time": 500
+  }

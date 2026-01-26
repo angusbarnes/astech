@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "astrocraft:block/brick_kiln",
+      "y" : 0
+    },
+    "facing=south": {
+      "model": "astrocraft:block/brick_kiln",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "astrocraft:block/brick_kiln",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "astrocraft:block/brick_kiln",
+      "y": 270
+    }
+  }
+}

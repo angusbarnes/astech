@@ -1,9 +1,0 @@
-{
-    "parent": "minecraft:block/orientable_with_bottom",
-    "textures": {
-      "front": "astech:block/chemical_reactor/overlay_front_active",
-      "side": "astech:block/chemical_reactor/overlay_side_active",
-      "top": "astech:block/chemical_reactor/overlay_top_active",
-      "bottom": "astech:block/opv_bottom"
-    }
-}

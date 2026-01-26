@@ -1,0 +1,22 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 400,
+      "tag": "forge:methanol"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 800,
+      "tag": "forge:chlorine"
+    },
+    "fluid_output_1": {
+      "amount": 700,
+      "fluid": "astrocraft:trichloromethane"
+    },
+    "fluid_output_2": {
+      "amount": 500,
+      "fluid": "astrocraft:hydrochloric_acid"
+    },
+    "time": 200
+}

@@ -17,7 +17,7 @@ class Context:
         self.LOOT_TABLES = {}
 
         # Ensures the required folders are created
-        ResourcePackManager(resources_path, 'astech', {
+        ResourcePackManager(resources_path, 'astrocraft', {
             'assets': [
                 'lang',
                 'textures/item',
@@ -55,13 +55,13 @@ class Context:
 
     def add_simple_block_model(self, block_name):
         self.MODEL_DEFS['block/' + block_name] = f"{{\"parent\": \"minecraft:block/cube_all\",\"textures\":{{\"all\": \"{self.NAMESPACE}:block/{block_name}\"}}}}"
-        self.BLOCK_STATES[block_name] = f"""{{"variants": {{"": {{"model": "astech:block/{block_name}"}}}}}}"""
+        self.BLOCK_STATES[block_name] = f"""{{"variants": {{"": {{"model": "astrocraft:block/{block_name}"}}}}}}"""
 
     def add_block_item_model(self, block_id):
-        self.MODEL_DEFS['item/' + block_id] = f"""{{"parent": "astech:block/{block_id}"}}"""
+        self.MODEL_DEFS['item/' + block_id] = f"""{{"parent": "astrocraft:block/{block_id}"}}"""
 
-    def add_simple_block_loot(self, astech_block_id):
-        self.LOOT_TABLES[f'blocks/{astech_block_id}'] = json.dumps({
+    def add_simple_block_loot(self, astrocraft_block_id):
+        self.LOOT_TABLES[f'blocks/{astrocraft_block_id}'] = json.dumps({
             "type": "minecraft:block",
             "pools": [
                 {
@@ -74,7 +74,7 @@ class Context:
                 "entries": [
                     {
                     "type": "minecraft:item",
-                    "name": f"astech:{astech_block_id}"
+                    "name": f"astrocraft:{astrocraft_block_id}"
                     }
                 ],
                 "rolls": 1.0
@@ -82,8 +82,8 @@ class Context:
             ]
         })
 
-    def add_ore_block_loot(self, astech_block_id, astech_ore_item_id):
-        self.LOOT_TABLES[f'blocks/{astech_block_id}'] = json.dumps({
+    def add_ore_block_loot(self, astrocraft_block_id, astrocraft_ore_item_id):
+        self.LOOT_TABLES[f'blocks/{astrocraft_block_id}'] = json.dumps({
             "type": "minecraft:block",
             "pools": [
                 {
@@ -109,7 +109,7 @@ class Context:
                             }
                             }
                         ],
-                        "name": f"astech:{astech_block_id}"
+                        "name": f"astrocraft:{astrocraft_block_id}"
                         },
                         {
                         "type": "minecraft:item",
@@ -123,7 +123,7 @@ class Context:
                             "function": "minecraft:explosion_decay"
                             }
                         ],
-                        "name": f"astech:{astech_ore_item_id}"
+                        "name": f"astrocraft:{astrocraft_ore_item_id}"
                         }
                     ]
                     }
@@ -208,9 +208,9 @@ class Context:
                 if master_tag_value not in self.MASTER_TAGS[namespace][master_path]:
                     self.MASTER_TAGS[namespace][master_path].append(master_tag_value)
 
-    def make_block_mineable(self, astech_block_id):
-        self.add_simple_block_loot(astech_block_id)
-        self.add_block_tag(f"minecraft:mineable/pickaxe", f"astech:{astech_block_id}")
+    def make_block_mineable(self, astrocraft_block_id):
+        self.add_simple_block_loot(astrocraft_block_id)
+        self.add_block_tag(f"minecraft:mineable/pickaxe", f"astrocraft:{astrocraft_block_id}")
 
     @staticmethod
     def _insert_text_in_region(file_path, region, new_text):
@@ -261,7 +261,7 @@ class Context:
 
         models_written = 0
         for model_location, model_info in self.MODEL_DEFS.items():
-            with open(f'../resources/assets/astech/models/{model_location}.json', 'w') as model_file:
+            with open(f'../resources/assets/astrocraft/models/{model_location}.json', 'w') as model_file:
                 model_file.write(model_info)
             models_written += 1
             
@@ -269,7 +269,7 @@ class Context:
 
         tables_written = 0
         for table_location, table_info in self.LOOT_TABLES.items():
-            with open(f'../resources/data/astech/loot_tables/{table_location}.json', 'w') as table_file:
+            with open(f'../resources/data/astrocraft/loot_tables/{table_location}.json', 'w') as table_file:
                 table_file.write(table_info)
             tables_written += 1
 
@@ -277,7 +277,7 @@ class Context:
 
         states_written = 0
         for state_location, state_info in self.BLOCK_STATES.items():
-            with open(f'../resources/assets/astech/blockstates/{state_location}.json', 'w') as state_file:
+            with open(f'../resources/assets/astrocraft/blockstates/{state_location}.json', 'w') as state_file:
                 state_file.write(state_info)
             states_written += 1
             
@@ -285,11 +285,11 @@ class Context:
 
         recipes_written = 0
         for recipe_id, recipe in self.RECIPES.items():
-            directory = os.path.dirname(f'../resources/data/astech/recipes/{recipe_id}.json')
+            directory = os.path.dirname(f'../resources/data/astrocraft/recipes/{recipe_id}.json')
     
              # Create all directories in the path if they don't exist
             os.makedirs(directory, exist_ok=True)
-            with open(f'../resources/data/astech/recipes/{recipe_id}.json', 'w') as recipe_file:
+            with open(f'../resources/data/astrocraft/recipes/{recipe_id}.json', 'w') as recipe_file:
                 recipe_file.write(recipe)
             
             recipes_written += 1
@@ -298,7 +298,7 @@ class Context:
 
 
 
-        with open(f'../resources/assets/astech/lang/en_us.json', 'w', encoding='utf-8') as lang_file:
+        with open(f'../resources/assets/astrocraft/lang/en_us.json', 'w', encoding='utf-8') as lang_file:
             json.dump(self.LANG_KEYS, lang_file, ensure_ascii=False, indent=4)
                 
         print("Language File has been written")

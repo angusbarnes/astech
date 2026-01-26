@@ -1,0 +1,17 @@
+{
+    "type": "astrocraft:electrolytic_seperator",
+    "fluid_input": {
+      "type": "astrocraft:fluid",
+      "amount": 600,
+      "tag": "forge:brine"
+    },
+    "fluid_output_1": {
+      "amount": 300,
+      "fluid": "astrocraft:chlorine"
+    },
+    "fluid_output_2": {
+        "amount": 300,
+        "fluid": "astrocraft:sodium_hydroxide"
+      },
+    "time": 100
+}

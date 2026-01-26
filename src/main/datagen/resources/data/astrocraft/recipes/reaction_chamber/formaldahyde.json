@@ -1,0 +1,23 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 200,
+      "tag": "forge:methanol"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 200,
+      "tag": "forge:oxygen"
+    },
+    "fluid_output_1": {
+      "amount": 300,
+      "fluid": "astrocraft:formaldehyde"
+    },
+    "fluid_output_2": {
+      "amount": 100,
+      "fluid": "minecraft:water"
+    },
+    "time": 600
+  }
+  

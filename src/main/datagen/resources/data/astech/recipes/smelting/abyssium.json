@@ -1,9 +1,0 @@
-{
-    "type": "minecraft:smelting",
-    "cookingtime": 2000,
-    "experience": 35,
-    "ingredient": {
-        "item": "astech:antimatter_tormentum"
-    },
-    "result": "astech:abyssium_ingot"
-    }

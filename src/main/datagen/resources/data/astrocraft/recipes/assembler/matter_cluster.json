@@ -1,0 +1,17 @@
+{
+    "type": "astrocraft:assembler",
+    "inputs": [
+      { "item": "minecraft:diamond" },
+      { "item": "minecraft:emerald" }
+    ],
+    "fluid_input": {
+      "type": "astrocraft:fluid",
+      "amount": 500,
+      "tag": "forge:flux_resin"
+    },
+    "item_output": {
+      "item": "astrocraft:matter_cluster"
+    },
+    "time": 3000,
+    "advanced": true
+  }

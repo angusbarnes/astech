@@ -19,7 +19,7 @@ def BEE_DEFINITION(primary_colour, secondary_colour, bee_text, flower_block_tag,
             "secondaryColor": secondary_colour,
             "/*particleColor_comment*/": "Color of the pollen located on the texture when it has nectar and also the particles dripping from the bee",
             "particleColor": primary_colour,
-            "description": "This bee is added by AsTech. " + bee_text,
+            "description": "This bee is added by astrocraft. " + bee_text,
             "createComb": True,
             "attackResponse": "fire",
             "flowerTag": flower_block_tag,
@@ -118,7 +118,7 @@ def UNCOMPACTING_RECIPE(from_item, to_item):
 def PLACED_ORE_FEATURE(ore_name, max_veins_per_chunk = 4):
     return JSON(
         {
-            "feature": f"astech:{ore_name}_ore",
+            "feature": f"astrocraft:{ore_name}_ore",
             "placement": [
                 {
                     "type": "minecraft:count",
@@ -160,7 +160,7 @@ def CONFIGURED_ORE_FEATURE(ore_name, max_vein_size = 9):
                             "tag": "minecraft:stone_ore_replaceables"
                         },
                         "state": {
-                            "Name": f"astech:{ore_name}_ore"
+                            "Name": f"astrocraft:{ore_name}_ore"
                         }
                     },
                     {
@@ -169,7 +169,7 @@ def CONFIGURED_ORE_FEATURE(ore_name, max_vein_size = 9):
                             "tag": "minecraft:deepslate_ore_replaceables"
                         },
                         "state": {
-                            "Name": f"astech:deepslate_{ore_name}_ore"
+                            "Name": f"astrocraft:deepslate_{ore_name}_ore"
                         }
                     }
                 ]
@@ -182,7 +182,7 @@ def FORGE_BIOME_MODIFIER(ore_name, biome_tag = "#minecraft:is_overworld"):
         {
             "type": "forge:add_features",
             "biomes": biome_tag,
-            "features": f"astech:ore_{ore_name}_placed",
+            "features": f"astrocraft:ore_{ore_name}_placed",
             "step": "underground_ores"
         }
     )
@@ -193,7 +193,7 @@ def CRYSTALISE(chemical_tag, output_dust):
             "type": "thermal:crystallizer",
             "ingredients": [
                 {
-                "fluid": f"astech:{chemical_tag}",
+                "fluid": f"astrocraft:{chemical_tag}",
                 "amount": 144
                 },
                 {
@@ -202,7 +202,7 @@ def CRYSTALISE(chemical_tag, output_dust):
             ],
             "result": [
                 {
-                "item": f"astech:{output_dust}_dust"
+                "item": f"astrocraft:{output_dust}_dust"
                 }
             ],
             "energy": 5000
@@ -218,7 +218,7 @@ def MELT(input_tag, output_fluid):
             },
             "result": [
                 {
-                "fluid": f"astech:{output_fluid}",
+                "fluid": f"astrocraft:{output_fluid}",
                 "amount": 110
                 }
             ],
@@ -244,7 +244,7 @@ def merge_json_file(json_file_path, new_data):
     with open(json_file_path, 'w', encoding='utf-8') as json_file:
         json.dump(merged_data, json_file,ensure_ascii=False, indent=4)
 
-file_path = '../java/net/astr0/astech/Fluid/ModFluids.java'  # Replace with your file path
+file_path = '../java/net/astr0/astrocraft/Fluid/ModFluids.java'  # Replace with your file path
 base_image_path = './templates/bucket_base_layer.png'  # Replace with your base image file path
 top_image_path = './templates/bucket_fluid_layer.png'   # Replace with your top image file path
 
@@ -279,50 +279,50 @@ def get_texture(filename, textures):
 
 def add_simple_tint_item(ctx: Context, item_id: str, item_name, tint, template_file, material_name, hazard):
 
-    TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
-    ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
-    FLUIDS_FILE = '../java/net/astr0/astech/Fluid/ModFluids.java' 
+    TAB_FILE = '../java/net/astr0/astrocraft/ModCreativeModTab.java'
+    ITEM_FILE = '../java/net/astr0/astrocraft/item/ModItems.java'
+    FLUIDS_FILE = '../java/net/astr0/astrocraft/Fluid/ModFluids.java' 
 
     template = Image.open(template_file)
     texture = blend_overlay(template, hex_to_rgb(tint))
-    texture.save(f'../resources/assets/astech/textures/item/{item_id}.png', format='PNG')
-    ctx.add_translation(f"item.astech.{item_id}", f"{item_name}")
+    texture.save(f'../resources/assets/astrocraft/textures/item/{item_id}.png', format='PNG')
+    ctx.add_translation(f"item.astrocraft.{item_id}", f"{item_name}")
     ctx.add_text_to_region(ITEM_FILE, 'MATERIAL_REGION', f"""public static final RegistryObject<AsTechMaterialItem> {item_id.upper()} = ITEMS.register("{item_id}", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "{material_name}", {hazard}));""")
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
     ctx.add_simple_item_model(f'{item_id}')
 
 def add_mek_tint_item(ctx: Context, item_id: str, item_name, tint, template_file, overlay, material_name, hazard):
 
-    TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
-    ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
-    FLUIDS_FILE = '../java/net/astr0/astech/Fluid/ModFluids.java' 
+    TAB_FILE = '../java/net/astr0/astrocraft/ModCreativeModTab.java'
+    ITEM_FILE = '../java/net/astr0/astrocraft/item/ModItems.java'
+    FLUIDS_FILE = '../java/net/astr0/astrocraft/Fluid/ModFluids.java' 
 
-    layer_images_but_backwards(template_file, overlay, f'../resources/assets/astech/textures/item/{item_id}.png', hex_to_rgb(tint))
+    layer_images_but_backwards(template_file, overlay, f'../resources/assets/astrocraft/textures/item/{item_id}.png', hex_to_rgb(tint))
 
-    ctx.add_translation(f"item.astech.{item_id}", f"{item_name}")
+    ctx.add_translation(f"item.astrocraft.{item_id}", f"{item_name}")
     ctx.add_text_to_region(ITEM_FILE, 'MATERIAL_REGION', f"""public static final RegistryObject<AsTechMaterialItem> {item_id.upper()} = ITEMS.register("{item_id}", () -> new AsTechMaterialItem(new Item.Properties().stacksTo(64), "{material_name}", {hazard}));""")
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
     ctx.add_simple_item_model(f'{item_id}')
 
 def add_static_asset_item(ctx: Context, item_id: str, item_name):
 
-    TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
-    ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
-    FLUIDS_FILE = '../java/net/astr0/astech/Fluid/ModFluids.java'
-    ctx.add_translation(f"item.astech.{item_id}", f"{item_name}")
+    TAB_FILE = '../java/net/astr0/astrocraft/ModCreativeModTab.java'
+    ITEM_FILE = '../java/net/astr0/astrocraft/item/ModItems.java'
+    FLUIDS_FILE = '../java/net/astr0/astrocraft/Fluid/ModFluids.java'
+    ctx.add_translation(f"item.astrocraft.{item_id}", f"{item_name}")
     ctx.add_text_to_region(ITEM_FILE, 'MATERIAL_REGION', f"""public static final RegistryObject<Item> {item_id.upper()} = SimpleIngredientItem("{item_id}", 64);""")
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModItems.{item_id.upper()}.get());")
     ctx.add_simple_item_model(f'{item_id}')
 
 def add_simple_tint_block(ctx: Context, block_id: str, block_name, tint, template_file):
-    TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
-    BLOCK_FILE = '../java/net/astr0/astech/block/ModBlocks.java'
+    TAB_FILE = '../java/net/astr0/astrocraft/ModCreativeModTab.java'
+    BLOCK_FILE = '../java/net/astr0/astrocraft/block/ModBlocks.java'
 
     template = Image.open(template_file)
     texture = blend_overlay(template, hex_to_rgb(tint))
-    texture.save(f'../resources/assets/astech/textures/block/{block_id}.png', format='PNG')
+    texture.save(f'../resources/assets/astrocraft/textures/block/{block_id}.png', format='PNG')
 
-    ctx.add_translation(f"block.astech.{block_id}", f"{block_name}")
+    ctx.add_translation(f"block.astrocraft.{block_id}", f"{block_name}")
     ctx.add_text_to_region(BLOCK_FILE, 'BLOCK_REGION', f"""public static final RegistryObject<Block> {block_id.upper()} = registerBlock("{block_id}", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));""")
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModBlocks.{block_id.upper()}.get());")
     ctx.add_simple_block_model(f'{block_id}')
@@ -330,76 +330,81 @@ def add_simple_tint_block(ctx: Context, block_id: str, block_name, tint, templat
 
 
 def add_simple_ore_block(ctx: Context, block_id: str, block_name, tint, template_file):
-    TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
-    BLOCK_FILE = '../java/net/astr0/astech/block/ModBlocks.java'
+    TAB_FILE = '../java/net/astr0/astrocraft/ModCreativeModTab.java'
+    BLOCK_FILE = '../java/net/astr0/astrocraft/block/ModBlocks.java'
 
     STONE_BASE = './templates/deepslate.png' if "deepslate" in block_id else './templates/stone.png'
 
-    layer_images(STONE_BASE, template_file, f'../resources/assets/astech/textures/block/{block_id}.png', hex_to_rgb(tint), 'Liquid')
+    layer_images(STONE_BASE, template_file, f'../resources/assets/astrocraft/textures/block/{block_id}.png', hex_to_rgb(tint), 'Liquid')
 
-    ctx.add_translation(f"block.astech.{block_id}", f"{block_name}")
+    ctx.add_translation(f"block.astrocraft.{block_id}", f"{block_name}")
     ctx.add_text_to_region(BLOCK_FILE, 'BLOCK_REGION', f"""public static final RegistryObject<Block> {block_id.upper()} = registerBlock("{block_id}", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)));""")
     ctx.add_text_to_region(TAB_FILE, 'TAB_REGION', f"output.accept(ModBlocks.{block_id.upper()}.get());")
     ctx.add_simple_block_model(f'{block_id}')
     ctx.add_block_item_model(f'{block_id}')
 
 headers, chemicals = get_chemical_defs("chems.csv")
-datapack = Context('../resources/', 'astech')
+datapack = Context('../resources/', 'astrocraft')
 
 datapack.set_base_dictionary({
-    "curios.identifier.key": "Key Slot",
-    "item.astech.fluid_cell" : "Fluid Cell",
-    "item.astech.large_fluid_cell" : "Large Fluid Cell",
-    "item.astech.pressurised_fluid_cell" : "Pressurised Fluid Cell",
+    "curios.identifier.key": "Key",
+    "item.astrocraft.fluid_cell" : "Fluid Cell",
+    "item.astrocraft.large_fluid_cell" : "Large Fluid Cell",
+    "item.astrocraft.pressurised_fluid_cell" : "Pressurised Fluid Cell",
     "tooltip.fluid_cell.contents": "Contains: %s (%d/%d mB)",
     "tooltip.fluid_cell.empty": "Empty",
-    "item.astech.deez_nuts": "Deez Nuts",
-    "item.astech.world_eater": "World Eater",
-    "item.astech.twig_bundle": "Twig Bundle",
-    "item.astech.fire_starter": "Fire Starter",
-    "item.astech.full_shwaxe": "Full Shwaxe",
-    "item.astech.galentine_energy_sword": "Galentine Energy Blade",
-    "item.astech.tablet": "Tablet",
-    "item.astech.broad_sword": "Diamond Broad Sword",
-    "item.astech.airhorn": "Airhorn",
-    "item.astech.deez_butts": "Deez Butts",
-    "item.astech.zeolite_catalyst": "Zeolite Catalyst",
-    "item.astech.monocrystalline_silicon": "Monocrystalline Silicon Boole",
-    "item.astech.cable_laying_tool": "Cable Laying Tool",
-    "item.astech.god_forged_ingot": "God Forged Ingot",
-    "creativetab.astech_tab": "AsTech Items",
-    "block.astech.nic_block": "§cNic Block",
-    "block.astech.brick_kiln_pile": "Brick Pile",
-    "block.astech.brick_kiln": "Brick Kiln",
-    "block.astech.log_pile": "Stick Stack",
-    "block.astech.knapping_stone": "Knapping Stone",
-    "block.astech.vacuum_freezer_controller": "Vaccum Freezer Controller",
-    "block.astech.regulated_machine_casing": "Regulated Machine Casing",
-    "block.astech.cleanroom_wall": "Cleanroom Wall",
-    "block.astech.coolant_block": "Coolant Block",
-    "block.astech.gem_polishing_station": "Gem Polishing Station",
-    "block.astech.chemical_mixer": "Chemical Mixer",
-    "block.astech.assembler": "Assembler",
-    "block.astech.fluid_output_hatch": "Fluid Output Hatch",
-    "block.astech.fluid_input_hatch": "Fluid Input Hatch",
-    "block.astech.energy_input_hatch": "Energy Input Hatch",
-    "block.astech.advanced_assembler": "Advanced Assembler",
-    "block.astech.chemical_reactor": "Chemical Reactor",
-    "block.astech.electrolytic_seperator": "Electrolytic Seperator",
-    "block.astech.pyrolysis_chamber": "Pyrolysis Chamber",
-    "block.astech.euv_machine": "EUV Machine",
-    "item.astech.as_an_llm_disc": "Music Disc",
-    "item.astech.as_an_llm_disc.desc": "As a Large Language Model - Ol' Yodel",
-        "item.astech.run_nic_run_disc": "Music Disc",
-    "item.astech.run_nic_run_disc.desc": "STIP NIC! - Grunge Parade",
-        "item.astech.help_of_disc": "Music Disc",
-    "item.astech.help_of_disc.desc": "Help My Mum - w$tPantyParty",
-        "item.astech.stolen_identity_disc": "Music Disc",
-    "item.astech.stolen_identity_disc.desc": "Stolen I.D",
-            "item.astech.bangarang_disc": "Music Disc",
-    "item.astech.bangarang_disc.desc": "Bangarang - Skrillex",
-                "item.astech.mir_disc": "Multiorgasmic Interplanetary Record",
-    "item.astech.mir_disc.desc": "The Final Song",
+    "item.astrocraft.deez_nuts": "Deez Nuts",
+    "item.astrocraft.world_eater": "World Eater",
+    "item.astrocraft.twig_bundle": "Twig Bundle",
+    "item.astrocraft.tree_key": "Tree Key",
+    "item.astrocraft.overworld_key": "Overworld Key",
+    "item.astrocraft.nether_key": "Nether Key",
+    "item.astrocraft.end_key": "End Key",
+    "item.astrocraft.transcendent_key": "Transcendent Key",
+    "item.astrocraft.fire_starter": "Fire Starter",
+    "item.astrocraft.full_shwaxe": "Full Shwaxe",
+    "item.astrocraft.galentine_energy_sword": "Galentine Energy Blade",
+    "item.astrocraft.tablet": "Tablet",
+    "item.astrocraft.broad_sword": "Diamond Broad Sword",
+    "item.astrocraft.airhorn": "Airhorn",
+    "item.astrocraft.deez_butts": "Deez Butts",
+    "item.astrocraft.zeolite_catalyst": "Zeolite Catalyst",
+    "item.astrocraft.monocrystalline_silicon": "Monocrystalline Silicon Boole",
+    "item.astrocraft.cable_laying_tool": "Cable Laying Tool",
+    "item.astrocraft.god_forged_ingot": "God Forged Ingot",
+    "creativetab.astrocraft_tab": "astrocraft Items",
+    "block.astrocraft.nic_block": "§cNic Block",
+    "block.astrocraft.brick_kiln_pile": "Brick Pile",
+    "block.astrocraft.brick_kiln": "Brick Kiln",
+    "block.astrocraft.log_pile": "Stick Stack",
+    "block.astrocraft.knapping_stone": "Knapping Stone",
+    "block.astrocraft.vacuum_freezer_controller": "Vaccum Freezer Controller",
+    "block.astrocraft.regulated_machine_casing": "Regulated Machine Casing",
+    "block.astrocraft.cleanroom_wall": "Cleanroom Wall",
+    "block.astrocraft.coolant_block": "Coolant Block",
+    "block.astrocraft.gem_polishing_station": "Gem Polishing Station",
+    "block.astrocraft.chemical_mixer": "Chemical Mixer",
+    "block.astrocraft.assembler": "Assembler",
+    "block.astrocraft.fluid_output_hatch": "Fluid Output Hatch",
+    "block.astrocraft.fluid_input_hatch": "Fluid Input Hatch",
+    "block.astrocraft.energy_input_hatch": "Energy Input Hatch",
+    "block.astrocraft.advanced_assembler": "Advanced Assembler",
+    "block.astrocraft.chemical_reactor": "Chemical Reactor",
+    "block.astrocraft.electrolytic_seperator": "Electrolytic Seperator",
+    "block.astrocraft.pyrolysis_chamber": "Pyrolysis Chamber",
+    "block.astrocraft.euv_machine": "EUV Machine",
+    "item.astrocraft.as_an_llm_disc": "Music Disc",
+    "item.astrocraft.as_an_llm_disc.desc": "As a Large Language Model - Ol' Yodel",
+        "item.astrocraft.run_nic_run_disc": "Music Disc",
+    "item.astrocraft.run_nic_run_disc.desc": "STIP NIC! - Grunge Parade",
+        "item.astrocraft.help_of_disc": "Music Disc",
+    "item.astrocraft.help_of_disc.desc": "Help My Mum - w$tPantyParty",
+        "item.astrocraft.stolen_identity_disc": "Music Disc",
+    "item.astrocraft.stolen_identity_disc.desc": "Stolen I.D",
+            "item.astrocraft.bangarang_disc": "Music Disc",
+    "item.astrocraft.bangarang_disc.desc": "Bangarang - Skrillex",
+                "item.astrocraft.mir_disc": "Multiorgasmic Interplanetary Record",
+    "item.astrocraft.mir_disc.desc": "The Final Song",
 
 
      "atm9.quest.industrialForegoing.hover.mycelialReactorFeatures.1": "Mycelial Reactor consists of all the Mycelial generators working at the same time, near the reactor block.",
@@ -857,31 +862,38 @@ earth_ores = [
 #     configured_feature = CONFIGURED_ORE_FEATURE(ore)
 #     biome_modifier = FORGE_BIOME_MODIFIER(ore, biome_tag=biome_tag)
 
-#     with open(f'./resources/data/astech/worldgen/placed_feature/ore_{ore}_placed.json', 'w') as placed_feature_file:
+#     with open(f'./resources/data/astrocraft/worldgen/placed_feature/ore_{ore}_placed.json', 'w') as placed_feature_file:
 #         placed_feature_file.write(placed_feature)
 
-#     with open(f'./resources/data/astech/forge/biome_modifier/astech/{ore}_ore.json', 'w') as modifier_file:
+#     with open(f'./resources/data/astrocraft/forge/biome_modifier/astrocraft/{ore}_ore.json', 'w') as modifier_file:
 #         modifier_file.write(biome_modifier)
 
-#     with open(f'./resources/data/astech/worldgen/configured_feature/{ore}_ore.json', 'w') as configured_feature_file:
+#     with open(f'./resources/data/astrocraft/worldgen/configured_feature/{ore}_ore.json', 'w') as configured_feature_file:
 #         configured_feature_file.write(configured_feature)
 
 
 
-datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_a')
-datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_b')
-datapack.add_item_tag('forge:genetic_material', 'astech:genetic_material_c')
-datapack.add_item_tag('forge:genetic_material', 'astech:mutated_genetic_material')
-datapack.add_fluid_tag('forge:flux_resin', 'astech:soldering_flux')
-datapack.add_fluid_tag('forge:flux_resin', 'astech:ammonium_chloride')
+datapack.add_item_tag('forge:genetic_material', 'astrocraft:genetic_material_a')
+datapack.add_item_tag('forge:genetic_material', 'astrocraft:genetic_material_b')
+datapack.add_item_tag('forge:genetic_material', 'astrocraft:genetic_material_c')
+datapack.add_item_tag('forge:genetic_material', 'astrocraft:mutated_genetic_material')
+datapack.add_fluid_tag('forge:flux_resin', 'astrocraft:soldering_flux')
+datapack.add_fluid_tag('forge:flux_resin', 'astrocraft:ammonium_chloride')
 datapack.add_fluid_tag('forge:alcohol', '#forge:ethanol')
 #datapack.add_fluid_tag('forge:tier_1_photoresist', '#forge:phenolic_acid')
-datapack.add_fluid_tag('forge:tier_2_photoresist', 'astech:polymethyl_methacrylate')
+datapack.add_fluid_tag('forge:tier_2_photoresist', 'astrocraft:polymethyl_methacrylate')
 #datapack.add_fluid_tag('forge:photoresist', '#forge:tier_1_photoresist')
 datapack.add_fluid_tag('forge:photoresist', '#forge:tier_2_photoresist')
 
-datapack.add_fluid_tag('forge:tier_1_coolant', 'astech:methyl_chloride')
-datapack.add_fluid_tag('forge:tier_2_coolant', 'astech:gelid_cryotheum')
+datapack.add_fluid_tag('forge:tier_1_coolant', 'astrocraft:methyl_chloride')
+datapack.add_fluid_tag('forge:tier_2_coolant', 'astrocraft:gelid_cryotheum')
+
+datapack.add_block_tag('astrocraft:locked_block/overworld', "minecraft:chest")
+datapack.add_item_tag("curios:key", 'astrocraft:tree_key')
+datapack.add_item_tag("curios:key", 'astrocraft:overworld_key')
+datapack.add_item_tag("curios:key", 'astrocraft:nether_key')
+datapack.add_item_tag("curios:key", 'astrocraft:end_key')
+datapack.add_item_tag("curios:key", 'astrocraft:transcendent_key')
 
 
 datapack.add_block_item_model("vacuum_freezer_controller")
@@ -918,7 +930,7 @@ datapack.make_block_mineable("brick_kiln")
 
 datapack.add_block_item_model("brick_kiln")
 
-datapack.add_block_tag(f"minecraft:mineable/pickaxe", f"astech:brick_kiln_pile")
+datapack.add_block_tag(f"minecraft:mineable/pickaxe", f"astrocraft:brick_kiln_pile")
 
 
 datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_helmet')
@@ -926,15 +938,20 @@ datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_chestplate
 datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_leggings')
 datapack.add_item_tag('forge:chemical_protection', 'minecraft:leather_boots')
 
-datapack.add_item_tag('minecraft:music_discs', 'astech:help_of_disc')
-datapack.add_item_tag('minecraft:music_discs', 'astech:as_an_llm_disc')
-datapack.add_item_tag('minecraft:music_discs', 'astech:run_nic_run_disc')
-datapack.add_item_tag('minecraft:music_discs', 'astech:stolen_identity_disc')
-datapack.add_item_tag('minecraft:music_discs', 'astech:bangarang_disc')
-datapack.add_item_tag('minecraft:music_discs', 'astech:mir_disc')
+datapack.add_item_tag('minecraft:music_discs', 'astrocraft:help_of_disc')
+datapack.add_item_tag('minecraft:music_discs', 'astrocraft:as_an_llm_disc')
+datapack.add_item_tag('minecraft:music_discs', 'astrocraft:run_nic_run_disc')
+datapack.add_item_tag('minecraft:music_discs', 'astrocraft:stolen_identity_disc')
+datapack.add_item_tag('minecraft:music_discs', 'astrocraft:bangarang_disc')
+datapack.add_item_tag('minecraft:music_discs', 'astrocraft:mir_disc')
 
 datapack.add_simple_item_model('airhorn')
 
+datapack.add_simple_item_model('tree_key')
+datapack.add_simple_item_model('overworld_key')
+datapack.add_simple_item_model('end_key')
+datapack.add_simple_item_model('nether_key')
+datapack.add_simple_item_model('transcendent_key')
 datapack.add_simple_item_model('fire_starter')
 datapack.add_simple_item_model('twig_bundle')
 datapack.add_simple_item_model('help_of_disc')
@@ -948,11 +965,11 @@ datapack.add_simple_item_model('zeolite_catalyst')
 datapack.add_simple_item_model('monocrystalline_silicon')
 datapack.add_simple_item_model('cable_laying_tool')
 
-TAB_FILE = '../java/net/astr0/astech/ModCreativeModTab.java'
-ITEM_FILE = '../java/net/astr0/astech/item/ModItems.java'
-FLUIDS_FILE = '../java/net/astr0/astech/Fluid/ModFluids.java' 
-SLURRY_FILE = '../java/net/astr0/astech/compat/mek/AsTechSlurries.java'
-JEI_FILE = "../java/net/astr0/astech/compat/JEI/AsTechJEIPlugin.java"
+TAB_FILE = '../java/net/astr0/astrocraft/ModCreativeModTab.java'
+ITEM_FILE = '../java/net/astr0/astrocraft/item/ModItems.java'
+FLUIDS_FILE = '../java/net/astr0/astrocraft/Fluid/ModFluids.java' 
+SLURRY_FILE = '../java/net/astr0/astrocraft/compat/mek/AstrocraftSlurries.java'
+JEI_FILE = "../java/net/astr0/astrocraft/compat/JEI/AstrocraftJEIPlugin.java"
 
 for chemdef in chemicals:
     plain_text_name = chemdef['Name']
@@ -994,26 +1011,26 @@ for chemdef in chemicals:
     datapack.add_text_to_region(FLUIDS_FILE, 'RENDER_REGION', f"ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_{fluid_name.upper()}.get(), RenderType.translucent());")
     datapack.add_text_to_region(FLUIDS_FILE, 'RENDER_REGION', f"ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_{fluid_name.upper()}.get(), RenderType.translucent());")
 
-    output_image_path = f'../resources/assets/astech/textures/item/{fluid_name}_bucket.png'
+    output_image_path = f'../resources/assets/astrocraft/textures/item/{fluid_name}_bucket.png'
 
     datapack.add_translation(f"tooltip.{fluid_name}.fluid", f"§e{chemdef['Formula']}§r")
-    datapack.add_translation(f"item.astech.{fluid_name}_bucket", f"{plain_text_name}")
-    datapack.add_translation(f"fluid_type.astech.{fluid_name}", f"{plain_text_name}")
+    datapack.add_translation(f"item.astrocraft.{fluid_name}_bucket", f"{plain_text_name}")
+    datapack.add_translation(f"fluid_type.astrocraft.{fluid_name}", f"{plain_text_name}")
 
 
-    datapack.add_translation(f"slurry.astech.dirty_{fluid_name}", f"Dirty {plain_text_name} Slurry")
-    datapack.add_translation(f"slurry.astech.clean_{fluid_name}", f"Clean {plain_text_name} Slurry")
+    datapack.add_translation(f"slurry.astrocraft.dirty_{fluid_name}", f"Dirty {plain_text_name} Slurry")
+    datapack.add_translation(f"slurry.astrocraft.clean_{fluid_name}", f"Clean {plain_text_name} Slurry")
 
     datapack.add_translation(f"tooltip.{fluid_name}.material", f"§e{chemdef['Formula']}§r")
 
     datapack.add_simple_item_model(f'{fluid_name}_bucket')
 
-    datapack.add_fluid_tag(f"forge:{fluid_name}", f"astech:{fluid_name}")
+    datapack.add_fluid_tag(f"forge:{fluid_name}", f"astrocraft:{fluid_name}")
 
     layer_images(base_image_path, top_image_path, output_image_path, hex_to_rgb(chemdef["Color"]), chemdef['Form'])
 
     add_simple_tint_item(datapack, f"{fluid_name}_dust", f"{plain_text_name} Dust", chemdef["Color"], get_texture(fluid_name, dust_textures), fluid_name, hazard)
-    datapack.add_item_tag(f"forge:dusts/{fluid_name}", f"astech:{fluid_name}_dust")
+    datapack.add_item_tag(f"forge:dusts/{fluid_name}", f"astrocraft:{fluid_name}_dust")
 
     datapack.add_generic_recipe(f"thermal/crystal/crystal_{fluid_name}", CRYSTALISE(fluid_name, fluid_name))
 
@@ -1030,58 +1047,58 @@ for chemdef in chemicals:
     add_simple_tint_item(datapack, f"{fluid_name}_wire", f"{plain_text_name} Wire", chemdef["Color"], './templates/wire.png', fluid_name, hazard)
     add_simple_tint_block(datapack, f"{fluid_name}_block", f"{plain_text_name} Block", chemdef["Color"], get_texture(fluid_name, block_textures))
 
-    datapack.add_item_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
-    datapack.add_block_tag(f"forge:storage_blocks/{fluid_name}", f"astech:{fluid_name}_block")
+    datapack.add_item_tag(f"forge:storage_blocks/{fluid_name}", f"astrocraft:{fluid_name}_block")
+    datapack.add_block_tag(f"forge:storage_blocks/{fluid_name}", f"astrocraft:{fluid_name}_block")
     datapack.add_simple_block_loot(f"{fluid_name}_block")
-    datapack.add_block_tag(f"minecraft:mineable/pickaxe", f"astech:{fluid_name}_block")
+    datapack.add_block_tag(f"minecraft:mineable/pickaxe", f"astrocraft:{fluid_name}_block")
 
-    datapack.add_block_tag("minecraft:mineable/axe", "astech:log_pile")
+    datapack.add_block_tag("minecraft:mineable/axe", "astrocraft:log_pile")
 
-    datapack.add_block_tag("astech:cable_block", "minecraft:deepslate")
-    datapack.add_block_tag("astech:cable_block", "mekanism:basic_universal_cable")
+    datapack.add_block_tag("astrocraft:cable_block", "minecraft:deepslate")
+    datapack.add_block_tag("astrocraft:cable_block", "mekanism:basic_universal_cable")
     
-    datapack.add_item_tag(f"forge:ingots/{fluid_name}", f"astech:{fluid_name}_ingot")
-    datapack.add_item_tag(f"forge:nuggets/{fluid_name}", f"astech:{fluid_name}_nugget")
-    datapack.add_item_tag(f"forge:rods/{fluid_name}", f"astech:{fluid_name}_rod")
-    datapack.add_item_tag(f"forge:plates/{fluid_name}", f"astech:{fluid_name}_plate")
-    datapack.add_item_tag(f"forge:wires/{fluid_name}", f"astech:{fluid_name}_wire")
-    datapack.add_item_tag(f"forge:gears/{fluid_name}", f"astech:{fluid_name}_gear")
-    datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_dust', f"forge:dusts/{fluid_name}", f"astech:{fluid_name}_ingot")
+    datapack.add_item_tag(f"forge:ingots/{fluid_name}", f"astrocraft:{fluid_name}_ingot")
+    datapack.add_item_tag(f"forge:nuggets/{fluid_name}", f"astrocraft:{fluid_name}_nugget")
+    datapack.add_item_tag(f"forge:rods/{fluid_name}", f"astrocraft:{fluid_name}_rod")
+    datapack.add_item_tag(f"forge:plates/{fluid_name}", f"astrocraft:{fluid_name}_plate")
+    datapack.add_item_tag(f"forge:wires/{fluid_name}", f"astrocraft:{fluid_name}_wire")
+    datapack.add_item_tag(f"forge:gears/{fluid_name}", f"astrocraft:{fluid_name}_gear")
+    datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_dust', f"forge:dusts/{fluid_name}", f"astrocraft:{fluid_name}_ingot")
 
     datapack.add_generic_recipe(f"thermal/melt/melt_{fluid_name}", MELT(fluid_name, fluid_name))
 
     if chemdef['Type'] == 'Element':
         add_simple_tint_item(datapack, f"raw_{fluid_name}", f"Raw {plain_text_name}", chemdef["Color"], get_texture(fluid_name, raw_ore_textures), fluid_name, hazard)
-        datapack.add_item_tag(f"forge:raw_materials/{fluid_name}", f"astech:raw_{fluid_name}")
-        datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_raw', f"forge:raw_materials/{fluid_name}", f"astech:{fluid_name}_ingot")
+        datapack.add_item_tag(f"forge:raw_materials/{fluid_name}", f"astrocraft:raw_{fluid_name}")
+        datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_raw', f"forge:raw_materials/{fluid_name}", f"astrocraft:{fluid_name}_ingot")
         add_simple_ore_block(datapack, f"{fluid_name}_ore", f"{plain_text_name} Ore", chemdef["Color"], get_texture(fluid_name, ore_textures))
         add_simple_ore_block(datapack, f"deepslate_{fluid_name}_ore", f"Deepslate {plain_text_name} Ore", chemdef["Color"], get_texture(fluid_name, ore_textures))
-        datapack.add_block_tag("minecraft:mineable/pickaxe", f"astech:{fluid_name}_ore")
-        datapack.add_block_tag("minecraft:mineable/pickaxe", f"astech:deepslate_{fluid_name}_ore")
-        datapack.add_block_tag("minecraft:needs_iron_tool", f"astech:deepslate_{fluid_name}_ore")
-        datapack.add_block_tag("minecraft:needs_iron_tool", f"astech:{fluid_name}_ore")
+        datapack.add_block_tag("minecraft:mineable/pickaxe", f"astrocraft:{fluid_name}_ore")
+        datapack.add_block_tag("minecraft:mineable/pickaxe", f"astrocraft:deepslate_{fluid_name}_ore")
+        datapack.add_block_tag("minecraft:needs_iron_tool", f"astrocraft:deepslate_{fluid_name}_ore")
+        datapack.add_block_tag("minecraft:needs_iron_tool", f"astrocraft:{fluid_name}_ore")
         datapack.add_ore_block_loot(f"{fluid_name}_ore", f"raw_{fluid_name}")
         datapack.add_ore_block_loot(f"deepslate_{fluid_name}_ore", f"raw_{fluid_name}")
 
-        datapack.add_item_tag(f"forge:ores/{fluid_name}", f"astech:{fluid_name}_ore")
-        datapack.add_item_tag(f"forge:ores/{fluid_name}", f"astech:deepslate_{fluid_name}_ore")
-        datapack.add_block_tag(f"forge:ores/{fluid_name}", f"astech:{fluid_name}_ore")
-        datapack.add_block_tag(f"forge:ores/{fluid_name}", f"astech:deepslate_{fluid_name}_ore")
+        datapack.add_item_tag(f"forge:ores/{fluid_name}", f"astrocraft:{fluid_name}_ore")
+        datapack.add_item_tag(f"forge:ores/{fluid_name}", f"astrocraft:deepslate_{fluid_name}_ore")
+        datapack.add_block_tag(f"forge:ores/{fluid_name}", f"astrocraft:{fluid_name}_ore")
+        datapack.add_block_tag(f"forge:ores/{fluid_name}", f"astrocraft:deepslate_{fluid_name}_ore")
 
-        datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_ore', f"forge:ores/{fluid_name}", f"astech:{fluid_name}_ingot")
+        datapack.add_smelting_recipe(f'smelting/{fluid_name}_from_{fluid_name}_ore', f"forge:ores/{fluid_name}", f"astrocraft:{fluid_name}_ingot")
 
         add_mek_tint_item(datapack, f"{fluid_name}_clump", f"{plain_text_name} Clump", chemdef["Color"], CLUMP_TEXTURE, CLUMP_TEXTURE_OVERLAY, fluid_name, hazard)
-        datapack.add_item_tag(f"mekanism:clumps/{fluid_name}", f"astech:{fluid_name}_clump")
+        datapack.add_item_tag(f"mekanism:clumps/{fluid_name}", f"astrocraft:{fluid_name}_clump")
         add_mek_tint_item(datapack, f"{fluid_name}_dirty_dust", f"{plain_text_name} Dirty Dust", chemdef["Color"], DIRTY_DUST_TEXTURE, DIRTY_DUST_TEXTURE_OVERLAY, fluid_name, hazard)
-        datapack.add_item_tag(f"mekanism:dirty_dusts/{fluid_name}", f"astech:{fluid_name}_dirty_dust")
+        datapack.add_item_tag(f"mekanism:dirty_dusts/{fluid_name}", f"astrocraft:{fluid_name}_dirty_dust")
         add_mek_tint_item(datapack, f"{fluid_name}_crystal", f"{plain_text_name} Crystal", chemdef["Color"], CRYSTAL_TEXTURE, CRYSTAL_TEXTURE_OVERLAY, fluid_name, hazard)
-        datapack.add_item_tag(f"mekanism:crystals/{fluid_name}", f"astech:{fluid_name}_crystal")
+        datapack.add_item_tag(f"mekanism:crystals/{fluid_name}", f"astrocraft:{fluid_name}_crystal")
         add_mek_tint_item(datapack, f"{fluid_name}_shard", f"{plain_text_name} Shard", chemdef["Color"], SHARD_TEXTURE, SHARD_TEXTURE_OVERLAY, fluid_name, hazard)
-        datapack.add_item_tag(f"mekanism:shards/{fluid_name}", f"astech:{fluid_name}_shard")
+        datapack.add_item_tag(f"mekanism:shards/{fluid_name}", f"astrocraft:{fluid_name}_shard")
 
         # Example usage
         template_dir = './templates/mek_processing/reference'
-        dest_dir = f'../resources/data/astech/recipes/compat/mek_processing/{fluid_name}'
+        dest_dir = f'../resources/data/astrocraft/recipes/compat/mek_processing/{fluid_name}'
         substitutions = {
             '$FLUID_TYPE$': fluid_name
         }
@@ -1103,7 +1120,7 @@ for chemdef in chemicals:
   }
 }
     ))
-    datapack.add_generic_recipe(f"crafting/{fluid_name}_ingot_to_nugget", UNCOMPACTING_RECIPE(f"astech:{fluid_name}_ingot", f"astech:{fluid_name}_nugget"))
+    datapack.add_generic_recipe(f"crafting/{fluid_name}_ingot_to_nugget", UNCOMPACTING_RECIPE(f"astrocraft:{fluid_name}_ingot", f"astrocraft:{fluid_name}_nugget"))
     datapack.add_generic_recipe(f"compat/thermal/plate/{fluid_name}_ingot_to_plate", JSON(
 {
   "type": "thermal:press",
@@ -1112,12 +1129,12 @@ for chemdef in chemicals:
   },
   "result": [
     {
-      "item": f"astech:{fluid_name}_plate"
+      "item": f"astrocraft:{fluid_name}_plate"
     }
   ]
 }
     ))
-    datapack.add_generic_recipe(f"crafting/{fluid_name}_block_to_ingot", UNCOMPACTING_RECIPE(f"astech:{fluid_name}_block", f"astech:{fluid_name}_ingot"))
+    datapack.add_generic_recipe(f"crafting/{fluid_name}_block_to_ingot", UNCOMPACTING_RECIPE(f"astrocraft:{fluid_name}_block", f"astrocraft:{fluid_name}_ingot"))
     
     datapack.add_generic_recipe(f"compat/thermal/pulv/{fluid_name}_ingot_to_dust", JSON(
         {
@@ -1127,7 +1144,7 @@ for chemdef in chemicals:
   },
   "result": [
     {
-      "item": f"astech:{fluid_name}_dust",
+      "item": f"astrocraft:{fluid_name}_dust",
       "count": 1
     }
   ]
@@ -1142,7 +1159,7 @@ for chemdef in chemicals:
   },
   "result": [
     {
-      "item": f"astech:{fluid_name}_dust",
+      "item": f"astrocraft:{fluid_name}_dust",
       "count": 1
     }
   ]
@@ -1153,16 +1170,16 @@ for chemdef in chemicals:
   "type": "mekanism:sawing",
   "input": {{
     "ingredient": {{
-      "item": "astech:{fluid_name}_plate"
+      "item": "astrocraft:{fluid_name}_plate"
     }}
   }},
   "mainOutput": {{
     "count": 3,
-    "item": "astech:{fluid_name}_rod"
+    "item": "astrocraft:{fluid_name}_rod"
   }},
   "secondaryChance": 0.25,
   "secondaryOutput": {{
-    "item": "astech:{fluid_name}_dust"
+    "item": "astrocraft:{fluid_name}_dust"
   }}
 }}
 """)
@@ -1171,12 +1188,12 @@ for chemdef in chemicals:
 #   "type": "mekanism:sawing",
 #   "input": {{
 #     "ingredient": {{
-#       "item": "astech:{fluid_name}_nugget"
+#       "item": "astrocraft:{fluid_name}_nugget"
 #     }}
 #   }},
 #   "mainOutput": {{
 #     "count": 1,
-#     "item": "astech:{fluid_name}_screw"
+#     "item": "astrocraft:{fluid_name}_screw"
 #   }}
 # }}
 # """)
@@ -1189,7 +1206,7 @@ for chemdef in chemicals:
       "tag": "forge:nuggets/{fluid_name}"
     }},
     "P": {{
-      "item": "astech:{fluid_name}_nugget"
+      "item": "astrocraft:{fluid_name}_nugget"
     }}
   }},
   "pattern": [
@@ -1199,7 +1216,7 @@ for chemdef in chemicals:
   ],
   "result": {{
     "count": 1,
-    "item": "astech:{fluid_name}_ingot"
+    "item": "astrocraft:{fluid_name}_ingot"
   }}
 }}
 """)
@@ -1209,7 +1226,7 @@ for chemdef in chemicals:
   "category": "misc",
   "key": {{
     "#": {{
-      "item": "astech:{fluid_name}_ingot"
+      "item": "astrocraft:{fluid_name}_ingot"
     }}
   }},
   "pattern": [
@@ -1219,7 +1236,7 @@ for chemdef in chemicals:
   ],
   "result": {{
     "count": 1,
-    "item": "astech:{fluid_name}_block"
+    "item": "astrocraft:{fluid_name}_block"
   }}
 }}
 """)

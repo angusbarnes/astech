@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/orientable_with_bottom",
+    "textures": {
+      "front": "astrocraft:block/chemical_reactor/overlay_front",
+      "side": "astrocraft:block/chemical_reactor/overlay_side",
+      "top": "astrocraft:block/chemical_reactor/overlay_top",
+      "bottom": "astrocraft:block/opv_bottom"
+    }
+}

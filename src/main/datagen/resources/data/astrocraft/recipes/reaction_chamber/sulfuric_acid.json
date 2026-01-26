@@ -1,0 +1,22 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 500,
+      "tag": "forge:hydrogen_sulfide"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 750,
+      "tag": "forge:oxygen"
+    },
+    "fluid_output_1": {
+      "amount": 1000,
+      "fluid": "astrocraft:sulfuric_acid"
+    },
+    "fluid_output_2": {
+      "amount": 250,
+      "fluid": "minecraft:water"
+    },
+    "time": 300
+  }

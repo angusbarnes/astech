@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "front": "astrocraft:block/electrolytic_seperator/overlay_front_active",
+    "side": "astrocraft:block/electrolytic_seperator/overlay_side_active",
+    "top": "astrocraft:block/electrolytic_seperator/overlay_top_active",
+    "bottom": "astrocraft:block/hull_bottom"
+  }
+}

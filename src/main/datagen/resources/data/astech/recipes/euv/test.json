@@ -1,9 +1,0 @@
-{
-  "type": "astech:euv_machine",
-  "input": { "tag": "forge:plates/xenon" },
-  "catalyst": { "item": "astech:monocrystalline_silicon" },
-  "output": {
-    "item": "astech:electronic_circuit_board"
-  },
-  "time": 14
-}

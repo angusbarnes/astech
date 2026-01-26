@@ -1,0 +1,33 @@
+package net.astr0.astrocraft.network;
+
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.network.NetworkEvent;
+
+import java.util.function.Supplier;
+
+public class ClientFlexiPacketHandler {
+
+    public static void handlePacket(FlexiPacket msg, Supplier<NetworkEvent.Context> ctx) {
+        ctx.get().enqueueWork(() -> {
+
+            var player = Minecraft.getInstance().player;
+
+            if (player != null) {
+                var level = player.getCommandSenderWorld();
+                var tile = level.getBlockEntity(msg.getPos());
+
+                // Not sure if this is the most suitable method for determining chunk coord
+                if(level.hasChunk(player.chunkPosition().x, player.chunkPosition().z)) {
+
+                    // NOTE: reduce nesting
+                    if(tile instanceof INetworkedMachine machine) {
+                        machine.updateClient(msg);
+                    }
+                }
+            }
+
+        });
+
+
+    }
+}

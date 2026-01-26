@@ -1,0 +1,22 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 400,
+      "tag": "forge:netherite"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 600,
+      "tag": "forge:gelid_cryotheum"
+    },
+    "fluid_output_1": {
+      "amount": 800,
+      "fluid": "minecraft:lava"
+    },
+    "fluid_output_2": {
+      "amount": 200,
+      "fluid": "astrocraft:ghastly_liquid"
+    },
+    "time": 1000
+  }

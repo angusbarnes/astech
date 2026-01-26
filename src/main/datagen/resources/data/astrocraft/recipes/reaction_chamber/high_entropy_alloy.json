@@ -1,0 +1,18 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 500,
+      "tag": "forge:neutronium"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 500,
+      "tag": "forge:adamantium"
+    },
+    "fluid_output_1": {
+      "amount": 1000,
+      "fluid": "astrocraft:high_entropy_alloy"
+    },
+    "time": 800
+  }

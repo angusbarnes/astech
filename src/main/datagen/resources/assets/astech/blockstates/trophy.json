@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "astech:block/trophy" },
-    "facing=east": { "model": "astech:block/trophy", "y": 90 },
-    "facing=south": { "model": "astech:block/trophy", "y": 180 },
-    "facing=west": { "model": "astech:block/trophy", "y": 270 }
-  }
-}

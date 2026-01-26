@@ -1,0 +1,9 @@
+{
+  "type": "astrocraft:euv_machine",
+  "input": { "tag": "forge:plates/xenon" },
+  "catalyst": { "item": "astrocraft:monocrystalline_silicon" },
+  "output": {
+    "item": "astrocraft:electronic_circuit_board"
+  },
+  "time": 14
+}

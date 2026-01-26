@@ -1,9 +1,0 @@
-{
-    "parent": "minecraft:block/orientable_with_bottom",
-    "textures": {
-      "front": "astech:block/electrolytic_seperator/overlay_front",
-      "side": "astech:block/electrolytic_seperator/overlay_side",
-      "top": "astech:block/electrolytic_seperator/overlay_top",
-      "bottom": "astech:block/hull_bottom"
-    }
-}

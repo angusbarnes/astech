@@ -1,0 +1,18 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 600,
+      "tag": "forge:glowing_solution"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 400,
+      "tag": "forge:dimethyl_sulfoxide"
+    },
+    "fluid_output_1": {
+      "amount": 1000,
+      "fluid": "astrocraft:bioluminescent_coon_juice"
+    },
+    "time": 450
+  }

@@ -1,0 +1,22 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 700,
+      "tag": "forge:ethylbenzene"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 300,
+      "tag": "forge:steam"
+    },
+    "fluid_output_1": {
+      "amount": 600,
+      "fluid": "astrocraft:styrene"
+    },
+    "fluid_output_2": {
+      "amount": 400,
+      "fluid": "astrocraft:hydrogen"
+    },
+    "time": 500
+  }

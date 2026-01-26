@@ -1,0 +1,18 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 300,
+      "tag": "forge:nitrogen"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 900,
+      "tag": "forge:hydrogen"
+    },
+    "fluid_output_1": {
+      "amount": 1000,
+      "fluid": "astrocraft:ammonia"
+    },
+    "time": 400
+  }

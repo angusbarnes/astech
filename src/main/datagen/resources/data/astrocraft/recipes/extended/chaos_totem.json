@@ -1,0 +1,22 @@
+{
+    "type": "extendedcrafting:shaped_table",
+    "pattern": [
+      "    A    ",
+      "   ABA   ",
+      "  ABCBA  ",
+      " ABCDCBA ",
+      "ABCDEDCBA",
+      " ABCDCBA ",
+      "  ABCBA  ",
+      "   ABA   ",
+      "    A    "
+    ],
+    "key": {
+      "A": { "tag": "forge:ingots/neutron" },
+      "B": { "item": "astrocraft:endest_pearl" },
+      "C": { "tag": "forge:genetic_material" },
+      "D": { "item": "astrocraft:infinity_nugget" },
+      "E": { "item": "minecraft:totem_of_undying" }
+    },
+    "result": { "item": "astrocraft:infinity_totem" }
+  }

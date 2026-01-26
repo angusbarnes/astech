@@ -1,0 +1,22 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 600,
+      "tag": "forge:isopropanol"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 400,
+      "tag": "forge:oxygen"
+    },
+    "fluid_output_1": {
+      "amount": 500,
+      "fluid": "astrocraft:acetone"
+    },
+    "fluid_output_2": {
+      "amount": 500,
+      "fluid": "minecraft:water"
+    },
+    "time": 350
+  }

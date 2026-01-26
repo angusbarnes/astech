@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "astrocraft:block/knapping_stone"
+    },
+    "facing=south": {
+      "model": "astrocraft:block/knapping_stone",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "astrocraft:block/knapping_stone",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "astrocraft:block/knapping_stone",
+      "y": -90
+    }
+  }
+}

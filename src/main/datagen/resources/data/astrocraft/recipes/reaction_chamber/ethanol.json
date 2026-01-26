@@ -1,0 +1,22 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 800,
+      "tag": "forge:hydrocarbonic_broth"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 200,
+      "tag": "forge:water"
+    },
+    "fluid_output_1": {
+      "amount": 600,
+      "fluid": "astrocraft:ethanol"
+    },
+    "fluid_output_2": {
+      "amount": 400,
+      "fluid": "astrocraft:carbon_dioxide"
+    },
+    "time": 600
+  }

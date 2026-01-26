@@ -1,0 +1,19 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 200,
+      "tag": "forge:benzene"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 200,
+      "tag": "forge:chlorine"
+    },
+    "fluid_output_1": {
+      "amount": 400,
+      "fluid": "astrocraft:chlorobenzene"
+    },
+    "time": 450
+  }
+  

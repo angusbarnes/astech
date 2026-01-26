@@ -1,0 +1,13 @@
+{
+    "type": "astrocraft:pyrolysis_chamber",
+    "fluid_input": {
+      "type": "astrocraft:fluid",
+      "amount": 600,
+      "tag": "forge:polytetrafluoroethylene"
+    },
+    "fluid_output_1": {
+      "amount": 500,
+      "fluid": "astrocraft:hexafluoropropylene"
+    },
+    "time": 350
+  }

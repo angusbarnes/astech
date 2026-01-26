@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "astrocraft:block/vacuum_freezer_controller"
+    },
+    "facing=south": {
+      "model": "astrocraft:block/vacuum_freezer_controller",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "astrocraft:block/vacuum_freezer_controller",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "astrocraft:block/vacuum_freezer_controller",
+      "y": -90
+    }
+  }
+}

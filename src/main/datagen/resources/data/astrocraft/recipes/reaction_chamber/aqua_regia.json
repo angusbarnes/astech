@@ -1,0 +1,18 @@
+{
+    "type": "astrocraft:chemical_reactor",
+    "fluid_input_1": {
+      "type": "astrocraft:fluid",
+      "amount": 750,
+      "tag": "forge:hydrochloric_acid"
+    },
+    "fluid_input_2": {
+      "type": "astrocraft:fluid",
+      "amount": 250,
+      "tag": "forge:nitric_acid"
+    },
+    "fluid_output_1": {
+      "amount": 1000,
+      "fluid": "astrocraft:aqua_regia"
+    },
+    "time": 150
+  }

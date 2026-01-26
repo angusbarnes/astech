@@ -1,0 +1,25 @@
+{
+    "type": "astrocraft:chemical_mixer",
+    "inputs" : [
+      {
+        "type": "astrocraft:stacked_item",
+        "tag": "forge:dusts/tin",
+        "count": 6
+      },
+      {
+        "type": "astrocraft:stacked_item",
+        "tag": "forge:dusts/lead",
+        "count": 4
+      }
+    ],
+    "fluid_input1": {
+      "type": "astrocraft:fluid",
+      "amount": 1000,
+      "fluid": "minecraft:water"
+    },
+    "fluid_output": {
+      "amount": 1000,
+      "fluid": "astrocraft:soldering_flux"
+    },
+    "time": 300
+  }

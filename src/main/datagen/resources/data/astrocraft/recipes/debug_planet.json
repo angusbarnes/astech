@@ -1,0 +1,12 @@
+{
+  "type": "astrocraft:planet_info",
+  "rocket_fuel": { "fluid": "minecraft:lava", "amount": 1000 },
+  "planet_resources": [
+    { "item": "minecraft:iron_ingot" },
+    { "item": "minecraft:diamond" }
+  ],
+  "planet_tier": 69,
+  "planet_name": "Debug Planet",
+  "flavour_text": "Hm. Hello, World!",
+  "rocket_item": { "item": "minecraft:firework_rocket", "count": 1 }
+}

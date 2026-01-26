@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:smelting",
+    "cookingtime": 2000,
+    "experience": 35,
+    "ingredient": {
+        "item": "astrocraft:antimatter_tormentum"
+    },
+    "result": "astrocraft:abyssium_ingot"
+    }

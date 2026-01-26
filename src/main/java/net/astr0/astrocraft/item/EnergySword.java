@@ -25,7 +25,7 @@ public class EnergySword extends SwordItem {
     private final Multimap<Attribute, AttributeModifier> lightningAttributeModifiers;
 
     public EnergySword(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
-        super(tier, attackDamage, attackSpeed, properties);
+        super(tier, attackDamage, attackSpeed, properties.durability(5));
 
         // Build the attribute modifiers including the custom Entity Reach
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
@@ -56,8 +56,8 @@ public class EnergySword extends SwordItem {
                     if (isCrit) {
                         // Flurry of lightning (3 bolts around the target)
                         for (int i = 0; i < 3; i++) {
-                            double offsetX = (level.random.nextDouble() - 0.5) * 4.0;
-                            double offsetZ = (level.random.nextDouble() - 0.5) * 4.0;
+                            double offsetX = (level.random.nextDouble() - 0.5) * 3.0;
+                            double offsetZ = (level.random.nextDouble() - 0.5) * 3.0;
                             spawnLightning(level, target.blockPosition().offset((int)offsetX, 0, (int)offsetZ));
                         }
                     } else {

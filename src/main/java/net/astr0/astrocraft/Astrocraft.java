@@ -4,11 +4,11 @@ import com.mojang.logging.LogUtils;
 import net.astr0.astrocraft.Fluid.ModFluids;
 import net.astr0.astrocraft.block.AdvancedAssembler.AdvancedAssemblerScreen;
 import net.astr0.astrocraft.block.Assembler.AssemblerScreen;
+import net.astr0.astrocraft.block.BrickKilnRenderer;
 import net.astr0.astrocraft.block.ChemicalMixer.ChemicalMixerScreen;
 import net.astr0.astrocraft.block.CoolantBlock.CoolantBlockScreen;
 import net.astr0.astrocraft.block.EUVMachine.EUVMachineScreen;
 import net.astr0.astrocraft.block.ElectrolyticSeperator.ElectrolyticSeperatorScreen;
-import net.astr0.astrocraft.block.GemPolisher.GemPolishingBlockEntityRenderer;
 import net.astr0.astrocraft.block.GemPolisher.GemPolishingStationScreen;
 import net.astr0.astrocraft.block.ModBlockEntities;
 import net.astr0.astrocraft.block.ModBlocks;
@@ -134,11 +134,6 @@ public class Astrocraft
         LOGGER.info("HELLO from server starting");
     }
 
-    @SubscribeEvent
-    public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ModBlockEntities.GEM_POLISHING_BE.get(), GemPolishingBlockEntityRenderer::new);
-    }
-
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
@@ -161,6 +156,11 @@ public class Astrocraft
             MenuScreens.register(ModMenuTypes.COOLANT_BLOCK_MENU.get(), CoolantBlockScreen::new);
             MenuScreens.register(ModMenuTypes.CABLE_TOOL_MENU.get(), CableToolScreen::new);
 
+        }
+
+        @SubscribeEvent
+        public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(ModBlockEntities.BRICK_KILN.get(), BrickKilnRenderer::new);
         }
 
     }

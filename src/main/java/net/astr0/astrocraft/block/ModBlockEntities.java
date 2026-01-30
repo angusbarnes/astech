@@ -28,6 +28,9 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(GemPolishingStationBlockEntity::new,
                             ModBlocks.GEM_POLISHING_STATION.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<BrickKilnBlockEntity>> BRICK_KILN =
+            BLOCK_ENTITIES.register("brick_kiln", () -> BlockEntityType.Builder.of(BrickKilnBlockEntity::new, ModBlocks.BRICK_KILN.get()).build(null));
+
     public static final RegistryObject<BlockEntityType<ChemicalMixerBlockEntity>> CHEMICAL_MIXER_BE =
             BLOCK_ENTITIES.register("chemical_mixer", () ->
                     BlockEntityType.Builder.of(ChemicalMixerBlockEntity::new,

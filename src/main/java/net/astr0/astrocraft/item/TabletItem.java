@@ -14,6 +14,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
+
+import java.util.Collection;
 
 public class TabletItem extends Item {
     public TabletItem(Properties pProperties) {
@@ -36,6 +39,11 @@ public class TabletItem extends Item {
 
         BlockPos pos = context.getClickedPos();
         BlockState block = level.getBlockState(pos);
+
+        Collection<Property<?>> props = block.getProperties();
+        for(Property<?> prop : props) {
+            player.displayClientMessage(Component.literal(prop.toString()), false);
+        }
 
         if (block.hasBlockEntity()) {
             BlockEntity be = level.getBlockEntity(pos);

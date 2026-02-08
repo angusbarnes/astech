@@ -373,6 +373,7 @@ datapack.set_base_dictionary({
     "item.astrocraft.cable_laying_tool": "Cable Laying Tool",
     "item.astrocraft.god_forged_ingot": "God Forged Ingot",
     "creativetab.astrocraft_tab": "astrocraft Items",
+    "block.astrocraft.crop_sticks": "Crop Sticks",
     "block.astrocraft.nic_block": "§cNic Block",
     "block.astrocraft.brick_kiln_pile": "Brick Pile",
     "block.astrocraft.brick_kiln": "Brick Kiln",
@@ -915,7 +916,7 @@ datapack.add_simple_block_model("fluid_output_hatch")
 
 datapack.add_block_item_model("knapping_stone")
 datapack.make_block_mineable("knapping_stone")
-
+datapack.make_block_mineable("crop_sticks")
 datapack.make_block_mineable("fluid_input_hatch")
 datapack.make_block_mineable("regulated_machine_casing")
 datapack.make_block_mineable("energy_input_hatch")

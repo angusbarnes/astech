@@ -1,16 +1,18 @@
 package net.astr0.astrocraft;
 
 import net.astr0.astrocraft.block.ModBlocks;
+import net.astr0.astrocraft.farming.CropGenetics;
 import net.astr0.astrocraft.item.KeyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -20,7 +22,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -111,6 +115,39 @@ public class EventHandlers {
         }
 
         return 0;
+    }
+
+    public static void addSeedTooltips(ItemTooltipEvent tooltip) {
+        ItemStack stack = tooltip.getItemStack();
+        if (!stack.is(Tags.Items.SEEDS)) return;
+
+        CompoundTag tag = stack.getTag();
+        if (tag != null) {
+            CropGenetics genetics = CropGenetics.fromStack(stack);
+            tooltip.getToolTip().add(
+                    Component.literal(
+                            String.format(
+                                    "Gain: %s", genetics.gain()
+                            )
+                    )
+            );
+            tooltip.getToolTip().add(
+                    Component.literal(
+                            String.format(
+                                    "Growth: %s", genetics.growth()
+                            )
+                    )
+            );
+            tooltip.getToolTip().add(
+                    Component.literal(
+                            String.format(
+                                    "Resistance: %s", genetics.resistance()
+                            )
+                    )
+            );
+        } else {
+            tooltip.getToolTip().add(Component.literal("Wild quality"));
+        }
     }
 
     public static void PreventTreePunching(PlayerEvent.BreakSpeed event) {

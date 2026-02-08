@@ -26,6 +26,7 @@ public class ModTags {
 
 
     public static final TagKey<Item> CHEMICAL_PROTECTION = ItemTags.create(RL("chemical_protection"));
+    public static final TagKey<Item> FORGE_SEED = ItemTags.create(RL("chemical_protection"));
 
 
     public static final TagKey<Fluid> TIER_1_COOLANT = FluidTags.create(new ResourceLocation("forge", "tier_1_coolant"));

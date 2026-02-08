@@ -7,6 +7,7 @@ import net.astr0.astrocraft.block.Assembler.AssemblerScreen;
 import net.astr0.astrocraft.block.BrickKilnRenderer;
 import net.astr0.astrocraft.block.ChemicalMixer.ChemicalMixerScreen;
 import net.astr0.astrocraft.block.CoolantBlock.CoolantBlockScreen;
+import net.astr0.astrocraft.block.CropSticksRenderer;
 import net.astr0.astrocraft.block.EUVMachine.EUVMachineScreen;
 import net.astr0.astrocraft.block.ElectrolyticSeperator.ElectrolyticSeperatorScreen;
 import net.astr0.astrocraft.block.GemPolisher.GemPolishingStationScreen;
@@ -96,6 +97,7 @@ public class Astrocraft
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::DoCampfireConversion);
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::BlockPlaceListener);
         forgeEventBus.addListener(EventPriority.HIGH, EventHandlers::restrictBlockEntityAccess);
+        forgeEventBus.addListener(EventPriority.LOW, EventHandlers::addSeedTooltips);
 
     }
 
@@ -161,6 +163,7 @@ public class Astrocraft
         @SubscribeEvent
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(ModBlockEntities.BRICK_KILN.get(), BrickKilnRenderer::new);
+            event.registerBlockEntityRenderer(ModBlockEntities.CROP_STICKS.get(), CropSticksRenderer::new);
         }
 
     }

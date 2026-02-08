@@ -28,6 +28,7 @@ public class ModCreativeModTab {
                         output.accept(ModItems.END_KEY.get());
                         output.accept(ModItems.NETHER_KEY.get());
                         output.accept(ModItems.TRANSCENDENT_KEY.get());
+                        output.accept(ModBlocks.CROP_STICKS.get());
                         output.accept(ModBlocks.CHEMICAL_MIXER.get());
                         output.accept(ModBlocks.ASSEMBLER.get());
                         output.accept(ModBlocks.ADVANCED_ASSEMBLER.get());

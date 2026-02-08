@@ -160,6 +160,11 @@ repositories {
         }
     }
 
+    maven {
+        name "createmod maven"
+        url "https://maven.createmod.net/"
+    }
+
 }
 
 dependencies {
@@ -209,6 +214,9 @@ dependencies {
 
     // Forge (see below block as well if you use Forge Gradle)
     runtimeOnly(fg.deobf("com.gregtechceu.gtceu:gtceu-${"1.20.1"}:${"7.1.4"}"))
+
+    compileOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-api-${minecraft_version}:${flywheel_version}")
+    runtimeOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

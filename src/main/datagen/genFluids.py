@@ -365,6 +365,7 @@ datapack.set_base_dictionary({
     "item.astrocraft.full_shwaxe": "Full Shwaxe",
     "item.astrocraft.galentine_energy_sword": "Galentine Energy Blade",
     "item.astrocraft.tablet": "Tablet",
+    "item.astrocraft.crop_sticks": "Crop Sticks",
     "item.astrocraft.broad_sword": "Diamond Broad Sword",
     "item.astrocraft.airhorn": "Airhorn",
     "item.astrocraft.deez_butts": "Deez Butts",
@@ -901,7 +902,7 @@ datapack.add_item_tag("curios:key", 'astrocraft:transcendent_key')
 
 
 datapack.add_block_item_model("vacuum_freezer_controller")
-
+datapack.add_simple_item_model("crop_sticks")
 datapack.add_block_item_model("fluid_input_hatch")
 datapack.add_simple_block_model("fluid_input_hatch")
 

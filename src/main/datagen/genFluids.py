@@ -348,6 +348,7 @@ datapack = Context('../resources/', 'astrocraft')
 
 datapack.set_base_dictionary({
     "curios.identifier.key": "Key",
+    "config.jade.plugin_astrocraft.crop" : "Crop",
     "item.astrocraft.fluid_cell" : "Fluid Cell",
     "item.astrocraft.large_fluid_cell" : "Large Fluid Cell",
     "item.astrocraft.pressurised_fluid_cell" : "Pressurised Fluid Cell",

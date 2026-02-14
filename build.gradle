@@ -217,6 +217,10 @@ dependencies {
 
     compileOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-api-${minecraft_version}:${flywheel_version}")
     runtimeOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
+
+    // jade_version example: 11.13.1+forge
+    // Visit https://modrinth.com/mod/jade/versions?l=forge to get the latest version
+    implementation fg.deobf("maven.modrinth:jade:11.13.2+forge")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

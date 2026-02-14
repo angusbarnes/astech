@@ -10,42 +10,54 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CropSticksBlockEntity extends BlockEntity {
 
-    private PlantedCrop planted;
+    // 1. Single Source of Truth. This Stack MUST contain the NBT tags.
     private ItemStack seedStack = ItemStack.EMPTY;
+
+    // Cache the helper to avoid resolving IPlantable every tick
+    // Nullable because the stick might be empty
+    private @Nullable PlantedCrop cachedPlant;
+
     public CropSticksBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.CROP_STICKS.get(), pos, state);
     }
 
 
-    public void setPlanted(PlantedCrop plant) {
-        planted = plant;
-        seedStack = new ItemStack(plant.seed(), 1);
+    public void setSeed(ItemStack stack) {
+        // Always store a COPY to prevent external modification
+        this.seedStack = stack.copy();
+        this.seedStack.setCount(1); // Force count 1
+
+        // Refresh cache immediately
+        this.cachedPlant = CropUtils.getPlantedCrop(this.seedStack);
+
         this.setChanged();
         this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
 
     public ItemStack getSeed() {
-        return seedStack;
+        // Return a copy so the caller can't mutate our internal state
+        return seedStack.isEmpty() ? ItemStack.EMPTY : seedStack.copy();
     }
 
     // --- Core Logic: The "Hybrid" Tick ---
     // Called by the Block's randomTick()
     public void performGrowthTick(ServerLevel level, RandomSource random) {
-        if (seedStack.isEmpty()) return;
+        if (cachedPlant == null) return; // Fast fail
 
-        CropGenetics stats = planted.genetics();
+        CropGenetics stats = cachedPlant.genetics();
 
         // 1. Calculate Growth Chance based on Stats
         // Base chance 10% + (Growth Stat * 5%)
@@ -65,8 +77,10 @@ public class CropSticksBlockEntity extends BlockEntity {
     // --- Compatibility: Simulation ---
     // Returns the BlockState that the internal seed *would* look like
     public BlockState getSimulatedPlantState() {
+        if (cachedPlant == null) return Blocks.AIR.defaultBlockState();
 
-        BlockState internalState = planted.Plant().getPlant(this.level, this.worldPosition);
+        // Safe access via cached object
+        BlockState internalState = cachedPlant.Plant().getPlant(this.level, this.worldPosition);
 
         // Map Stick Age (0-7) to Internal Plant Age
         if (internalState.hasProperty(BlockStateProperties.AGE_7)) {
@@ -80,44 +94,51 @@ public class CropSticksBlockEntity extends BlockEntity {
         return internalState;
     }
 
-    public List<ItemStack> simulateDrops(ServerLevel level) {
+    public List<ItemStack> simulateDrops(LootParams.Builder builder) {
         List<ItemStack> drops = new ArrayList<>();
-        if (seedStack.isEmpty()) return drops;
+        if (cachedPlant == null) return drops;
 
         BlockState simulatedState = getSimulatedPlantState();
 
-        // Use LootContext to ask the internal block what it drops
-        LootParams.Builder params = new LootParams.Builder(level)
-                .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition))
-                .withParameter(LootContextParams.TOOL, ItemStack.EMPTY);
+        // CRITICAL: We override the BLOCK_STATE parameter.
+        // The internal plant's loot table uses this to determine its drops.
+        builder.withParameter(LootContextParams.BLOCK_STATE, simulatedState);
+        // This might return Wheat + Seeds
+        List<ItemStack> rawDrops = simulatedState.getDrops(builder);
 
-        List<ItemStack> rawDrops = simulatedState.getDrops(params);
-
-        // --- Critical: Re-apply Stats ---
-        // The loot table returns "generic" seeds. We must replace them with our "stat-keeping" seed.
+        if (rawDrops.isEmpty()) {
+            LogUtils.getLogger().warn("CROP STICKS: Loot table for {} returned NOTHING! Age: {}",
+                    simulatedState.getBlock(),
+                    this.getBlockState().getValue(CropSticksBlock.AGE));
+        }
         for (ItemStack drop : rawDrops) {
-            LogUtils.getLogger().info("++++++++ Dropped: {}", drop);
-            // If the drop matches our seed type, apply the stats
-            if (drop.getItem() == seedStack.getItem()) {
-                planted.genetics().applyToStack(drop);
+            // Check if the drop is the seed
+            if (ItemStack.isSameItem(drop, seedStack)) {
+                // IMPORTANT: Apply the genetics to the dropped seed
+                cachedPlant.genetics().applyToStack(drop);
             }
             drops.add(drop);
         }
         return drops;
     }
 
-    // Standard NBT Save/Load...
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (tag.contains("Seed")) this.seedStack = ItemStack.of(tag.getCompound("Seed"));
-        planted = CropUtils.getPlantedCrop(seedStack);
+        if (tag.contains("Seed")) {
+            this.seedStack = ItemStack.of(tag.getCompound("Seed"));
+            // Re-init cache on load
+            this.cachedPlant = CropUtils.getPlantedCrop(this.seedStack);
+        }
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        if (!seedStack.isEmpty()) tag.put("Seed", seedStack.save(new CompoundTag()));
+        if (!seedStack.isEmpty()) {
+            // This saves the stack WITH the NBT data inside it automatically
+            tag.put("Seed", seedStack.save(new CompoundTag()));
+        }
     }
 
     @Override

@@ -1,7 +1,7 @@
 package net.astr0.astrocraft.farming;
 
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.IPlantable;
 
-public record PlantedCrop(Item seed, IPlantable Plant, CropGenetics genetics) {
+public record PlantedCrop(ItemStack seed, IPlantable Plant, CropGenetics genetics) {
 }

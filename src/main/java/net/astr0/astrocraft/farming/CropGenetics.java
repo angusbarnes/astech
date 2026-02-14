@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 
 public record CropGenetics(int growth, int gain, int resistance) {
     public static final CropGenetics DEFAULT = new CropGenetics(1, 1, 1);
-    private static final String NBT_KEY = "CropStats";
+    public static final String NBT_KEY = "CropStats";
 
     // Read from an ItemStack
     public static CropGenetics fromStack(ItemStack stack) {
@@ -20,8 +20,9 @@ public record CropGenetics(int growth, int gain, int resistance) {
         return DEFAULT;
     }
 
-    // Write to an ItemStack
     public ItemStack applyToStack(ItemStack stack) {
+        if (stack.isEmpty()) return stack; // Safety check
+
         CompoundTag root = stack.getOrCreateTag();
         CompoundTag stats = new CompoundTag();
         stats.putInt("Growth", growth);

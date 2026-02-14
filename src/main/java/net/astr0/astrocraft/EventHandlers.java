@@ -122,7 +122,7 @@ public class EventHandlers {
         if (!stack.is(Tags.Items.SEEDS)) return;
 
         CompoundTag tag = stack.getTag();
-        if (tag != null) {
+        if (tag != null && tag.contains(CropGenetics.NBT_KEY)) {
             CropGenetics genetics = CropGenetics.fromStack(stack);
             tooltip.getToolTip().add(
                     Component.literal(

@@ -19,9 +19,11 @@ public class CropUtils {
 
     public static @Nullable PlantedCrop getPlantedCrop(ItemStack seed) {
         IPlantable plant = getPlantableFromSeed(seed.getItem());
+        ItemStack seedStack = seed.copy();
+        seedStack.setCount(1);
 
         if (plant != null) {
-            return new PlantedCrop(seed.getItem(), plant, CropGenetics.fromStack(seed));
+            return new PlantedCrop(seedStack, plant, CropGenetics.fromStack(seedStack));
         }
 
         return null;

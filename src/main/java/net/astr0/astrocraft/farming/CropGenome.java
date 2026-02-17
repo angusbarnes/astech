@@ -168,13 +168,56 @@ public class CropGenome {
     public CropGenome mutate(Random random) {
         // Same logic, but use 'of()' at the end
         char[] chars = genome.toCharArray();
-        // ... (your existing mutation loop logic) ...
 
-        // We calculate chance based on THIS genome's pre-calculated mod
-        // But individual locus chance is still dynamic per pair
-        // ...
+        for (int locus = 0; locus < 4; locus++) {
+
+            int i = locus * 2;
+            double chance = getMutationChance(i);
+
+            if (random.nextDouble() < chance) {
+                int alleleIndex = i + random.nextInt(2);
+                chars[alleleIndex] = mutateAllele(chars[alleleIndex]);
+            }
+        }
 
         return CropGenome.of(new String(chars)); // Cached return
+    }
+
+    private double getMutationChance(int index) {
+
+        char a = genome.charAt(index);
+        char b = genome.charAt(index + 1);
+
+        boolean homozygous = Character.toUpperCase(a) == Character.toUpperCase(b);
+
+        if (homozygous) {
+            if (Character.isUpperCase(a)) {
+                return BASE_MUTATION_RATE * DOMINANT_MUTATION_MULT;
+            } else {
+                return BASE_MUTATION_RATE * RECESSIVE_MUTATION_MULT;
+            }
+        }
+
+        return BASE_MUTATION_RATE * HETEROZYGOUS_MUTATION_MULT;
+    }
+
+    private char mutateAllele(char allele) {
+        Tier tier = Tier.fromChar(allele);
+
+        if (tier == Tier.G || tier == Tier.X)
+            return allele;
+
+        boolean isUpper = Character.isUpperCase(allele);
+
+        if (!isUpper) {
+            // recessive -> dominant
+            return Character.toUpperCase(allele);
+        }
+
+        // dominant -> next tier recessive
+        Tier next = Tier.next(tier);
+
+        return Character.toLowerCase(next.name().charAt(0));
     }
 
     // ==========================================

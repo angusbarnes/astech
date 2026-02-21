@@ -17,6 +17,9 @@ public class CropGenome {
     public static final double DOMINANT_MUTATION_MULT = 0.5;
     public static final double DOMINANT_PAIR_BUFF = 1.1;
     public static final double RECESSIVE_PAIR_NERF = 0.9;
+    public static final double HETEROZYGOUS_NERF = 0.9;
+    public static final double HETERO_GLOBAL_NERF = 0.95;
+    public static final double REGRESSIVE_MUTATION_CHANCE = 0.15;
     public static final String NBT_KEY = "Genome";
 
     // --- OPTIMIZATION 1: Global Cache ---
@@ -30,9 +33,9 @@ public class CropGenome {
     // =============================
     private final String genome;
     // --- OPTIMIZATION 2: Pre-calculated Stats ---
-    private final int growth;
-    private final int gain;
-    private final int resistance;
+    private final double growth;
+    private final double gain;
+    private final double resistance;
     private final double mutationMod;
 
     // Private constructor forces use of factory
@@ -96,6 +99,18 @@ public class CropGenome {
                 default -> t;
             };
         }
+
+        public static Tier previous(Tier t) {
+            return switch (t) {
+                case S -> A;
+                case A -> B;
+                case B -> C;
+                case C -> D;
+                case D -> E;
+                case E -> F;
+                default -> t; // F remains F
+            };
+        }
     }
 
     // ==========================================
@@ -103,9 +118,9 @@ public class CropGenome {
     // ==========================================
     // These are now O(1) field reads
 
-    public int getGrowth() { return growth; }
-    public int getGain() { return gain; }
-    public int getResistance() { return resistance; }
+    public double getGrowth() { return growth; }
+    public double getGain() { return gain; }
+    public double getResistance() { return resistance; }
     public double getModifierMutationMultiplier() { return mutationMod; }
 
     // ==========================================
@@ -113,40 +128,75 @@ public class CropGenome {
     // ==========================================
     // (Run once during construction)
 
-    private int computeLocus(int index) {
+    private double computeLocus(int index) {
         char a = genome.charAt(index);
         char b = genome.charAt(index + 1);
 
         Tier tierA = Tier.fromChar(a);
         Tier tierB = Tier.fromChar(b);
 
-        if (tierA.value() == 0 && tierB.value() == 0) return 0;
+        if (tierA.value() == 0 && tierB.value() == 0) return 0.0;
 
-        // Homozygous
-        if (Character.toUpperCase(a) == Character.toUpperCase(b)) {
-            int base = tierA.value();
-            if (Character.isUpperCase(a) && Character.isUpperCase(b)) {
-                return (int) Math.round(base * DOMINANT_PAIR_BUFF);
+        boolean isUpperA = Character.isUpperCase(a);
+        boolean isUpperB = Character.isUpperCase(b);
+        boolean sameTier = Character.toUpperCase(a) == Character.toUpperCase(b);
+
+        // --- CASE 1, 2, 3: SAME TIER (e.g., AA, aa, Aa) ---
+        if (sameTier) {
+            double base = tierA.value();
+
+            if (isUpperA && isUpperB) {
+                return base * DOMINANT_PAIR_BUFF; // Rule 1: BB, AA
+            } else if (!isUpperA && !isUpperB) {
+                return base * RECESSIVE_PAIR_NERF; // Rule 2: bb, aa
             } else {
-                return (int) Math.round(base * RECESSIVE_PAIR_NERF);
+                return base; // Rule 3: Bb, aA (Base Case)
             }
         }
 
-        // Heterozygous
-        Tier dominant = (Character.isUpperCase(a)) ? tierA :
-                (Character.isUpperCase(b)) ? tierB : tierA;
-        return dominant.value();
+        // --- CASE 4, 5, 6: DIFFERENT TIERS (Heterozygous) ---
+        double result;
+
+        if (isUpperA && isUpperB) {
+            // Rule 4: Both dominant, higher value takes precedence
+            result = Math.max(tierA.value(), tierB.value());
+        }
+        else if (!isUpperA && !isUpperB) {
+            // Rule 5: Both recessive, lower value takes precedence
+            result = Math.min(tierA.value(), tierB.value());
+        }
+        else {
+            // Rule 6: Mixed dominance, the dominant allele wins
+            result = isUpperA ? tierA.value() : tierB.value();
+        }
+
+        // Rule 7: Apply flat nerf to all heterozygous pairs
+        return result * HETERO_GLOBAL_NERF;
     }
 
     private double computeModifier() {
         char a = genome.charAt(6);
         char b = genome.charAt(7);
-        Tier t = Tier.fromChar(a);
 
-        if (t == Tier.X) return 2.0;
-        if (t == Tier.G) return 1.5;
-        if (Character.isUpperCase(a) && Character.isUpperCase(b)) return 0.75;
-        if (Character.isLowerCase(a) && Character.isLowerCase(b)) return 1.25;
+        Tier tierA = Tier.fromChar(a);
+        Tier tierB = Tier.fromChar(b);
+
+        // 1. Reserved Tiers (Prioritized)
+        // Using OR ensures that if either allele is X/G, the effect triggers.
+        if (tierA == Tier.X || tierB == Tier.X) return 2.0; // The "Chaos" Gene
+        if (tierA == Tier.G || tierB == Tier.G) return 1.5; // The "Evolution" Gene
+
+        boolean isUpperA = Character.isUpperCase(a);
+        boolean isUpperB = Character.isUpperCase(b);
+
+        // 2. Stability vs. Volatility (Homozygous Check)
+        // We only apply these if the tiers match (e.g., AA or aa).
+        if (Character.toUpperCase(a) == Character.toUpperCase(b)) {
+            if (isUpperA && isUpperB) return 0.75;  // Dominant Homozygous: Very Stable
+            if (!isUpperA && !isUpperB) return 1.25; // Recessive Homozygous: More Volatile
+        }
+
+        // 3. Base Case (Heterozygous or Mixed Dominance)
         return 1.0;
     }
 
@@ -176,7 +226,7 @@ public class CropGenome {
 
             if (random.nextDouble() < chance) {
                 int alleleIndex = i + random.nextInt(2);
-                chars[alleleIndex] = mutateAllele(chars[alleleIndex]);
+                chars[alleleIndex] = mutateAllele(chars[alleleIndex], random);
             }
         }
 
@@ -184,40 +234,70 @@ public class CropGenome {
     }
 
     private double getMutationChance(int index) {
-
         char a = genome.charAt(index);
         char b = genome.charAt(index + 1);
 
-        boolean homozygous = Character.toUpperCase(a) == Character.toUpperCase(b);
+        boolean isUpperA = Character.isUpperCase(a);
+        boolean isUpperB = Character.isUpperCase(b);
+        boolean sameTier = Character.toUpperCase(a) == Character.toUpperCase(b);
 
-        if (homozygous) {
-            if (Character.isUpperCase(a)) {
-                return BASE_MUTATION_RATE * DOMINANT_MUTATION_MULT;
+        double localMultiplier;
+
+        if (sameTier) {
+            // CASE: Same Tier (e.g., AA, aa, Aa)
+            if (isUpperA && isUpperB) {
+                // Dominant Homozygous: The "End Goal" - highly stable.
+                localMultiplier = DOMINANT_MUTATION_MULT;
+            } else if (!isUpperA && !isUpperB) {
+                // Recessive Homozygous: The "Mutation Engine" - highly volatile.
+                localMultiplier = RECESSIVE_MUTATION_MULT;
             } else {
-                return BASE_MUTATION_RATE * RECESSIVE_MUTATION_MULT;
+                // Mixed Dominance (Aa/aA): The "Stable Hybrid" - baseline.
+                localMultiplier = HETEROZYGOUS_MUTATION_MULT;
             }
+        } else {
+            // CASE: Different Tiers (e.g., AB, ab, Ab)
+            // These are transition states. We treat them as neutral baseline.
+            localMultiplier = HETEROZYGOUS_MUTATION_MULT;
         }
 
-        return BASE_MUTATION_RATE * HETEROZYGOUS_MUTATION_MULT;
+        // Apply the Global Modifier (from slots 7 & 8) and the Base Rate
+        // this.mutationMod is the pre-calculated field from computeModifier()
+        return BASE_MUTATION_RATE * localMultiplier * this.mutationMod;
     }
 
-    private char mutateAllele(char allele) {
+    private char mutateAllele(char allele, Random random) {
         Tier tier = Tier.fromChar(allele);
 
-        if (tier == Tier.G || tier == Tier.X)
-            return allele;
+        // G and X are "immutable" or "perfected" genes that don't shift
+        if (tier == Tier.G || tier == Tier.X) return allele;
 
         boolean isUpper = Character.isUpperCase(allele);
+        boolean isRegressive = random.nextDouble() < REGRESSIVE_MUTATION_CHANCE;
 
-        if (!isUpper) {
-            // recessive -> dominant
-            return Character.toUpperCase(allele);
+        if (isRegressive) {
+            // --- REGRESSIVE MUTATION (The Setback) ---
+            if (isUpper) {
+                // Dominant -> Recessive (e.g., 'A' -> 'a')
+                // Stays in same tier but loses the dominance buff.
+                return Character.toLowerCase(allele);
+            } else {
+                // Recessive -> Previous Tier Dominant (e.g., 'b' -> 'A')
+                // Drops a tier but gains dominance.
+                Tier prev = Tier.previous(tier);
+                return Character.toUpperCase(prev.name().charAt(0));
+            }
+        } else {
+            // --- PROGRESSIVE MUTATION (Standard) ---
+            if (!isUpper) {
+                // Recessive -> Dominant (e.g., 'a' -> 'A')
+                return Character.toUpperCase(allele);
+            } else {
+                // Dominant -> Next Tier Recessive (e.g., 'A' -> 'b')
+                Tier next = Tier.next(tier);
+                return Character.toLowerCase(next.name().charAt(0));
+            }
         }
-
-        // dominant -> next tier recessive
-        Tier next = Tier.next(tier);
-
-        return Character.toLowerCase(next.name().charAt(0));
     }
 
     // ==========================================

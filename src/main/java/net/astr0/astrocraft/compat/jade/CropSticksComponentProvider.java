@@ -32,7 +32,7 @@ public enum CropSticksComponentProvider implements IBlockComponentProvider, ISer
     @Override
     public void appendServerData(CompoundTag data, BlockAccessor accessor) {
         CropSticksBlockEntity furnace = (CropSticksBlockEntity) accessor.getBlockEntity();
-        data.putInt("Fuel", furnace.litTime);
+        //data.putInt("Fuel", furnace.litTime);
     }
 
     @Override

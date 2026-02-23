@@ -61,6 +61,8 @@ public class TabletItem extends Item {
                 Component message = NbtPrettyPrinter.prettyPrint(be.saveWithFullMetadata());
                 player.displayClientMessage(message, false);
             }
+        } else {
+            player.displayClientMessage(Component.literal(String.format("%f", level.getBiome(player.getOnPos()).get().getBaseTemperature())), true);
         }
 
         return InteractionResult.CONSUME; // ← This stops the GUI from opening!

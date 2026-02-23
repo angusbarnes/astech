@@ -23,7 +23,7 @@ public class CropUtils {
         seedStack.setCount(1);
 
         if (plant != null) {
-            return new PlantedCrop(seedStack, plant, CropGenetics.fromStack(seedStack));
+            return new PlantedCrop(seedStack, plant, CropGenome.fromStack(seedStack));
         }
 
         return null;

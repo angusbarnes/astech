@@ -11,7 +11,7 @@ public class CropGenome {
     // =============================
     // ===== CONFIGURABLE VALUES ===
     // =============================
-    public static final double BASE_MUTATION_RATE = 0.005;
+    public static final double BASE_MUTATION_RATE = 0.50;
     public static final double RECESSIVE_MUTATION_MULT = 1.5;
     public static final double HETEROZYGOUS_MUTATION_MULT = 1.0;
     public static final double DOMINANT_MUTATION_MULT = 0.5;

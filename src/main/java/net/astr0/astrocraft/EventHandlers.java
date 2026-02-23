@@ -2,6 +2,7 @@ package net.astr0.astrocraft;
 
 import net.astr0.astrocraft.block.ModBlocks;
 import net.astr0.astrocraft.farming.CropGenetics;
+import net.astr0.astrocraft.farming.CropGenome;
 import net.astr0.astrocraft.item.KeyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -122,28 +123,10 @@ public class EventHandlers {
         if (!stack.is(Tags.Items.SEEDS)) return;
 
         CompoundTag tag = stack.getTag();
-        if (tag != null && tag.contains(CropGenetics.NBT_KEY)) {
-            CropGenetics genetics = CropGenetics.fromStack(stack);
+        if (tag != null && tag.contains(CropGenome.NBT_KEY)) {
+            CropGenome genome = CropGenome.fromStack(stack);
             tooltip.getToolTip().add(
-                    Component.literal(
-                            String.format(
-                                    "Gain: %s", genetics.gain()
-                            )
-                    )
-            );
-            tooltip.getToolTip().add(
-                    Component.literal(
-                            String.format(
-                                    "Growth: %s", genetics.growth()
-                            )
-                    )
-            );
-            tooltip.getToolTip().add(
-                    Component.literal(
-                            String.format(
-                                    "Resistance: %s", genetics.resistance()
-                            )
-                    )
+                    Component.literal(genome.genome())
             );
         } else {
             tooltip.getToolTip().add(Component.literal("Wild quality"));

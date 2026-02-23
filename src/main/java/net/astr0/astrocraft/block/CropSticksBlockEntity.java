@@ -2,6 +2,7 @@ package net.astr0.astrocraft.block;
 
 import com.mojang.logging.LogUtils;
 import net.astr0.astrocraft.farming.CropGenetics;
+import net.astr0.astrocraft.farming.CropGenome;
 import net.astr0.astrocraft.farming.CropUtils;
 import net.astr0.astrocraft.farming.PlantedCrop;
 import net.minecraft.core.BlockPos;
@@ -20,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CropSticksBlockEntity extends BlockEntity {
 
@@ -42,9 +44,12 @@ public class CropSticksBlockEntity extends BlockEntity {
 
         // Refresh cache immediately
         this.cachedPlant = CropUtils.getPlantedCrop(this.seedStack);
+        cachedPlant.genetics().mutate(new Random()); //TODO: THIS IS TEMPORARY
+        cachedPlant.genetics().applyToStack(seedStack);
 
         this.setChanged();
         this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+
     }
 
     public ItemStack getSeed() {
@@ -52,16 +57,20 @@ public class CropSticksBlockEntity extends BlockEntity {
         return seedStack.isEmpty() ? ItemStack.EMPTY : seedStack.copy();
     }
 
+    public CropGenome getGenes() {
+        return cachedPlant.genetics();
+    }
+
     // --- Core Logic: The "Hybrid" Tick ---
     // Called by the Block's randomTick()
     public void performGrowthTick(ServerLevel level, RandomSource random) {
         if (cachedPlant == null) return; // Fast fail
 
-        CropGenetics stats = cachedPlant.genetics();
+        CropGenome stats = cachedPlant.genetics();
 
         // 1. Calculate Growth Chance based on Stats
         // Base chance 10% + (Growth Stat * 5%)
-        float chance = 0.10f + (stats.growth() * 0.05f);
+        float chance = (float) (0.10f + (stats.getGrowth() * 0.05f));
 
         // 2. Check Light/Water logic here (omitted for brevity)
         if (level.getRawBrightness(this.worldPosition.above(), 0) >= 9) {
@@ -120,6 +129,16 @@ public class CropSticksBlockEntity extends BlockEntity {
             drops.add(drop);
         }
         return drops;
+    }
+
+    //PLACEHOLDER (do not implement): Check if a crop can be crafted
+    private boolean isValidRecipe() {
+        return false;
+    }
+
+    //PLACEHOLDER (do not implement): Get crafted crop based on recipe system
+    private PlantedCrop getCraftedCrop() {
+        return null;
     }
 
     @Override

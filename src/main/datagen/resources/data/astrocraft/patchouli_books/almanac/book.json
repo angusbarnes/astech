@@ -1,0 +1,10 @@
+{
+    "name": "The Botanist's Almanac",
+    "landing_text": "DO YOU LIKE PLANTS? DO YOU HATE WEEDS? This is the book for you. The essential guide to everyday plant care",
+    "subtitle": 1,
+    "show_progress": false,
+    "dont_generate_book": false,
+    "macros": {},
+    "use_resource_pack": true,
+    "creative_tab": "minecraft:tools_and_utilities"
+}

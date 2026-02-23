@@ -1,0 +1,20 @@
+{
+    "name": "Purity & Dominance",
+    "icon": "minecraft:wheat_seeds",
+    "category": "astrocraft:genetics",
+    "sortnum": 2,
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "astrocraft:crop_sticks",
+            "title": "Breeding Pairs",
+            "link_recipe": false,
+            "text": "When two identical letters pair up, the trait is $(o)Purebred$().$(br2)$(li)$(2)Dominant Purebred (AA)$(): Yields a $(2)+10% stat buff$() and makes the gene highly stable.$(li)$(4)Recessive Purebred (aa)$(): Suffers a $(4)-10% stat nerf$() but becomes highly volatile for mutations.$(li)$(e)Stable Hybrid (Aa)$(): Base stats, baseline mutation rate."
+        },
+        {
+            "type": "text",
+            "title": "The Hetero Penalty",
+            "text": "If a plant inherits two completely different tiers (e.g., $(6)A$() and $(c)B$()), it is $(o)Heterozygous$().$(br2)In this state, the plant is biologically stressed. It suffers a flat $(4)5% stat penalty$() across the board until you breed it back into a stable pair (like $(6)AA$() or $(c)BB$()).$(br2)If the tiers clash, the Dominant letter takes precedence."
+        }
+    ]
+}

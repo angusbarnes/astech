@@ -1,0 +1,20 @@
+{
+    "name": "Crop Genetics 101",
+    "icon": "astrocraft:genetic_material_a",
+    "category": "astrocraft:genetics",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "astrocraft:genetic_material_a",
+            "title": "The Genome",
+            "link_recipe": false,
+            "text": "Every crop holds an 8-letter $(6)Genome$() that dictates its behavior. You can view this using a $(l:modid:genetic_analyzer)Genetic Analyzer$(/l).$(br2)The genome is split into 4 pairs of letters (called $(o)Loci$()), each controlling a specific trait:$(br)$(li)$(2)Growth$() (Speed)$(li)$(6)Gain$() (Yield)$(li)$(b)Resistance$() (Weed/Pest Defense)$(li)$(d)Modifier$() (Mutation Rate)"
+        },
+        {
+            "type": "text",
+            "title": "Understanding Alleles",
+            "text": "Each trait is controlled by two letters (Alleles), inherited from its parents. $(br2)Letters range from $(c)F$() (worst) up to $(6)S$() (best). There are also special hidden tiers like $(5)X$() and $(5)G$().$(br2)Capital letters are $(2)Dominant$(), while lowercase letters are $(4)Recessive$(). The combination of these letters determines not only the plant's stats, but its stability!"
+        }
+    ]
+}

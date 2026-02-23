@@ -1,0 +1,18 @@
+{
+    "name": "Farming Strategies",
+    "icon": "minecraft:golden_hoe",
+    "category": "astrocraft:genetics",
+    "sortnum": 4,
+    "pages": [
+        {
+            "type": "text",
+            "title": "The Production Line",
+            "text": "Once you have high-tier seeds, your goal is $(2)Stability$().$(br2)You want every letter to be $(2)Dominant Homozygous (e.g., SS SS SS SS)$().$(br2)This gives the plant a 10% stat buff across the board, and the dominant modifier gene will crush the mutation rate, virtually \"locking in\" your perfect crop so it never degrades."
+        },
+        {
+            "type": "text",
+            "title": "The Laboratory",
+            "text": "When trying to discover new tiers, you want $(4)Volatility$().$(br2)Keep a field of $(4)Recessive Homozygous (e.g., ff ff ff ff)$() crops. They have terrible stats, but their genetic instability makes them mutate rapidly.$(br2)Once they mutate into a higher tier, cross them with your stable lines to purify the new gene!"
+        }
+    ]
+}

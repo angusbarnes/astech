@@ -1,0 +1,20 @@
+{
+    "name": "Mutations & Volatility",
+    "icon": "astrocraft:genetic_sample",
+    "category": "astrocraft:genetics",
+    "sortnum": 3,
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "astrocraft:mutated_genetic_material",
+            "title": "Forcing Evolution",
+            "link_recipe": false,
+            "text": "When crossbreeding, crops have a small chance to mutate. Mutations climb a \"step-ladder\":$(br2)A recessive $(4)'a'$() might mutate into a dominant $(2)'A'$(). A dominant $(2)'A'$() might mutate into the next tier's recessive $(4)'b'$().$(br2)Beware: roughly $(c)15% of mutations are Regressive$(), meaning the gene steps backward!"
+        },
+        {
+            "type": "text",
+            "title": "The Modifier Gene",
+            "text": "The final two letters of the genome (Slots 7 & 8) don't give stats. Instead, they act as the $(d)Modifier Locus$().$(br2)$(li)A dominant purebred modifier (e.g., $(2)SS$()) acts as a $(2)Genetic Lock$(), drastically reducing the chance of mutations.$(li)A recessive purebred modifier (e.g., $(4)ss$()) acts as a $(4)Mutation Engine$(), heavily boosting the chance of genetic drift."
+        }
+    ]
+}

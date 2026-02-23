@@ -128,6 +128,7 @@ output.accept(ModItems.NEUTRON_PILE.get());
 output.accept(ModItems.NOT_GATE.get());
 output.accept(ModItems.OP_AMP.get());
 output.accept(ModItems.OR_GATE.get());
+output.accept(ModItems.PENFOLDS_GRANGE.get());
 output.accept(ModItems.PHOTONIC_FLUX_CAPACITOR.get());
 output.accept(ModItems.PROCESSING_UNIT.get());
 output.accept(ModItems.PROCESSING_UNIT_BOARD.get());

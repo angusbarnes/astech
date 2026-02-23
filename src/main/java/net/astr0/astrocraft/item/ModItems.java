@@ -125,6 +125,7 @@ public static final RegistryObject<Item> NEUTRON_PILE = SimpleIngredientItem("ne
 public static final RegistryObject<Item> NOT_GATE = SimpleIngredientItem("not_gate", 64);
 public static final RegistryObject<Item> OP_AMP = SimpleIngredientItem("op_amp", 64);
 public static final RegistryObject<Item> OR_GATE = SimpleIngredientItem("or_gate", 64);
+public static final RegistryObject<Item> PENFOLDS_GRANGE = SimpleIngredientItem("penfolds_grange", 64);
 public static final RegistryObject<Item> PHOTONIC_FLUX_CAPACITOR = SimpleIngredientItem("photonic_flux_capacitor", 64);
 public static final RegistryObject<Item> PROCESSING_UNIT = SimpleIngredientItem("processing_unit", 64);
 public static final RegistryObject<Item> PROCESSING_UNIT_BOARD = SimpleIngredientItem("processing_unit_board", 64);

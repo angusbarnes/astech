@@ -809,6 +809,7 @@ static_items = [
     'cosmic_meatballs', 
     'quantum_circuit_board',
     'blank_record',
+    'penfolds_grange',
     'tier_2_rocket_fin',
     'tier_3_rocket_fin',
     'tier_4_rocket_fin',

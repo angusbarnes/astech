@@ -19,20 +19,17 @@ public enum CropSticksComponentProvider implements IBlockComponentProvider, ISer
             BlockAccessor accessor,
             IPluginConfig config
     ) {
-        if (accessor.getServerData().contains("Fuel")) {
+        if (accessor.getServerData().contains("genes")) {
             tooltip.add(
-                    Component.translatable(
-                            "mymod.fuel",
-                            accessor.getServerData().getInt("Fuel")
-                    )
+                    Component.literal(accessor.getServerData().getString("genes"))
             );
         }
     }
 
     @Override
     public void appendServerData(CompoundTag data, BlockAccessor accessor) {
-        CropSticksBlockEntity furnace = (CropSticksBlockEntity) accessor.getBlockEntity();
-        //data.putInt("Fuel", furnace.litTime);
+        CropSticksBlockEntity sticks = (CropSticksBlockEntity) accessor.getBlockEntity();
+        data.putString("genes", sticks.getGenes().genome());
     }
 
     @Override

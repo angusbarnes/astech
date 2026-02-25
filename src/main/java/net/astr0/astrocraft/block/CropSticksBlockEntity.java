@@ -1,7 +1,6 @@
 package net.astr0.astrocraft.block;
 
 import com.mojang.logging.LogUtils;
-import net.astr0.astrocraft.farming.CropGenetics;
 import net.astr0.astrocraft.farming.CropGenome;
 import net.astr0.astrocraft.farming.CropUtils;
 import net.astr0.astrocraft.farming.PlantedCrop;
@@ -63,6 +62,7 @@ public class CropSticksBlockEntity extends BlockEntity {
 
     // --- Core Logic: The "Hybrid" Tick ---
     // Called by the Block's randomTick()
+    // TODO: Support flowers and shit
     public void performGrowthTick(ServerLevel level, RandomSource random) {
         if (cachedPlant == null) return; // Fast fail
 

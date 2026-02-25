@@ -1,13 +1,13 @@
 package net.astr0.astrocraft;
 
 import com.mojang.logging.LogUtils;
+import dev.engine_room.flywheel.api.visualization.VisualizerRegistry;
 import net.astr0.astrocraft.Fluid.ModFluids;
 import net.astr0.astrocraft.block.AdvancedAssembler.AdvancedAssemblerScreen;
 import net.astr0.astrocraft.block.Assembler.AssemblerScreen;
 import net.astr0.astrocraft.block.BrickKilnRenderer;
 import net.astr0.astrocraft.block.ChemicalMixer.ChemicalMixerScreen;
 import net.astr0.astrocraft.block.CoolantBlock.CoolantBlockScreen;
-import net.astr0.astrocraft.block.CropSticksRenderer;
 import net.astr0.astrocraft.block.EUVMachine.EUVMachineScreen;
 import net.astr0.astrocraft.block.ElectrolyticSeperator.ElectrolyticSeperatorScreen;
 import net.astr0.astrocraft.block.GemPolisher.GemPolishingStationScreen;
@@ -158,12 +158,14 @@ public class Astrocraft
             MenuScreens.register(ModMenuTypes.COOLANT_BLOCK_MENU.get(), CoolantBlockScreen::new);
             MenuScreens.register(ModMenuTypes.CABLE_TOOL_MENU.get(), CableToolScreen::new);
 
+            VisualizerRegistry.setVisualizer(ModBlockEntities.CROP_STICKS.get(), new CropSticksVisualizer());
+
         }
 
         @SubscribeEvent
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(ModBlockEntities.BRICK_KILN.get(), BrickKilnRenderer::new);
-            event.registerBlockEntityRenderer(ModBlockEntities.CROP_STICKS.get(), CropSticksRenderer::new);
+            //event.registerBlockEntityRenderer(ModBlockEntities.CROP_STICKS.get(), CropSticksRenderer::new);
         }
 
     }

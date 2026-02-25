@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
 
@@ -14,6 +15,7 @@ public class CropSticksRenderer implements BlockEntityRenderer<CropSticksBlockEn
     public CropSticksRenderer(BlockEntityRendererProvider.Context context) {
     }
 
+    //TODO: Support multiblock plants
     @Override
     public void render(CropSticksBlockEntity be, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         if (be.getSeed().isEmpty()) return;
@@ -29,16 +31,20 @@ public class CropSticksRenderer implements BlockEntityRenderer<CropSticksBlockEn
 
         // Scale/Safety:
         // We render it as a "Cutout" to support transparent textures (like wheat)
-        Minecraft.getInstance().getBlockRenderer().renderSingleBlock(
-                plantState,
-                poseStack,
-                bufferSource,
-                packedLight,
-                packedOverlay,
-                ModelData.EMPTY,
-                RenderType.cutout()
-        );
 
+        if (plantState.getBlock() instanceof TallFlowerBlock block) {
+            //TODO: Put some shit here
+        } else {
+            Minecraft.getInstance().getBlockRenderer().renderSingleBlock(
+                    plantState,
+                    poseStack,
+                    bufferSource,
+                    packedLight,
+                    packedOverlay,
+                    ModelData.EMPTY,
+                    RenderType.cutout()
+            );
+        }
         poseStack.popPose();
     }
 }

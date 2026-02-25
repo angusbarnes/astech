@@ -20,6 +20,10 @@ public class ModRecipes {
     public static final RegistryObject<RecipeSerializer<ChemicalMixerRecipe>> CHEMICAL_MIXER_SERIALIZER =
             SERIALIZERS.register(ModRecipes.CHEMICAL_MIXER, ChemicalMixerRecipe.Serializer::getInstance);
 
+    public static final RegistryObject<AsTechRecipeType<CrossbreedingRecipe>> CROSSBREADING_RECIPE_TYPE = registerType("crossbreading", AsTechRecipeType::new);
+    public static final RegistryObject<RecipeSerializer<CrossbreedingRecipe>> CROSSBREADING_SERIALIZER =
+            SERIALIZERS.register("crossbreading", CrossbreedingRecipe.Serializer::getInstance);
+
     public static final RegistryObject<AsTechRecipeType<AssemblerRecipe>> ASSEMBLER_RECIPE_TYPE = registerType(ModRecipes.ASSEMBLER, AsTechRecipeType::new);
     public static final RegistryObject<RecipeSerializer<AssemblerRecipe>> ASSEMBLER_SERIALIZER =
             SERIALIZERS.register(ModRecipes.ASSEMBLER, AssemblerRecipe.Serializer::getInstance);

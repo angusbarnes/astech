@@ -23,6 +23,8 @@ import net.astr0.astrocraft.item.FluidCellItem;
 import net.astr0.astrocraft.item.ModItems;
 import net.astr0.astrocraft.network.AsTechNetworkHandler;
 import net.astr0.astrocraft.recipe.ModRecipes;
+import net.astr0.astrocraft.trading.TradeConfig;
+import net.astr0.astrocraft.trading.TradeEventHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.ComponentContents;
@@ -42,7 +44,9 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -60,6 +64,7 @@ public class Astrocraft
 
     public Astrocraft()
     {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TradeConfig.SPEC);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for mod loading
@@ -83,8 +88,11 @@ public class Astrocraft
         }
 
         MinecraftForge.EVENT_BUS.register(this);
-
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
+        forgeEventBus.addListener(EventPriority.LOWEST, TradeEventHandler::onVillagerTrades);
+        forgeEventBus.addListener(EventPriority.LOWEST, TradeEventHandler::onWanderingTrades);
+
+
         forgeEventBus.addListener(Astrocraft::addDangerToolTips);
         forgeEventBus.addListener(EventPriority.LOW, (PlayerInteractEvent.RightClickBlock event) -> {
             InteractionResult result = EventHandlers.HandleBrickPlacement(event);
@@ -98,7 +106,8 @@ public class Astrocraft
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::BlockPlaceListener);
         forgeEventBus.addListener(EventPriority.HIGH, EventHandlers::restrictBlockEntityAccess);
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::addSeedTooltips);
-
+        forgeEventBus.addListener(EventPriority.LOWEST, EventHandlers::handleHungerMechanics);
+        forgeEventBus.addListener(EventPriority.HIGH, EventHandlers::onCurioChange);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)

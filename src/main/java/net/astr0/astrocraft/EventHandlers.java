@@ -1,19 +1,24 @@
 package net.astr0.astrocraft;
 
+import com.mojang.logging.LogUtils;
 import net.astr0.astrocraft.block.ModBlocks;
-import net.astr0.astrocraft.farming.CropGenetics;
 import net.astr0.astrocraft.farming.CropGenome;
 import net.astr0.astrocraft.item.KeyItem;
+import net.astr0.astrocraft.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -32,6 +37,7 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.event.CurioChangeEvent;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import java.util.HashMap;
@@ -235,5 +241,172 @@ public class EventHandlers {
                 (soundtype.getVolume() + 1.0F) / 2.0F,
                 soundtype.getPitch() * 0.8F
         );
+    }
+
+    public static void handleSurvivalSystems(ServerPlayer player) {
+        if (player.level().isClientSide()) return;
+
+        CompoundTag data = player.getPersistentData();
+        FoodData food = player.getFoodData();
+
+        boolean stabilizer = data.getBoolean("astech_has_stabilizer");
+        boolean xpConverter = data.getBoolean("astech_has_xp_converter");
+        boolean override = data.getBoolean("astech_has_exhaustion_override");
+
+        if (override) {
+            handleOverrideMode(player, food);
+            handleColdDamage(player); // still vulnerable to cold
+            return;
+        }
+
+        float exhaustionToAdd = computeEnvironmentalExhaustion(player);
+
+        if (stabilizer) {
+            reduceExhaustion(food, 0.01f);
+        } else {
+            food.addExhaustion(exhaustionToAdd);
+        }
+
+        if (xpConverter) {
+            convertXpToSaturation(player, food);
+        }
+
+        handleColdDamage(player);
+    }
+
+    private static float computeEnvironmentalExhaustion(ServerPlayer player) {
+        float base = 0.002f; // increased base globally
+
+        var level = player.level();
+
+        // Nether multiplier
+        if (level.dimension() == Level.NETHER) {
+            base *= 3.5f;
+        }
+
+        // Altitude scaling
+        int y = player.blockPosition().getY();
+        if (y > 100) {
+            base += ((y - 100) / 10f) * 0.0007f;
+        }
+
+        // Temperature scaling (ignored in Nether)
+        if (level.dimension() != Level.NETHER) {
+            float temp = level.getBiome(player.blockPosition())
+                    .value()
+                    .getBaseTemperature();
+
+            base += Math.abs(temp - 0.8f) * 0.004f;
+        }
+
+        return base;
+    }
+
+    private static void reduceExhaustion(FoodData food, float amount) {
+        float current = food.getExhaustionLevel();
+        if (current > 0f) {
+            food.setExhaustion(Math.max(0f, current - amount));
+        }
+    }
+
+    private static void convertXpToSaturation(ServerPlayer player, FoodData food) {
+
+        if (food.getSaturationLevel() >= food.getFoodLevel()) return;
+
+        int totalXp = player.totalExperience;
+
+        if (totalXp < 2000) return; // roughly level 30+
+
+        int drain = 10; // per tick
+        if (totalXp < drain) return;
+
+        player.giveExperiencePoints(-drain);
+
+        food.setSaturation(
+                Math.min(
+                        food.getFoodLevel(),
+                        food.getSaturationLevel() + 0.5f
+                )
+        );
+    }
+
+    private static void handleOverrideMode(ServerPlayer player, FoodData food) {
+
+        // Disable exhaustion entirely
+        food.setExhaustion(0f);
+
+        // Custom regen
+        if (player.tickCount % 40 != 0) return; // every 2 seconds
+
+        if (player.getHealth() >= player.getMaxHealth()) return;
+
+        if (food.getSaturationLevel() > 1f) {
+            food.setSaturation(food.getSaturationLevel() - 1f);
+            player.heal(1f);
+        } else if (food.getFoodLevel() > 1) {
+            food.setFoodLevel(food.getFoodLevel() - 1);
+            player.heal(1f);
+        }
+    }
+
+    private static void updateCurioFlags(ServerPlayer player) {
+
+        CompoundTag data = player.getPersistentData();
+
+        boolean stabilizer = hasCurio(player, ModItems.OVERWORLD_KEY.get());
+        boolean xpConverter = hasCurio(player, ModItems.NETHER_KEY.get());
+        boolean override = hasCurio(player, ModItems.END_KEY.get());
+
+        data.putBoolean("astech_has_stabilizer", stabilizer);
+        data.putBoolean("astech_has_xp_converter", xpConverter);
+        data.putBoolean("astech_has_exhaustion_override", override);
+    }
+
+    private static void handleColdDamage(ServerPlayer player) {
+
+        if (player.isCreative() || player.isSpectator()) return;
+
+        FoodData food = player.getFoodData();
+
+        if (food.getFoodLevel() >= 10) return;
+
+        var level = player.level();
+        var biome = level.getBiome(player.blockPosition()).value();
+
+        //TODO: Review this cold classification logic
+        boolean coldBiome =
+                biome.getBaseTemperature() < 0.15f ||
+                        level.getBiome(player.blockPosition()).is(BiomeTags.SPAWNS_SNOW_FOXES);
+
+        if (!coldBiome) return;
+
+        if (player.tickCount % 40 == 0) {
+            player.hurt(
+                    level.damageSources().freeze(),
+                    1.0f
+            );
+        }
+    }
+
+    private static boolean hasCurio(Player player, Item curioItem) {
+        return CuriosApi.getCuriosInventory(player)
+                .map(inv -> inv.findFirstCurio(stack ->
+                        stack.is(curioItem)
+                ).isPresent())
+                .orElse(false);
+    }
+
+    public static void handleHungerMechanics(TickEvent.PlayerTickEvent event) {
+
+        if (event.phase != TickEvent.Phase.END) return;
+        if (!(event.player instanceof ServerPlayer player)) return;
+        handleSurvivalSystems(player);
+    }
+
+    public static void onCurioChange(CurioChangeEvent event) {
+
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        LogUtils.getLogger().info(">>>>>>>>>> CURIO CHANGE EVENT");
+        updateCurioFlags(player);
     }
 }

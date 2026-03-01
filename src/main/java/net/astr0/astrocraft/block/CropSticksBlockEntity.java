@@ -56,7 +56,9 @@ public class CropSticksBlockEntity extends BlockEntity {
         return seedStack.isEmpty() ? ItemStack.EMPTY : seedStack.copy();
     }
 
-    public CropGenome getGenes() {
+    public @Nullable CropGenome getGenes() {
+        if (cachedPlant == null)
+            return null;
         return cachedPlant.genetics();
     }
 

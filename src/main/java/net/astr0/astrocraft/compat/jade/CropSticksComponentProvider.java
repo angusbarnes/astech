@@ -1,6 +1,7 @@
 package net.astr0.astrocraft.compat.jade;
 
 import net.astr0.astrocraft.block.CropSticksBlockEntity;
+import net.astr0.astrocraft.farming.CropGenome;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +30,10 @@ public enum CropSticksComponentProvider implements IBlockComponentProvider, ISer
     @Override
     public void appendServerData(CompoundTag data, BlockAccessor accessor) {
         CropSticksBlockEntity sticks = (CropSticksBlockEntity) accessor.getBlockEntity();
-        data.putString("genes", sticks.getGenes().genome());
+        CropGenome genetics = sticks.getGenes();
+        if (genetics != null) {
+            data.putString("genes", sticks.getGenes().genome());
+        }
     }
 
     @Override

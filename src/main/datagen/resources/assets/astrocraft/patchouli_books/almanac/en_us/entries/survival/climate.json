@@ -1,0 +1,18 @@
+{
+  "name": "Climate Hazards",
+  "icon": "minecraft:powder_snow_bucket",
+  "category": "astrocraft:survival",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "text",
+      "title": "Freezing Conditions",
+      "text": "In $(b)Snowy$() and $(b)Icy$() biomes, hunger becomes critical.$(br2)If your hunger drops below $(c)half$(), the cold will begin to damage you.$(br2)Eat well before traveling through frozen lands."
+    },
+    {
+      "type": "text",
+      "title": "The Nether",
+      "text": "The Nether is brutally exhausting.$(br2)Passive exhaustion increases dramatically in this dimension.$(br)Food consumption is significantly higher.$(br2)Prepare accordingly before extended expeditions."
+    }
+  ]
+}

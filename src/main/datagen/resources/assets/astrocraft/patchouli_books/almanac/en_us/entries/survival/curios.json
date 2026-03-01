@@ -1,0 +1,29 @@
+{
+  "name": "Survival Charms",
+  "icon": "astrocraft:toxic_vial",
+  "category": "astrocraft:survival",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "astrocraft:deep_see_crystal",
+      "title": "Stabilizer Charm",
+      "link_recipe": false,
+      "text": "Reduces passive exhaustion buildup.$(br2)Environmental effects still apply, but are softened.$(br)Ideal for long journeys or high-altitude bases."
+    },
+    {
+      "type": "spotlight",
+      "item": "astrocraft:steel_heart",
+      "title": "Essence Converter",
+      "link_recipe": false,
+      "text": "Converts $(5)Experience Points$() into $(e)Saturation$().$(br2)Drains XP rapidly — only sustainable for players above roughly $(6)Level 30$().$(br2)Useful in emergencies, but costly."
+    },
+    {
+      "type": "spotlight",
+      "item": "astrocraft:toxic_vial",
+      "title": "Metabolic Override",
+      "link_recipe": false,
+      "text": "Completely prevents exhaustion accumulation.$(br2)You can sprint indefinitely.$(br2)However, natural regeneration is replaced: healing now directly consumes $(e)Saturation$() and $(c)Hunger$().$(br2)No food means no healing."
+    }
+  ]
+}

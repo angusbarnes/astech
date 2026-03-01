@@ -1,0 +1,23 @@
+{
+  "name": "Environmental Fatigue",
+  "icon": "minecraft:cooked_beef",
+  "category": "astrocraft:survival",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "title": "A Harder World",
+      "text": "Survival is no longer passive. The world itself slowly wears you down.$(br2)All players now accumulate $(6)Exhaustion$() over time — even while standing still.$(br2)Exhaustion drains $(e)Saturation$() first, then $(c)Hunger$()."
+    },
+    {
+      "type": "text",
+      "title": "Altitude",
+      "text": "Above $(b)Y=100$(), the air grows thin.$(br)The higher you climb, the faster exhaustion builds.$(br2)Mountains and sky builds require serious food preparation."
+    },
+    {
+      "type": "text",
+      "title": "Temperature",
+      "text": "Extreme climates increase fatigue.$(br2)Hot deserts and freezing tundras both raise passive exhaustion.$(br)Temperate biomes are safest for long-term survival."
+    }
+  ]
+}

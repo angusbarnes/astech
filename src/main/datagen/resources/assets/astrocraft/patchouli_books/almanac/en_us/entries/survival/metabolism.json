@@ -1,0 +1,23 @@
+{
+  "name": "Metabolic Override",
+  "icon": "astrocraft:steel_heart",
+  "category": "astrocraft:survival",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "text",
+      "title": "A Different Physiology",
+      "text": "With Metabolic Override active, exhaustion is constantly reset to $(2)zero$().$(br2)You will never lose hunger from sprinting or environmental fatigue."
+    },
+    {
+      "type": "text",
+      "title": "Custom Regeneration",
+      "text": "Healing occurs periodically and consumes $(e)Saturation$() first.$(br)If saturation is empty, $(c)Hunger$() is consumed instead.$(br2)This prevents infinite regeneration without eating."
+    },
+    {
+      "type": "text",
+      "title": "Strategic Use",
+      "text": "This charm is powerful for combat and exploration.$(br2)However, food management becomes critical.$(br)Running out of food removes your ability to recover health."
+    }
+  ]
+}

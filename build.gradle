@@ -165,6 +165,19 @@ repositories {
         url "https://maven.createmod.net/"
     }
 
+    maven {
+        name "Modmaven"
+        url "https://modmaven.dev/"
+        // For Gradle 5.1 and above, limit it to just AE2
+        content {
+            includeGroup 'appeng'
+        }
+    }
+
+    maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
+    maven { url = "https://maven.ithundxr.dev/mirror" } // Registrate
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // ForgeConfigAPIPort
+    maven { url = 'https://maven.rover656.dev/releases' }
 }
 
 dependencies {
@@ -205,7 +218,7 @@ dependencies {
     // Not sure what the fuck this means
     implementation fg.deobf("curse.maven:${mekanism}")
 
-    implementation fg.deobf("maven.modrinth:fusion-connected-textures:1.1.1-forge-mc1.20.1")
+    runtimeOnly fg.deobf("maven.modrinth:fusion-connected-textures:1.1.1-forge-mc1.20.1")
 
     // Compile against only the API artifact
     compileOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${"5.7.0+1.20.1"}:api"))
@@ -224,6 +237,25 @@ dependencies {
 
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE")
+
+    //runtimeOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10")
+    //compileOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10:api")
+
+    // Include Ender IO API for compilation
+    compileOnly fg.deobf("com.enderio:EnderIO:1.20.1-6.2.17-beta")
+
+    // Use EnderIO at runtime
+    runtimeOnly fg.deobf("com.enderio:EnderIO:1.20.1-6.2.17-beta")
+
+
+
+    implementation(fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false })
+    implementation(fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}"))
+    //implementation(fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}"))
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
+    implementation("io.github.llamalad7:mixinextras-forge:0.4.1")
+
+    runtimeOnly(fg.deobf("dev.gigaherz.graph:GraphLib3:${graphlib_version}"))
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

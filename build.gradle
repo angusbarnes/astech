@@ -174,6 +174,8 @@ repositories {
         }
     }
 
+    mavenCentral()
+
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
     maven { url = "https://maven.ithundxr.dev/mirror" } // Registrate
     maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // ForgeConfigAPIPort
@@ -238,14 +240,15 @@ dependencies {
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE")
 
-    //runtimeOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10")
-    //compileOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10:api")
+    runtimeOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10")
+    compileOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10:api")
 
     // Include Ender IO API for compilation
     compileOnly fg.deobf("com.enderio:EnderIO:1.20.1-6.2.17-beta")
 
     // Use EnderIO at runtime
     runtimeOnly fg.deobf("com.enderio:EnderIO:1.20.1-6.2.17-beta")
+    runtimeOnly(fg.deobf("org.appliedenergistics:guideme:${guideme_version}"))
 
 
 

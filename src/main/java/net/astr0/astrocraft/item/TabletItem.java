@@ -3,6 +3,8 @@ package net.astr0.astrocraft.item;
 import net.astr0.astrocraft.IConfigurable;
 import net.astr0.astrocraft.NbtPrettyPrinter;
 import net.astr0.astrocraft.SoundRegistry;
+import net.astr0.astrocraft.compat.CompatManager;
+import net.astr0.astrocraft.compat.create.CreateCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -39,6 +41,11 @@ public class TabletItem extends Item {
 
         BlockPos pos = context.getClickedPos();
         BlockState block = level.getBlockState(pos);
+
+        if (CompatManager.isCreateLoaded) {
+            InteractionResult result = CreateCompat.handleWrench(context);
+            if (result.consumesAction()) return result;
+        }
 
         Collection<Property<?>> props = block.getProperties();
         for(Property<?> prop : props) {

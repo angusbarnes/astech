@@ -20,7 +20,6 @@ public abstract class MixinEnderman {
             cancellable = true        // Allow us to return a value early
     )
     private void onCheckLookingAtMe(Player player, CallbackInfoReturnable<Boolean> cir) {
-        LogUtils.getLogger().warn("HELLO FROM ENDERMAN MIXIN");
         if(EventHandlers.hasCurio(player, ModItems.END_KEY.get())) {
             cir.setReturnValue(false);
         }

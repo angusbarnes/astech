@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "astrocraft.refmap.json",
   "mixins": [
-    "MixinEnderman"
+    "MixinEnderman",
+    "EnderIOTravelStaffMixin"
   ],
   "injectors": {
     "defaultRequire": 1

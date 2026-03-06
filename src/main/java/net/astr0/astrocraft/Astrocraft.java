@@ -15,6 +15,7 @@ import net.astr0.astrocraft.block.ModBlockEntities;
 import net.astr0.astrocraft.block.ModBlocks;
 import net.astr0.astrocraft.block.PyrolysisChamber.PyrolysisChamberScreen;
 import net.astr0.astrocraft.block.ReactionChamber.ChemicalReactorScreen;
+import net.astr0.astrocraft.compat.CompatManager;
 import net.astr0.astrocraft.compat.mek.AstrocraftSlurries;
 import net.astr0.astrocraft.gui.ModMenuTypes;
 import net.astr0.astrocraft.item.AsTechBucketItem;
@@ -49,6 +50,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
@@ -69,6 +71,7 @@ public class Astrocraft
 
         // Register the commonSetup method for mod loading
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::endSetup);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -115,6 +118,10 @@ public class Astrocraft
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
         AsTechNetworkHandler.onCommonSetup();
+    }
+
+    private void endSetup(final FMLLoadCompleteEvent event) {
+        CompatManager.init();
     }
 
     // Add the example block item to the building blocks tab

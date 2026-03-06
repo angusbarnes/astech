@@ -937,7 +937,9 @@ datapack.add_item_tag("curios:key", 'astrocraft:end_key')
 datapack.add_item_tag("curios:key", 'astrocraft:transcendent_key')
 
 datapack.add_item_tag("forge:enderio_staff", 'astrocraft:tablet')
-
+datapack.add_item_tag("forge:wrench", 'astrocraft:tablet')
+datapack.add_item_tag("forge:tools/wrench", 'astrocraft:tablet')
+datapack.add_item_tag("forge:tools/wire_cutters", 'astrocraft:tablet')
 
 datapack.add_block_item_model("vacuum_freezer_controller")
 datapack.add_simple_item_model("crop_sticks")

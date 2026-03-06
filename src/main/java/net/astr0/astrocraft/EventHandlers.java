@@ -388,7 +388,7 @@ public class EventHandlers {
         }
     }
 
-    private static boolean hasCurio(Player player, Item curioItem) {
+    public static boolean hasCurio(Player player, Item curioItem) {
         return CuriosApi.getCuriosInventory(player)
                 .map(inv -> inv.findFirstCurio(stack ->
                         stack.is(curioItem)

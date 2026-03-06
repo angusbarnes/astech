@@ -4,6 +4,7 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = mod_version
@@ -141,6 +142,8 @@ repositories {
 dependencies {
     // Minecraft
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    // Apply Mixin AP
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // JEI
     compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"))
@@ -192,6 +195,15 @@ dependencies {
     runtimeOnly fg.deobf("maven.modrinth:fusion-connected-textures:1.1.1-forge-mc1.20.1")
     runtimeOnly(fg.deobf("blank:CTM-1.20.1:1.1.10"))
     //runtimeOnly(fg.deobf("blank:kubejs-forge-2001.6.4:build.138"))
+}
+
+mixin {
+    // MixinGradle Settings
+    add sourceSets.main, 'mixins.astrocraft.refmap.json'
+    config 'mixins.astrocraft.json'
+
+    debug.verbose = true
+    debug.export = true
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

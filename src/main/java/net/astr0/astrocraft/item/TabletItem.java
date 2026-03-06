@@ -5,10 +5,13 @@ import net.astr0.astrocraft.NbtPrettyPrinter;
 import net.astr0.astrocraft.SoundRegistry;
 import net.astr0.astrocraft.compat.CompatManager;
 import net.astr0.astrocraft.compat.create.CreateCompat;
+import net.astr0.astrocraft.compat.enderio.TravelStaffPatches;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +31,17 @@ public class TabletItem extends Item {
     @Override
     public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
         return false; // Don't allow breaking either
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
+        ItemStack stack = player.getItemInHand(usedHand);
+
+            if (TravelStaffPatches.performAction(this,level, player, stack)) {
+                return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+            }
+
+        return super.use(level, player, usedHand);
     }
 
     @Override

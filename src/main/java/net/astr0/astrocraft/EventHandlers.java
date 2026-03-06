@@ -5,6 +5,7 @@ import net.astr0.astrocraft.block.ModBlocks;
 import net.astr0.astrocraft.farming.CropGenome;
 import net.astr0.astrocraft.item.KeyItem;
 import net.astr0.astrocraft.item.ModItems;
+import net.astr0.astrocraft.trading.TradeConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -248,9 +249,10 @@ public class EventHandlers {
         CompoundTag data = player.getPersistentData();
         FoodData food = player.getFoodData();
 
-        boolean stabilizer = data.getBoolean("astech_has_stabilizer");
-        boolean xpConverter = data.getBoolean("astech_has_xp_converter");
-        boolean override = data.getBoolean("astech_has_exhaustion_override");
+        //TODO: Can only have one equipped at a time so can optimise this by only checking the slot
+        boolean stabilizer = data.getBoolean("astrocraft_has_stabilizer");
+        boolean xpConverter = data.getBoolean("astrocraft_has_xp_converter");
+        boolean override = data.getBoolean("astrocraft_has_exhaustion_override");
 
         if (override) {
             handleOverrideMode(player, food);
@@ -274,7 +276,7 @@ public class EventHandlers {
     }
 
     private static float computeEnvironmentalExhaustion(ServerPlayer player) {
-        float base = 0.002f; // increased base globally
+        float base = TradeConfig.EXHAUSTION_RATE.get().floatValue(); // increased base globally
 
         var level = player.level();
 
@@ -284,6 +286,7 @@ public class EventHandlers {
         }
 
         // Altitude scaling
+        // TODO: Review
         int y = player.blockPosition().getY();
         if (y > 100) {
             base += ((y - 100) / 10f) * 0.0007f;
@@ -310,23 +313,18 @@ public class EventHandlers {
 
     private static void convertXpToSaturation(ServerPlayer player, FoodData food) {
 
-        if (food.getSaturationLevel() >= food.getFoodLevel()) return;
+        if (food.getSaturationLevel() < 2) return;
 
-        int totalXp = player.totalExperience;
+        int drain = 5; // per tick
+        LogUtils.getLogger().info("XP CURIO: Level {}", player.experienceLevel);
 
-        if (totalXp < 2000) return; // roughly level 30+
+        if (player.experienceLevel < 10) return;
 
-        int drain = 10; // per tick
-        if (totalXp < drain) return;
-
+        // Proper XP removal
         player.giveExperiencePoints(-drain);
+        LogUtils.getLogger().info("]]]]] XP CURIO: {}, {}, {}", player.totalExperience, drain, food.getSaturationLevel());
 
-        food.setSaturation(
-                Math.min(
-                        food.getFoodLevel(),
-                        food.getSaturationLevel() + 0.5f
-                )
-        );
+        food.setSaturation(10f);
     }
 
     private static void handleOverrideMode(ServerPlayer player, FoodData food) {
@@ -356,9 +354,9 @@ public class EventHandlers {
         boolean xpConverter = hasCurio(player, ModItems.NETHER_KEY.get());
         boolean override = hasCurio(player, ModItems.END_KEY.get());
 
-        data.putBoolean("astech_has_stabilizer", stabilizer);
-        data.putBoolean("astech_has_xp_converter", xpConverter);
-        data.putBoolean("astech_has_exhaustion_override", override);
+        data.putBoolean("astrocraft_has_stabilizer", stabilizer);
+        data.putBoolean("astrocraft_has_xp_converter", xpConverter);
+        data.putBoolean("astrocraft_has_exhaustion_override", override);
     }
 
     private static void handleColdDamage(ServerPlayer player) {

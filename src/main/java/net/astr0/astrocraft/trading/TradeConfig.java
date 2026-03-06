@@ -11,7 +11,7 @@ public class TradeConfig {
 
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> INPUT_CURRENCIES;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> OUTPUT_CURRENCIES;
-
+    public static final ForgeConfigSpec.DoubleValue EXHAUSTION_RATE;
     static {
         BUILDER.push("Tiered Currency Settings");
 
@@ -34,6 +34,10 @@ public class TradeConfig {
                 obj -> obj instanceof String && ((String) obj).contains("="));
 
         BUILDER.pop();
+
+        BUILDER.push("Survival Mechanics");
+        BUILDER.comment("Rate of passive exhaustion");
+        EXHAUSTION_RATE = BUILDER.defineInRange("exhaustion_rate", 0.003d, 0, 1.0d);
         SPEC = BUILDER.build();
     }
 }

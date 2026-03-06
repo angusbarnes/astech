@@ -20,11 +20,11 @@ public static SlurryRegistryObject<Slurry, Slurry> DILITHIUM_SLURRY = SLURRIES.r
 public static SlurryRegistryObject<Slurry, Slurry> HELIUM_SLURRY = SLURRIES.register("helium", "#f7ecad", new ResourceLocation("forge","tags/items/ores/helium"));
 public static SlurryRegistryObject<Slurry, Slurry> IUMIUM_SLURRY = SLURRIES.register("iumium", "#ff903b", new ResourceLocation("forge","tags/items/ores/iumium"));
 public static SlurryRegistryObject<Slurry, Slurry> NEON_SLURRY = SLURRIES.register("neon", "#ff5ccd", new ResourceLocation("forge","tags/items/ores/neon"));
-public static SlurryRegistryObject<Slurry, Slurry> NITROGEN_SLURRY = SLURRIES.register("nitrogen", "#8a8dff", new ResourceLocation("forge","tags/items/ores/nitrogen"));
 public static SlurryRegistryObject<Slurry, Slurry> RADON_SLURRY = SLURRIES.register("radon", "#f542cb", new ResourceLocation("forge","tags/items/ores/radon"));
-public static SlurryRegistryObject<Slurry, Slurry> SODIUM_SLURRY = SLURRIES.register("sodium", "#ffaf54", new ResourceLocation("forge","tags/items/ores/sodium"));
 public static SlurryRegistryObject<Slurry, Slurry> STIPNICIUM_SLURRY = SLURRIES.register("stipnicium", "#ff4245", new ResourceLocation("forge","tags/items/ores/stipnicium"));
 public static SlurryRegistryObject<Slurry, Slurry> XENON_SLURRY = SLURRIES.register("xenon", "#3a79ff", new ResourceLocation("forge","tags/items/ores/xenon"));
 public static SlurryRegistryObject<Slurry, Slurry> PHOSPHORUS_SLURRY = SLURRIES.register("phosphorus", "#7d2718", new ResourceLocation("forge","tags/items/ores/phosphorus"));
+public static SlurryRegistryObject<Slurry, Slurry> NITROGEN_SLURRY = SLURRIES.register("nitrogen", "#8a8dff", new ResourceLocation("forge","tags/items/ores/nitrogen"));
+public static SlurryRegistryObject<Slurry, Slurry> SODIUM_SLURRY = SLURRIES.register("sodium", "#ffaf54", new ResourceLocation("forge","tags/items/ores/sodium"));
     //#end SLURRY_REGION
 }

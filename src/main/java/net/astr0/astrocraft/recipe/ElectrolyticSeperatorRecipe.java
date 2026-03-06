@@ -86,8 +86,6 @@ public class ElectrolyticSeperatorRecipe extends AsTechRecipeBase {
         @Override
         public ElectrolyticSeperatorRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            LogUtils.getLogger().info("REACTOR RECIPE_DEBUG: attempting to create recipe for id: {}", recipeId);
-
             FluidIngredient input1 = (FluidIngredient) FluidIngredient.fromJson(json.get("fluid_input"));
 
             FluidStack output1 = json.has("fluid_output_1") ?

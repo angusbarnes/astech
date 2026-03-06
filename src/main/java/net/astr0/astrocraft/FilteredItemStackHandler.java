@@ -155,8 +155,6 @@ public class FilteredItemStackHandler extends ItemStackHandler implements IState
             {
                 ItemStack stack = ItemStack.of(itemTags);
                 filters[slot].Lock(stack);
-
-                //LogUtils.getLogger().info("Loaded slot {} with filter {}", slot, stack);
             }
         }
         onLoad();
@@ -192,7 +190,6 @@ public class FilteredItemStackHandler extends ItemStackHandler implements IState
                 // This might not support NBT filtering and will only do basic filters
                 // May need to come back to this if noticing bugs with complex ingreients
                 buf.writeItemStack(filter.GetFilter(), true);
-                //LogUtils.getLogger().info("Wrote {} to flexipacket for slot {}", filters.get(i).GetFilter(), i);
             }
         }
     }

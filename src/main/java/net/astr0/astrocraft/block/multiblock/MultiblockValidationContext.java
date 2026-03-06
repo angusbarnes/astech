@@ -1,6 +1,7 @@
 package net.astr0.astrocraft.block.multiblock;
 
 import com.mojang.logging.LogUtils;
+import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,17 +34,17 @@ public class MultiblockValidationContext {
     }
 
     public boolean registerHatch(BlockPos pos, BlockState state) {
-        LogUtils.getLogger().info("Attempting to register hatch");
+        Astrocraft.LOGGER.info("Attempting to register hatch");
         if (state.is(ModBlocks.FLUID_INPUT_HATCH_BLOCK.get())) {
             if (inputHatches.size() >= maxInputs) return false;
             inputHatches.add(pos);
-            LogUtils.getLogger().info("Successfully registered fluid input hatch");
+            Astrocraft.LOGGER.info("Successfully registered fluid input hatch");
             return true;
         }
         if (state.is(ModBlocks.FLUID_OUTPUT_HATCH_BLOCK.get())) {
             if (outputHatches.size() >= maxOutputs) return false;
             outputHatches.add(pos);
-            LogUtils.getLogger().info("Successfully registered fluid output hatch");
+            Astrocraft.LOGGER.info("Successfully registered fluid output hatch");
             return true;
         }
         return false;

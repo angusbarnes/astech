@@ -149,7 +149,6 @@ public class EventHandlers {
 
         Level level = event.level;
 
-
         Iterator<Map.Entry<BlockPos, Integer>> it = dryingLogs.entrySet().iterator();
 
         while (it.hasNext()) {
@@ -406,7 +405,6 @@ public class EventHandlers {
     public static void onCurioChange(CurioChangeEvent event) {
 
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
-        LogUtils.getLogger().info(">>>>>>>>>> CURIO CHANGE EVENT");
         updateCurioFlags(player);
     }
 }

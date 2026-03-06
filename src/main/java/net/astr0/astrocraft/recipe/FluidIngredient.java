@@ -214,23 +214,6 @@ public class FluidIngredient extends Ingredient {
         return stack != null && stack.hasCraftingRemainingItem() && FluidUtil.getFluidContained(stack).map(this::testFluid).orElse(false);
     }
 
-//    @Override
-//    public ItemStack[] getItems() {
-//        if (cachedStacks == null) {
-//            List<ItemStack> tankList = new ArrayList<>();
-//            for (Fluid f : getFluidList()) {
-//                FluidStack fluidStack = new FluidStack(f, 1000);
-//                ItemStack bucket = FluidUtil.getFilledBucket(fluidStack);
-//                if (!bucket.isEmpty()) tankList.add(bucket);
-//                Stream.of("small", "medium", "large", "huge")
-//                        .map(tankName -> ForgeRegistries.BLOCKS.getValue(PneumaticRegistry.RL(tankName + "_tank")))
-//                        .filter(tankBlock -> tankBlock != null && tankBlock != Blocks.AIR)
-//                        .forEach(tankBlock -> maybeAddTank(tankList, tankBlock, fluidStack));
-//            }
-//            cachedStacks = tankList.toArray(new ItemStack[0]);
-//        }
-//        return cachedStacks;
-//    }
 
     /**
      * Test the given fluid stack against this ingredient. The fluid must match, and the fluid stack amount must be at
@@ -344,7 +327,6 @@ public class FluidIngredient extends Ingredient {
             } else if (json.has("fluid")) {
                 ResourceLocation fluidId = new ResourceLocation(GsonHelper.getAsString(json, "fluid"));
                 Fluid fluid = ForgeRegistries.FLUIDS.getValue(fluidId);
-                LogUtils.getLogger().info("RECIPE_DEBUG: Found a fluid id: {} which created fluid: {}", fluidId, fluid);
                 if (fluid == null || fluid == Fluids.EMPTY) throw new JsonSyntaxException("Unknown fluid '" + fluidId + "'");
                 result = FluidIngredient.of(amount, nbt, fuzzyNBT, fluid);
             } else {

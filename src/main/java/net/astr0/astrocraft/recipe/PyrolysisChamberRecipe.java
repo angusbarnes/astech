@@ -2,6 +2,7 @@ package net.astr0.astrocraft.recipe;
 
 import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
+import net.astr0.astrocraft.Astrocraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -86,7 +87,7 @@ public class PyrolysisChamberRecipe extends AsTechRecipeBase {
         @Override
         public PyrolysisChamberRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            LogUtils.getLogger().info("REACTOR RECIPE_DEBUG: attempting to create recipe for id: {}", recipeId);
+            Astrocraft.LOGGER.info("REACTOR RECIPE_DEBUG: attempting to create recipe for id: {}", recipeId);
 
             FluidIngredient input1 = (FluidIngredient) FluidIngredient.fromJson(json.get("fluid_input"));
 

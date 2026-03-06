@@ -48,7 +48,6 @@ public class IconButton extends AbstractButton {
 
     public void setIcon(Icons.Icon icon) {
         iconToDraw = icon;
-        //LogUtils.getLogger().info("Button was clicked -> set icon was called {}", icon.toString());
     }
 
     public Icons.Icon getIcon() {

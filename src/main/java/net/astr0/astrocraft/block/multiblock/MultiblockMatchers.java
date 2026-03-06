@@ -1,6 +1,7 @@
 package net.astr0.astrocraft.block.multiblock;
 
 import com.mojang.logging.LogUtils;
+import net.astr0.astrocraft.Astrocraft;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -12,7 +13,7 @@ public class MultiblockMatchers {
     public static MultiblockMatcher ofBlock(Block block) {
 
         return (level, pos, state, be, ctx) -> {
-            LogUtils.getLogger().info("Looking for {} at {}, found {}", block.getName(), pos.toShortString(), state.getBlock().getName());
+            Astrocraft.LOGGER.info("Looking for {} at {}, found {}", block.getName(), pos.toShortString(), state.getBlock().getName());
             return state.is(block);
         };
     }
@@ -31,7 +32,7 @@ public class MultiblockMatchers {
 
     public static MultiblockMatcher casingOrHatch(Block casingBlock) {
         return (level, pos, state, be, context) -> {
-            LogUtils.getLogger().info("Looking for Casing OR Hatch at {}, found {}", pos.toShortString(), state.getBlock().getName());
+            Astrocraft.LOGGER.info("Looking for Casing OR Hatch at {}, found {}", pos.toShortString(), state.getBlock().getName());
             if (state.is(casingBlock)) return true;
 
             return context.registerHatch(pos, state);

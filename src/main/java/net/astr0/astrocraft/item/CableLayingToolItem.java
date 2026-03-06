@@ -2,6 +2,7 @@ package net.astr0.astrocraft.item;
 
 
 import com.mojang.logging.LogUtils;
+import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -195,12 +196,12 @@ public class CableLayingToolItem extends Item {
                         return itemHandler;
                     } else {
                         // This shouldn't happen with your current setup, but is safe to log
-                        LogUtils.getLogger().warn("Unexpected handler type: {}", handler.getClass().getName());
+                        Astrocraft.LOGGER.warn("Unexpected handler type: {}", handler.getClass().getName());
                         return new ItemStackHandler(INVENTORY_SIZE);
                     }
                 })
                 .orElseGet(() -> {
-                    LogUtils.getLogger().warn("No ITEM_HANDLER capability found for: {}", stack);
+                    Astrocraft.LOGGER.warn("No ITEM_HANDLER capability found for: {}", stack);
                     return new ItemStackHandler(INVENTORY_SIZE); // Fallback
                 });
     }

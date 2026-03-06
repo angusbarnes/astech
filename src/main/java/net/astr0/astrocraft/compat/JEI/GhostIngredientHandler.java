@@ -5,6 +5,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.handlers.IGhostIngredientHandler;
 import mezz.jei.api.ingredients.ITypedIngredient;
+import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.gui.AbstractGuiSlot;
 import net.astr0.astrocraft.gui.AsTechGuiElement;
 import net.astr0.astrocraft.gui.AsTechGuiScreen;
@@ -76,7 +77,7 @@ public class GhostIngredientHandler implements IGhostIngredientHandler<AsTechGui
             return new DraggedIngredient.Fluid(fluid);
         }
 
-        LogUtils.getLogger().info("Unhandled dragged ingredient: {}", ingredient);
+        Astrocraft.LOGGER.info("Unhandled dragged ingredient: {}", ingredient);
         return null;
     }
 

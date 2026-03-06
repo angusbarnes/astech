@@ -103,8 +103,6 @@ public class ChemicalReactorRecipe extends AsTechRecipeBase {
         @Override
         public ChemicalReactorRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            LogUtils.getLogger().info("REACTOR RECIPE_DEBUG: attempting to create recipe for id: {}", recipeId);
-
             FluidIngredient input1 = json.has("fluid_input_1") ? (FluidIngredient) FluidIngredient.fromJson(json.get("fluid_input_1")) : FluidIngredient.EMPTY;
             FluidIngredient input2 = json.has("fluid_input_2") ? (FluidIngredient) FluidIngredient.fromJson(json.get("fluid_input_2")) : FluidIngredient.EMPTY;
 

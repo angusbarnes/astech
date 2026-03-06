@@ -218,15 +218,11 @@ public class MachineCapConfiguratorWidget extends AbstractWidget {
 
         if (_mode.get() == ITEM_MODE) {
             boolean shouldPush = _itemConfig.getPushSetting();
-
             _itemConfig.SetAutoPushOnClient(!shouldPush);
-            LogUtils.getLogger().info("Mode is ITEM, oldShouldPush={}, newShouldPush={}", !shouldPush, shouldPush);
             return !shouldPush;
         } else {
             boolean shouldPush = _fluidConfig.getPushSetting();
-
             _fluidConfig.SetAutoPushOnClient(!shouldPush);
-            LogUtils.getLogger().info("Mode is FLUID, oldShouldPush={}, newShouldPush={}", !shouldPush, shouldPush);
             return !shouldPush;
         }
 

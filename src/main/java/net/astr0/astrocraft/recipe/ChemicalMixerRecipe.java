@@ -154,8 +154,6 @@ public class ChemicalMixerRecipe extends AsTechRecipeBase {
         @Override
         public ChemicalMixerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            LogUtils.getLogger().info("RECIPE_DEBUG: attempting to create recipe for id: {}", recipeId);
-
             JsonArray inputs = json.get("inputs").getAsJsonArray();
             List<Ingredient> inputIngredients = new ArrayList<>();
             for (JsonElement e : inputs) {

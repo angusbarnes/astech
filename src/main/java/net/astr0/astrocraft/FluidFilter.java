@@ -22,7 +22,6 @@ public class FluidFilter {
     public void Lock(FluidStack stack) {
         isLocked = true;
         filterFluidStack = stack.copy();
-        //LogUtils.getLogger().info("Filter set as {}", filterFluidStack);
     }
 
     public void Unlock() {

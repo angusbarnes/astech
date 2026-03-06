@@ -48,8 +48,6 @@ public abstract class KeyItem extends Item implements ICurioItem {
     }
 
     protected boolean isValidDimension(ResourceKey<DimensionType> dimension) {
-        LogUtils.getLogger().debug("Dimension Type: {}", dimension.location().getPath());
-
         return Arrays.stream(allowedDimensions).anyMatch(dim -> dim.equals(dimension.location().getPath()));
     }
 

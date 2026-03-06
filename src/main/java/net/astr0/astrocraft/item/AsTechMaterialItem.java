@@ -34,9 +34,6 @@ public class AsTechMaterialItem extends Item {
             for(ItemStack armorPiece : livingEntity.getArmorSlots()) {
                 // If even a single piece isnt chemically protective, apply hazard effect
                 if (!armorPiece.is(ModTags.CHEMICAL_PROTECTION)) {
-//                    LogUtils.getLogger().info("Checked {} against {} and found that it failed. Had {}",
-//                        armorPiece.getDisplayName().getString(), myItemTag.toString(), armorPiece.getTags().toList().toString()
-//                    );
                     hazardBehavior.apply(stack, livingEntity, level);
                     return;
                 }

@@ -36,9 +36,6 @@ public class CableRenderHandler {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS)
             return;
 
-
-        //LogUtils.getLogger().info("Ohhh boy we renderin");
-
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
         ItemStack heldItem = player.getMainHandItem();

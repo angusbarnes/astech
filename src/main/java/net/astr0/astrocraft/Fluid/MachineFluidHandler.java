@@ -31,7 +31,6 @@ public class MachineFluidHandler implements IFluidHandler, IStateManaged {
                 @Override
                 protected void onContentsChanged() {
                     super.onContentsChanged();
-                    LogUtils.getLogger().info("Tank contents were changed");
                     MachineFluidHandler.this.networkIsDirty = true;
                 }
             };
@@ -276,8 +275,6 @@ public class MachineFluidHandler implements IFluidHandler, IStateManaged {
     //Only some of this data changes
     public void writeNetworkEncoding(FriendlyByteBuf buf) {
 
-        LogUtils.getLogger().info("FluidHandler is being encoded on the server");
-
         for(FluidTank tank : tanks) {
             buf.writeFluidStack(tank.getFluid());
         }
@@ -295,7 +292,7 @@ public class MachineFluidHandler implements IFluidHandler, IStateManaged {
     }
 
     public void readNetworkEncoding(FriendlyByteBuf buf) {
-        LogUtils.getLogger().info("FluidHandler is being decoded on the client");
+
         for(FluidTank tank : tanks) {
             tank.setFluid(buf.readFluidStack());
         }

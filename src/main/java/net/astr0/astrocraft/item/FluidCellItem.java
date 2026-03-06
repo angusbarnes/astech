@@ -1,6 +1,7 @@
 package net.astr0.astrocraft.item;
 
 import com.mojang.logging.LogUtils;
+import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.Fluid.AsTechChemicalFluidType;
 import net.astr0.astrocraft.ModTags;
 import net.minecraft.ChatFormatting;
@@ -268,7 +269,7 @@ public class FluidCellItem extends Item {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity != null) {
             InteractionResult res = handleTileEntityFluidInteraction(blockEntity, stack, player, context.getClickedFace());
-            LogUtils.getLogger().info("We got the interaction result of: '{}' for the FluidCell", res.toString());
+            Astrocraft.LOGGER.info("We got the interaction result of: '{}' for the FluidCell", res.toString());
             return res;
         }
 

@@ -34,8 +34,7 @@ public class FilteredFluidTankSlot extends FluidTankSlot {
     @Override
     public void handleFilterDrop(GhostIngredientHandler.DraggedIngredient ingredient) {
         if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Fluid fluid) {
-            handler.setFluidFilterOnClient(SLOT_INDEX, fluid.stack());// Here we would set the filter and update the server
-            LogUtils.getLogger().info("We reached the item slot with fluid {}", fluid.stack().getFluid().toString());
+            handler.setFluidFilterOnClient(SLOT_INDEX, fluid.stack());
         }
     }
 

@@ -2,6 +2,7 @@ package net.astr0.astrocraft.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
+import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.FilteredItemStackHandler;
 import net.astr0.astrocraft.compat.JEI.GhostIngredientHandler;
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,13 +25,12 @@ public class FilteredItemSlot extends AbstractGuiSlot {
     @Override
     public boolean canAcceptGhostIngredient(GhostIngredientHandler.DraggedIngredient ingredient) {
         if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Item && handler.getStackInSlot(slotIndex) == ItemStack.EMPTY) {
-            LogUtils.getLogger().info("Slot was checked for drag potential: True");
+            Astrocraft.LOGGER.info("Slot was checked for drag potential: True");
 
             return true;
-
         }
 
-        LogUtils.getLogger().info("Slot was checked for drag potential: False, {}", ingredient);
+        Astrocraft.LOGGER.info("Slot was checked for drag potential: False, {}", ingredient);
         return false;
     }
 
@@ -38,7 +38,7 @@ public class FilteredItemSlot extends AbstractGuiSlot {
     public void handleFilterDrop(GhostIngredientHandler.DraggedIngredient ingredient) {
         if(ingredient instanceof GhostIngredientHandler.DraggedIngredient.Item item) {
             // Here we would set the filter and update the server
-            LogUtils.getLogger().info("We reached the item slot with item{}", item.stack().getItem());
+            Astrocraft.LOGGER.info("We reached the item slot with item{}", item.stack().getItem());
             handler.setFilterOnClient(slotIndex, item.stack());
         }
     }

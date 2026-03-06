@@ -22,7 +22,6 @@ public class BasicFilter {
     public void Lock(ItemStack stack) {
         isLocked = true;
         filterItemStack = stack.copy();
-        //LogUtils.getLogger().info("Filter set as {}", filterItemStack);
     }
 
     public void Unlock() {

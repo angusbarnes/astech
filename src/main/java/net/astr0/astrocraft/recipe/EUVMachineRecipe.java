@@ -82,8 +82,6 @@ public class EUVMachineRecipe extends AsTechRecipeBase {
         @Override
         public EUVMachineRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            LogUtils.getLogger().info("RECIPE_DEBUG: attempting to create recipe for id: {}", recipeId);
-
             Ingredient input = Ingredient.fromJson(json.get("input"));
             Ingredient catalyst = json.has("catalyst") ? Ingredient.fromJson(json.get("catalyst")) : Ingredient.EMPTY;
 

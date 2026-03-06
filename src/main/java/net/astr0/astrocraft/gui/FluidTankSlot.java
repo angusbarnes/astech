@@ -110,9 +110,6 @@ public class FluidTankSlot extends AbstractGuiSlot {
         // We should only bother sending a drain packet if the held item can actually handle it
         if (carried.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
 
-
-            LogUtils.getLogger().info("Mouse clicked: {}. Filling allowed={}", mouseButton, fillingAllowed);
-
             if (fillingAllowed && mouseButton == InputConstants.MOUSE_BUTTON_LEFT) {
                 AsTechNetworkHandler.INSTANCE.sendToServer(new UIFluidActionPacket(BLOCK_ENTITY.getBlockPos(), STATE_NAME, SLOT_INDEX, UIFluidActionPacket.FluidAction.DRAIN_ITEM));
                 return true;

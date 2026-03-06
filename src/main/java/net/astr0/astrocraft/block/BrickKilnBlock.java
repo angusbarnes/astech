@@ -56,8 +56,7 @@ public class BrickKilnBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.getBlockEntity(pos) instanceof BrickKilnBlockEntity kiln) {
-            LogUtils.getLogger().info("=================== Kiln Interacted");
-            // Delegate logic to the BE
+
             if (kiln.onPlayerInteract(player, hand)) {
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
@@ -69,7 +68,6 @@ public class BrickKilnBlock extends Block implements EntityBlock {
     @org.jetbrains.annotations.Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        LogUtils.getLogger().info("===================== New Kilk Entity");
         return new BrickKilnBlockEntity(blockPos, blockState);
     }
 

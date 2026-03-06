@@ -43,8 +43,6 @@ public class BlockEntityStateManager {
             int index = stateList.indexOf(state);
             if (index >= 0) sendClientUpdate(index);
         }
-
-        LogUtils.getLogger().info("Client update was sent for: {}", name);
     }
 
     public void sendClientUpdate(int index) {
@@ -66,7 +64,7 @@ public class BlockEntityStateManager {
         }
 
         if (index < 0 || index >= stateList.size()) {
-            LogUtils.getLogger().warn("Received invalid index {} for block entity at {}", index, pos);
+            Astrocraft.LOGGER.warn("Received invalid index {} for block entity at {}", index, pos);
             return;
         }
 
@@ -123,7 +121,7 @@ public class BlockEntityStateManager {
             if (tag.contains(name)) {
                 state.loadFromTag(tag.getCompound(name));
             } else {
-                LogUtils.getLogger().warn("Unable to load NBT data for block entity {} tag={}", _blockEntity.getBlockPos().toShortString(), name);
+                Astrocraft.LOGGER.warn("Unable to load NBT data for block entity {} tag={}", _blockEntity.getBlockPos().toShortString(), name);
             }
         }
     }

@@ -248,13 +248,10 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             if(this.energyStorage.getEnergyStored() < 204800) {
                 decreaseCraftingProgress();
                 updateActiveState(false);
-                //LogUtils.getLogger().info("ENERGY DEPLETE TICK TEMP: {}", currentTemperature);
             } else {
                 increaseCraftingProgress();
                 ConsumePower(204800);
                 updateActiveState(true);
-                //LogUtils.getLogger().info("CRAFT INCREASE TEMP: {}", currentTemperature);
-                //level.playSound(null, getBlockPos(), SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 3f, 1.0F);
             }
 
             // every time we change some shit, call setChanged
@@ -264,7 +261,6 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             if(hasProgressFinished()) {
                 craftItem();
                 resetProgress();
-                //LogUtils.getLogger().info("CRAFT COMPLETE: {}", currentTemperature);
             }
 
             if(currentTemperature > 300) {
@@ -274,11 +270,7 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
         } else {
             resetProgress();
             updateActiveState(false);
-           // LogUtils.getLogger().info("HAS NO RECIPE TEMP: {}", currentTemperature);
         }
-
-//        LogUtils.getLogger().info("END TICK TEMP: {}", currentTemperature);
-//        LogUtils.getLogger().info("========================");
 
         IncrementNetworkTickCount();
     }
@@ -385,7 +377,6 @@ public class EUVMachineBlockEntity extends AbstractMachineBlockEntity {
             }
         }
 
-        //LogUtils.getLogger().info("Did not Found Recipe");
         cachedRecipe = null;
         return null;
     }

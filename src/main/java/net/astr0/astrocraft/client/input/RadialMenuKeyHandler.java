@@ -1,7 +1,6 @@
 package net.astr0.astrocraft.client.input;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.client.gui.RadialMenuScreen;
 import net.astr0.astrocraft.common.RadialMenu;
 import net.astr0.astrocraft.common.RadialMenuEntry;
@@ -101,12 +100,8 @@ public class RadialMenuKeyHandler {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null) return;
 
-        Astrocraft.LOGGER.info("Mouse button pressed: {}, {} need {}", event.getButton(), event.getAction(), event.getButton());
-
-        // KeyMapping.matches() checks the input type, so this correctly
-        // ignores keyboard bindings and only fires for mouse buttons
         if (!OPEN_RADIAL_MENU.matchesMouse(event.getButton())) return;
-        Astrocraft.LOGGER.info("Did not match");
+
         if (event.getAction() == GLFW.GLFW_PRESS) {
             handlePress(mc);
         } else if (event.getAction() == GLFW.GLFW_RELEASE) {

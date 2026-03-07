@@ -15,13 +15,11 @@ import net.astr0.astrocraft.block.ModBlockEntities;
 import net.astr0.astrocraft.block.ModBlocks;
 import net.astr0.astrocraft.block.PyrolysisChamber.PyrolysisChamberScreen;
 import net.astr0.astrocraft.block.ReactionChamber.ChemicalReactorScreen;
+import net.astr0.astrocraft.client.gui.ModMenuTypes;
+import net.astr0.astrocraft.client.input.RadialMenuKeyHandler;
 import net.astr0.astrocraft.compat.CompatManager;
 import net.astr0.astrocraft.compat.mek.AstrocraftSlurries;
-import net.astr0.astrocraft.gui.ModMenuTypes;
-import net.astr0.astrocraft.item.AsTechBucketItem;
-import net.astr0.astrocraft.item.CableToolScreen;
-import net.astr0.astrocraft.item.FluidCellItem;
-import net.astr0.astrocraft.item.ModItems;
+import net.astr0.astrocraft.item.*;
 import net.astr0.astrocraft.network.AsTechNetworkHandler;
 import net.astr0.astrocraft.recipe.ModRecipes;
 import net.astr0.astrocraft.trading.TradeConfig;
@@ -36,6 +34,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -72,6 +71,7 @@ public class Astrocraft
         // Register the commonSetup method for mod loading
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::endSetup);
+        modEventBus.addListener(this::registerKeys);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -111,6 +111,7 @@ public class Astrocraft
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::addSeedTooltips);
         forgeEventBus.addListener(EventPriority.LOWEST, EventHandlers::handleHungerMechanics);
         forgeEventBus.addListener(EventPriority.HIGH, EventHandlers::onCurioChange);
+        forgeEventBus.addListener(EventPriority.HIGH, TabletEventHandler::onTabletModeToggle);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -118,6 +119,10 @@ public class Astrocraft
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
         AsTechNetworkHandler.onCommonSetup();
+    }
+
+    private void registerKeys(RegisterKeyMappingsEvent event) {
+        RadialMenuKeyHandler.registerKeys(event);
     }
 
     private void endSetup(final FMLLoadCompleteEvent event) {
@@ -176,6 +181,8 @@ public class Astrocraft
 
             VisualizerRegistry.setVisualizer(ModBlockEntities.CROP_STICKS.get(), new CropSticksVisualizer());
 
+            MinecraftForge.EVENT_BUS.register(new RadialMenuKeyHandler());
+
         }
 
         @SubscribeEvent
@@ -183,6 +190,8 @@ public class Astrocraft
             event.registerBlockEntityRenderer(ModBlockEntities.BRICK_KILN.get(), BrickKilnRenderer::new);
             //event.registerBlockEntityRenderer(ModBlockEntities.CROP_STICKS.get(), CropSticksRenderer::new);
         }
+
+
 
     }
 }

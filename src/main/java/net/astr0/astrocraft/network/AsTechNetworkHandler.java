@@ -2,6 +2,7 @@ package net.astr0.astrocraft.network;
 
 import net.astr0.astrocraft.Astrocraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
@@ -20,6 +21,14 @@ public class AsTechNetworkHandler {
         INSTANCE.registerMessage(1, ServerToClientStateSyncPacket.class, ServerToClientStateSyncPacket::encode, ServerToClientStateSyncPacket::new, ServerToClientStateSyncPacket::handle);
         INSTANCE.registerMessage(2, ClientToServerStateUpdatePacket.class, ClientToServerStateUpdatePacket::encode, ClientToServerStateUpdatePacket::new, ClientToServerStateUpdatePacket::handle);
         INSTANCE.registerMessage(3, UIFluidActionPacket.class, UIFluidActionPacket::encode, UIFluidActionPacket::new, UIFluidActionPacket::handle);
+        INSTANCE.registerMessage(
+                4,
+                ServerboundSetToolModePacket.class,
+                ServerboundSetToolModePacket::encode,
+                ServerboundSetToolModePacket::decode,
+                ServerboundSetToolModePacket::handle,
+                java.util.Optional.of(NetworkDirection.PLAY_TO_SERVER)
+        );
     }
 
 }

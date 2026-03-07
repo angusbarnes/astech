@@ -17,8 +17,8 @@ import net.astr0.astrocraft.block.ElectrolyticSeperator.ElectrolyticSeperatorScr
 import net.astr0.astrocraft.block.ModBlocks;
 import net.astr0.astrocraft.block.PyrolysisChamber.PyrolysisChamberScreen;
 import net.astr0.astrocraft.block.ReactionChamber.ChemicalReactorScreen;
-import net.astr0.astrocraft.gui.AsTechGuiScreen;
-import net.astr0.astrocraft.gui.ModMenuTypes;
+import net.astr0.astrocraft.client.gui.AsTechGuiScreen;
+import net.astr0.astrocraft.client.gui.ModMenuTypes;
 import net.astr0.astrocraft.item.ModItems;
 import net.astr0.astrocraft.recipe.*;
 import net.minecraft.client.Minecraft;

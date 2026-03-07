@@ -86,11 +86,8 @@ public class EventHandlers {
         BlockPos pos = event.getPos();
         BlockState block = level.getBlockState(pos);
 
-
         if (block.is(ModTags.LOCKED_BLOCK)) {
 
-            InteractionHand hand = event.getHand();
-            ItemStack itemUsed = event.getItemStack();
             Player player = event.getEntity();
             KeyItem equippedKey = getKeyFromPlayer(player);
 

@@ -34,7 +34,8 @@ public class CurrencyHelper {
 
                     if (newItem != null && newItem != Items.AIR) {
                         // Return the new item, keeping the original count
-                        return new ItemStack(newItem, count);
+                        int newCount = (int) (Math.ceil((double) count/min ));
+                        return new ItemStack(newItem, newCount);
                     }
                 }
             } catch (Exception e) {

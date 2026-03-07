@@ -1,4 +1,4 @@
-package net.astr0.astrocraft.gui.tooltips;
+package net.astr0.astrocraft.client.gui.tooltips;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;

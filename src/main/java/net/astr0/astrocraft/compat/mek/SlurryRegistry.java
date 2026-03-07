@@ -5,7 +5,7 @@ import mekanism.api.chemical.slurry.Slurry;
 import mekanism.api.chemical.slurry.SlurryBuilder;
 import mekanism.common.registration.WrappedDeferredRegister;
 import mekanism.common.registration.impl.SlurryRegistryObject;
-import net.astr0.astrocraft.gui.TintColor;
+import net.astr0.astrocraft.client.gui.TintColor;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.UnaryOperator;

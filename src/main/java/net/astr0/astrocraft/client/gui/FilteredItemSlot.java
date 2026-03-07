@@ -1,7 +1,6 @@
-package net.astr0.astrocraft.gui;
+package net.astr0.astrocraft.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.logging.LogUtils;
 import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.FilteredItemStackHandler;
 import net.astr0.astrocraft.compat.JEI.GhostIngredientHandler;

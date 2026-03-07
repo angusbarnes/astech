@@ -1,7 +1,7 @@
 package net.astr0.astrocraft.Fluid;
 
 import net.astr0.astrocraft.Fluid.helpers.AsTechFluidType;
-import net.astr0.astrocraft.gui.TintColor;
+import net.astr0.astrocraft.client.gui.TintColor;
 import net.astr0.astrocraft.item.HazardBehavior;
 import net.minecraftforge.fluids.FluidType;
 

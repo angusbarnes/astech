@@ -1,7 +1,7 @@
 package net.astr0.astrocraft.block;
 
-import net.astr0.astrocraft.gui.MachineCapConfiguratorWidget.SlotFormat;
-import net.astr0.astrocraft.gui.TintColor;
+import net.astr0.astrocraft.client.gui.MachineCapConfiguratorWidget.SlotFormat;
+import net.astr0.astrocraft.client.gui.TintColor;
 import net.astr0.astrocraft.network.IHasStateManager;
 import net.astr0.astrocraft.network.IStateManaged;
 import net.minecraft.core.Direction;

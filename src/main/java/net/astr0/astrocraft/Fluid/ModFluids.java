@@ -2,7 +2,7 @@ package net.astr0.astrocraft.Fluid;
 
 import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.block.ModBlocks;
-import net.astr0.astrocraft.gui.TintColor;
+import net.astr0.astrocraft.client.gui.TintColor;
 import net.astr0.astrocraft.item.HazardBehavior;
 import net.astr0.astrocraft.item.ModItems;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;

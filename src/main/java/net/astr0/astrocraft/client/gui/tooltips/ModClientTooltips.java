@@ -1,4 +1,4 @@
-package net.astr0.astrocraft.gui.tooltips;
+package net.astr0.astrocraft.client.gui.tooltips;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;

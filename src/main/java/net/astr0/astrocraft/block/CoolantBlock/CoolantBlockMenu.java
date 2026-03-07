@@ -1,7 +1,7 @@
 package net.astr0.astrocraft.block.CoolantBlock;
 
 import net.astr0.astrocraft.block.ModBlocks;
-import net.astr0.astrocraft.gui.ModMenuTypes;
+import net.astr0.astrocraft.client.gui.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

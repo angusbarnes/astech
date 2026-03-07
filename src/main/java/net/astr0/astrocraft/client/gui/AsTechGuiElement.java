@@ -1,4 +1,4 @@
-package net.astr0.astrocraft.gui;
+package net.astr0.astrocraft.client.gui;
 
 import net.astr0.astrocraft.Astrocraft;
 import net.minecraft.client.Minecraft;

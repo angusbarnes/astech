@@ -1,4 +1,4 @@
-package net.astr0.astrocraft.gui;
+package net.astr0.astrocraft.client.gui;
 
 import org.joml.Vector3f;
 import org.joml.Vector4f;

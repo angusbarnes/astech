@@ -1,14 +1,13 @@
 package net.astr0.astrocraft.compat.JEI;
 
-import com.mojang.logging.LogUtils;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.handlers.IGhostIngredientHandler;
 import mezz.jei.api.ingredients.ITypedIngredient;
 import net.astr0.astrocraft.Astrocraft;
-import net.astr0.astrocraft.gui.AbstractGuiSlot;
-import net.astr0.astrocraft.gui.AsTechGuiElement;
-import net.astr0.astrocraft.gui.AsTechGuiScreen;
+import net.astr0.astrocraft.client.gui.AbstractGuiSlot;
+import net.astr0.astrocraft.client.gui.AsTechGuiElement;
+import net.astr0.astrocraft.client.gui.AsTechGuiScreen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

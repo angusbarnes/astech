@@ -4,7 +4,7 @@ import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.Fluid.helpers.AsTechFluidType;
-import net.astr0.astrocraft.gui.TintColor;
+import net.astr0.astrocraft.client.gui.TintColor;
 import net.astr0.astrocraft.item.HazardBehavior;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;

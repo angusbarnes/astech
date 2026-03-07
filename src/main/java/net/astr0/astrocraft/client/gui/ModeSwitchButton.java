@@ -1,4 +1,4 @@
-package net.astr0.astrocraft.gui;
+package net.astr0.astrocraft.client.gui;
 
 public class ModeSwitchButton extends UIButton{
     public ModeSwitchButton(Icons.Icon iconToDraw, TintColor color, int x, int y) {

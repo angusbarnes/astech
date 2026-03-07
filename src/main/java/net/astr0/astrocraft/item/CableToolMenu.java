@@ -1,6 +1,6 @@
 package net.astr0.astrocraft.item;
 
-import net.astr0.astrocraft.gui.ModMenuTypes;
+import net.astr0.astrocraft.client.gui.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

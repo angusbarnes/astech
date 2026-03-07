@@ -3,7 +3,7 @@ package net.astr0.astrocraft.block.ElectrolyticSeperator;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.GraphicsUtils;
-import net.astr0.astrocraft.gui.*;
+import net.astr0.astrocraft.client.gui.*;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;

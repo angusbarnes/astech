@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "net.astr0.astrocraft.mixin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "astrocraft.refmap.json",
+  "refmap": "mixins.astrocraft.refmap.json",
   "mixins": [
     "MixinEnderman",
     "EnderIOTravelStaffMixin"

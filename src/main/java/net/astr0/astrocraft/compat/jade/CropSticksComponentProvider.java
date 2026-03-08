@@ -5,6 +5,7 @@ import net.astr0.astrocraft.farming.CropGenome;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
@@ -20,7 +21,7 @@ public enum CropSticksComponentProvider implements IBlockComponentProvider, ISer
             BlockAccessor accessor,
             IPluginConfig config
     ) {
-        if (accessor.getServerData().contains("genes")) {
+        if (accessor.getBlockState().getValue(BlockStateProperties.AGE_7) > 5 && accessor.getServerData().contains("genes")) {
             tooltip.add(
                     Component.literal(accessor.getServerData().getString("genes"))
             );

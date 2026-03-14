@@ -1,0 +1,7 @@
+{
+  "type": "astrocraft:crossbreeding",
+  "priority": 10,
+  "group_a": "astrocraft:seed_groups/grass",
+  "group_b": "astrocraft:seed_groups/dirt",
+  "result_group": "astrocraft:seed_groups/vege"
+}

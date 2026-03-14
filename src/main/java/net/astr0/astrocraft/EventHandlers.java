@@ -3,6 +3,7 @@ package net.astr0.astrocraft;
 import com.mojang.logging.LogUtils;
 import net.astr0.astrocraft.block.ModBlocks;
 import net.astr0.astrocraft.farming.CropGenome;
+import net.astr0.astrocraft.farming.FarmingNBT;
 import net.astr0.astrocraft.item.KeyItem;
 import net.astr0.astrocraft.item.ModItems;
 import net.astr0.astrocraft.trading.TradeConfig;
@@ -127,11 +128,17 @@ public class EventHandlers {
         if (!stack.is(Tags.Items.SEEDS)) return;
 
         CompoundTag tag = stack.getTag();
-        if (tag != null && tag.contains(CropGenome.NBT_KEY)) {
+        if (tag != null && tag.contains(FarmingNBT.CROP_GENOME_NBT)) {
             CropGenome genome = CropGenome.fromStack(stack);
             tooltip.getToolTip().add(
                     Component.literal(genome.genome())
             );
+
+            if (tag.contains(FarmingNBT.CROP_AGE_NBT)) {
+                tooltip.getToolTip().add(
+                        Component.literal("Generation: " + tag.getInt(FarmingNBT.CROP_AGE_NBT))
+                );
+            }
         } else {
             tooltip.getToolTip().add(Component.literal("Wild quality"));
         }

@@ -1,0 +1,7 @@
+{
+  "type": "astrocraft:crossbreeding",
+  "priority": 100,
+  "input_a": { "item": "minecraft:wheat_seeds" },
+  "input_b": { "item": "minecraft:beetroot_seeds" },
+  "result_item": { "item": "minecraft:carrot" }
+}

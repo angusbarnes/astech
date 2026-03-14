@@ -1,6 +1,7 @@
 package net.astr0.astrocraft.recipe;
 
 import com.google.gson.JsonObject;
+import net.astr0.astrocraft.Astrocraft;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -37,6 +38,10 @@ public class CrossbreedingRecipe extends AsTechRecipeBase {
         this.groupA = groupA;
         this.groupB = groupB;
         this.resultGroup = resultGroup;
+    }
+
+    public String getRecipeId() {
+        return id.toString();
     }
 
     public boolean isSpecific() {
@@ -78,14 +83,18 @@ public class CrossbreedingRecipe extends AsTechRecipeBase {
                 Ingredient inA = Ingredient.fromJson(json.get("input_a"));
                 Ingredient inB = Ingredient.fromJson(json.get("input_b"));
                 ItemStack out = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result_item"));
+                Astrocraft.LOGGER.info("CROSSBREEDING RECIPE: {}, {}", recipeId, out.getItem());
                 return new CrossbreedingRecipe(recipeId, priority, inA, inB, out, null, null, null);
             } else {
                 // Parse Group Matrix Rule
                 String grpA = GsonHelper.getAsString(json, "group_a");
                 String grpB = GsonHelper.getAsString(json, "group_b");
                 String resGrp = GsonHelper.getAsString(json, "result_group");
+                Astrocraft.LOGGER.info("CROSSBREEDING RECIPE: {}, {}", recipeId, resGrp);
                 return new CrossbreedingRecipe(recipeId, priority, Ingredient.EMPTY, Ingredient.EMPTY, ItemStack.EMPTY, grpA, grpB, resGrp);
             }
+
+
         }
 
         @Nullable

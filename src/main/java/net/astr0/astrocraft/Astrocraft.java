@@ -19,6 +19,7 @@ import net.astr0.astrocraft.client.gui.ModMenuTypes;
 import net.astr0.astrocraft.client.input.RadialMenuKeyHandler;
 import net.astr0.astrocraft.compat.CompatManager;
 import net.astr0.astrocraft.compat.mek.AstrocraftSlurries;
+import net.astr0.astrocraft.farming.GeneticsEventHandler;
 import net.astr0.astrocraft.item.*;
 import net.astr0.astrocraft.network.AsTechNetworkHandler;
 import net.astr0.astrocraft.recipe.ModRecipes;
@@ -108,10 +109,11 @@ public class Astrocraft
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::DoCampfireConversion);
         forgeEventBus.addListener(EventPriority.LOW, EventHandlers::BlockPlaceListener);
         forgeEventBus.addListener(EventPriority.HIGH, EventHandlers::restrictBlockEntityAccess);
-        forgeEventBus.addListener(EventPriority.LOW, EventHandlers::addSeedTooltips);
         forgeEventBus.addListener(EventPriority.LOWEST, EventHandlers::handleHungerMechanics);
         forgeEventBus.addListener(EventPriority.HIGH, EventHandlers::onCurioChange);
         forgeEventBus.addListener(EventPriority.HIGH, TabletEventHandler::onTabletModeToggle);
+        forgeEventBus.addListener(EventPriority.LOWEST, GeneticsEventHandler::onTagsUpdated);
+        forgeEventBus.addListener(EventPriority.LOWEST, GeneticsEventHandler::onServerStarted);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -182,6 +184,7 @@ public class Astrocraft
             VisualizerRegistry.setVisualizer(ModBlockEntities.CROP_STICKS.get(), new CropSticksVisualizer());
 
             MinecraftForge.EVENT_BUS.register(new RadialMenuKeyHandler());
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, EventHandlers::addSeedTooltips);
 
         }
 

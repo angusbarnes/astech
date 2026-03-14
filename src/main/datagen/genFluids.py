@@ -355,6 +355,9 @@ datapack.set_base_dictionary({
     "tooltip.fluid_cell.contents": "Contains: %s (%d/%d mB)",
     "tooltip.fluid_cell.empty": "Empty",
     "item.astrocraft.deez_nuts": "Deez Nuts",
+    "item.astrocraft.harddrive": "Hard Drive",
+    "item.astrocraft.nasdrive": "NAS Hard Drive",
+    "item.astrocraft.deez_nuts": "Deez Nuts",
     "item.astrocraft.world_eater": "World Eater",
     "item.astrocraft.twig_bundle": "Twig Bundle",
     "item.astrocraft.tree_key": "Tree Key",
@@ -940,6 +943,14 @@ datapack.add_item_tag("forge:enderio_staff", 'astrocraft:tablet')
 datapack.add_item_tag("forge:wrench", 'astrocraft:tablet')
 datapack.add_item_tag("forge:tools/wrench", 'astrocraft:tablet')
 datapack.add_item_tag("forge:tools/wire_cutters", 'astrocraft:tablet')
+
+datapack.add_item_tag("astrocraft:seed_groups/grass", "minecraft:wheat_seeds")
+datapack.add_item_tag("astrocraft:seed_groups/dirt", "minecraft:potato" )
+datapack.add_item_tag("astrocraft:seed_groups/vege", "minecraft:carrot" )
+
+
+datapack.add_simple_item_model("harddrive")
+datapack.add_simple_item_model("nasdrive")
 
 datapack.add_block_item_model("vacuum_freezer_controller")
 datapack.add_simple_item_model("crop_sticks")

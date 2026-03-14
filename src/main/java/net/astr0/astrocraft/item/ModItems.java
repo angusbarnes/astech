@@ -1,5 +1,6 @@
 package net.astr0.astrocraft.item;
 
+import appeng.api.stacks.AEKeyType;
 import net.astr0.astrocraft.Astrocraft;
 import net.astr0.astrocraft.ModTags;
 import net.astr0.astrocraft.ModTiers;
@@ -31,7 +32,8 @@ public class ModItems {
     private static RegistryObject<Item> SimpleIngredientItem(String name, int stack_size) {
         return ITEMS.register(name, () -> new Item(new Item.Properties().stacksTo(stack_size)));
     }
-
+    public static final RegistryObject<Item> HARDDRIVE = ITEMS.register("harddrive", () -> new BasicStorageCell(new Item.Properties().stacksTo(1), 1f, 1024, 8, 16, AEKeyType.items()));
+    public static final RegistryObject<Item> NASDRIVE = ITEMS.register("nasdrive", () -> new BasicStorageCell(new Item.Properties().stacksTo(1), 1f, 8 * 1024, 8, 16, AEKeyType.items()));
     public static final RegistryObject<Item> TREE_KEY = ITEMS.register("tree_key", () -> new KeyItem(ModTags.LOCKED_BLOCK_TREE, "Trees", ChatFormatting.DARK_GREEN, new String[]{"overworld"}) {});
     public static final RegistryObject<Item> OVERWORLD_KEY = ITEMS.register("overworld_key", () -> new KeyItem(ModTags.LOCKED_BLOCK_OVERWORLD, "The Overworld", ChatFormatting.GREEN, new String[]{"overworld"}) {});
     public static final RegistryObject<Item> NETHER_KEY = ITEMS.register("nether_key", () -> new DimensionKeyItem(ModTags.LOCKED_BLOCK_NETHER, "The Nether", ChatFormatting.RED, new String[]{"overworld", "the_nether"}) {});

@@ -27,6 +27,8 @@ public class ModCreativeModTab {
                         output.accept(ModItems.OVERWORLD_KEY.get());
                         output.accept(ModItems.END_KEY.get());
                         output.accept(ModItems.NETHER_KEY.get());
+                        output.accept(ModItems.HARDDRIVE.get());
+                        output.accept(ModItems.NASDRIVE.get());
                         output.accept(ModItems.TRANSCENDENT_KEY.get());
                         output.accept(ModBlocks.CROP_STICKS.get());
                         output.accept(ModBlocks.CHEMICAL_MIXER.get());

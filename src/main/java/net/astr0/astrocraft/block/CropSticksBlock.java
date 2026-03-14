@@ -9,8 +9,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -89,68 +89,93 @@ public class CropSticksBlock extends CropBlock implements EntityBlock, Bonemeala
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
+        ItemStack held = player.getItemInHand(hand);
+        if (held.getItem() == ModBlocks.CROP_STICKS.get().asItem()) return InteractionResult.FAIL;
+
         BlockEntity be = level.getBlockEntity(pos);
         if (!(be instanceof CropSticksBlockEntity cropBE)) return InteractionResult.PASS;
 
-        ItemStack held = player.getItemInHand(hand);
         ItemStack currentSeed = cropBE.getSeed();
         PlantedCrop heldPlant = CropUtils.getPlantedCrop(held);
-        LootParams.Builder builder = new LootParams.Builder((ServerLevel) level)
-                .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
-                .withParameter(LootContextParams.TOOL, player.getItemInHand(hand))
-                .withOptionalParameter(LootContextParams.THIS_ENTITY, player)
-                .withOptionalParameter(LootContextParams.BLOCK_ENTITY, cropBE);
+        LootParams.Builder builder = getStandardLootParams(level, pos, player, player.getItemInHand(hand), cropBE);
+        List<ItemStack> drops = cropBE.simulateDrops((builder));
 
-        // 1. SWAP LOGIC: Player is holding a valid, DIFFERENT seed
+        if (held.getItem() instanceof ShearsItem) {
+
+            if (cropBE.hasWeeds()) {
+                cropBE.clearWeeds();
+                return InteractionResult.SUCCESS;
+            }
+
+            if (cropBE.readyForHarvest()) {
+                doStandardDrops(drops, currentSeed, level, pos, true);
+                level.setBlock(pos, state.setValue(AGE, 0), 2);
+                return InteractionResult.SUCCESS;
+            }
+
+            return InteractionResult.SUCCESS;
+        }
+
+        if(cropBE.hasWeeds()) {
+            return InteractionResult.PASS;
+        }
+
         if (heldPlant != null && !currentSeed.isEmpty() && !ItemStack.isSameItemSameTags(held, currentSeed)) {
 
             if (state.getValue(AGE) == 7) {
-                // It's mature: Perform a full harvest first
-                List<ItemStack> drops = cropBE.simulateDrops(builder);
-                for (ItemStack drop : drops) {
-                    popResource(level, pos, drop);
-                }
+                doStandardDrops(drops, currentSeed, level, pos);
             } else {
-                // Not mature: Just pop the current seed back out
                 popResource(level, pos, currentSeed);
             }
 
             // Plant the new seed
             cropBE.setSeed(held);
-            if (!player.isCreative()) held.shrink(1);
+            held.shrink(1);
 
             // Reset age to 0 for the new plant
             level.setBlock(pos, state.setValue(AGE, 0), 2);
             return InteractionResult.SUCCESS;
         }
 
-        // 2. PLANTING LOGIC: Stick is empty
         if (currentSeed.isEmpty() && heldPlant != null) {
             cropBE.setSeed(held);
-            if (!player.isCreative()) held.shrink(1);
+            held.shrink(1);
             return InteractionResult.SUCCESS;
         }
 
-        // 3. STANDARD HARVEST LOGIC: Stick is mature, player isn't trying to swap
-        if (!currentSeed.isEmpty() && state.getValue(AGE) == 7) {
-            List<ItemStack> drops = cropBE.simulateDrops((builder));
-            Item seedItem = currentSeed.getItem();
-
-            for (ItemStack drop : drops) {
-                // Filter logic: In a standard harvest, we reset AGE but keep the seed in the BE.
-                // Therefore, we don't drop the "base" seed stack.
-                if (drop.is(currentSeed.getItem())) {
-                    drop.shrink(1);
-                    if (drop.getCount() == 0) continue;
-                }
-                popResource(level, pos, drop);
-            }
-
-            level.setBlock(pos, state.setValue(AGE, 0), 2);
+        if (cropBE.readyForHarvest()) {
+            doStandardDrops(drops, currentSeed, level, pos);
+            state.setValue(AGE, 0);
+            cropBE.setSeed(ItemStack.EMPTY);
             return InteractionResult.SUCCESS;
         }
 
         return InteractionResult.PASS;
+    }
+
+    private void doStandardDrops(List<ItemStack> drops, ItemStack currentSeed, Level level, BlockPos pos) {
+        doStandardDrops(drops, currentSeed, level, pos, false);
+    }
+
+    private void doStandardDrops(List<ItemStack> drops, ItemStack currentSeed, Level level, BlockPos pos, boolean consumeSeed) {
+
+        for (ItemStack drop : drops) {
+            // Filter logic: In a standard harvest, we reset AGE but keep the seed in the BE.
+            // Therefore, we don't drop the "base" seed stack.
+            if (consumeSeed && drop.is(currentSeed.getItem())) {
+                drop.shrink(1);
+                if (drop.getCount() == 0) continue;
+            }
+            popResource(level, pos, drop);
+        }
+    }
+
+    private LootParams.Builder getStandardLootParams(Level level, BlockPos pos, Player player, ItemStack toolStack, CropSticksBlockEntity cropBE) {
+        return new LootParams.Builder((ServerLevel) level)
+                .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
+                .withParameter(LootContextParams.TOOL, toolStack)
+                .withOptionalParameter(LootContextParams.THIS_ENTITY, player)
+                .withOptionalParameter(LootContextParams.BLOCK_ENTITY, cropBE);
     }
 
     @Override

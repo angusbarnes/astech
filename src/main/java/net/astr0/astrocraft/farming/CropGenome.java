@@ -20,7 +20,6 @@ public class CropGenome {
     public static final double HETEROZYGOUS_NERF = 0.9;
     public static final double HETERO_GLOBAL_NERF = 0.95;
     public static final double REGRESSIVE_MUTATION_CHANCE = 0.15;
-    public static final String NBT_KEY = "Genome";
 
     // --- OPTIMIZATION 1: Global Cache ---
     // Stores unique instances. Thread-safe.
@@ -305,8 +304,8 @@ public class CropGenome {
     // ==========================================
 
     public static CropGenome fromStack(ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains(NBT_KEY)) {
-            String g = stack.getTag().getString(NBT_KEY);
+        if (stack.hasTag() && stack.getTag().contains(FarmingNBT.CROP_GENOME_NBT)) {
+            String g = stack.getTag().getString(FarmingNBT.CROP_GENOME_NBT);
             if (g.length() == 8) return CropGenome.of(g); // Cached
         }
         return DEFAULT;
@@ -319,13 +318,13 @@ public class CropGenome {
         if (this.equals(DEFAULT)) {
             if (stack.hasTag()) {
                 assert stack.getTag() != null;
-                stack.getTag().remove(NBT_KEY);
+                stack.getTag().remove(FarmingNBT.CROP_GENOME_NBT);
                 if (stack.getTag().isEmpty()) stack.setTag(null);
             }
             return stack;
         }
 
-        stack.getOrCreateTag().putString(NBT_KEY, genome);
+        stack.getOrCreateTag().putString(FarmingNBT.CROP_GENOME_NBT, genome);
         return stack;
     }
 

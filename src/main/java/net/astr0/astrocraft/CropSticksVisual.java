@@ -1,6 +1,5 @@
 package net.astr0.astrocraft;
 
-import com.mojang.logging.LogUtils;
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.instance.Instancer;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
@@ -40,7 +39,6 @@ public class CropSticksVisual extends AbstractBlockEntityVisual<CropSticksBlockE
         transformedInstance = cropModelInstancer.createInstance();
 
         setupVisual(partialTick);
-        LogUtils.getLogger().info(">>>>>>>>>> A visual instance was created");
     }
 
     @Override

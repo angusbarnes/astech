@@ -39,4 +39,6 @@ public class CurrencyWrapperListing implements VillagerTrades.ItemListing {
                 offer.getDemand()
         );
     }
+
+
 }
